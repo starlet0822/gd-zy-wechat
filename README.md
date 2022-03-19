@@ -1,9 +1,3 @@
-<!--
- * @Description:
- * @Author: wuxxing
- * @LastEditTime: 2022-03-19 08:18:29
--->
-
 # gd-zy-wechat
 
 基于`node v12.16.1` `npm v6.13.4`开发环境搭建的`Vue2.x + Vant2 + Less + Vue Router + Vuex`项目
@@ -24,7 +18,7 @@ yarn lint           # 格式化代码
 - 标签栏
 - 搜索、筛选
 - 时间线
--
+- 标签组件 √
 
 ## 待做
 
@@ -40,7 +34,7 @@ yarn lint           # 格式化代码
 
 ### 代码编写
 
-- vscode 安装 eslint
+- vscode 用户建议安装 Vetur + eslint + Prettier - Code formatter （格式代码时建议使用 Vetur）
 - [vue 规范]()
 
 ### 文件命名

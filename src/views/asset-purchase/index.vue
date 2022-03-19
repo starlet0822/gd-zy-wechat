@@ -111,7 +111,7 @@ export default {
 }
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .asset-purchase-wrapper {
   .list-item {
     margin: 10px;

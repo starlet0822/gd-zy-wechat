@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <h1 class="vh-font22">{{ userName }}</h1>
-
     <van-button type="primary">主要按钮</van-button>
     <van-button type="primary" @click="changeUsername" v-waves>actions调用</van-button>
     <van-button type="primary">主要按钮</van-button>
@@ -10,20 +9,24 @@
     </router-link>
     <van-cell v-waves class="vh-required" title="审核状态" value="通过"></van-cell>
 
-    <div class="vh-flex-row">
-      <div class="vh-flex4 file-name van-ellipsis">
-        文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-ellipsis
-      </div>
+    <!--    <div class="vh-flex-row">-->
+    <!--      <div class="vh-flex4 file-name van-ellipsis">-->
+    <!--        文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-ellipsis-->
+    <!--      </div>-->
+    <!--    </div>-->
+
+    <!--    <div class="file-name van-multi-ellipsis&#45;&#45;l2">-->
+    <!--      {{-->
+    <!--        '文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis&#45;&#45;l2' +-->
+    <!--        '文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis&#45;&#45;l2'-->
+    <!--      }}-->
+    <!--    </div>-->
+
+    <div class="vh-p-box vh-flex-wrap">
+      <TagBox class="vh-mr-10" v-for="item in 5" :key="item"></TagBox>
     </div>
 
-    <div class="file-name van-multi-ellipsis--l2">
-      {{
-        '文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2' +
-        '文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2'
-      }}
-    </div>
-
-    <h2 class="vh-m-10 vh-border-y-1 vh-border-0">上吧</h2>
+    <h2 class="vh-p-10 vh-border-y-1">上吧</h2>
     <vh-empty></vh-empty>
     <van-tabbar v-model="active" placeholder>
       <van-tabbar-item icon="home-o">标签</van-tabbar-item>
@@ -36,8 +39,12 @@
 import vars from '@/assets/css/vars.less'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { _camelCase } from '@utils/index'
+import TagBox from '@comp/common/TagBox'
 export default {
   name: 'HelloWorld',
+  components: {
+    TagBox
+  },
   mixins: [],
   props: {
     msg: String
@@ -77,5 +84,6 @@ export default {
 <style scoped lang="less">
 .hello {
   color: @color-red;
+  font-size: 15px;
 }
 </style>
