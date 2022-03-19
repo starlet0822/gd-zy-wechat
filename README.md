@@ -37,6 +37,10 @@ yarn lint           # 格式化代码
 - vscode 用户建议安装 Vetur + eslint + Prettier - Code formatter （格式代码时建议使用 Vetur）
 - [vue 规范]()
 
+## git 提交
+
+- `"lint-staged": "8.1.5" + "husky": "1.3.1"` 约束 git 提交自动修改 eslint，部分需要手动修正！！！
+
 ### 文件命名
 
 - **\*.vue** 在 views 目录下 命名规范同 js 命名规范；组件文件则以驼峰命名且首字母大写(如 MyCom)
