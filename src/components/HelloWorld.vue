@@ -1,60 +1,88 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-router" target="_blank" rel="noopener">router</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-vuex" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+    <h1 class="vh-font22">{{ userName }}</h1>
+
+    <van-button type="primary">主要按钮</van-button>
+    <van-button type="primary" @click="changeUsername" v-waves
+      >actions调用</van-button
+    >
+    <van-button type="primary">主要按钮</van-button>
+    <router-link to="/about">
+      <van-button type="info">关于</van-button>
+    </router-link>
+    <van-cell
+      v-waves
+      class="vh-required"
+      title="审核状态"
+      value="通过"
+    ></van-cell>
+
+    <div class="vh-flex-row">
+      <div class="vh-flex4 file-name van-ellipsis">
+        文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-ellipsis
+      </div>
+    </div>
+
+    <div class="file-name van-multi-ellipsis--l2">
+      {{
+        "文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2" +
+        "文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2"
+      }}
+    </div>
+
+    <h2 class="vh-m-10 vh-border-y-1 vh-border-0">上吧</h2>
+    <vh-empty></vh-empty>
+    <van-tabbar v-model="active" placeholder>
+      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+      <van-tabbar-item icon="search">标签</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
 <script>
+import vars from '@/assets/css/vars.less'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
+import { _camelCase } from '@utils/index'
 export default {
   name: 'HelloWorld',
+  mixins: [],
   props: {
     msg: String
+  },
+  data () {
+    return {
+      active: 0,
+      name: 'wxx',
+      arr: [
+        { id: '1', lang: 'html' },
+        { id: '2', lang: 'css' },
+        { id: '3', lang: 'js' }
+      ]
+    }
+  },
+  computed: {
+    ...mapGetters(['userName', 'roles2'])
+  },
+  created () {
+    console.log('js引入less变量', vars)
+    console.log('userName', this.userName, this.roles2)
+    console.log(_camelCase('starlet-wu'))
+    console.log('id拼接', this._joinKey2String(this.arr))
+  },
+  methods: {
+    ...mapMutations(['SET_USER_NAME']),
+    ...mapActions('user', ['/setUserName']),
+    changeUsername () {
+      // this.SET_USER_NAME('我是修改后的名称')
+      this.setUserName('我是修改后的名称')
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.hello {
+  color: @color-red;
 }
 </style>

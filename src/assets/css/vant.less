@@ -1,0 +1,64 @@
+/*
+  定制 vant-ui 主题
+*/
+@gray-1: #f9f9f9; // 背景色
+// @gray-3: #8c8c8c; // 边框颜色
+// @gray-3: @color-border; // 边框颜色
+@black: #262626; // 组件字体颜色
+@blue: @color-blue; // 默认蓝色
+@red: #e90000; // 默认红色
+// @orange: #FF7500; // 默认橙色
+
+// van-cell
+// @cell-vertical-padding: 12px;
+// @cell-horizontal-padding: 20px;
+// @cell-font-size: 16px;
+@cell-text-color: #262626;
+@cell-border-color: @color-border;
+// @cell-required-color:#E90000;
+@cell-value-color: #262626;
+
+// van-field
+@field-label-color: #262626;
+// @field-input-text-color: #262626;
+
+// nav-bar
+@nav-bar-height: 1.28rem;
+@nav-bar-background-color: @color-blue;
+@nav-bar-title-text-color: #ffffff;
+@nav-bar-text-color: #ffffff;
+@nav-bar-icon-color: #ffffff;
+
+// dialog
+@dialog-header-padding-top: 12px;
+@dialog-header-font-weight: 500;
+@dialog-confirm-button-text-color: @color-blue;
+
+// 自定义vant样式
+body {
+  .van-cell,
+  .van-field {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    // border-bottom: 1px solid #e6e6e6;
+    // &::after {
+    //   //border: 0;
+    //   // height: 0;
+    //   // border: 0;
+    //   /* 细线 */
+    //   position: absolute;
+    //   box-sizing: border-box;
+    //   content: " ";
+    //   pointer-events: none;
+    //   top: -50%;
+    //   right: -50%;
+    //   bottom: -50%;
+    //   left: -50%;
+    //   border-bottom: 1px solid @gray-3;
+    //   -webkit-transform: scale(0.5);
+    //   -ms-transform: scale(0.5);
+    //   transform: scale(0.5);
+    // }
+  }
+}
