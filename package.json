@@ -7,7 +7,8 @@
     "dev": "yarn serve",
     "build": "vue-cli-service build",
     "build:test": "vue-cli-service build --mode test",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "clean:lib": "rimraf node_modules"
   },
   "dependencies": {
     "amfe-flexible": "^2.2.1",
@@ -39,12 +40,12 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
-    "husky": "^7.0.4",
     "less": "^4.1.1",
     "less-loader": "^7.0.0",
     "lint-staged": "^12.3.7",
     "postcss-loader": "^6.1.0",
     "postcss-pxtorem": "^5.1.1",
+    "rimraf": "^3.0.2",
     "style-resources-loader": "^1.5.0",
     "vue-cli-plugin-style-resources-loader": "^0.1.5",
     "vue-template-compiler": "^2.6.11"
@@ -61,7 +62,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,vue}": [
-      "yarn lint",
+      "vue-cli-service lint",
       "git add"
     ]
   }
