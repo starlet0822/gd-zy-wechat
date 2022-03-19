@@ -3,11 +3,18 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es6: true,
+    es6: true
   },
   extends: ['plugin:vue/essential', '@vue/standard'],
   parserOptions: {
-    parser: 'babel-eslint'
+    // parser: 'babel-eslint'
+    parser: '@babel/eslint-parser',
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    // jsxPragma: 'React',
+    ecmaFeatures: {
+      jsx: true
+    }
   },
   rules: {
     'vue/max-attributes-per-line': [
