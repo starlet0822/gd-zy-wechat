@@ -41,7 +41,7 @@ import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
 import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'HelloWorld'',
+  name: 'HelloWorld', 
   components: {
     TagBox
   },
