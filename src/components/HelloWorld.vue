@@ -37,7 +37,7 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { mapGetters, mapMutations, mapActions, mapState } from 'vuex'
+import { mapGetters, mapMutations, mapActions, } from 'vuex';
 import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
 export default {
@@ -45,7 +45,7 @@ export default {
   components: {
     TagBox
   },
-  mixins: [],
+  mixins: [],   
   props: {
     msg: String
   },

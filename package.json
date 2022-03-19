@@ -56,15 +56,15 @@
     "last 2 versions",
     "not dead"
   ],
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.{js,vue,jsx,tsx}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
   }
 }
