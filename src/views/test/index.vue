@@ -14,7 +14,7 @@
 <script>
 export default {
   name: 'Test',
-  data () {
+  data() {
     return {
       list: [
         { text: '资产配置', to: '/asset-purchase' },
@@ -22,7 +22,7 @@ export default {
       ]
     }
   },
-  created () {
+  created() {
 
   },
   methods: {

@@ -13,13 +13,13 @@ const state = {
   roles: ['admin']
 }
 const mutations = {
-  SET_USER_NAME (state, name) {
+  SET_USER_NAME(state, name) {
     state.userName = name
   }
 }
 const actions = {
   // 设置name
-  setUserName ({ commit }, name) {
+  setUserName({ commit }, name) {
     commit('SET_USER_NAME', name)
   }
 }

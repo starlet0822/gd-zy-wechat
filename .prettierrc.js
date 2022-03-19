@@ -6,11 +6,15 @@ module.exports = {
   singleQuote: true, // 使用单引号
   quoteProps: 'as-needed', // （默认值）仅仅当必须的时候才会加上双引号
   jsxSingleQuote: true, // 在 JSX 中使用单引号
-  trailingComma: 'all', // 不用在多行的逗号分隔的句法结构的最后一行的末尾加上逗号
+  trailingComma: 'none', // 不用在多行的逗号分隔的句法结构的最后一行的末尾加上逗号
   bracketSpacing: true, // （默认值）在括号和对象的文字之间加上一个空格
   jsxBracketSameLine: true, // 把 > 符号放在多行的 JSX 元素的最后一行
-  arrowParens: 'avoid', // 当箭头函数中只有一个参数的时候可以忽略括弧
-  htmlWhitespaceSensitivity: 'ignore', // vue template 中的结束标签结尾尖括号掉到了下一行
+  // insertPragma: false,
+  // requirePragma: false,
   vueIndentScriptAndStyle: false, // （默认值）对于 .vue 文件，不缩进 <script> 和 <style> 里的内容
-  embeddedLanguageFormatting: 'auto' // （默认值）允许自动格式化内嵌的代码块
+  arrowParens: 'always', // 当箭头函数中只有一个参数的时候不忽略括弧() avoid 则忽略
+  htmlWhitespaceSensitivity: 'ignore', // vue template 中的结束标签结尾尖括号掉到了下一行
+  embeddedLanguageFormatting: 'auto', // （默认值）允许自动格式化内嵌的代码块
+  proseWrap: 'never',
+  endOfLine: 'auto',
 }

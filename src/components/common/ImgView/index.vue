@@ -1,10 +1,10 @@
 <!--
  * @Description: 图片展示
  * @Author: wuxxing
- * @LastEditTime: 2022-03-18 16:18:37
+ * @LastEditTime: 2022-03-19 18:20:12
 -->
 <template>
-  <div class="imgView-wrapper vh-p-box vh-bg-white " :class="{'van-hairline--bottom': border}">
+  <div class="imgView-wrapper vh-p-box vh-bg-white" :class="{ 'van-hairline--bottom': border }">
     <!-- <div class="vh-flex-wrap"> -->
     <van-image
       class="imgItem vh-mr-10"
@@ -39,37 +39,35 @@ export default {
         {
           fileName: '文件名称2.xlsx',
           fileSize: '20kb',
-          filePath:
-            'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hh0x9kj30go0rpadd.jpg'
+          filePath: 'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hh0x9kj30go0rpadd.jpg'
         },
         {
           fileName: '文件名称3.ppt',
           fileSize: '108kb',
-          filePath:
-            'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hyxqnxj30go0uwtds.jpg'
+          filePath: 'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hyxqnxj30go0uwtds.jpg'
         }
       ]
     },
     border: Boolean
   },
-  data () {
+  data() {
     return {}
   },
   computed: {
     imgList: {
-      get () {
+      get() {
         return this.value.map((item) => item.filePath)
       }
     }
   },
-  created () {},
+  created() {},
   methods: {
     // 预览图片
-    handleClickImg (img, index) {
+    handleClickImg(img, index) {
       // const { filePath } = img
       this.handlePreview(index)
     },
-    handlePreview (index) {
+    handlePreview(index) {
       const imgsrcArr = this.imgList
       ImagePreview({
         images: imgsrcArr,

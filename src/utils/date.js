@@ -10,7 +10,7 @@ import dayjs from 'dayjs'
    * @param format 想要的格式
    * @returns {string|string}
    */
-export function dateFormat (time, format = 'YYYY-MM-DD HH:mm:ss') {
+export function dateFormat(time, format = 'YYYY-MM-DD HH:mm:ss') {
   if (!time) return ''
   try {
     return dayjs(time).format(format) || ''

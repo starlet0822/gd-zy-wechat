@@ -12,12 +12,12 @@
 <script>
 export default {
   name: 'Empty',
-  data () {
+  data() {
     return {
 
     }
   },
-  created () {
+  created() {
 
   },
   methods: {

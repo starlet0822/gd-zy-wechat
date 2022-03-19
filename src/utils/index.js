@@ -13,7 +13,7 @@ export { upperFirst as _upperFirst, camelCase as _camelCase, capitalize as _capi
  * @param key 要拼接的属性名称 默认为id 若要拼接其他接 则直接传值即可
  * @returns {*}
  */
-export function _joinKey2String (arr, key = 'id', flag = ',') {
+export function _joinKey2String(arr, key = 'id', flag = ',') {
   if (!isArray(arr)) return ''
   return arr.reduce((acc, cur, index, arr) => {
     return index === arr.length - 1 ? acc.concat(cur[key]) : acc.concat(cur[key] + flag)

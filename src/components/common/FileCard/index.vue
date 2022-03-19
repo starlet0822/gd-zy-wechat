@@ -50,7 +50,7 @@ export default {
   },
   computed: {
     fileList: {
-      get () {
+      get() {
         return this.value
       }
     }

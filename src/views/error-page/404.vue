@@ -12,12 +12,12 @@
 <script>
 export default {
   name: 'Error404',
-  data () {
+  data() {
     return {
 
     }
   },
-  created () {
+  created() {
 
   },
   methods: {

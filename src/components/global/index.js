@@ -7,7 +7,7 @@ import { prefixCls } from '@/config/constants'
 import { _upperFirst, _camelCase } from '@utils/index'
 
 // 注册全局组件
-export function registerGlobComp (Vue) {
+export function registerGlobComp(Vue) {
   const requireComponent = require.context('./', true, /\.vue$/)
   requireComponent.keys().forEach(fileName => {
     const componentConfig = requireComponent(fileName)

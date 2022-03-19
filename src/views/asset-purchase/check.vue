@@ -38,7 +38,10 @@
     <div class="vh-h-44">
       <div class="vh-fixed-b vh-flex-jc vh-fixed" v-if="true">
         <van-button block plain>驳回</van-button>
-        <van-button block type="info" @click="showCheckUser = true"
+        <van-button
+block
+type="info"
+@click="showCheckUser = true"
           >通过</van-button
         >
       </div>
@@ -86,7 +89,7 @@ import ImgView from '@comp/common/ImgView'
 export default {
   name: 'AssetPurchaseCheck',
   components: { FileCard, ImgView },
-  data () {
+  data() {
     return {
       showCheckUser: false,
       showCheckDetail: false,
@@ -94,17 +97,17 @@ export default {
       users: ['张三', '李四', '王五']
     }
   },
-  created () {},
+  created() {},
   methods: {
-    handleConfirmUser () {
+    handleConfirmUser() {
       // 调佣接口
     },
     // 查看审批详情
-    handleRightClick () {
+    handleRightClick() {
       // console.log(555);
       this.showCheckDetail = true
     },
-    getContainer () {
+    getContainer() {
       return document.querySelector('.check-wrapper')
     }
   }

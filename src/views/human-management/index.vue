@@ -12,12 +12,12 @@
 <script>
 export default {
   name: 'HumanManagement',
-  data () {
+  data() {
     return {
 
     }
   },
-  created () {
+  created() {
 
   },
   methods: {

@@ -1,28 +1,19 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-18 18:56:13
+ * @LastEditTime: 2022-03-19 17:55:32
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="false"></vh-nav-bar>
     <div class="vh-flex-jc">
-      <van-search
-        class="vh-flex1"
-        v-model="keyword"
-        placeholder="请输入搜索关键词"
-      />
+      <van-search class="vh-flex1" v-model="keyword" placeholder="请输入搜索关键词" />
       <div class="vh-font-14 vh-flex-jc-ac vh-bg-white vh-pr-10">
         <van-icon name="filter-o" size="28" />
       </div>
     </div>
     <van-tabs v-model="active" animated :color="activeColor">
-      <van-tab
-        v-for="(tab, index) in tabs"
-        :title="tab.title"
-        :key="index"
-        :name="tab.id"
-      >
+      <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
@@ -39,20 +30,22 @@
             >
               <div class="list-item vh-p-10 vh-bg-white">
                 <div class="vh-flex-jb-ac">
-                  <div class="">{{ "办公屏风卡座" }}</div>
-                  <div class="vh-font-tip">{{ "2022-03-07" }}</div>
+                  <div class="">{{ '办公屏风卡座' }}</div>
+                  <div class="vh-font-tip">{{ '2022-03-07' }}</div>
                 </div>
                 <div class="vh-flex-ac">
-                  <span>申请单号：</span
-                  ><span class="vh-color-blue">{{ "6666" }}</span>
+                  <span>申请单号：</span>
+                  <span class="vh-color-blue">{{ '6666' }}</span>
                 </div>
                 <div class="vh-flex-ac">
-                  <span>申请科室：</span><span>{{ "设备科" }}</span>
+                  <span>申请科室：</span>
+                  <span>{{ '设备科' }}</span>
                 </div>
                 <div class="vh-flex-ac">
-                  <span>总预算：</span><span>{{ "1000.00" }}</span>
+                  <span>总预算：</span>
+                  <span>{{ '1000.00' }}</span>
                 </div>
-                <div class="btn-status">{{ "未提交" }}</div>
+                <div class="btn-status">{{ '未提交' }}</div>
               </div>
             </router-link>
           </van-list>
@@ -66,7 +59,7 @@
 import { themeColor } from '@/config/constants'
 export default {
   name: 'AssetPurchase',
-  data () {
+  data() {
     return {
       tabs: [
         { title: '全部', id: '0' },
@@ -86,9 +79,9 @@ export default {
       refreshing: false
     }
   },
-  created () {},
+  created() {},
   methods: {
-    onLoad () {
+    onLoad() {
       setTimeout(() => {
         if (this.refreshing) {
           this.dataList = []
@@ -105,7 +98,7 @@ export default {
         }
       }, 1000)
     },
-    onRefresh () {
+    onRefresh() {
       // 清空列表数据
       this.finished = false
 

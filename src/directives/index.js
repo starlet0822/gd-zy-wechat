@@ -5,6 +5,6 @@
  */
 import waves from './waves/waves'
 
-export function registerGlobDirective (Vue) {
+export function registerGlobDirective(Vue) {
   Vue.directive('waves', waves)
 }

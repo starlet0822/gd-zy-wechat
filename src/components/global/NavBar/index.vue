@@ -47,7 +47,7 @@ export default {
       default: true
     }
   },
-  data () {
+  data() {
     return {}
   },
   computed: {
@@ -57,21 +57,21 @@ export default {
     //   }
     // },
     navTitle: {
-      get () {
+      get() {
         const { title: routeTitle } = this.$route.meta
         console.log(routeTitle)
         return this.title !== '' ? this.title : routeTitle
       }
     }
   },
-  created () {
+  created() {
     // const { title } = this.$route.meta
     // if (title) {
     // }
   },
   methods: {
     // 点击左侧
-    handleClickLeft () {
+    handleClickLeft() {
       this.$router.back()
     }
   }

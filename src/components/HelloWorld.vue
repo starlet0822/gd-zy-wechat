@@ -3,19 +3,12 @@
     <h1 class="vh-font22">{{ userName }}</h1>
 
     <van-button type="primary">主要按钮</van-button>
-    <van-button type="primary" @click="changeUsername" v-waves
-      >actions调用</van-button
-    >
+    <van-button type="primary" @click="changeUsername" v-waves>actions调用</van-button>
     <van-button type="primary">主要按钮</van-button>
     <router-link to="/about">
       <van-button type="info">关于</van-button>
     </router-link>
-    <van-cell
-      v-waves
-      class="vh-required"
-      title="审核状态"
-      value="通过"
-    ></van-cell>
+    <van-cell v-waves class="vh-required" title="审核状态" value="通过"></van-cell>
 
     <div class="vh-flex-row">
       <div class="vh-flex4 file-name van-ellipsis">
@@ -25,8 +18,8 @@
 
     <div class="file-name van-multi-ellipsis--l2">
       {{
-        "文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2" +
-        "文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2"
+        '文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2' +
+        '文件名称文件名称文件名称文件名称文件名称文件名称文件名称文件名称van-multi-ellipsis--l2'
       }}
     </div>
 
@@ -49,7 +42,7 @@ export default {
   props: {
     msg: String
   },
-  data () {
+  data() {
     return {
       active: 0,
       name: 'wxx',
@@ -63,7 +56,7 @@ export default {
   computed: {
     ...mapGetters(['userName', 'roles2'])
   },
-  created () {
+  created() {
     console.log('js引入less变量', vars)
     console.log('userName', this.userName, this.roles2)
     console.log(_camelCase('starlet-wu'))
@@ -72,7 +65,7 @@ export default {
   methods: {
     ...mapMutations(['SET_USER_NAME']),
     ...mapActions('user', ['/setUserName']),
-    changeUsername () {
+    changeUsername() {
       // this.SET_USER_NAME('我是修改后的名称')
       this.setUserName('我是修改后的名称')
     }

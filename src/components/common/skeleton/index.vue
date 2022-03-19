@@ -12,12 +12,12 @@
 <script>
 export default {
   name: 'Skeleton',
-  data () {
+  data() {
     return {
 
     }
   },
-  created () {
+  created() {
 
   },
   methods: {
