@@ -23,7 +23,7 @@
     <!--    </div>-->
 
     <div class="vh-p-box vh-flex-wrap">
-      <TagBox class="vh-mr-10" v-for="item in 5" :key="item"></TagBox>
+      <TagBox class="vh-mr-10" v-for="item in 5" :key="item"></TagBox> 
     </div>
 
     <h2 class="vh-p-10 vh-border-y-1">上吧</h2>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import vars from '@/assets/css/vars.less'
+import vars from '@/assets/css/vars.less';
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
@@ -56,7 +56,7 @@ export default {
       arr: [
         { id: '1', lang: 'html' },
         { id: '2', lang: 'css' },
-        { id: '3', lang: 'js' }
+        { id: '3', lang: 'js' },
       ]
     }
   },
