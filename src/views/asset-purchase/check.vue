@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-18 17:26:35
+ * @LastEditTime: 2022-03-20 21:36:30
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -10,10 +10,26 @@
         <div class="vh-color-white">审批详情</div>
       </template>
     </vh-nav-bar>
-    <div class="asset-info vh-rounded-12 vh-m-10" v-for="item in 3" :key="item">
-      <!-- <div class="vh-color-blue">{{'基本信息'+item}}</div> -->
+    <!-- 折叠面板 -->
+    <van-collapse class="vh-m-10" v-model="activeNames">
+      <van-collapse-item :name="item" v-for="item in 3" :key="item">
+        <template #title>
+          <div class="vh-color-blue">标题{{ item }}</div>
+        </template>
+        <template #default>
+          <van-cell
+            v-for="citem in 5"
+            :key="citem"
+            :title="'资产名称' + citem"
+            value="xxx"
+          ></van-cell>
+        </template>
+      </van-collapse-item>
+    </van-collapse>
+    <!-- <div class="asset-info vh-rounded-12 vh-m-10" v-for="item in 3" :key="item">
       <van-cell
         title-class="vh-color-blue"
+        :border="false"
         :title="'基本信息'"
         value="xxx"
       ></van-cell>
@@ -23,7 +39,7 @@
       <van-cell title="资产名称" value="xxx"></van-cell>
       <van-cell title="资产名称" value="xxx"></van-cell>
       <van-cell title="资产名称00" value="xxx"></van-cell>
-    </div>
+    </div> -->
     <!-- 附件上传 -->
     <div class="asset-info vh-rounded-12 vh-m-10 file-upload">
       <van-cell title-class="vh-color-blue" :title="'附件'"></van-cell>
@@ -38,12 +54,7 @@
     <div class="vh-h-44">
       <div class="vh-fixed-b vh-flex-jc vh-fixed" v-if="true">
         <van-button block plain>驳回</van-button>
-        <van-button
-block
-type="info"
-@click="showCheckUser = true"
-          >通过</van-button
-        >
+        <van-button block type="info" @click="showCheckUser = true">通过</van-button>
       </div>
     </div>
     <!-- 节点弹窗 -->
@@ -57,15 +68,11 @@ type="info"
         <div class="vh-pl-15 vh-text-left">下一节审批人</div>
       </template> -->
       <template #default>
-        <div class="vh-p-box">
+        <div class="vh-p-20">
           <van-radio-group v-model="radio" icon-size="0.64rem">
-            <van-radio
-              class="vh-mb-10"
-              v-for="(user, index) in users"
-              :key="index"
-              :name="index"
-              >{{ user }}</van-radio
-            >
+            <van-radio class="vh-mb-10" v-for="(user, index) in users" :key="index" :name="index">
+              {{ user }}
+            </van-radio>
           </van-radio-group>
         </div>
       </template>
@@ -75,7 +82,7 @@ type="info"
       v-model="showCheckDetail"
       position="right"
       closeable
-      :style="{ width: '70%', height: '100%' }"
+      :style="{ width: '90%', height: '100%' }"
       @get-container="getContainer"
     >
       <div class="vh-flex-center vh-pt-40">666</div>
@@ -94,6 +101,7 @@ export default {
       showCheckUser: false,
       showCheckDetail: false,
       radio: 0,
+      activeNames: [1],
       users: ['张三', '李四', '王五']
     }
   },
@@ -107,8 +115,9 @@ export default {
       // console.log(555);
       this.showCheckDetail = true
     },
+    // TODO 无效
     getContainer() {
-      return document.querySelector('.check-wrapper')
+      return document.querySelector('#app')
     }
   }
 }
@@ -117,6 +126,9 @@ export default {
 <style lang="less" scoped>
 .check-wrapper {
   .asset-info {
+  }
+  /deep/ .van-collapse-item__content {
+    padding: 0;
   }
 }
 </style>

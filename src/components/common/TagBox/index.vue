@@ -13,6 +13,7 @@
     :closeable="closeable"
     v-bind="$attrs"
     @click="handleClickTag"
+    @close="handleCloseTag"
   >
     {{ text }}
   </van-tag>
@@ -51,6 +52,9 @@ export default {
   methods: {
     handleClickTag() {
       this.$emit('click')
+    },
+    handleCloseTag() {
+      this.$emit('close')
     }
   }
 }

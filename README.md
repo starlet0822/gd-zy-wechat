@@ -21,11 +21,11 @@ yarn lint           # 格式化代码
 - 标签组件 √
 
 ## 待做
-
+- 定制主题
 - 工具函数
 - axios 请求封装
 - 公共组件封装
-- 自定义指令
+- 自定义指令 v-waves
 - 过滤器
 - 公共样式
 - less 全局变量 √
@@ -34,12 +34,12 @@ yarn lint           # 格式化代码
 
 ### 代码编写
 
-- vscode 用户建议安装 Vetur + eslint + Prettier - Code formatter （格式代码时建议使用 Vetur）
+- vscode 用户建议安装 Vetur + eslint + Prettier - Code formatter （格式代码时建议使用 Prettier）
 - [vue 规范]()
 
 ## git 提交
 
-- `"lint-staged": "8.1.5" + "husky": "1.3.1"` 约束 git 提交自动修改 eslint，部分需要手动修正！！！
+- `"lint-staged": "8.1.5" + "husky": "1.3.1"` 约束 git 提交检测eslint并自动修复，部分需要手动修正！！！
 
 ### 文件命名
 

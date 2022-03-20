@@ -3,9 +3,61 @@
 
 // 按需全局引入 vant组件
 import Vue from 'vue'
-import { Button, Cell, List, Skeleton, Empty, Grid, GridItem, PullRefresh, Tabs, Tab, Search, Icon, NavBar, Sticky, Tabbar, TabbarItem, SwipeCell, Card, Image as VanImage, Lazyload, Dialog, RadioGroup, Radio, Tag, Popup } from 'vant'
+import {
+  Button,
+  Cell,
+  Form,
+  Field,
+  List,
+  Skeleton,
+  Empty,
+  Grid,
+  GridItem,
+  PullRefresh,
+  Tabs,
+  Tab,
+  Search,
+  Icon,
+  NavBar,
+  Sticky,
+  Tabbar,
+  TabbarItem,
+  SwipeCell,
+  Card,
+  Image as VanImage,
+  Lazyload,
+  Dialog,
+  RadioGroup,
+  Radio,
+  Tag,
+  Popup,
+  Collapse,
+  CollapseItem
+} from 'vant'
 Vue.use(Button)
-Vue.use(Cell)
-Vue.use(List).use(PullRefresh).use(Skeleton).use(Empty).use(Grid).use(GridItem).use(Tabs).use(Tab).use(Search).use(Icon).use(NavBar).use(Sticky)
+Vue.use(Cell).use(Form).use(Field)
+Vue.use(List)
+  .use(PullRefresh)
+  .use(Skeleton)
+  .use(Empty)
+  .use(Grid)
+  .use(GridItem)
+  .use(Tabs)
+  .use(Tab)
+  .use(Search)
+  .use(Icon)
+  .use(NavBar)
+  .use(Sticky)
 Vue.use(Tabbar)
-Vue.use(TabbarItem).use(SwipeCell).use(Card).use(VanImage).use(Lazyload, { lazyComponent: false }).use(Dialog).use(Popup).use(RadioGroup).use(Radio).use(Tag)
+Vue.use(TabbarItem)
+  .use(SwipeCell)
+  .use(Card)
+  .use(VanImage)
+  .use(Lazyload, { lazyComponent: false })
+  .use(Dialog)
+  .use(Popup)
+  .use(RadioGroup)
+  .use(Radio)
+  .use(Tag)
+  .use(Collapse)
+  .use(CollapseItem)

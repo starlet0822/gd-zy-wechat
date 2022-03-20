@@ -49,13 +49,14 @@ each(@colors,
 }
 
 /*-------------------- border 公共样式 ----------------------- */
-[class*=~"@{prefixCls}-border-"] {
+[class*=~'@{prefixCls}-border-'] {
   position: relative;
 }
-[class*=~"@{prefixCls}-border"]::after {
+[class*=~'@{prefixCls}-border']::after {
+  // van写法
   position: absolute;
   box-sizing: border-box;
-  content: " ";
+  content: ' ';
   pointer-events: none;
   top: -50%;
   right: -50%;
@@ -68,43 +69,43 @@ each(@colors,
 
 @borders: 1;
 each(@borders, {
-  .@{prefixCls}-border-@{value} {  
+  .@{prefixCls}-border-@{value} {
     &::after {
-      border-width: 1PX; // 全方向
+      border-width: 1px; // 全方向
     }
-   } 
-  .@{prefixCls}-border-t-@{value} {  
+   }
+  .@{prefixCls}-border-t-@{value} {
     // position: relative;
     &::after {
-      border-top-width: 1PX; // 上边框
+      border-top-width: 1px; // 上边框
     }
-   } 
+   }
   .@{prefixCls}-border-r-@{value} {
     &::after {
-      border-right-width: 1PX; // 右边框
+      border-right-width: 1px; // 右边框
     }
-  } 
+  }
   .@{prefixCls}-border-b-@{value} {
     &::after {
-      border-bottom-width: 1PX; // 下边框
+      border-bottom-width: 1px; // 下边框
     }
   }
   .@{prefixCls}-border-l-@{value} {
     &::after {
-      border-left-width: 1PX; // 左边框
+      border-left-width: 1px; // 左边框
     }
   }
   .@{prefixCls}-border-x-@{value} {
     &::after {
-      border-left-width: 1PX; border-right-width: 1PX; // 水平边框
-    }
-  } 
-  .@{prefixCls}-border-y-@{value} {
-    &::after {
-      border-top-width: 1PX; border-bottom-width: 1PX; // 垂直边框
+      border-left-width: 1px; border-right-width: 1px; // 水平边框
     }
   }
-  .@{prefixCls}-border-0{  
+  .@{prefixCls}-border-y-@{value} {
+    &::after {
+      border-top-width: 1px; border-bottom-width: 1px; // 垂直边框
+    }
+  }
+  .@{prefixCls}-border-0{
     &::after {
       border-width: 0; // 无边框
     }
@@ -182,7 +183,7 @@ each(@heights, {
 }
 
 /* ------------- flex 弹性布局 ------------- */
-[class*=~"@{prefixCls}-flex-"] {
+[class*=~'@{prefixCls}-flex-'] {
   display: -webkit-flex;
   display: flex;
 }
@@ -239,7 +240,7 @@ each(@heights, {
 .flex(1);
 
 /* ------------- position 定位布局 ------------- */
-[class*=~"@{prefixCls}-fixed-"] {
+[class*=~'@{prefixCls}-fixed-'] {
   width: 100%;
   position: fixed;
 }
@@ -267,7 +268,7 @@ each(@textAligns, {
 });
 
 /* -----------------------  margin 外边距 -----------------------  */
-@margins: 5, 8, 10, 12, 15;
+@margins: 0, 5, 8, 10, 12, 16;
 each(@margins, {
   .@{prefixCls}-m-@{value} {  margin: ~"@{value}px"; } // 全方向
   .@{prefixCls}-mt-@{value} {  margin-top: ~"@{value}px"; } // 上边距
@@ -279,14 +280,14 @@ each(@margins, {
 });
 
 .@{prefixCls}-m-box {
-  margin: 10px 15px;
+  margin: 10px 16px;
 }
 
 /* -----------------------  padding 内边距 -----------------------  */
-[class*=~"@{prefixCls}-p"] {
+[class*=~'@{prefixCls}-p'] {
   box-sizing: border-box;
 }
-@paddings: 5, 8, 10, 12, 15, 20, 40;
+@paddings: 0, 5, 8, 10, 12, 16, 20, 40;
 each(@paddings, {
   .@{prefixCls}-p-@{value} {  padding: ~"@{value}px"; } // 全方向
   .@{prefixCls}-pt-@{value} {  padding-top: ~"@{value}px"; } // 上边距
@@ -298,7 +299,7 @@ each(@paddings, {
 });
 
 .@{prefixCls}-p-box {
-  padding: 10px 15px;
+  padding: 10px 16px;
 }
 
 /*  ----------- 文本超出限制显示行数部分以省略号... 显示TODO:有点bug ------------ */
@@ -331,7 +332,7 @@ each(@paddings, {
     position: relative;
 
     &::after {
-      content: "*";
+      content: '*';
       color: @color-red;
       position: absolute;
       width: 100%;
