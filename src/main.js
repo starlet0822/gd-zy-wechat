@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-17 11:13:37
+ * @LastEditTime: 2022-03-21 18:12:41
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -13,8 +13,10 @@ import '@/plugins/vant' // 按需导入vant组件
 import 'amfe-flexible' // 屏幕适配
 import { ENV } from '@/config/index'
 import common from './mixins/common'
+import { registerFilter } from './filters/index'
 import { registerGlobComp } from '@/components/global/index'
 import { registerGlobDirective } from '@/directives/index'
+registerFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
 registerGlobDirective(Vue) // 注册全局自定义指令
 
@@ -25,5 +27,5 @@ Vue.config.productionTip = false // 关闭生产环境提示
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: (h) => h(App)
 }).$mount('#app')
