@@ -1,7 +1,7 @@
 <!--
  * @Description: 标签页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-21 14:53:00
+ * @LastEditTime: 2022-03-21 15:21:16
 -->
 <template>
   <div class="move-tabs-wrapper">
@@ -10,7 +10,8 @@
       v-model="tabActive"
       :color="color"
       :border="border"
-      sticky
+      :sticky="sticky"
+      :offset-top="`${offsetTopRet}rem`"
       animated
       swipeable
       @change="onTabsChange"
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import { themeColor } from '@/config/constants'
+import { themeColor, RootValue } from '@/config/constants'
 export default {
   name: 'MoveTabs',
   props: {
@@ -46,6 +47,15 @@ export default {
     border: {
       type: Boolean,
       default: true
+    },
+    // 是否吸顶
+    sticky: {
+      type: Boolean,
+      default: true
+    },
+    offsetTop: {
+      type: [Number, String],
+      default: 0
     }
   },
   data() {
@@ -53,7 +63,13 @@ export default {
       tabActive: this.active
     }
   },
-  computed: {},
+  computed: {
+    offsetTopRet: {
+      get() {
+        return this.offsetTop / RootValue
+      }
+    }
+  },
   created() {},
   methods: {
     // 当前激活的标签改变时触发

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-19 17:55:32
+ * @LastEditTime: 2022-03-21 15:20:44
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -12,7 +12,7 @@
         <van-icon name="filter-o" size="28" />
       </div>
     </div>
-    <van-tabs v-model="active" animated :color="activeColor">
+    <van-tabs v-model="active" animated sticky offset-top="1.28rem" :color="activeColor">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">

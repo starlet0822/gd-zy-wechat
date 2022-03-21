@@ -19,11 +19,13 @@
       :key="item"
     ></van-cell> -->
 
-    <MoveTabs>
+    <!-- <MoveTabs>
       <div>
         <van-cell v-for="item in 10" :key="item" title="列表"></van-cell>
       </div>
-    </MoveTabs>
+    </MoveTabs> -->
+
+    <TimeLine></TimeLine>
 
     <!-- <van-form :show-error-message="false" validate-first scroll-to-error>
       <van-field
@@ -89,12 +91,14 @@ import vars from '@/assets/css/vars.less'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
-import MoveTabs from '@comp/common/MoveTabs'
+// import MoveTabs from '@comp/common/MoveTabs'
+import TimeLine from '@comp/common/TimeLine'
 export default {
   name: 'HelloWorld',
   components: {
     TagBox,
-    MoveTabs
+    // MoveTabs,
+    TimeLine
   },
   mixins: [],
   props: {
