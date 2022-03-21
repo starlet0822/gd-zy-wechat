@@ -1,11 +1,11 @@
 <!--
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-03-20 22:01:48
+ * @LastEditTime: 2022-03-21 14:33:05
 -->
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>

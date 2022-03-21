@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1 class="vh-font22">{{ userName }}</h1>
+    <!-- <h1 class="vh-font22">{{ userName }}</h1>
     <van-button type="primary">主要按钮</van-button>
     <van-button type="primary" @click="changeUsername" v-waves>actions调用</van-button>
     <van-button type="primary">主要按钮</van-button>
@@ -9,17 +9,23 @@
     </router-link>
     <router-link to="/asset-purchase">
       <van-button type="warning">审批</van-button>
-    </router-link>
-    <van-cell
+    </router-link> -->
+    <!-- <van-cell
       v-waves
       class=""
       title="审核状态"
       value="通过"
       v-for="item in 5"
       :key="item"
-    ></van-cell>
+    ></van-cell> -->
 
-    <van-form :show-error-message="false" validate-first scroll-to-error>
+    <MoveTabs>
+      <div>
+        <van-cell v-for="item in 10" :key="item" title="列表"></van-cell>
+      </div>
+    </MoveTabs>
+
+    <!-- <van-form :show-error-message="false" validate-first scroll-to-error>
       <van-field
         v-model="username"
         name="用户名"
@@ -44,7 +50,7 @@
         :rules="[{ required: false, message: '请选择类型' }]"
         is-link
       />
-    </van-form>
+    </van-form> -->
 
     <!--    <div class="vh-flex-row">-->
     <!--      <div class="vh-flex4 file-name van-ellipsis">-->
@@ -83,10 +89,12 @@ import vars from '@/assets/css/vars.less'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
+import MoveTabs from '@comp/common/MoveTabs'
 export default {
   name: 'HelloWorld',
   components: {
-    TagBox
+    TagBox,
+    MoveTabs
   },
   mixins: [],
   props: {
