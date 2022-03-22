@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="hello vh-bg">
     <!-- <h1 class="vh-font22">{{ userName }}</h1>
     <van-button type="primary">主要按钮</van-button>
     <van-button type="primary" @click="changeUsername" v-waves>actions调用</van-button>
@@ -79,11 +79,10 @@
 
     <h2 class="vh-p-10 vh-border-y-1">上吧</h2>
     <vh-empty></vh-empty>
-    <!-- <van-tabbar v-model="active" placeholder>
+    <van-tabbar v-model="active" fixed placeholder>
       <van-tabbar-item icon="home-o">标签</van-tabbar-item>
       <van-tabbar-item icon="search">标签</van-tabbar-item>
-    </van-tabbar> -->
-    <ButtonGroup></ButtonGroup>
+    </van-tabbar>
   </div>
 </template>
 
@@ -94,14 +93,14 @@ import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
 // import MoveTabs from '@comp/common/MoveTabs'
 import TimeLine from '@comp/common/TimeLine'
-import ButtonGroup from '@comp/global/ButtonGroup'
+// import ButtonGroup from '@comp/global/ButtonGroup'
 export default {
   name: 'HelloWorld',
   components: {
     TagBox,
     // MoveTabs,
-    TimeLine,
-    ButtonGroup
+    TimeLine
+    // ButtonGroup
   },
   mixins: [],
   props: {

@@ -33,12 +33,11 @@ body {
   border: @color-border;
   shadow: @color-shadow;
 };
-each(@colors,
- {
-    .@{prefixCls}-color-@{key} {
-			color: @value;
-    }
-  })
+each(@colors,{
+  .@{prefixCls}-color-@{key} {
+		color: @value;
+  }
+ })
 
 // 背景颜色样式
 .@{prefixCls}-bg {
@@ -136,7 +135,7 @@ each(@radius, {
   min-width: 100vw;
 }
 /* -------------- 高度: height ----------------  */
-@heights: 24, 32, 44, 46, 48;
+@heights: 24, 32, 44, 46, 48, 56;
 each(@heights, {
   .@{prefixCls}-h-@{value}{
    height: ~"@{value}px";
@@ -241,8 +240,8 @@ each(@heights, {
 
 /* ------------- position 定位布局 ------------- */
 [class*=~'@{prefixCls}-fixed-'] {
-  width: 100%;
   position: fixed;
+  width: 100%;
 }
 // 固定定位
 .@{prefixCls}-fixed {

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-20 21:36:30
+ * @LastEditTime: 2022-03-22 15:48:47
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -50,13 +50,12 @@
         <FileCard></FileCard>
       </div>
     </div>
-    <!-- 底部按钮 -->
-    <div class="vh-h-44">
-      <div class="vh-fixed-b vh-flex-jc vh-fixed" v-if="true">
-        <van-button block plain>驳回</van-button>
-        <van-button block type="info" @click="showCheckUser = true">通过</van-button>
-      </div>
-    </div>
+    <!-- 底部按钮组 -->
+    <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
+    <!-- <van-tabbar v-model="active" fixed placeholder>
+      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
+      <van-tabbar-item icon="search">标签</van-tabbar-item>
+    </van-tabbar> -->
     <!-- 节点弹窗 -->
     <van-dialog
       v-model="showCheckUser"
@@ -85,7 +84,9 @@
       :style="{ width: '90%', height: '100%' }"
       @get-container="getContainer"
     >
-      <div class="vh-flex-center vh-pt-40">666</div>
+      <div class="vh-flex-center vh-pt-40">
+        <TimeLine></TimeLine>
+      </div>
     </van-popup>
   </div>
 </template>
@@ -93,22 +94,38 @@
 <script>
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
+import TimeLine from '@comp/common/TimeLine'
+import ButtonGroup from '@comp/global/ButtonGroup'
 export default {
   name: 'AssetPurchaseCheck',
-  components: { FileCard, ImgView },
+  components: { FileCard, ImgView, TimeLine, ButtonGroup },
   data() {
     return {
       showCheckUser: false,
       showCheckDetail: false,
+      active: 0,
       radio: 0,
       activeNames: [1],
-      users: ['张三', '李四', '王五']
+      users: ['张三', '李四', '王五'],
+      btnList: [
+        { text: '驳回', value: 'nopass' },
+        // { text: '提交', value: 'submit' },
+        { text: '通过', value: 'pass' }
+      ]
     }
   },
   created() {},
   methods: {
     handleConfirmUser() {
       // 调佣接口
+    },
+    // 按钮回调
+    handleClickBtn({ value }) {
+      switch (value) {
+        case 'pass':
+          this.showCheckUser = true
+          break
+      }
     },
     // 查看审批详情
     handleRightClick() {

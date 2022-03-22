@@ -1,67 +1,73 @@
 <!--
  * @Description: 功能按钮组
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 13:43:15
+ * @LastEditTime: 2022-03-22 15:45:40
 -->
 <template>
-  <div class="button-group-wrapper vh-flex-ac vh-fixed-b vh-bg-white vh-p-box van-hairline--top">
-    <van-button
-      class="button-item"
-      :type="index === 1 ? 'info' : 'default'"
-      v-for="(btn, index) in btnArr.slice(0, 2)"
-      :key="index"
-      block
-      :size="size"
-      icon-position="right"
-      @click="handleClickBtn(btn)"
+  <div class="button-group-placeholder">
+    <div
+      ref="buttonGroup"
+      class="button-group-wrapper vh-flex-ac vh-bg-white vh-p-box van-hairline--top"
+      :class="{ 'vh-fixed-b': fixed }"
     >
-      {{ btn.text }}
-      <template #icon>
-        <!-- :get-container="getContainer" -->
-        <van-popover
-          :style="{ width: '100%' }"
-          class="other-btn-popover"
-          v-model="showMoreBtn"
-          placement="top-start"
-          trigger="click"
-          :get-container="getContainer"
-        >
-          <div class="other-btns" v-if="index === 1">
-            <!-- <template v-if="index === 1"> -->
-            <van-button
-              class="button-item--other"
-              type="default"
-              block
-              :size="size"
-              icon="plus"
-              @click="handleClickBtn(btnOther)"
-              v-for="(btnOther, indexOther) in otherBtns"
-              :key="btnOther.value + indexOther"
-            >
-              {{ btnOther.text }}
-            </van-button>
-            <!-- </template> -->
-          </div>
-          <template #reference>
-            <van-icon
-              class="vh-pl-8 vh-pt-5"
-              v-if="btnArr.length > 2 && index === 1"
-              name="more-o"
-              @click.stop="handleClickMore"
-            />
-          </template>
-        </van-popover>
-        <!-- <van-icon
+      <van-button
+        class="button-item"
+        :type="index === 1 ? 'info' : 'default'"
+        v-for="(btn, index) in btnArr.slice(0, 2)"
+        :key="index"
+        block
+        :plain="false"
+        :size="size"
+        icon-position="right"
+        @click="handleClickBtn(btn)"
+      >
+        {{ btn.text }}
+        <template #icon>
+          <!-- :get-container="getContainer" -->
+          <van-popover
+            :style="{ width: '100%' }"
+            class="other-btn-popover"
+            v-model="showMoreBtn"
+            placement="top-start"
+            trigger="click"
+            :get-container="getContainer"
+          >
+            <div class="other-btns" v-if="index === 1">
+              <!-- <template v-if="index === 1"> -->
+              <van-button
+                class="button-item--other"
+                type="default"
+                block
+                :size="size"
+                icon="plus"
+                @click="handleClickBtn(btnOther)"
+                v-for="(btnOther, indexOther) in otherBtns"
+                :key="btnOther.value + indexOther"
+              >
+                {{ btnOther.text }}
+              </van-button>
+              <!-- </template> -->
+            </div>
+            <template #reference>
+              <van-icon
+                class="vh-pl-8 vh-pt-5"
+                v-if="btnArr.length > 2 && index === 1"
+                name="more-o"
+                @click.stop="handleClickMore"
+              />
+            </template>
+          </van-popover>
+          <!-- <van-icon
           class="vh-pl-8"
           v-if="btnArr.length > 2 && index === 1"
           name="arrow-down"
           @click.stop="handleClickMore"
         /> -->
-      </template>
-    </van-button>
-    <!-- <van-button block type="info">信息按钮</van-button> -->
-    <!-- 更多按钮集合 -->
-    <!-- <van-dropdown-menu direction="up" active-color="#1989fa">
+        </template>
+      </van-button>
+      <!-- <van-button block type="info">信息按钮</van-button> -->
+      <!-- 更多按钮集合 -->
+      <!-- <van-dropdown-menu direction="up" active-color="#1989fa">
       <van-dropdown-item :options="otherBtns" />
       <van-dropdown-item title="更多" ref="item">
         <div class="other-btns vh-p-box">
@@ -69,6 +75,7 @@
         </div>
       </van-dropdown-item>
     </van-dropdown-menu> -->
+    </div>
   </div>
 </template>
 
@@ -79,23 +86,25 @@ export default {
     btnArr: {
       type: Array,
       default: () => [
-        { text: '驳回', value: 'nopass', disabled: false, color: '', plain: false },
-        { text: '提交', value: 'submit', disabled: false, color: '', plain: false },
-        { text: '通过', value: 'pass', disabled: false, color: '', plain: false }
+        { text: '驳回', value: 'nopass' },
+        { text: '提交', value: 'submit' },
+        { text: '通过', value: 'pass' }
       ]
     },
     size: {
       type: String,
-      default: 'normal',
+      default: 'small',
       validator(val) {
         return ['large', 'small', 'mini', 'normal'].includes(val) // large small mini
       }
-    }
+    },
+    fixed: Boolean
+    // placeholder: Boolean
   },
   data() {
     return {
+      height: 0, // 用于固定定位占位
       showMoreBtn: false
-      // otherBtns: []
     }
   },
   computed: {
@@ -106,10 +115,24 @@ export default {
     }
   },
   created() {},
+  mounted() {
+    // if (this.placeholder && this.fixed) {
+    if (this.fixed) {
+      const setHeight = () => {
+        console.log(5)
+        this.height = this.$refs.buttonGroup.getBoundingClientRect().height
+      }
+
+      setHeight()
+      // https://github.com/youzan/vant/issues/10131
+      setTimeout(setHeight, 100)
+    }
+  },
   methods: {
-    onConfirm() {},
+    // 点击按钮
     handleClickBtn(btn) {
       console.log('点击按钮', btn)
+      this.$emit('click', btn)
     },
     handleClickMore() {
       console.log('点击展开更多')
@@ -132,17 +155,24 @@ export default {
 </style>
 
 <style lang="less" scoped>
-.button-group-wrapper {
-  padding: 10px 8px;
-  box-sizing: border-box;
-  .button-item {
-    margin: 0 8px;
-    // height: 36px;
-    &.van-button--default {
-      background-color: @color-bg;
-    }
-    &--other {
-      height: 36px;
+.button-group-placeholder {
+  // padding-top: 52px;
+  height: 52px; // BUG这种方案 页面内容减少时会顶上去
+
+  .button-group-wrapper {
+    // height: 1.3867rem;
+    padding: 10px 8px;
+    box-sizing: border-box;
+    z-index: 1;
+    .button-item {
+      margin: 0 8px;
+      // height: 36px;
+      // &.van-button--default {
+      //   background-color: @color-bg;
+      // }
+      &--other {
+        height: 36px;
+      }
     }
   }
 }

@@ -1,19 +1,19 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 09:21:42
+ * @LastEditTime: 2022-03-22 16:21:13
 -->
 <template>
   <div class="timeline-wrapper vh-p-box">
     <div class="timeline__header vh-color-blue">{{ '审批流程' }}</div>
     <ul class="timeline">
-      <li class="timeline-item vh-flex-row" v-for="item in 3" :key="item">
+      <li class="timeline-item vh-flex-row" v-for="(item, index) in list" :key="index">
         <!-- 年月标签 -->
         <div class="timeline-item-left">
           <p>
-            {{ new Date() | formatDate('YYYY-MM-DD') }}
+            {{ item.time | formatDate('YYYY-MM-DD') }}
             <br />
-            {{ new Date() | formatDate('HH:mm:ss') }}
+            {{ item.time | formatDate('HH:mm:ss') }}
           </p>
         </div>
         <div class="timeline-item-right vh-pt-5 vh-flex-row">
@@ -25,8 +25,8 @@
           <div class="timeline-item__wrapper">
             <!-- 时间项内容 -->
             <div class="timeline-item_content vh-flex-ac-jb">
-              <div>{{ '张三' }}</div>
-              <div class="vh-color-tip vh-px-8">{{ '同意' }}</div>
+              <div>{{ item.name }}</div>
+              <div class="vh-color-tip vh-px-8">{{ item.result }}</div>
               <div class="vh-color-tip">{{ '主任审核' }}</div>
             </div>
             <!-- 时间线时间 -->
@@ -34,7 +34,11 @@
           </div>
         </div>
       </li>
-      <div class="pick-btn vh-color-blue">收起</div>
+      <template v-if="isShowToggle">
+        <div class="pick-btn vh-color-blue" @click="handleToggle">
+          {{ isPickup ? '展开' : '收起' }}
+        </div>
+      </template>
     </ul>
   </div>
 </template>
@@ -45,14 +49,45 @@ export default {
   props: {
     timeList: {
       type: [Array],
-      default: () => []
+      default: () => [
+        { time: new Date(), name: '张三', result: '执行' },
+        { time: new Date(), name: '李四', result: '执行' },
+        { time: new Date(), name: '王五', result: '执行' },
+        { time: new Date(), name: '老六', result: '同意' },
+        { time: new Date(), name: '李四', result: '执行' },
+        { time: new Date(), name: '王五', result: '执行' },
+        { time: new Date(), name: '老六', result: '同意' },
+        { time: new Date(), name: '陈真', result: '同意' }
+      ]
     },
-    reverse: Boolean // 指定节点排序方向，默认为正序
+    reverse: Boolean, // 指定节点排序方向，默认为正序
+    // 默认显示几条
+    length: {
+      type: [Number, String],
+      default: 5
+    }
   },
   data() {
-    return {}
+    return {
+      isPickup: true,
+      list: this.timeList.slice(0, this.length)
+      // storageList: this.timeList
+    }
   },
-  methods: {}
+  computed: {
+    isShowToggle: {
+      get() {
+        return this.timeList.length > this.length
+      }
+    }
+  },
+  methods: {
+    // 展开收起切换
+    handleToggle() {
+      this.isPickup = !this.isPickup
+      this.list = this.isPickup ? this.timeList.slice(0, this.length) : this.timeList
+    }
+  }
 }
 </script>
 
@@ -69,16 +104,8 @@ export default {
     font-size: 14px;
     .timeline-item {
       .timeline-item-left {
-        // min-width: 54px;
-        // height: 30px;
-        // line-height: 30px;
-        // background: #1a77f0;
-        // border-radius: 15px;
         text-align: center;
-        // color: #fff;
         margin-right: 10px;
-        // padding: 0 8px;
-        // box-sizing: border-box;
       }
       .timeline-item-right {
         position: relative;
