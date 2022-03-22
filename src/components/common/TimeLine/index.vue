@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-21 18:15:26
+ * @LastEditTime: 2022-03-22 09:21:42
 -->
 <template>
   <div class="timeline-wrapper vh-p-box">
@@ -18,11 +18,11 @@
         </div>
         <div class="timeline-item-right vh-pt-5 vh-flex-row">
           <!-- 时间线条 -->
-          <div class="timeline-item_tail"></div>
+          <div class="timeline-item__tail"></div>
           <!-- 节点 -->
-          <div class="timeline-item_node"></div>
+          <div class="timeline-item__node"></div>
           <!-- 时间项容器 -->
-          <div class="timeline-item_wrapper">
+          <div class="timeline-item__wrapper">
             <!-- 时间项内容 -->
             <div class="timeline-item_content vh-flex-ac-jb">
               <div>{{ '张三' }}</div>
@@ -85,32 +85,31 @@ export default {
         padding-bottom: 20px;
         flex: 1;
         // &:last-child {// TODO 不生效？
-        //   .timeline-item_tail {
+        //   .timeline-item__tail {
         //     display: none;
         //   }
         // }
-        .timeline-item_tail {
+        .timeline-item__tail {
           position: absolute;
           left: 7px;
           height: 100%;
           border-left: 1px solid #1a77f0;
         }
-        .timeline-item_node {
+        .timeline-item__node {
           position: absolute;
           // background-color: #e4e7ed;
           border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
-          //
+          // 默认样式
           width: 14px;
           height: 14px;
           border-radius: 50%;
-          background: #ffffff;
-          opacity: 0.97;
+          background: rgba(255, 255, 255, 0.9);
           border: 4px solid #e06500;
         }
-        .timeline-item_wrapper {
+        .timeline-item__wrapper {
           position: relative;
           width: 100%;
           padding-left: 20px;

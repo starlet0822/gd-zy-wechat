@@ -32,11 +32,16 @@ import {
   Tag,
   Popup,
   Collapse,
-  CollapseItem
+  CollapseItem,
+  DropdownMenu,
+  DropdownItem,
+  Popover
 } from 'vant'
 Vue.use(Button)
-Vue.use(Cell).use(Form).use(Field)
-Vue.use(List)
+  .use(Cell)
+  .use(Form)
+  .use(Field)
+  .use(List)
   .use(PullRefresh)
   .use(Skeleton)
   .use(Empty)
@@ -48,16 +53,19 @@ Vue.use(List)
   .use(Icon)
   .use(NavBar)
   .use(Sticky)
-Vue.use(Tabbar)
-Vue.use(TabbarItem)
+  .use(Tabbar)
+  .use(TabbarItem)
   .use(SwipeCell)
   .use(Card)
   .use(VanImage)
   .use(Lazyload, { lazyComponent: false })
   .use(Dialog)
   .use(Popup)
+  .use(Popover)
   .use(RadioGroup)
   .use(Radio)
   .use(Tag)
   .use(Collapse)
   .use(CollapseItem)
+  .use(DropdownMenu)
+  .use(DropdownItem)

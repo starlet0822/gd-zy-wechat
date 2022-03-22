@@ -1,3 +1,8 @@
+/*
+ * @Description:
+ * @Author: wuxxing
+ * @LastEditTime: 2022-03-22 13:44:46
+ */
 const env = process.env.NODE_ENV
 const propList = env === 'development' ? [] : ['*', '!border']
 

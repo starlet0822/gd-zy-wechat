@@ -27,7 +27,7 @@
 
     <TimeLine></TimeLine>
 
-    <!-- <van-form :show-error-message="false" validate-first scroll-to-error>
+    <van-form :show-error-message="false" validate-first scroll-to-error>
       <van-field
         v-model="username"
         name="用户名"
@@ -52,7 +52,7 @@
         :rules="[{ required: false, message: '请选择类型' }]"
         is-link
       />
-    </van-form> -->
+    </van-form>
 
     <!--    <div class="vh-flex-row">-->
     <!--      <div class="vh-flex4 file-name van-ellipsis">-->
@@ -79,10 +79,11 @@
 
     <h2 class="vh-p-10 vh-border-y-1">上吧</h2>
     <vh-empty></vh-empty>
-    <van-tabbar v-model="active" placeholder>
+    <!-- <van-tabbar v-model="active" placeholder>
       <van-tabbar-item icon="home-o">标签</van-tabbar-item>
       <van-tabbar-item icon="search">标签</van-tabbar-item>
-    </van-tabbar>
+    </van-tabbar> -->
+    <ButtonGroup></ButtonGroup>
   </div>
 </template>
 
@@ -93,12 +94,14 @@ import { _camelCase } from '@utils/index'
 import TagBox from '@comp/common/TagBox'
 // import MoveTabs from '@comp/common/MoveTabs'
 import TimeLine from '@comp/common/TimeLine'
+import ButtonGroup from '@comp/global/ButtonGroup'
 export default {
   name: 'HelloWorld',
   components: {
     TagBox,
     // MoveTabs,
-    TimeLine
+    TimeLine,
+    ButtonGroup
   },
   mixins: [],
   props: {
