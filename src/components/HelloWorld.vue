@@ -24,9 +24,6 @@
         <van-cell v-for="item in 10" :key="item" title="列表"></van-cell>
       </div>
     </MoveTabs> -->
-
-    <TimeLine></TimeLine>
-
     <van-form :show-error-message="false" validate-first scroll-to-error>
       <van-field
         v-model="username"
@@ -77,7 +74,7 @@
       ></TagBox>
     </div>
 
-    <h2 class="vh-p-10 vh-border-y-1">上吧</h2>
+    <h2 class="vh-p-10 vh-border-y-1">上吧{{ ret }}</h2>
     <vh-empty></vh-empty>
     <van-tabbar v-model="active" fixed placeholder>
       <van-tabbar-item icon="home-o">标签</van-tabbar-item>
@@ -90,16 +87,16 @@
 import vars from '@/assets/css/vars.less'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
 import { _camelCase } from '@utils/index'
+import { mul, div } from '@/utils/calculate'
+// import { Decimal } from 'decimal.js'
 import TagBox from '@comp/common/TagBox'
 // import MoveTabs from '@comp/common/MoveTabs'
-import TimeLine from '@comp/common/TimeLine'
 // import ButtonGroup from '@comp/global/ButtonGroup'
 export default {
   name: 'HelloWorld',
   components: {
-    TagBox,
+    TagBox
     // MoveTabs,
-    TimeLine
     // ButtonGroup
   },
   mixins: [],
@@ -117,7 +114,8 @@ export default {
       ],
       username: '',
       password: '',
-      type: ''
+      type: '',
+      ret: ''
     }
   },
   computed: {
@@ -128,6 +126,15 @@ export default {
     console.log('userName', this.userName, this.roles2)
     console.log(_camelCase('starlet-wu'))
     console.log('id拼接', this._joinKey2String(this.arr))
+    // this.ret = add(2.0, 3)
+    // this.ret = sub(0, 0.2)
+    this.ret = mul(1, 2, 3)
+    this.ret = div(1, 2)
+    console.log('结果：', this.ret)
+    // const x = new Decimal(0.1) // '255.9375'
+    // const y = new Decimal(0.2) // '172'
+    // this.ret = x.mul(y)
+    // console.log(x, y, this.ret)
   },
   methods: {
     ...mapMutations(['SET_USER_NAME']),
@@ -143,5 +150,4 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less"></style>

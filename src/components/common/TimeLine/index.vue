@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 16:21:13
+ * @LastEditTime: 2022-03-22 16:33:20
 -->
 <template>
   <div class="timeline-wrapper vh-p-box">
@@ -47,6 +47,7 @@
 export default {
   name: 'TimeLine',
   props: {
+    // 时间线数据源
     timeList: {
       type: [Array],
       default: () => [
@@ -69,15 +70,15 @@ export default {
   },
   data() {
     return {
-      isPickup: true,
-      list: this.timeList.slice(0, this.length)
-      // storageList: this.timeList
+      isPickup: true, // 默认显示展开按钮
+      list: this.timeList.slice(0, +this.length)
     }
   },
   computed: {
+    // 是否显示切换按钮
     isShowToggle: {
       get() {
-        return this.timeList.length > this.length
+        return this.timeList.length > +this.length
       }
     }
   },
@@ -85,7 +86,7 @@ export default {
     // 展开收起切换
     handleToggle() {
       this.isPickup = !this.isPickup
-      this.list = this.isPickup ? this.timeList.slice(0, this.length) : this.timeList
+      this.list = this.isPickup ? this.timeList.slice(0, +this.length) : this.timeList
     }
   }
 }
@@ -93,7 +94,7 @@ export default {
 
 <style lang="less" scoped>
 .timeline-wrapper {
-  background-color: #ffffff;
+  background-color: #fff;
   .timeline__header {
     // font-size: 18px;
     // line-height: 1.5;
