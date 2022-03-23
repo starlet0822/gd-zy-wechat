@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 15:48:47
+ * @LastEditTime: 2022-03-23 18:25:02
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -11,7 +11,7 @@
       </template>
     </vh-nav-bar>
     <!-- 折叠面板 -->
-    <van-collapse class="vh-m-10" v-model="activeNames">
+    <van-collapse class="vh-m-10 vh-rounded-12" v-model="activeNames">
       <van-collapse-item :name="item" v-for="item in 3" :key="item">
         <template #title>
           <div class="vh-color-blue">标题{{ item }}</div>

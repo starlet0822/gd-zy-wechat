@@ -1,17 +1,18 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-21 15:20:44
+ * @LastEditTime: 2022-03-23 17:55:27
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="false"></vh-nav-bar>
-    <div class="vh-flex-jc">
+    <SearchFilter v-model="keyword" @search="handleSearch"></SearchFilter>
+    <!-- <div class="vh-flex-jc">
       <van-search class="vh-flex1" v-model="keyword" placeholder="请输入搜索关键词" />
       <div class="vh-font-14 vh-flex-jc-ac vh-bg-white vh-pr-10">
         <van-icon name="filter-o" size="28" />
       </div>
-    </div>
+    </div> -->
     <van-tabs v-model="active" animated sticky offset-top="1.28rem" :color="activeColor">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
@@ -57,8 +58,12 @@
 
 <script>
 import { themeColor } from '@/config/constants'
+import SearchFilter from '@comp/common/SearchFilter'
 export default {
   name: 'AssetPurchase',
+  components: {
+    SearchFilter
+  },
   data() {
     return {
       tabs: [
@@ -106,6 +111,10 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true
       this.onLoad()
+    },
+    handleSearch(val) {
+      console.log('handleSearch', val)
+      this.onRefresh()
     }
   }
 }

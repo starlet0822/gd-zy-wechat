@@ -35,7 +35,8 @@ import {
   CollapseItem,
   DropdownMenu,
   DropdownItem,
-  Popover
+  Popover,
+  ActionSheet
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -62,6 +63,7 @@ Vue.use(Button)
   .use(Dialog)
   .use(Popup)
   .use(Popover)
+  .use(ActionSheet)
   .use(RadioGroup)
   .use(Radio)
   .use(Tag)

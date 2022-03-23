@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 16:33:20
+ * @LastEditTime: 2022-03-23 17:57:59
 -->
 <template>
   <div class="timeline-wrapper vh-p-box">
@@ -126,7 +126,6 @@ export default {
         .timeline-item__node {
           position: absolute;
           // background-color: #e4e7ed;
-          border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -134,7 +133,7 @@ export default {
           width: 14px;
           height: 14px;
           border-radius: 50%;
-          background: rgba(255, 255, 255, 0.9);
+          background: rgba(255, 255, 255, 1);
           border: 4px solid #e06500;
         }
         .timeline-item__wrapper {

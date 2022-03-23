@@ -1,5 +1,6 @@
 <template>
   <div class="hello vh-bg">
+    <SearchFilter v-model="keyword" @search="handleSearch"></SearchFilter>
     <!-- <h1 class="vh-font22">{{ userName }}</h1>
     <van-button type="primary">主要按钮</van-button>
     <van-button type="primary" @click="changeUsername" v-waves>actions调用</van-button>
@@ -90,12 +91,14 @@ import { _camelCase } from '@utils/index'
 import { mul, div } from '@/utils/calculate'
 // import { Decimal } from 'decimal.js'
 import TagBox from '@comp/common/TagBox'
+import SearchFilter from '@comp/common/SearchFilter'
 // import MoveTabs from '@comp/common/MoveTabs'
 // import ButtonGroup from '@comp/global/ButtonGroup'
 export default {
   name: 'HelloWorld',
   components: {
-    TagBox
+    TagBox,
+    SearchFilter
     // MoveTabs,
     // ButtonGroup
   },
@@ -115,7 +118,8 @@ export default {
       username: '',
       password: '',
       type: '',
-      ret: ''
+      ret: '',
+      keyword: ''
     }
   },
   computed: {
@@ -145,6 +149,9 @@ export default {
     },
     handleClose(event) {
       console.log(event)
+    },
+    handleSearch(val) {
+      console.log('handleSearch', val)
     }
   }
 }
