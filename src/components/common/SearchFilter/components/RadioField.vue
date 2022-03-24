@@ -1,17 +1,17 @@
 <!--
  * @Description: 点击选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-24 18:08:44
+ * @LastEditTime: 2022-03-24 18:21:29
 -->
 <template>
   <div class="radio-field-wrapper vh-bg2">
     <van-cell class="vh-border-0" title-class="vh-color-text" :title="label"></van-cell>
-    <div class="gird vh-flex-wrap" :style="{ 'padding-left': '10px' }">
+    <div class="gird vh-flex-wrap" :style="{ 'padding-left': '16px' }">
       <div
         class="gird-item"
         :style="{
           flex: '0 0 33.333%',
-          'padding-right': '10px',
+          'padding-right': '16px',
           'margin-top': index >= 3 ? '10px' : '0'
         }"
         v-for="(item, index) in list"
