@@ -1,7 +1,7 @@
 /*
- * @Description:dom相关工具函数
+ * @Description:dom工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-17 14:20:15
+ * @LastEditTime: 2022-03-24 10:08:08
  */
 /**
  * Check if an element has a class

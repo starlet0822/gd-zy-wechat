@@ -1,7 +1,7 @@
 /*
  * @Description:demo页面路由
  * @Author: wuxxing
- * @LastEditTime: 2022-03-17 18:06:31
+ * @LastEditTime: 2022-03-24 10:08:43
  */
 import Home from '@/views/Home.vue'
 export default [
@@ -9,10 +9,6 @@ export default [
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/about',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
   },
   {
     path: '/test',
