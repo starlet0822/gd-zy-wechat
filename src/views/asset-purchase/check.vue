@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:05:22
+ * @LastEditTime: 2022-03-25 15:48:43
 -->
 <template>
   <div class="check-wrapper vh-bg">

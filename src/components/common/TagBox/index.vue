@@ -1,7 +1,7 @@
 <!--
  * @Description: 标签
  * @Author: wuxxing
- * @LastEditTime: 2022-03-19 08:15:42
+ * @LastEditTime: 2022-03-25 15:45:29
 -->
 <template>
   <!--  <div class="tag-box-wrapper">-->
@@ -14,6 +14,7 @@
     v-bind="$attrs"
     @click="handleClickTag"
     @close="handleCloseTag"
+    v-waves
   >
     {{ text }}
   </van-tag>

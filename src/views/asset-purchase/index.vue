@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 14:13:10
+ * @LastEditTime: 2022-03-25 15:46:50
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -13,7 +13,14 @@
         <van-icon name="filter-o" size="28" />
       </div>
     </div> -->
-    <van-tabs v-model="active" animated sticky offset-top="1.28rem" :color="activeColor">
+    <van-tabs
+      v-model="active"
+      animated
+      sticky
+      offset-top="1.28rem"
+      :color="activeColor"
+      @change="onTabsChange"
+    >
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
@@ -26,10 +33,10 @@
             <!-- <van-cell v-for="item in dataList" :key="item" :title="item" /> -->
             <router-link
               :to="{ name: 'AssetPurchaseCheck' }"
-              v-for="(item, index) in 5"
+              v-for="(item, index) in mockArr"
               :key="index"
             >
-              <div class="list-item vh-p-10 vh-bg-white">
+              <div class="list-item vh-p-10 vh-bg-white" v-waves>
                 <div class="vh-flex-jb-ac">
                   <div class="">{{ '办公屏风卡座' }}</div>
                   <div class="vh-font-tip">{{ '2022-03-07' }}</div>
@@ -67,17 +74,18 @@ export default {
   data() {
     return {
       tabs: [
-        { title: '全部', id: '0' },
-        { title: '未提交', id: '1' },
-        { title: '已提交', id: '2' },
-        { title: '审核', id: '3' },
-        { title: '执行完成', id: '4' },
-        { title: '中止', id: '5' }
+        // { title: '全部', id: '0' },
+        { title: '待处理', id: '1' },
+        { title: '已处理', id: '2' },
+        { title: '全部', id: '3' }
+        // { title: '执行完成', id: '4' },
+        // { title: '中止', id: '5' }
       ],
       keyword: '',
-      active: '0',
+      active: '1',
       activeColor: themeColor,
       // 列表相关
+      mockArr: 1,
       dataList: [],
       loading: false,
       finished: false,
@@ -115,6 +123,10 @@ export default {
     handleSearch(val) {
       console.log('handleSearch', val)
       this.onRefresh()
+    },
+    onTabsChange(index, title) {
+      console.log(index)
+      this.mockArr = index * 1
     }
   }
 }

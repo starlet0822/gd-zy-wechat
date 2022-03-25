@@ -1,7 +1,7 @@
 <!--
  * @Description: 功能按钮组
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 15:45:40
+ * @LastEditTime: 2022-03-25 15:46:00
 -->
 <template>
   <div class="button-group-placeholder">
@@ -19,6 +19,7 @@
         :plain="false"
         :size="size"
         icon-position="right"
+        v-waves
         @click="handleClickBtn(btn)"
       >
         {{ btn.text }}
@@ -40,6 +41,7 @@
                 block
                 :size="size"
                 icon="plus"
+                v-waves
                 @click="handleClickBtn(btnOther)"
                 v-for="(btnOther, indexOther) in otherBtns"
                 :key="btnOther.value + indexOther"

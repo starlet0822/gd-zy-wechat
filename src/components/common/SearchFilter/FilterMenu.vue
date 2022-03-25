@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 11:29:31
+ * @LastEditTime: 2022-03-25 15:53:50
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -49,6 +49,7 @@
           取消
         </div> -->
         <div
+          v-waves
           class="filter-button-reset vh-flex-center vh-bg-white vh-flex1 vh-color-blue"
           @click.stop="filterReset"
         >

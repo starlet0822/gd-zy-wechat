@@ -1,12 +1,12 @@
 <!--
  * @Description: 点击选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 11:29:05
+ * @LastEditTime: 2022-03-25 15:52:04
 -->
 <template>
   <div class="radio-field-wrapper vh-bg2">
     <van-cell class="vh-border-0" title-class="vh-color-text" :title="label"></van-cell>
-    <div class="gird vh-flex-wrap" :style="{ 'padding-left': gutter }">
+    <div class="gird vh-pb-5 vh-flex-wrap" :style="{ 'padding-left': gutter }">
       <div
         class="gird-item"
         :style="{
@@ -16,9 +16,13 @@
         }"
         v-for="(item, index) in list"
         :key="index"
+        @click="onSelectLabel(item, index)"
       >
-        <div :class="['grid-item__content', 'vh-flex-center', { 'is-check': item.checked }]">
-          <div :class="['grid-item__text']" @click="onSelectLabel(item, index)">
+        <div
+          v-waves
+          :class="['grid-item__content', 'vh-flex-center', { 'is-check': item.checked }]"
+        >
+          <div :class="['grid-item__text']">
             {{ item.label }}
           </div>
         </div>

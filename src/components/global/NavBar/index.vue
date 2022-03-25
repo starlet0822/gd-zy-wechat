@@ -1,11 +1,12 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-03-18 18:58:02
+ * @LastEditTime: 2022-03-25 15:45:50
 -->
 <template>
   <div class="navbar-wrapper">
     <van-nav-bar
+      v-waves
       :title="navTitle"
       :left-text="leftArrow ? '返回' : ''"
       :fixed="fixed"
@@ -78,7 +79,7 @@ export default {
 }
 </script>
 
-<style lang='less' scoped>
+<style lang="less" scoped>
 .navbar-wrapper {
   height: 48px;
 }

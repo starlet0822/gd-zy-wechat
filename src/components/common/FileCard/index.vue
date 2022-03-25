@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-03-18 16:11:35
+ * @LastEditTime: 2022-03-25 15:45:14
 -->
 <template>
   <div class="file-card-wrapper">
@@ -9,6 +9,7 @@
       class="file-item van-hairline--bottom vh-flex-ac vh-bg-white"
       v-for="(file, index) in fileList"
       :key="file.fileName + index"
+      v-waves
     >
       <div class="vh-flex-center">
         <van-icon size="32" name="description" />
