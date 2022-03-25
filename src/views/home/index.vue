@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:08:42
+ * @LastEditTime: 2022-03-25 17:56:44
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -11,21 +11,47 @@
       :key="item.title + index"
     >
       <van-cell title-class="vh-title" class="vh-border-0 vh-pb-0" :title="item.title"></van-cell>
-      <van-grid :gutter="0" :border="false" clickable>
+      <van-grid :gutter="0" :border="false" :clickable="true">
         <van-grid-item
           v-for="(cItem, cIndex) in item.children"
           :key="cItem.text + cIndex"
           icon="photo-o"
           :text="cItem.text"
-          :to="cItem.to"
+          v-bind="linkProps(cItem)"
+          badge=""
           @click="onclickItem(cItem, index)"
         />
+        <!-- 自定义内容 -->
+        <template v-if="false">
+          <van-grid-item
+            v-for="(cItem, cIndex) in item.children"
+            :key="cItem.text + cIndex"
+            icon="photo-o"
+            dot
+            badge="1"
+          >
+            <template #default>
+              <div
+                v-waves
+                class="module-children vh-flex-col vh-flex-center"
+                @click="onclickItem(cItem, index)"
+              >
+                <van-icon name="photo-o" size="0.7467rem"></van-icon>
+                <!-- TODO van-ellipsis无效？  -->
+                <div class="vh-font-12 vh-mt-8 van-ellipsis">
+                  {{ cItem.text }}
+                </div>
+              </div>
+            </template>
+          </van-grid-item>
+        </template>
       </van-grid>
     </div>
   </div>
 </template>
 
 <script>
+import { isExternal } from '@/utils/is'
 export default {
   name: 'Home',
   components: {},
@@ -77,7 +103,7 @@ export default {
           children: [
             {
               text: '智能报销',
-              to: '',
+              to: 'http://hrp.gdhtcm.com:8111/OES/ctrl/crtlwechat/index/appmodellogin.jsp',
               icon: ''
             }
           ]
@@ -87,7 +113,7 @@ export default {
           children: [
             {
               text: 'BI分析',
-              to: '',
+              to: 'http://hrp.gdhtcm.com:8111/BI/H5/#/',
               icon: ''
             }
           ]
@@ -105,6 +131,18 @@ export default {
         })
         return false
       }
+      // 另开新窗口方式
+      // const flag = isExternal(item.to)
+      // if (flag) {
+      //   window.open(item.to, '_blank')
+      //   return false
+      // }
+    },
+    // 特殊处理 to url属性
+    linkProps({ to }) {
+      return {
+        [isExternal(to) ? 'url' : 'to']: to
+      }
     }
   }
 }
@@ -113,6 +151,10 @@ export default {
 <style lang="less" scoped>
 .home-wrapper {
   .module {
+    .module-children {
+      // padding: 16px 8px;
+      box-sizing: border-box;
+    }
   }
 }
 </style>

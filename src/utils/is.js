@@ -1,7 +1,7 @@
 /*
  * @Description:校验工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-17 11:08:14
+ * @LastEditTime: 2022-03-25 16:11:52
  */
 /**
  * @desc 是否是数组
@@ -13,4 +13,8 @@ export function isArray(arg) {
     return Object.prototype.toString.call(arg) === '[object Array]'
   }
   return Array.isArray(arg)
+}
+
+export function isExternal(path) {
+  return /^(https?:|mailto:|tel:)/.test(path)
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:02:01
+ * @LastEditTime: 2022-03-25 16:05:24
 -->
 <template>
   <div class="rotational-check-wrapper vh-bg">
@@ -56,7 +56,7 @@ export default {
   },
   data() {
     return {
-      activeNames: [1, 2],
+      activeNames: [1],
       formInfo: {
         opinion: ''
       },
