@@ -1,7 +1,7 @@
 <!--
  * @Description: 点击选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-24 18:21:29
+ * @LastEditTime: 2022-03-25 10:22:16
 -->
 <template>
   <div class="radio-field-wrapper vh-bg2">
@@ -134,7 +134,7 @@ export default {
         height: 100%;
         padding: 6px 8px;
         box-sizing: border-box;
-        border-radius: 4px;
+        border-radius: 6px;
         overflow: hidden;
         background-color: #f0f0f0;
         .grid-item__text {

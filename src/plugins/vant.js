@@ -36,7 +36,8 @@ import {
   DropdownMenu,
   DropdownItem,
   Popover,
-  ActionSheet
+  ActionSheet,
+  DatetimePicker
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -71,3 +72,4 @@ Vue.use(Button)
   .use(CollapseItem)
   .use(DropdownMenu)
   .use(DropdownItem)
+  .use(DatetimePicker)

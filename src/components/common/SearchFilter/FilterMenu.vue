@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-24 18:16:03
+ * @LastEditTime: 2022-03-25 10:48:32
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -30,6 +30,13 @@
           v-bind="{ ...pItem, result }"
           @input="handleInput($event, pItem)"
         ></InputField>
+        <DateField
+          ref="dateFieldRef"
+          v-if="pItem.type === 'date'"
+          :key="pItem.field"
+          v-bind="{ ...pItem, result }"
+          @change="handleChangeDate($event, pItem)"
+        ></DateField>
       </div>
     </div>
     <!-- 底部按钮 -->
@@ -63,13 +70,15 @@
 import RadioField from './components/RadioField.vue'
 import InputField from './components/InputField.vue'
 import SelectField from './components/SelectField.vue'
+import DateField from './components/DateField.vue'
 import { isArray } from 'lodash-es'
 export default {
   name: 'FilterMenu',
   components: {
     RadioField,
     InputField,
-    SelectField
+    SelectField,
+    DateField
   },
   props: {
     filterMenu: {
@@ -121,8 +130,16 @@ export default {
           placeholder: '请输入',
           type: 'input',
           value: ''
-        }
+        },
         // 范围 选择（e.g:时间区间|价格区间等） TODO
+        // 输入框
+        {
+          field: 'createDate',
+          label: '申请日期',
+          placeholder: '请选择',
+          type: 'date',
+          value: ''
+        }
       ],
       validator(val) {
         return isArray(val)
@@ -151,6 +168,11 @@ export default {
     },
     handleChangeRadio(val, item) {
       console.log('handleChangeRadio', val, item)
+      this.result[item.field] = val
+      // this.result = { ...this.result, ...val }
+    },
+    handleChangeDate(val, item) {
+      console.log('handleChangeDate', val, item)
       this.result[item.field] = val
       // this.result = { ...this.result, ...val }
     },
@@ -186,6 +208,16 @@ export default {
           console.log(selectFieldRef)
           selectFieldRef.forEach((ref) => {
             ref.defaultVal = ''
+          })
+        }
+
+        if (item.type && item.type === 'date') {
+          item.value = ''
+          this.result[item.field] = ''
+          // 获取dom
+          const dateFieldRef = this.$refs.dateFieldRef
+          dateFieldRef.forEach((ref) => {
+            ref.defaultVal = ['', '']
           })
         }
 
