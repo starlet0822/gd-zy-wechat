@@ -1,11 +1,11 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-23 17:55:27
+ * @LastEditTime: 2022-03-25 14:13:10
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
-    <vh-nav-bar :left-arrow="false"></vh-nav-bar>
+    <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <SearchFilter v-model="keyword" @search="handleSearch"></SearchFilter>
     <!-- <div class="vh-flex-jc">
       <van-search class="vh-flex1" v-model="keyword" placeholder="请输入搜索关键词" />

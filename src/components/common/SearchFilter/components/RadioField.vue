@@ -1,18 +1,18 @@
 <!--
  * @Description: 点击选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 10:22:16
+ * @LastEditTime: 2022-03-25 11:29:05
 -->
 <template>
   <div class="radio-field-wrapper vh-bg2">
     <van-cell class="vh-border-0" title-class="vh-color-text" :title="label"></van-cell>
-    <div class="gird vh-flex-wrap" :style="{ 'padding-left': '16px' }">
+    <div class="gird vh-flex-wrap" :style="{ 'padding-left': gutter }">
       <div
         class="gird-item"
         :style="{
-          flex: '0 0 33.333%',
-          'padding-right': '16px',
-          'margin-top': index >= 3 ? '10px' : '0'
+          flex: `0 0 ${flexBasic}%`,
+          'padding-right': gutter,
+          'margin-top': index >= +columnNum ? '0.2667rem' : '0'
         }"
         v-for="(item, index) in list"
         :key="index"
@@ -22,20 +22,14 @@
             {{ item.label }}
           </div>
         </div>
-        <!-- <div
-          v-for="(item, index) in list"
-          :key="index"
-          :class="['filter-item-label', 'vh-line-16', 'van-ellipsis', { 'is-check': item.checked }]"
-          @click="onSelectLabel(item, index)"
-        >
-          {{ item.label }}
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { div, mul } from '@/utils/calculate'
+import { RootValue } from '@/config/constants'
 export default {
   name: 'RadioField',
   props: {
@@ -54,6 +48,16 @@ export default {
     result: {
       type: Object,
       default: () => {}
+    },
+    // 格子之间的间距
+    columnNum: {
+      type: [String, Number],
+      default: 3
+    },
+    // 间距
+    gutter: {
+      type: [String, Number],
+      default: div(16, RootValue) + 'rem'
     }
   },
   watch: {
@@ -73,6 +77,11 @@ export default {
     return {
       list: [],
       defaultVal: ''
+    }
+  },
+  computed: {
+    flexBasic() {
+      return mul(div(1, this.columnNum), 100)
     }
   },
   created() {},

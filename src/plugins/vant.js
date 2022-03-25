@@ -37,7 +37,8 @@ import {
   DropdownItem,
   Popover,
   ActionSheet,
-  DatetimePicker
+  DatetimePicker,
+  Toast
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -62,6 +63,7 @@ Vue.use(Button)
   .use(VanImage)
   .use(Lazyload, { lazyComponent: false })
   .use(Dialog)
+  .use(Toast)
   .use(Popup)
   .use(Popover)
   .use(ActionSheet)

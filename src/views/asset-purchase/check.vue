@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-23 18:25:02
+ * @LastEditTime: 2022-03-25 15:05:22
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -18,6 +18,7 @@
         </template>
         <template #default>
           <van-cell
+            title-class="vh-color-tip"
             v-for="citem in 5"
             :key="citem"
             :title="'资产名称' + citem"
@@ -124,6 +125,16 @@ export default {
       switch (value) {
         case 'pass':
           this.showCheckUser = true
+          break
+        case 'nopass':
+          // this.showCheckUser = true
+          this.$toast({
+            message: '已驳回',
+            type: 'success',
+            duration: 800,
+            // overlay: true,
+            forbidClick: true
+          })
           break
       }
     },

@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-03-23 18:20:17
+ * @LastEditTime: 2022-03-25 14:17:11
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -11,7 +11,7 @@
       background="#fff"
       placeholder="请输入搜索关键词"
       show-action
-      readonly
+      :readonly="dialog"
       @focus="onFocus"
       @input="handleInputChange"
     >
@@ -76,7 +76,8 @@ export default {
       type: [String, Number],
       default: ''
     },
-    border: Boolean
+    border: Boolean,
+    dialog: Boolean // 是否弹出
   },
   data() {
     return {
@@ -100,7 +101,9 @@ export default {
   },
   methods: {
     onFocus() {
-      this.visibleSearchPage = true
+      // TODO 先不搞弹出交互
+      if (!this.dialog) return false
+      // this.visibleSearchPage = true
     },
     // 点击筛选
     onFilter() {

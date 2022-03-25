@@ -1,7 +1,7 @@
 <!--
  * @Description: pick选择项类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-24 16:11:26
+ * @LastEditTime: 2022-03-25 11:34:30
 -->
 <template>
   <div class="select-field-wrapper">
@@ -64,8 +64,14 @@ export default {
     height: auto;
     box-shadow: none;
     background-color: transparent;
+    .van-dropdown-item__option {
+      .van-cell__title {
+        color: #262626;
+      }
+    }
     .van-dropdown-menu__item {
       justify-content: flex-end;
+
       .van-dropdown-menu__title {
         padding: 0;
         &::after {

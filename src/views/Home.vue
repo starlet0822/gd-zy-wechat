@@ -1,7 +1,7 @@
 <!--
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-03-21 14:33:05
+ * @LastEditTime: 2022-03-25 14:24:49
 -->
 <template>
   <div class="home">
@@ -15,7 +15,7 @@
 import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  name: 'Home',
+  name: 'Home2',
   components: {
     HelloWorld
   }

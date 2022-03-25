@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 10:48:32
+ * @LastEditTime: 2022-03-25 11:29:31
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -304,31 +304,8 @@ export default {
     // left: 0;
     .filter-item {
       //padding: 15px 12px 8px;
-      /deep/ .van-cell__value {
-        color: #8c8c8c;
-      }
-      // .filter-item-label {
-      //   flex: 0 0 calc(1 * (94%) / 3);
-      //   height: 34px;
-      //   text-align: center;
-      //   line-height: 34px;
-      //   padding: 0 8px;
-      //   box-sizing: border-box;
-      //   margin-right: 10px;
-      //   margin-bottom: 10px;
-      //   border-radius: 4px;
-      //   background: #f0f0f0;
-
-      //   &:nth-child(3n) {
-      //     margin-right: 0;
-      //   }
-      // }
-
-      // .is-check {
-      //   color: @color-blue;
-      //   // border: 1PX solid @color-blue;
-      //   box-sizing: border-box;
-      //   background: rgba(107, 186, 255, 0.1);
+      // /deep/ .van-cell__value {
+      //   color: #8c8c8c;
       // }
     }
   }
