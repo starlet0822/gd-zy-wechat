@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:53:50
+ * @LastEditTime: 2022-03-26 18:29:31
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -41,23 +41,23 @@
     </div>
     <!-- 底部按钮 -->
     <footer class="filter-footer">
-      <div class="filter-button-box vh-flex-ac vh-border-t-1">
+      <div class="filter-button__content vh-flex-ac vh-border-t-1">
         <!-- <div
-          class="filter-button-cancel vh-flex-center vh-bg-white vh-flex1 vh-border-r-1"
+          class="filter-button filter-button--cancel vh-flex-center vh-bg-white vh-flex1 vh-border-r-1"
           @click.stop="filterCancel"
         >
           取消
         </div> -->
         <div
           v-waves
-          class="filter-button-reset vh-flex-center vh-bg-white vh-flex1 vh-color-blue"
+          class="filter-button filter-button--reset vh-flex-center vh-bg-white vh-flex1 vh-color-blue"
           @click.stop="filterReset"
         >
           重置
         </div>
         <div
           v-waves
-          class="filter-button-confirm vh-flex-center vh-flex2 vh-color-white"
+          class="filter-button filter-button--confirm vh-flex-center vh-flex2 vh-color-white"
           @click.stop="filterConfirm"
         >
           确定
@@ -68,10 +68,7 @@
 </template>
 
 <script>
-import RadioField from './components/RadioField.vue'
-import InputField from './components/InputField.vue'
-import SelectField from './components/SelectField.vue'
-import DateField from './components/DateField.vue'
+import { RadioField, InputField, SelectField, DateField } from './components/index'
 import { isArray } from 'lodash-es'
 export default {
   name: 'FilterMenu',
@@ -298,11 +295,7 @@ export default {
 <style lang="less" scoped>
 .filterMenu-wrapper {
   min-height: 100%;
-  position: relative;
   .filter-main {
-    // position: absolute;
-    // bottom: 48px;
-    // left: 0;
     .filter-item {
       //padding: 15px 12px 8px;
       // /deep/ .van-cell__value {
@@ -312,21 +305,21 @@ export default {
   }
   .filter-footer {
     height: 48px;
-    .filter-button-box {
+    .filter-button__content {
       width: 100%;
       position: fixed;
       left: 0;
       bottom: 0;
-
-      .filter-button-reset {
-        // background: @color-bg;
+      .filter-button {
         height: 48px;
       }
+      .filter-button--reset {
+        background: @color-bg;
+      }
 
-      .filter-button-confirm {
+      .filter-button--confirm {
         background: @color-blue;
         color: #fff;
-        height: 48px;
       }
     }
   }

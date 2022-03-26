@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 14:17:11
+ * @LastEditTime: 2022-03-26 18:15:44
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -45,11 +45,16 @@
     </van-popup>
     <!-- 筛选组件 -->
     <van-action-sheet
-      :style="{ width: '100%', height: '75%' }"
+      :style="{ width: '100%', height: '85vh' }"
       v-model="visibleFilterMenu"
       title="全部筛选"
+      @close="onCloseFilterMenu"
     >
-      <FilterMenu @cancel="visibleFilterMenu = false" @confirm="onFilterConfirm"></FilterMenu>
+      <FilterMenu
+        ref="filterMenuRef"
+        @cancel="visibleFilterMenu = false"
+        @confirm="onFilterConfirm"
+      ></FilterMenu>
     </van-action-sheet>
     <!-- <van-popup
       v-model="visibleFilterMenu"
@@ -127,6 +132,12 @@ export default {
       this.filtered = noEmptyObj
       this.visibleFilterMenu = false
       this.$emit('confirm', filterQuery, noEmptyObj)
+    },
+    // 关闭动作面板触发的回调
+    onCloseFilterMenu() {
+      const filterMenuRef = this.$refs.filterMenuRef
+      // console.log(filterMenuRef, 555)
+      filterMenuRef.filterConfirm()
     }
   }
 }
