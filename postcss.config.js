@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 14:46:37
+ * @LastEditTime: 2022-03-26 13:14:12
  */
 const env = process.env.NODE_ENV
 const propList = env === '1development' ? [] : ['*', '!border']
@@ -10,15 +10,15 @@ module.exports = {
   plugins: {
     // 兼容浏览器，添加前缀
     autoprefixer: {
-      overrideBrowserslist: [
-        'Android 4.1',
-        'iOS 7.1',
-        'Chrome > 31',
-        'ff > 31',
-        'ie >= 8',
-        'last 10 versions' // 所有主流浏览器最近10版本用
-      ],
-      grid: true
+      // overrideBrowserslist: [
+      //   'Android 4.1',
+      //   'iOS 7.1',
+      //   'Chrome > 31',
+      //   'ff > 31',
+      //   'ie >= 8',
+      //   'last 10 versions' // 所有主流浏览器最近10版本用
+      // ],
+      // grid: true
     },
     'postcss-pxtorem': {
       // rootValue({ file }) { // postcss-pxtorem 插件的版本需要 >= 5.0.0
