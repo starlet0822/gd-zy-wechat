@@ -25,10 +25,10 @@ yarn lint           # 格式化代码
 
 - 定制主题
 - 工具函数
-- 算术工具库 mathjs
+- 算术工具库 decimal.js √
 - axios 请求封装
 - 公共组件封装
-- 自定义指令 v-waves
+- 自定义指令 v-waves √
 - 过滤器 √
 - 公共样式
 - less 全局变量 √
@@ -51,7 +51,7 @@ yarn lint           # 格式化代码
 
 ## vue.config.js 配置
 
-- gzip 压缩
+- gzip 压缩 √
 
 ```
 compression-webpack-plugin

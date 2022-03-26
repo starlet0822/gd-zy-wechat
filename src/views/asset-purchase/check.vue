@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:48:43
+ * @LastEditTime: 2022-03-26 18:38:52
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -62,6 +62,7 @@
       v-model="showCheckUser"
       title="下一节审批人"
       show-cancel-button
+      :close-on-click-overlay="false"
       @confirm="handleConfirmUser"
     >
       <!-- <template #title>

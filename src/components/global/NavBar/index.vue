@@ -1,12 +1,11 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:45:50
+ * @LastEditTime: 2022-03-26 17:47:16
 -->
 <template>
   <div class="navbar-wrapper">
     <van-nav-bar
-      v-waves
       :title="navTitle"
       :left-text="leftArrow ? '返回' : ''"
       :fixed="fixed"
