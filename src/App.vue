@@ -1,17 +1,20 @@
 <!--
  * @Description: 入口页面
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:33:45
+ * @LastEditTime: 2022-03-27 21:56:08
 -->
 <template>
   <div id="app">
     <transition :name="transitionName" mode="out-in">
-      <router-view class="router-view" />
+      <keep-alive :include="include" :exclude="exclude">
+        <router-view class="router-view" />
+      </keep-alive>
     </transition>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
   components: {},
@@ -20,7 +23,12 @@ export default {
       transitionName: 'van-fade'
     }
   },
-  created() {},
+  computed: {
+    ...mapGetters('cacheView', ['include', 'exclude'])
+  },
+  created() {
+    console.log(this.include)
+  },
   methods: {}
 }
 </script>
