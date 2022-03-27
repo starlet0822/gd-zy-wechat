@@ -1,13 +1,16 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-20 22:05:17
+ * @LastEditTime: 2022-03-27 11:49:23
  */
+// const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
-// const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
+const defaultSettings = require('./src/config/settings')
+const IsBuild = ['production', 'prod'].includes(process.env.NODE_ENV)
 const CompressionPlugin = require('compression-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
@@ -70,17 +73,35 @@ module.exports = {
         }
       })
     )
-    // gzip压缩
+    // TODO生产环境才开启 gzip压缩
     config.plugins.push(new CompressionPlugin({
       filename: '[path][name].gz',
-      test: /\.(js|css)$/i
+      test: /\.(js|css)$/i,
+      threshold: 10240,
+      minRatio: 0.8
     }))
+    // 打包分析
+    IsBuild && config.plugins.push(new BundleAnalyzerPlugin())
   },
   chainWebpack: (config) => {
     console.log('当前环境为：' + process.env.NODE_ENV)
     config.plugin('html').tap((args) => {
-      args[0].title = '广东中医企业微信'
+      args[0].title = defaultSettings.title
       return args
+    })
+    config.when(IsBuild, config => {
+      // 配置删除 console.log
+      config.optimization.minimizer('terser').tap(args => {
+      // remove debugger
+        args[0].terserOptions.compress.drop_debugger = true
+        // 移除 console.log
+        args[0].terserOptions.compress.pure_funcs = ['console.log']
+        // 去掉注释 如果需要看chunk-vendors公共部分插件，可以注释掉就可以看到注释了
+        args[0].terserOptions.output = {
+          comments: false
+        }
+        return args
+      })
     })
     // 开发环境可使用 开发工具
     // config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-source-map'))
