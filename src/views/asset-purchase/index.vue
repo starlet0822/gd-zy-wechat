@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:46:50
+ * @LastEditTime: 2022-03-27 15:31:18
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -126,7 +126,7 @@ export default {
     },
     onTabsChange(index, title) {
       console.log(index)
-      this.mockArr = index * 1
+      this.mockArr = index * 6
     }
   }
 }

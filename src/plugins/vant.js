@@ -1,7 +1,8 @@
-// import 'vant/lib/index.css' // 引入vant全局样式
-// export { Button, Cell, List, Toast, Dialog, Field, Row, Col, Form, Uploader, RadioGroup, Radio, PullRefresh, Empty, Divider, Popup, DropdownMenu, DropdownItem, DatetimePicker, Picker, ActionSheet } from 'vant' // 按需引入vant组件
-
-// 按需全局引入 vant组件
+/*
+ * @Description:按需全局引入 vant组件
+ * @Author: wuxxing
+ * @LastEditTime: 2022-03-27 15:13:44
+ */
 import Vue from 'vue'
 import {
   Button,
