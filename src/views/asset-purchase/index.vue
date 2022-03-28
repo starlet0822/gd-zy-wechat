@@ -1,18 +1,12 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 15:31:18
+ * @LastEditTime: 2022-03-28 16:49:09
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <SearchFilter v-model="keyword" @search="handleSearch"></SearchFilter>
-    <!-- <div class="vh-flex-jc">
-      <van-search class="vh-flex1" v-model="keyword" placeholder="请输入搜索关键词" />
-      <div class="vh-font-14 vh-flex-jc-ac vh-bg-white vh-pr-10">
-        <van-icon name="filter-o" size="28" />
-      </div>
-    </div> -->
     <van-tabs
       v-model="active"
       animated
@@ -30,7 +24,6 @@
             finished-text="没有更多了"
             @load="onLoad"
           >
-            <!-- <van-cell v-for="item in dataList" :key="item" :title="item" /> -->
             <router-link
               :to="{ name: 'AssetPurchaseCheck' }"
               v-for="(item, index) in mockArr"

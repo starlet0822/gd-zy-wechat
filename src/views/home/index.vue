@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 17:56:44
+ * @LastEditTime: 2022-03-28 17:08:29
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -83,7 +83,7 @@ export default {
           children: [
             {
               text: '考勤审批',
-              to: '',
+              to: '/attendance',
               icon: ''
             },
             {

@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 15:13:44
+ * @LastEditTime: 2022-03-28 17:56:14
  */
 import Vue from 'vue'
 import {
@@ -39,7 +39,9 @@ import {
   Popover,
   ActionSheet,
   DatetimePicker,
-  Toast
+  Toast,
+  Row,
+  Col
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -71,6 +73,8 @@ Vue.use(Button)
   .use(RadioGroup)
   .use(Radio)
   .use(Tag)
+  .use(Row)
+  .use(Col)
   .use(Collapse)
   .use(CollapseItem)
   .use(DropdownMenu)

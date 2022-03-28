@@ -1,0 +1,171 @@
+<!--
+ * @Description: 考勤
+ * @Author: wuxxing
+ * @LastEditTime: 2022-03-28 18:18:44
+-->
+<template>
+  <div class="attendance-wrapper vh-bg">
+    <vh-nav-bar></vh-nav-bar>
+    <MoveTabs v-model.trim="tabActive" :tabs="tabs" offset-top="48">
+      <div class="vh-w-full vh-flex-ac">
+        <van-search
+          class="vh-flex1"
+          v-model="keyword"
+          placeholder="请输入员工姓名"
+          :show-action="showAction"
+          @search="handleSearch"
+        >
+          <template #action>
+            <div class="vh-flex-center" @click="handleSearch">
+              <van-button class="vh-px-12" type="info" size="mini">查询</van-button>
+            </div>
+          </template>
+        </van-search>
+      </div>
+      <!-- 列表 -->
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+          <router-link :to="{ name: 'AssetPurchaseCheck' }" v-for="(item, index) in 5" :key="index">
+            <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
+              <!-- <div class="vh-flex-jb-ac">
+                <div class="">{{ '办公屏风卡座' }}</div>
+                <div class="vh-font-tip">{{ '2022-03-07' }}</div>
+              </div> -->
+              <van-row type="flex" align="center">
+                <van-col span="9">
+                  <p class="vh-font-14">
+                    <span class="vh-tip">出勤部门：</span>
+                    <span>{{ '审计处' }}</span>
+                  </p>
+                  <p class="vh-font-14 vh-py-5">
+                    <span class="vh-tip">考勤年份：</span>
+                    <span>{{ new Date() | formatDate('YYYY') }}</span>
+                  </p>
+                  <p class="vh-font-14">
+                    <span class="vh-tip">上报人员：</span>
+                    <span>{{ '张三' }}</span>
+                  </p>
+                </van-col>
+                <van-col span="15">
+                  <p class="vh-font-14">
+                    <span class="vh-tip">发文科室：</span>
+                    <span>{{ '审计处' }}</span>
+                  </p>
+                  <p class="vh-font-14 vh-py-5">
+                    <span class="vh-tip">考勤月份：</span>
+                    <span>{{ new Date() | formatDate('M') }}</span>
+                  </p>
+                  <p class="vh-font-14">
+                    <span class="vh-tip">考核时间：</span>
+                    <span>{{ new Date() | formatDate() }}</span>
+                  </p>
+                </van-col>
+                <!-- <van-col span="1">
+                  <van-icon name="arrow" size="0.7476rem" :color="themeColor"></van-icon>
+                </van-col> -->
+              </van-row>
+              <!-- <div class="vh-flex-ac">
+                <p class="vh-mr-24">
+                  <span class="vh-tip">出勤部门：</span>
+                  <span>{{ '审计处' }}</span>
+                </p>
+                <p>
+                  <span class="vh-tip">发文科室：</span>
+                  <span>{{ '审计处' }}</span>
+                </p>
+              </div>
+              <div class="vh-flex-ac">
+                <p class="vh-pr-40">
+                  <span class="vh-tip">考勤年份：</span>
+                  <span>{{ '2022' }}</span>
+                </p>
+                <p>
+                  <span class="vh-tip">考勤月份：</span>
+                  <span>{{ '02' }}</span>
+                </p>
+              </div>
+              <div class="vh-flex-ac">
+                <span>申请科室：</span>
+                <span>{{ '设备科' }}</span>
+              </div>
+              <div class="vh-flex-ac">
+                <span>总预算：</span>
+                <span>{{ '1000.00' }}</span>
+              </div>
+              <div class="btn-status">{{ '未提交' }}</div> -->
+            </div>
+          </router-link>
+        </van-list>
+      </van-pull-refresh>
+    </MoveTabs>
+  </div>
+</template>
+
+<script>
+import MoveTabs from '@comp/common/MoveTabs'
+import { themeColor } from '@/config/constants'
+export default {
+  name: 'Attendance',
+  components: {
+    MoveTabs
+  },
+  data() {
+    return {
+      keyword: '',
+      tabActive: 0,
+      tabs: ['待审批', '已审批'],
+      dataList: [],
+      loading: false,
+      finished: false,
+      refreshing: false,
+      themeColor
+    }
+  },
+  computed: {
+    showAction: {
+      get() {
+        return String(this.keyword).trim() !== '' // TODO 清空两边空格无效
+      }
+    }
+  },
+  created() {},
+  methods: {
+    onLoad() {
+      setTimeout(() => {
+        if (this.refreshing) {
+          this.dataList = []
+          this.refreshing = false
+        }
+
+        for (let i = 0; i < 10; i++) {
+          this.dataList.push(this.dataList.length + 1)
+        }
+        this.loading = false
+
+        if (this.dataList.length >= 40) {
+          this.finished = true
+        }
+      }, 1000)
+    },
+    onRefresh() {
+      // 清空列表数据
+      this.finished = false
+
+      // 重新加载数据
+      // 将 loading 设置为 true，表示处于加载状态
+      this.loading = true
+      this.onLoad()
+    },
+    // 搜索
+    handleSearch() {
+      console.log('handleSearch', this.keyword)
+      this.onRefresh()
+    }
+  }
+}
+</script>
+
+<style lang="less" scoped>
+.attendance-wrapper {
+}
+</style>

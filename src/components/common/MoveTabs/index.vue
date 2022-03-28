@@ -1,7 +1,7 @@
 <!--
  * @Description: 标签页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-21 15:21:16
+ * @LastEditTime: 2022-03-28 17:28:41
 -->
 <template>
   <div class="move-tabs-wrapper">
@@ -25,6 +25,7 @@
 
 <script>
 import { themeColor, RootValue } from '@/config/constants'
+import { div } from '@/utils/calculate'
 export default {
   name: 'MoveTabs',
   props: {
@@ -66,7 +67,7 @@ export default {
   computed: {
     offsetTopRet: {
       get() {
-        return this.offsetTop / RootValue
+        return div(this.offsetTop, RootValue)
       }
     }
   },

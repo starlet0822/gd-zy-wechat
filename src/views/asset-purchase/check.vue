@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-26 18:38:52
+ * @LastEditTime: 2022-03-28 16:49:42
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -27,20 +27,6 @@
         </template>
       </van-collapse-item>
     </van-collapse>
-    <!-- <div class="asset-info vh-rounded-12 vh-m-10" v-for="item in 3" :key="item">
-      <van-cell
-        title-class="vh-color-blue"
-        :border="false"
-        :title="'基本信息'"
-        value="xxx"
-      ></van-cell>
-      <van-cell title="资产名称" value="xxx"></van-cell>
-      <van-cell title="资产名称" value="xxx"></van-cell>
-      <van-cell title="资产名称" value="xxx"></van-cell>
-      <van-cell title="资产名称" value="xxx"></van-cell>
-      <van-cell title="资产名称" value="xxx"></van-cell>
-      <van-cell title="资产名称00" value="xxx"></van-cell>
-    </div> -->
     <!-- 附件上传 -->
     <div class="asset-info vh-rounded-12 vh-m-10 file-upload">
       <van-cell title-class="vh-color-blue" :title="'附件'"></van-cell>
@@ -53,10 +39,6 @@
     </div>
     <!-- 底部按钮组 -->
     <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
-    <!-- <van-tabbar v-model="active" fixed placeholder>
-      <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-      <van-tabbar-item icon="search">标签</van-tabbar-item>
-    </van-tabbar> -->
     <!-- 节点弹窗 -->
     <van-dialog
       v-model="showCheckUser"
@@ -65,9 +47,6 @@
       :close-on-click-overlay="false"
       @confirm="handleConfirmUser"
     >
-      <!-- <template #title>
-        <div class="vh-pl-15 vh-text-left">下一节审批人</div>
-      </template> -->
       <template #default>
         <div class="vh-p-20">
           <van-radio-group v-model="radio" icon-size="0.64rem">
