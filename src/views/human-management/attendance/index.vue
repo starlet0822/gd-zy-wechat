@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 18:18:44
+ * @LastEditTime: 2022-03-28 18:21:35
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -25,7 +25,7 @@
       <!-- 列表 -->
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-          <router-link :to="{ name: 'AssetPurchaseCheck' }" v-for="(item, index) in 5" :key="index">
+          <router-link :to="{ name: '' }" v-for="(item, index) in 5" :key="index">
             <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
               <!-- <div class="vh-flex-jb-ac">
                 <div class="">{{ '办公屏风卡座' }}</div>
@@ -64,35 +64,6 @@
                   <van-icon name="arrow" size="0.7476rem" :color="themeColor"></van-icon>
                 </van-col> -->
               </van-row>
-              <!-- <div class="vh-flex-ac">
-                <p class="vh-mr-24">
-                  <span class="vh-tip">出勤部门：</span>
-                  <span>{{ '审计处' }}</span>
-                </p>
-                <p>
-                  <span class="vh-tip">发文科室：</span>
-                  <span>{{ '审计处' }}</span>
-                </p>
-              </div>
-              <div class="vh-flex-ac">
-                <p class="vh-pr-40">
-                  <span class="vh-tip">考勤年份：</span>
-                  <span>{{ '2022' }}</span>
-                </p>
-                <p>
-                  <span class="vh-tip">考勤月份：</span>
-                  <span>{{ '02' }}</span>
-                </p>
-              </div>
-              <div class="vh-flex-ac">
-                <span>申请科室：</span>
-                <span>{{ '设备科' }}</span>
-              </div>
-              <div class="vh-flex-ac">
-                <span>总预算：</span>
-                <span>{{ '1000.00' }}</span>
-              </div>
-              <div class="btn-status">{{ '未提交' }}</div> -->
             </div>
           </router-link>
         </van-list>
