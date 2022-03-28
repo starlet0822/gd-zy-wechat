@@ -1,11 +1,11 @@
 <!--
  * @Description: 入口页面
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 21:56:08
+ * @LastEditTime: 2022-03-28 11:07:44
 -->
 <template>
   <div id="app">
-    <transition :name="transitionName" mode="out-in">
+    <transition :name="transitionName" mode="out-in" @after-leave="afterLeave">
       <keep-alive :include="include" :exclude="exclude">
         <router-view class="router-view" />
       </keep-alive>
@@ -20,7 +20,7 @@ export default {
   components: {},
   data() {
     return {
-      transitionName: 'van-fade'
+      transitionName: 'fade'
     }
   },
   computed: {
@@ -29,7 +29,11 @@ export default {
   created() {
     console.log(this.include)
   },
-  methods: {}
+  methods: {
+    afterLeave() {
+      // this.$root.$emit('triggerScroll')
+    }
+  }
 }
 </script>
 
