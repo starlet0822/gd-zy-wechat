@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 11:49:23
+ * @LastEditTime: 2022-03-28 22:16:22
  */
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const path = require('path')
@@ -10,7 +10,7 @@ const defaultSettings = require('./src/config/settings')
 const IsBuild = ['production', 'prod'].includes(process.env.NODE_ENV)
 const CompressionPlugin = require('compression-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
@@ -81,7 +81,7 @@ module.exports = {
       minRatio: 0.8
     }))
     // 打包分析
-    IsBuild && config.plugins.push(new BundleAnalyzerPlugin())
+    // IsBuild && config.plugins.push(new BundleAnalyzerPlugin())
   },
   chainWebpack: (config) => {
     console.log('当前环境为：' + process.env.NODE_ENV)
