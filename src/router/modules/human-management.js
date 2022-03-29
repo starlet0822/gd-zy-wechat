@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 17:09:52
+ * @LastEditTime: 2022-03-29 11:38:43
  */
 export default [
   {
@@ -19,6 +19,34 @@ export default [
     },
     component: () =>
       import(/* webpackChunkName: "attendance" */ '@/views/human-management/attendance/index.vue')
+  },
+  {
+    path: '/attendance-check',
+    name: 'AttendanceCheck',
+    meta: {
+      title: '考勤审批'
+    },
+    component: () =>
+      import(/* webpackChunkName: "attendance-check" */ '@/views/human-management/attendance/check')
+  },
+  {
+    path: '/vacation',
+    name: 'Vacation',
+    meta: {
+      title: '休假列表',
+      keepAlive: true
+    },
+    component: () =>
+      import(/* webpackChunkName: "vacation" */ '@/views/human-management/vacation/list.vue')
+  },
+  {
+    path: '/vacation-check',
+    name: 'VacationCheck',
+    meta: {
+      title: '休假审批'
+    },
+    component: () =>
+      import(/* webpackChunkName: "vacation-check" */ '@/views/human-management/vacation/check')
   },
   {
     path: '/rotational-check',

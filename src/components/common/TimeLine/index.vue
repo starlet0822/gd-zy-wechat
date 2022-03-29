@@ -1,10 +1,10 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-23 17:57:59
+ * @LastEditTime: 2022-03-29 09:24:44
 -->
 <template>
-  <div class="timeline-wrapper vh-p-box">
+  <div class="timeline-wrapper vh-p-box33">
     <div class="timeline__header vh-color-blue">{{ '审批流程' }}</div>
     <ul class="timeline">
       <li class="timeline-item vh-flex-row" v-for="(item, index) in list" :key="index">

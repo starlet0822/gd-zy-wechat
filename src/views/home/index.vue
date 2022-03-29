@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 17:08:29
+ * @LastEditTime: 2022-03-29 09:48:25
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -88,7 +88,7 @@ export default {
             },
             {
               text: '休假申请',
-              to: '',
+              to: '/vacation',
               icon: ''
             },
             {

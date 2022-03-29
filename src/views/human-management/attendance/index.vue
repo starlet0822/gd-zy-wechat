@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 18:21:35
+ * @LastEditTime: 2022-03-29 09:01:09
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -25,7 +25,7 @@
       <!-- 列表 -->
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-          <router-link :to="{ name: '' }" v-for="(item, index) in 5" :key="index">
+          <router-link :to="{ name: 'AttendanceCheck' }" v-for="(item, index) in 5" :key="index">
             <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
               <!-- <div class="vh-flex-jb-ac">
                 <div class="">{{ '办公屏风卡座' }}</div>
