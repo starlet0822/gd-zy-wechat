@@ -1,12 +1,12 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 14:29:49
+ * @LastEditTime: 2022-03-29 18:45:36
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter v-model="keyword" @search="handleSearch"></search-filter>
+    <search-filter v-model="query.title" @search="handleSearch"></search-filter>
     <van-tabs
       v-model="active"
       animated
@@ -26,32 +26,38 @@
           >
             <router-link
               :to="{ name: 'AssetPurchaseCheck' }"
-              v-for="(item, index) in mockArr"
-              :key="index"
+              v-for="(item, index) in dataList"
+              :key="item.id + index"
             >
               <div class="list-item vh-p-10 vh-bg-white" v-waves>
                 <div class="vh-flex-jb-ac">
-                  <div class="">{{ '办公屏风卡座' }}</div>
-                  <div class="vh-color-tip">{{ '2022-03-07' }}</div>
+                  <div class="vh-title">{{ item.title }}</div>
+                  <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
                 </div>
-                <div class="vh-flex-ac">
-                  <span class="vh-color-tip">申请单号：</span>
-                  <span class="vh-color-blue">{{ '6666' }}</span>
+                <div
+                  class="vh-flex-ac"
+                  v-for="(field, fieldIndex) in item.formData"
+                  :key="fieldIndex"
+                >
+                  <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                  <span :class="{ 'vh-color-blue': field.fieldKey === '处置单号' }">
+                    {{ field.fieldValue }}
+                  </span>
                 </div>
-                <div class="vh-flex-ac">
+                <!--<div class="vh-flex-ac">
                   <span class="vh-color-tip">申请科室：</span>
                   <span>{{ '设备科' }}</span>
                 </div>
                 <div class="vh-flex-ac">
                   <span class="vh-color-tip">总预算：</span>
                   <span>{{ '1000.00' }}</span>
-                </div>
+                </div> -->
                 <div class="btn-status">
                   <TagBox
                     plain
                     size="medium"
-                    :color="checkStatus.get(-1).color"
-                    :text="checkStatus.get(-1).text"
+                    :color="checkStatus.get(item.checkState).color"
+                    :text="checkStatus.get(item.checkState).text"
                   ></TagBox>
                 </div>
               </div>
@@ -65,6 +71,7 @@
 
 <script>
 import { themeColor, checkStatus } from '@/config/constants'
+import { getFixCheckList } from '@/api/modules/asset-purchase'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
@@ -77,18 +84,24 @@ export default {
     return {
       tabs: [
         // { title: '全部', id: '0' },
-        { title: '待处理', id: '1' },
-        { title: '已处理', id: '2' },
-        { title: '全部', id: '3' }
+        { title: '待处理', id: 'NO' },
+        { title: '已处理', id: 'YES' },
+        { title: '全部', id: '' }
         // { title: '执行完成', id: '4' },
         // { title: '中止', id: '5' }
       ],
-      keyword: '',
+      title: '',
       active: '1',
       activeColor: themeColor,
       checkStatus, // 审批状态
       // 列表相关
       mockArr: 1,
+      query: {
+        title: '',
+        page: 1,
+        limit: 10,
+        checkStatus: 'NO'
+      },
       dataList: [],
       loading: false,
       finished: false,
@@ -97,25 +110,24 @@ export default {
   },
   created() {},
   methods: {
-    onLoad() {
-      setTimeout(() => {
-        if (this.refreshing) {
-          this.dataList = []
-          this.refreshing = false
-        }
-
-        for (let i = 0; i < 10; i++) {
-          this.dataList.push(this.dataList.length + 1)
-        }
-        this.loading = false
-
-        if (this.dataList.length >= 40) {
-          this.finished = true
-        }
-      }, 1000)
+    async onLoad() {
+      if (this.refreshing) {
+        this.dataList = []
+        this.refreshing = false
+      }
+      const res = await getFixCheckList(this.query)
+      console.log(res)
+      if (res.errcode === 0) {
+        this.dataList = this.dataList.concat(res.data)
+      }
+      this.loading = false
+      if (this.dataList.length >= res.total) {
+        this.finished = true
+      }
     },
     onRefresh() {
       // 清空列表数据
+      this.dataList = []
       this.finished = false
 
       // 重新加载数据
@@ -123,13 +135,17 @@ export default {
       this.loading = true
       this.onLoad()
     },
+    // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
+      this.query.title = val
       this.onRefresh()
     },
-    onTabsChange(index, title) {
-      console.log(index)
-      this.mockArr = index * 6
+    // 标签页切换
+    onTabsChange(id, title) {
+      console.log(id)
+      this.query.checkState = id
+      this.onRefresh()
     }
   }
 }

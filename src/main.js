@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-21 18:12:41
+ * @LastEditTime: 2022-03-29 15:32:40
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -19,6 +19,11 @@ import { registerGlobDirective } from '@/directives/index'
 registerFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
 registerGlobDirective(Vue) // 注册全局自定义指令
+// mock
+if (process.env.NODE_ENV === 'production') {
+  const { mockXHR } = require('../mock')
+  mockXHR()
+}
 
 console.log('当前运行环境：', ENV)
 Vue.use(common) // 公共混入注册

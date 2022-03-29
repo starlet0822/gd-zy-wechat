@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 14:30:36
+ * @LastEditTime: 2022-03-29 18:42:09
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -116,7 +116,7 @@ export default {
     },
     handleInputChange(keyword) {
       this.$emit('update:value', keyword)
-      this.$emit('change')
+      this.$emit('search', keyword)
     },
     // 确定搜索
     onSearch(val) {
