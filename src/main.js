@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 15:32:40
+ * @LastEditTime: 2022-03-29 18:54:14
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -15,14 +15,20 @@ import { ENV } from '@/config/index'
 import common from './mixins/common'
 import { registerFilter } from './filters/index'
 import { registerGlobComp } from '@/components/global/index'
-import { registerGlobDirective } from '@/directives/index'
+import { registerGlobDirective } from '@/directives/index' // 注册全局自定义指令
+import VConsole from 'vconsole'
 registerFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
-registerGlobDirective(Vue) // 注册全局自定义指令
+registerGlobDirective(Vue)
 // mock
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
+}
+
+if (process.env.NODE_ENV !== 'development') {
+  const vConsole = new VConsole()
+  console.log(vConsole)
 }
 
 console.log('当前运行环境：', ENV)
