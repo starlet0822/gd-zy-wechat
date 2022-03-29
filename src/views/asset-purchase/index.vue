@@ -1,12 +1,12 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 16:49:09
+ * @LastEditTime: 2022-03-29 14:29:49
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <SearchFilter v-model="keyword" @search="handleSearch"></SearchFilter>
+    <search-filter v-model="keyword" @search="handleSearch"></search-filter>
     <van-tabs
       v-model="active"
       animated
@@ -32,21 +32,28 @@
               <div class="list-item vh-p-10 vh-bg-white" v-waves>
                 <div class="vh-flex-jb-ac">
                   <div class="">{{ '办公屏风卡座' }}</div>
-                  <div class="vh-font-tip">{{ '2022-03-07' }}</div>
+                  <div class="vh-color-tip">{{ '2022-03-07' }}</div>
                 </div>
                 <div class="vh-flex-ac">
-                  <span>申请单号：</span>
+                  <span class="vh-color-tip">申请单号：</span>
                   <span class="vh-color-blue">{{ '6666' }}</span>
                 </div>
                 <div class="vh-flex-ac">
-                  <span>申请科室：</span>
+                  <span class="vh-color-tip">申请科室：</span>
                   <span>{{ '设备科' }}</span>
                 </div>
                 <div class="vh-flex-ac">
-                  <span>总预算：</span>
+                  <span class="vh-color-tip">总预算：</span>
                   <span>{{ '1000.00' }}</span>
                 </div>
-                <div class="btn-status">{{ '未提交' }}</div>
+                <div class="btn-status">
+                  <TagBox
+                    plain
+                    size="medium"
+                    :color="checkStatus.get(-1).color"
+                    :text="checkStatus.get(-1).text"
+                  ></TagBox>
+                </div>
               </div>
             </router-link>
           </van-list>
@@ -57,12 +64,14 @@
 </template>
 
 <script>
-import { themeColor } from '@/config/constants'
+import { themeColor, checkStatus } from '@/config/constants'
 import SearchFilter from '@comp/common/SearchFilter'
+import TagBox from '@comp/common/TagBox'
 export default {
   name: 'AssetPurchase',
   components: {
-    SearchFilter
+    SearchFilter,
+    TagBox
   },
   data() {
     return {
@@ -77,6 +86,7 @@ export default {
       keyword: '',
       active: '1',
       activeColor: themeColor,
+      checkStatus, // 审批状态
       // 列表相关
       mockArr: 1,
       dataList: [],
@@ -131,8 +141,10 @@ export default {
     margin: 10px;
     // padding: 10px;
     .btn-status {
-      font-size: @font14;
       text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
   }
 }

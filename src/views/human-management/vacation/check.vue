@@ -1,17 +1,17 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 12:37:27
+ * @LastEditTime: 2022-03-29 14:53:09
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
     <vh-nav-bar></vh-nav-bar>
     <div class="check-info vh-mb-10 vh-bg-white">
       <!-- 折叠面板 -->
-      <van-collapse class="" v-model="activeNames">
+      <van-collapse v-model="activeNames" :border="false">
         <van-collapse-item :name="0">
           <template #title>
-            <div class="vh-color-blue">人员基本信息</div>
+            <div class="vh-color-blue2">人员基本信息</div>
           </template>
           <template #default>
             <van-cell
@@ -43,7 +43,7 @@
         </van-collapse-item>
         <van-collapse-item :name="1">
           <template #title>
-            <div class="vh-color-blue">考勤休假申请表</div>
+            <div class="vh-color-blue2">考勤休假申请表</div>
           </template>
           <template #default>
             <van-cell
@@ -52,13 +52,14 @@
               :title="'休假类型'"
               :value="dataInfo.vacationInfo.type"
             ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              value-class="vh-color-orange"
-              :title="'休假余额'"
-              :value="dataInfo.vacationInfo.balance + '天'"
-            ></van-cell>
+            <van-cell class="vh-font-14" title-class="vh-color-tip" :title="'休假余额'">
+              <template #default>
+                <div>
+                  <span class="vh-color-orange">{{ dataInfo.vacationInfo.balance }}</span>
+                  天
+                </div>
+              </template>
+            </van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
@@ -200,8 +201,8 @@ export default {
 
 <style lang="less" scoped>
 .vacation-check-wrapper {
-  .check-info {
-    /deep/ .van-collapse-item__content {
+  /deep/.check-info {
+    .van-collapse-item__content {
       padding: 0;
       .van-cell {
         // font-size: @font14;

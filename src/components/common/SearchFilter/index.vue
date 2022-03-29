@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-03-26 18:15:44
+ * @LastEditTime: 2022-03-29 14:30:36
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -18,7 +18,7 @@
       <template #action>
         <div class="filter-box vh-flex-center">
           <van-icon
-            :color="filtered ? themeColor : textColor"
+            :color="filtered ? themeColor : colorTip"
             name="filter-o"
             size="0.7rem"
             @click="onFilter"
@@ -45,7 +45,7 @@
     </van-popup>
     <!-- 筛选组件 -->
     <van-action-sheet
-      :style="{ width: '100%', height: '85vh' }"
+      :style="{ width: '100%', 'max-height': '85vh' }"
       v-model="visibleFilterMenu"
       title="全部筛选"
       @close="onCloseFilterMenu"
@@ -69,7 +69,7 @@
 <script>
 import SearchPage from './search.vue'
 import FilterMenu from './FilterMenu.vue'
-import { themeColor, textColor } from '@/config/constants'
+import vars from '@css/vars.less'
 export default {
   name: 'SearchFilter',
   components: {
@@ -90,8 +90,8 @@ export default {
       filtered: false, // 是否已有筛选数据
       visibleSearchPage: false,
       visibleFilterMenu: false,
-      themeColor,
-      textColor
+      themeColor: vars.themeColor,
+      colorTip: vars.colorTip
     }
   },
   computed: {

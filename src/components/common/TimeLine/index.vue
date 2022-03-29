@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 09:24:44
+ * @LastEditTime: 2022-03-29 14:36:01
 -->
 <template>
   <div class="timeline-wrapper vh-p-box33">
@@ -37,6 +37,7 @@
       <template v-if="isShowToggle">
         <div class="pick-btn vh-color-blue" @click="handleToggle">
           {{ isPickup ? '展开' : '收起' }}
+          <van-icon :name="isPickup ? 'arrow-down' : 'arrow-up'" />
         </div>
       </template>
     </ul>
@@ -146,7 +147,7 @@ export default {
     }
     .pick-btn {
       // text-align: right;
-      padding-left: 100px;
+      padding-left: 102px;
     }
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 16:49:42
+ * @LastEditTime: 2022-03-29 14:39:09
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -137,6 +137,14 @@ export default {
   }
   /deep/ .van-collapse-item__content {
     padding: 0;
+    .van-cell {
+      font-size: @font14;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      &::after {
+        border: 0;
+      }
+    }
   }
 }
 </style>

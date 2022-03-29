@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 11:38:43
+ * @LastEditTime: 2022-03-29 13:57:15
  */
 export default [
   {
@@ -33,7 +33,7 @@ export default [
     path: '/vacation',
     name: 'Vacation',
     meta: {
-      title: '休假列表',
+      title: '休假申请',
       keepAlive: true
     },
     component: () =>
