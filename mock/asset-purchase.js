@@ -1,7 +1,7 @@
 /*
  * @Description:资产管理mock
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 18:28:57
+ * @LastEditTime: 2022-03-30 14:21:41
  */
 const Mock = require('mockjs')
 
@@ -10,23 +10,6 @@ const count = 10
 
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
-    // id: '@increment',
-    // timestamp: +Mock.Random.date('T'),
-    // author: '@first',
-    // reviewer: '@first',
-    // title: '@title(5, 10)',
-    // content_short: 'mock data',
-    // content: baseContent,
-    // forecast: '@float(0, 100, 2, 2)',
-    // importance: '@integer(1, 3)',
-    // 'type|1': ['CN', 'US', 'JP', 'EU'],
-    // 'status|1': ['published', 'draft'],
-    // display_time: '@datetime',
-    // comment_disabled: true,
-    // pageviews: '@integer(300, 5000)',
-    // image_uri,
-    // platforms: ['a-platform'],
-
     id: '@increment',
     title: '@title(1)',
     dateTime: '@datetime',
@@ -86,14 +69,6 @@ module.exports = [
         total: pageList.length,
         data: pageList
       }
-
-      // return {
-      //   code: 200,
-      //   data: {
-      //     total: mockList.length,
-      //     items: pageList
-      //   }
-      // }
     }
   }
 ]

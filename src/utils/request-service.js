@@ -1,7 +1,7 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 17:17:11
+ * @LastEditTime: 2022-03-30 09:53:49
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
@@ -24,7 +24,7 @@ service.interceptors.request.use(
     //   config.headers['Authorization'] = token
     //   config.headers['u-login-areaId'] = '370200'
     // }
-    config.headers['X-Token'] = 'admin-token'
+    // config.headers['X-Token'] = 'admin-token'
     return config
   },
   (error) => {
@@ -36,7 +36,7 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    console.log('response', response)
+    // console.log('response', response)
     // Toast.clear()
     const res = response
     if (res.status && res.status !== 200) {

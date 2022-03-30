@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 17:16:14
+ * @LastEditTime: 2022-03-30 14:13:38
  */
 'use strict'
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -12,20 +12,20 @@ const IsBuild = ['production', 'prod'].includes(process.env.NODE_ENV)
 const CompressionPlugin = require('compression-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const port = 8088
+const port = process.env.port || process.env.npm_config_port || 8088 // dev port
 module.exports = {
   publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
   // publicPath: defaultSettings.baseUrl, // 署应用包时的基本 URL。
   lintOnSave: false,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
-    port: 8088,
+    port: port,
     open: false,
     overlay: {
       //  当出现编译器错误或警告时，在浏览器中显示全屏覆盖层
       warnings: false,
       errors: true
-    },
+    }
     // proxy: {
     //   // change xxx-api/login => mock/login
     //   // detail: https://cli.vuejs.org/config/#devserver-proxy
@@ -37,7 +37,7 @@ module.exports = {
     //     }
     //   }
     // },
-    before: require('./mock/mock-server.js')
+    // before: require('./mock/mock-server.js')
   },
   css: {
     extract: true, // 是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。

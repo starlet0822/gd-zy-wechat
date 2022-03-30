@@ -1,7 +1,7 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-03-26 17:47:16
+ * @LastEditTime: 2022-03-30 10:38:17
 -->
 <template>
   <div class="navbar-wrapper">
@@ -59,8 +59,8 @@ export default {
     navTitle: {
       get() {
         const { title: routeTitle } = this.$route.meta
-        console.log(routeTitle)
-        return this.title !== '' ? this.title : routeTitle
+        // console.log(routeTitle)
+        return this.title.trim() !== '' ? this.title : routeTitle
       }
     }
   },

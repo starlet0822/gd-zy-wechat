@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 18:54:14
+ * @LastEditTime: 2022-03-30 11:31:16
  */
 import Vue from 'vue'
 import App from './App.vue'
@@ -20,15 +20,14 @@ import VConsole from 'vconsole'
 registerFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
 registerGlobDirective(Vue)
-// mock
-if (process.env.NODE_ENV === 'production') {
-  const { mockXHR } = require('../mock')
-  mockXHR()
-}
+// mock 服务
+// // if (process.env.NODE_ENV === 'production') {
+// const { mockXHR } = require('../mock')
+// mockXHR()
+// // }
 
 if (process.env.NODE_ENV !== 'development') {
-  const vConsole = new VConsole()
-  console.log(vConsole)
+  const vConsole = new VConsole() // eslint-disable-line
 }
 
 console.log('当前运行环境：', ENV)

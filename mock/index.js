@@ -1,18 +1,9 @@
 const Mock = require('mockjs')
 const { param2Obj } = require('./utils')
-
-const user = require('./user')
-const role = require('./role')
-// const article = require('./article')
 const assetPurchase = require('./asset-purchase')
-const search = require('./remote-search')
 
 const mocks = [
-  ...user,
-  ...role,
-  // ...article,
-  ...assetPurchase,
-  ...search
+  ...assetPurchase
 ]
 
 // for front mock
@@ -52,6 +43,7 @@ function mockXHR() {
   }
 
   for (const i of mocks) {
+    console.log(i)
     Mock.mock(new RegExp(i.url), i.type || 'get', XHR2ExpressReqWrap(i.response))
   }
 }

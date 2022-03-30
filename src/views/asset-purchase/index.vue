@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 18:45:36
+ * @LastEditTime: 2022-03-30 09:53:06
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -100,7 +100,7 @@ export default {
         title: '',
         page: 1,
         limit: 10,
-        checkStatus: 'NO'
+        checkState: 'NO'
       },
       dataList: [],
       loading: false,
@@ -116,7 +116,7 @@ export default {
         this.refreshing = false
       }
       const res = await getFixCheckList(this.query)
-      console.log(res)
+      // console.log(res)
       if (res.errcode === 0) {
         this.dataList = this.dataList.concat(res.data)
       }
