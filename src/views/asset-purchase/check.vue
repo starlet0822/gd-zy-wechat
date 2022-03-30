@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 14:39:09
+ * @LastEditTime: 2022-03-30 17:34:12
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -14,21 +14,31 @@
     <van-collapse class="vh-m-10 vh-rounded-12" v-model="activeNames">
       <van-collapse-item :name="item" v-for="item in 3" :key="item">
         <template #title>
-          <div class="vh-color-blue">标题{{ item }}</div>
+          <div class="vh-color-blue">{{ item === 3 ? '附件' : `标题${item}` }}</div>
         </template>
         <template #default>
-          <van-cell
-            title-class="vh-color-tip"
-            v-for="citem in 5"
-            :key="citem"
-            :title="'资产名称' + citem"
-            value="xxx"
-          ></van-cell>
+          <template v-if="item !== 3">
+            <van-cell
+              title-class="vh-color-tip"
+              v-for="citem in 5"
+              :key="citem"
+              :title="'资产名称' + citem"
+              value="xxx"
+            ></van-cell>
+          </template>
+          <div v-else class="file-upload">
+            <div class="file-box vh-color-text">
+              <!-- 图片集 -->
+              <ImgView border></ImgView>
+              <!-- 文件列表 -->
+              <FileCard></FileCard>
+            </div>
+          </div>
         </template>
       </van-collapse-item>
     </van-collapse>
     <!-- 附件上传 -->
-    <div class="asset-info vh-rounded-12 vh-m-10 file-upload">
+    <div class="asset-info vh-rounded-12 vh-m-10 file-upload" v-if="false">
       <van-cell title-class="vh-color-blue" :title="'附件'"></van-cell>
       <div class="file-box">
         <!-- 图片集 -->
@@ -86,7 +96,7 @@ export default {
       showCheckDetail: false,
       active: 0,
       radio: 0,
-      activeNames: [1],
+      activeNames: [1, 3],
       users: ['张三', '李四', '王五'],
       btnList: [
         { text: '驳回', value: 'nopass' },
