@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 09:48:25
+ * @LastEditTime: 2022-03-31 11:40:42
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -15,7 +15,8 @@
         <van-grid-item
           v-for="(cItem, cIndex) in item.children"
           :key="cItem.text + cIndex"
-          icon="photo-o"
+          icon-prefix="iconfont icon"
+          :icon="cItem.icon"
           :text="cItem.text"
           v-bind="linkProps(cItem)"
           badge=""
@@ -26,7 +27,6 @@
           <van-grid-item
             v-for="(cItem, cIndex) in item.children"
             :key="cItem.text + cIndex"
-            icon="photo-o"
             dot
             badge="1"
           >
@@ -36,7 +36,7 @@
                 class="module-children vh-flex-col vh-flex-center"
                 @click="onclickItem(cItem, index)"
               >
-                <van-icon name="photo-o" size="0.7467rem"></van-icon>
+                <van-icon class="iconfont" size="0.6rem" class-prefix="icon" name="zhuanhuan" />
                 <!-- TODO van-ellipsis无效？  -->
                 <div class="vh-font-12 vh-mt-8 van-ellipsis">
                   {{ cItem.text }}
@@ -64,17 +64,32 @@ export default {
             {
               text: '资产购置',
               to: '/asset-purchase',
-              icon: ''
+              icon: 'gouzhi'
             },
             {
               text: '资产处置',
               to: '',
-              icon: ''
+              icon: 'chuzhi'
             },
             {
               text: '资产调拨',
               to: '',
-              icon: ''
+              icon: 'tiaobo'
+            },
+            {
+              text: '资产转移',
+              to: '',
+              icon: 'zhuanyi'
+            },
+            {
+              text: '项目库',
+              to: '',
+              icon: 'cangku'
+            },
+            {
+              text: '待处理消息',
+              to: '',
+              icon: 'xiaoxi'
             }
           ]
         },
@@ -84,17 +99,32 @@ export default {
             {
               text: '考勤审批',
               to: '/attendance',
-              icon: ''
+              icon: 'kaoqin'
             },
             {
               text: '休假申请',
               to: '/vacation',
-              icon: ''
+              icon: 'xiujia'
             },
             {
               text: '轮岗审批',
               to: '/rotational-check',
-              icon: ''
+              icon: 'lungang'
+            },
+            {
+              text: '轮岗审批',
+              to: '',
+              icon: 'jiediao'
+            },
+            {
+              text: '离职审批',
+              to: '',
+              icon: 'lizhi'
+            },
+            {
+              text: '轮转审批',
+              to: '',
+              icon: 'lunzhuan'
             }
           ]
         },
@@ -104,7 +134,7 @@ export default {
             {
               text: '智能报销',
               to: 'http://hrp.gdhtcm.com:8111/OES/ctrl/crtlwechat/index/appmodellogin.jsp',
-              icon: ''
+              icon: 'baoxiao'
             }
           ]
         },
@@ -114,7 +144,7 @@ export default {
             {
               text: 'BI分析',
               to: 'http://hrp.gdhtcm.com:8111/BI/H5/#/',
-              icon: ''
+              icon: 'tongji'
             }
           ]
         }
@@ -150,7 +180,20 @@ export default {
 
 <style lang="less" scoped>
 .home-wrapper {
-  .module {
+  /deep/.module {
+    .van-grid-item {
+      .van-grid-item__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 44px;
+        font-size: 32px;
+        background: rgba(243, 247, 255, 1);
+        color: #2f6bf4;
+      }
+    }
     .module-children {
       // padding: 16px 8px;
       box-sizing: border-box;
