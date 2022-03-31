@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-30 17:34:12
+ * @LastEditTime: 2022-03-31 15:49:26
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -11,42 +11,32 @@
       </template>
     </vh-nav-bar>
     <!-- 折叠面板 -->
-    <van-collapse class="vh-m-10 vh-rounded-12" v-model="activeNames">
-      <van-collapse-item :name="item" v-for="item in 3" :key="item">
+    <van-collapse class="vh-m-10" v-model="activeNames">
+      <van-collapse-item
+        class="vh-mb-10 vh-rounded-12"
+        :name="index"
+        v-for="(item, index) in detailData"
+        :key="item.title"
+        :border="false"
+      >
         <template #title>
-          <div class="vh-color-blue">{{ item === 3 ? '附件' : `标题${item}` }}</div>
+          <div :class="{ 'vh-color-blue': index === 0 }">
+            {{ item.type === 'file' ? '附件' : `${item.title}` }}
+          </div>
         </template>
         <template #default>
-          <template v-if="item !== 3">
+          <div class="content" @click.stop="handleClickItem(item, index)">
             <van-cell
               title-class="vh-color-tip"
-              v-for="citem in 5"
-              :key="citem"
-              :title="'资产名称' + citem"
-              value="xxx"
+              v-for="citem in item.rowData"
+              :key="citem.fieldName"
+              :title="citem.fieldName"
+              value="xxxx"
             ></van-cell>
-          </template>
-          <div v-else class="file-upload">
-            <div class="file-box vh-color-text">
-              <!-- 图片集 -->
-              <ImgView border></ImgView>
-              <!-- 文件列表 -->
-              <FileCard></FileCard>
-            </div>
           </div>
         </template>
       </van-collapse-item>
     </van-collapse>
-    <!-- 附件上传 -->
-    <div class="asset-info vh-rounded-12 vh-m-10 file-upload" v-if="false">
-      <van-cell title-class="vh-color-blue" :title="'附件'"></van-cell>
-      <div class="file-box">
-        <!-- 图片集 -->
-        <ImgView border></ImgView>
-        <!-- 文件列表 -->
-        <FileCard></FileCard>
-      </div>
-    </div>
     <!-- 底部按钮组 -->
     <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
     <!-- 节点弹窗 -->
@@ -83,21 +73,21 @@
 </template>
 
 <script>
-import FileCard from '@comp/common/FileCard'
-import ImgView from '@comp/common/ImgView'
 import TimeLine from '@comp/common/TimeLine'
 import ButtonGroup from '@comp/global/ButtonGroup'
+import { detailData } from './mock'
 export default {
-  name: 'AssetPurchaseCheck',
-  components: { FileCard, ImgView, TimeLine, ButtonGroup },
+  name: 'AssetTransfersCheck',
+  components: { TimeLine, ButtonGroup },
   data() {
     return {
       showCheckUser: false,
       showCheckDetail: false,
       active: 0,
       radio: 0,
-      activeNames: [1, 3],
+      activeNames: [...new Array(detailData.length).keys()],
       users: ['张三', '李四', '王五'],
+      detailData,
       btnList: [
         { text: '驳回', value: 'nopass' },
         // { text: '提交', value: 'submit' },
@@ -132,6 +122,12 @@ export default {
     handleRightClick() {
       // console.log(555);
       this.showCheckDetail = true
+    },
+    // 查看明细
+    handleClickItem(item, index) {
+      console.log(item)
+      if (index === 0) return
+      this.$router.push(`/asset-transfers-detail`)
     },
     // TODO 无效
     getContainer() {

@@ -1,10 +1,10 @@
 <!--
- * @Description:资产购置
+ * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-03-30 09:53:06
+ * @LastEditTime: 2022-03-31 15:23:31
 -->
 <template>
-  <div class="asset-purchase-wrapper vh-bg">
+  <div class="asset-transfers-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter v-model="query.title" @search="handleSearch"></search-filter>
     <van-tabs
@@ -25,7 +25,7 @@
             @load="onLoad"
           >
             <router-link
-              :to="{ name: 'AssetPurchaseCheck' }"
+              :to="{ name: 'AssetTransfersCheck' }"
               v-for="(item, index) in dataList"
               :key="item.id + index"
             >
@@ -71,11 +71,11 @@
 
 <script>
 import { themeColor, checkStatus } from '@/config/constants'
-import { getFixCheckList } from '@/api/modules/asset-purchase'
+import { getFixCheckList } from '@/api/modules/asset-management'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetPurchase',
+  name: 'AssetTransfers',
   components: {
     SearchFilter,
     TagBox
@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-purchase-wrapper {
+.asset-transfers-wrapper {
   .list-item {
     margin: 10px;
     // padding: 10px;

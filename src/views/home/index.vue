@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 11:40:42
+ * @LastEditTime: 2022-03-31 14:34:53
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -68,12 +68,12 @@ export default {
             },
             {
               text: '资产处置',
-              to: '',
+              to: '/asset-disposal',
               icon: 'chuzhi'
             },
             {
               text: '资产调拨',
-              to: '',
+              to: '/asset-transfers',
               icon: 'tiaobo'
             },
             {
@@ -112,7 +112,7 @@ export default {
               icon: 'lungang'
             },
             {
-              text: '轮岗审批',
+              text: '借调审批',
               to: '',
               icon: 'jiediao'
             },
