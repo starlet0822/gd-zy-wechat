@@ -8,7 +8,7 @@
 import vars from '@css/vars.less'
 export const RootValue = 37.5 // 自适应基准值
 export const prefixCls = 'vh' // class类前缀
-export const themeColor = '#4e78b9' // 主题基色值
+export const themeColor = '#2f6bf4' // 主题基色值
 export const textColor = '#262626'
 
 export const checkStatus = new Map([

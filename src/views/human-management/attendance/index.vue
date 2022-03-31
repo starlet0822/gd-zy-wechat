@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 09:01:09
+ * @LastEditTime: 2022-03-31 11:50:51
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -27,10 +27,6 @@
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <router-link :to="{ name: 'AttendanceCheck' }" v-for="(item, index) in 5" :key="index">
             <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
-              <!-- <div class="vh-flex-jb-ac">
-                <div class="">{{ '办公屏风卡座' }}</div>
-                <div class="vh-font-tip">{{ '2022-03-07' }}</div>
-              </div> -->
               <van-row type="flex" align="center">
                 <van-col span="9">
                   <p class="vh-font-14">
@@ -51,10 +47,13 @@
                     <span class="vh-tip">发文科室：</span>
                     <span>{{ '审计处' }}</span>
                   </p>
-                  <p class="vh-font-14 vh-py-5">
-                    <span class="vh-tip">考勤月份：</span>
-                    <span>{{ new Date() | formatDate('M') }}</span>
-                  </p>
+                  <div class="vh-font-14 vh-py-5 vh-flex-ac-jb">
+                    <p>
+                      <span class="vh-tip">考勤月份：</span>
+                      <span>{{ new Date() | formatDate('M') }}</span>
+                    </p>
+                    <van-icon name="arrow" size="0.64rem" :color="themeColor" />
+                  </div>
                   <p class="vh-font-14">
                     <span class="vh-tip">考核时间：</span>
                     <span>{{ new Date() | formatDate() }}</span>
