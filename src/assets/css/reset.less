@@ -107,7 +107,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -webkit-overflow-scrolling: touch;
-  // overflow-scrolling: touch;
+  // (横竖屏会出现字体加粗不一致等)问题
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -117,10 +117,6 @@ html {
   height: 100%;
   box-sizing: border-box;
 }
-
-//#app {
-//  height: 100%;
-//}
 
 *,
 *:before,
@@ -145,7 +141,6 @@ img,
 picture {
   max-width: 100%;
   border: none;
-  // display: block;
 }
 
 ol,
@@ -153,11 +148,13 @@ ul {
   list-style: none;
 }
 
+a,
 input,
 button,
 textarea,
 select {
   font: inherit;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 div:focus {
