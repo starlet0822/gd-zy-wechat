@@ -1,14 +1,14 @@
 <!--
  * @Description: 资产调拨明细
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:05:05
+ * @LastEditTime: 2022-03-31 16:23:11
 -->
 <template>
   <div class="asset-transfers-detail vh-bg">
     <vh-nav-bar></vh-nav-bar>
     <!-- 折叠面板 -->
-    <van-collapse class="vh-m-10" v-model="activeNames">
-      <van-collapse-item class="vh-rounded-12" disabled :name="0" :is-link="false" :border="false">
+    <van-collapse class="vh-m-10" v-model="activeNames" :border="false">
+      <van-collapse-item class="vh-rounded-6" disabled :name="0" :is-link="false" :border="false">
         <template #title>
           <div :class="{ 'vh-color-blue': true }">
             {{ detailInfo.title }}

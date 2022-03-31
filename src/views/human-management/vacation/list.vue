@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 13:56:26
+ * @LastEditTime: 2022-03-31 16:25:57
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -12,7 +12,7 @@
         <template v-for="item in 5">
           <van-row
             v-waves
-            class="vacation-item vh-m-10 vh-bg-white vh-p-10 vh-flex-ac-jb"
+            class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
             type="flex"
             align="center"
             :key="item"
@@ -130,6 +130,7 @@ export default {
 <style lang="less" scoped>
 .vacation-list-wrapper {
   .vacation-item {
+    // border-radius: 6px;
     // border-bottom: 1px solid @color-border;
   }
 }

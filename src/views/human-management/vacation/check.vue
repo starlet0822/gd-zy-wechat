@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 14:53:09
+ * @LastEditTime: 2022-03-31 16:31:19
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -9,7 +9,7 @@
     <div class="check-info vh-mb-10 vh-bg-white">
       <!-- 折叠面板 -->
       <van-collapse v-model="activeNames" :border="false">
-        <van-collapse-item :name="0">
+        <van-collapse-item :name="0" class="vh-mb-100" :border="false">
           <template #title>
             <div class="vh-color-blue2">人员基本信息</div>
           </template>
@@ -41,7 +41,7 @@
             ></van-cell> -->
           </template>
         </van-collapse-item>
-        <van-collapse-item :name="1">
+        <van-collapse-item :name="1" :border="false">
           <template #title>
             <div class="vh-color-blue2">考勤休假申请表</div>
           </template>
@@ -202,6 +202,9 @@ export default {
 <style lang="less" scoped>
 .vacation-check-wrapper {
   /deep/.check-info {
+    .van-collapse-item__title {
+      background: rgba(247, 248, 250, 1);
+    }
     .van-collapse-item__content {
       padding: 0;
       .van-cell {

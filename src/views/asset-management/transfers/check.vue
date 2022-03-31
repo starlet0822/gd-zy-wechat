@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 15:49:26
+ * @LastEditTime: 2022-03-31 16:23:06
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -11,9 +11,9 @@
       </template>
     </vh-nav-bar>
     <!-- 折叠面板 -->
-    <van-collapse class="vh-m-10" v-model="activeNames">
+    <van-collapse class="vh-m-10" v-model="activeNames" :border="false">
       <van-collapse-item
-        class="vh-mb-10 vh-rounded-12"
+        class="vh-mb-10 vh-rounded-6"
         :name="index"
         v-for="(item, index) in detailData"
         :key="item.title"

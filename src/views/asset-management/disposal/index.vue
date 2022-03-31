@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 14:39:21
+ * @LastEditTime: 2022-03-31 16:22:25
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -29,7 +29,7 @@
               v-for="(item, index) in dataList"
               :key="item.id + index"
             >
-              <div class="list-item vh-p-10 vh-bg-white" v-waves>
+              <div class="list-item vh-p-10 vh-bg-white vh-rounded-6" v-waves>
                 <div class="vh-flex-jb-ac">
                   <div class="vh-title">{{ item.title }}</div>
                   <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
