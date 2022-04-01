@@ -1,7 +1,7 @@
 <!--
- * @Description: 休假审批
+ * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 09:02:45
+ * @LastEditTime: 2022-04-01 13:29:22
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -26,12 +26,6 @@
               :title="'员工编号'"
               :value="dataInfo.userInfo.no"
             ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'部门'"
-              :value="dataInfo.userInfo.depName"
-            ></van-cell>
             <!-- <van-cell
               title-class="vh-color-tip"
               v-for="citem in 5"
@@ -41,66 +35,52 @@
             ></van-cell> -->
           </template>
         </van-collapse-item>
-        <van-collapse-item :name="1" :border="false">
+        <van-collapse-item :name="1" class="vh-mb-100" :border="false">
           <template #title>
-            <div class="vh-color-blue2">考勤休假申请表</div>
+            <div class="vh-color-blue2">员工组织结构</div>
           </template>
           <template #default>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'休假类型'"
-              :value="dataInfo.vacationInfo.type"
-            ></van-cell>
-            <van-cell class="vh-font-14" title-class="vh-color-tip" :title="'休假余额'">
-              <template #default>
-                <div>
-                  <span class="vh-color-orange">{{ dataInfo.vacationInfo.balance }}</span>
-                  天
-                </div>
-              </template>
-            </van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'休假天数'"
-              :value="dataInfo.vacationInfo.dayNum + '天'"
+              :title="'所在单位'"
+              value="xxxx"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'申请日期'"
-              :value="dataInfo.vacationInfo.applyDate | formatDate('YYYY-MM-DD')"
+              :title="'所在部门'"
+              value="xxxx"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'岗位'"
+              value="xxxx"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'职务'"
+              value="xxxx"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'职级'"
+              value="xxxx"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'职等'"
+              value="xxxx"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
               :title="'开始日期'"
-              :value="dataInfo.vacationInfo.startDate | formatDate('YYYY-MM-DD')"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'结束日期'"
-              :value="dataInfo.vacationInfo.endDate | formatDate('YYYY-MM-DD')"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'申请原因'"
-              :value="dataInfo.vacationInfo.reason"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'开始上下午'"
-              :value="dataInfo.vacationInfo.start"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'结束上下午'"
-              :value="dataInfo.vacationInfo.end"
+              :value="dataInfo.vacationInfo.applyDate | formatDate('YYYY-MM-DD')"
             ></van-cell>
           </template>
         </van-collapse-item>
@@ -121,6 +101,20 @@
         :rules="[{ required: false, message: '请输入审批意见' }]"
       />
     </van-form>
+    <!-- 附件上传 -->
+    <van-collapse v-model="activeNames" :border="false">
+      <van-collapse-item :name="0" class="vh-mb-10" :border="false">
+        <template #title>
+          <div class="vh-color-blue">附件</div>
+        </template>
+        <template #default>
+          <!-- 图片集 -->
+          <ImgView border></ImgView>
+          <!-- 文件列表 -->
+          <FileCard class="vh-color-text"></FileCard>
+        </template>
+      </van-collapse-item>
+    </van-collapse>
     <!-- 底部按钮组 -->
     <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn"></vh-button-group>
   </div>
@@ -128,9 +122,11 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
+import FileCard from '@comp/common/FileCard'
+import ImgView from '@comp/common/ImgView'
 export default {
-  name: 'VacationCheck',
-  components: {},
+  name: 'RotationalCheck',
+  components: { FileCard, ImgView },
   data() {
     return {
       dataInfo: {

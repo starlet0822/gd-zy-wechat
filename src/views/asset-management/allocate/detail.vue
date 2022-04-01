@@ -1,10 +1,10 @@
 <!--
  * @Description: 资产调拨明细
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:23:11
+ * @LastEditTime: 2022-04-01 10:26:52
 -->
 <template>
-  <div class="asset-transfers-detail vh-bg">
+  <div class="asset-allocate-detail vh-bg">
     <vh-nav-bar></vh-nav-bar>
     <!-- 折叠面板 -->
     <van-collapse class="vh-m-10" v-model="activeNames" :border="false">
@@ -31,7 +31,7 @@
 <script>
 import { detailInfo } from './mock'
 export default {
-  name: 'AssetTransfersDetail',
+  name: 'AssetAllocateDetail',
   components: {},
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-transfers-detail {
+.asset-allocate-detail {
   /deep/ .van-collapse-item__content {
     padding: 0;
     .van-cell {

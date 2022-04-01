@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:23:06
+ * @LastEditTime: 2022-04-01 13:33:38
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -77,7 +77,7 @@ import TimeLine from '@comp/common/TimeLine'
 import ButtonGroup from '@comp/global/ButtonGroup'
 import { detailData } from './mock'
 export default {
-  name: 'AssetTransfersCheck',
+  name: 'AssetAllocateCheck',
   components: { TimeLine, ButtonGroup },
   data() {
     return {
@@ -127,7 +127,7 @@ export default {
     handleClickItem(item, index) {
       console.log(item)
       if (index === 0) return
-      this.$router.push(`/asset-transfers-detail`)
+      this.$router.push(`/asset-allocate-detail`)
     },
     // TODO 无效
     getContainer() {

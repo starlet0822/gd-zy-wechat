@@ -1,10 +1,10 @@
 <!--
  * @Description: 图片展示
  * @Author: wuxxing
- * @LastEditTime: 2022-03-19 18:20:12
+ * @LastEditTime: 2022-04-01 11:51:37
 -->
 <template>
-  <div class="imgView-wrapper vh-p-box vh-bg-white" :class="{ 'van-hairline--bottom': border }">
+  <div class="imgView-wrapper vh-p-box12 vh-bg-white" :class="{ 'van-hairline--bottom': border }">
     <!-- <div class="vh-flex-wrap"> -->
     <van-image
       class="imgItem vh-mr-10"

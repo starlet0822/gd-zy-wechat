@@ -1,7 +1,7 @@
 <!--
- * @Description:资产购置审核
+ * @Description:资处转移审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 13:31:38
+ * @LastEditTime: 2022-04-01 13:31:09
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -20,7 +20,9 @@
         :border="false"
       >
         <template #title>
-          <div class="vh-color-blue">{{ item.type === 'file' ? '附件' : `${item.title}` }}</div>
+          <div :class="{ 'vh-color-blue': index === 0 }">
+            {{ item.type === 'file' ? '附件' : `${item.title}` }}
+          </div>
         </template>
         <template #default>
           <template v-if="item.type !== 'file'">
@@ -95,7 +97,7 @@ import TimeLine from '@comp/common/TimeLine'
 import ButtonGroup from '@comp/global/ButtonGroup'
 import { detailData } from './mock'
 export default {
-  name: 'AssetPurchaseCheck',
+  name: 'AssetTransferCheck',
   components: { FileCard, ImgView, TimeLine, ButtonGroup },
   data() {
     return {
@@ -103,7 +105,7 @@ export default {
       showCheckDetail: false,
       active: 0,
       radio: 0,
-      activeNames: [0],
+      activeNames: [...new Array(detailData.length).keys()],
       users: ['张三', '李四', '王五'],
       detailData,
       btnList: [

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:23:26
+ * @LastEditTime: 2022-04-01 13:31:52
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -35,7 +35,7 @@
             ></van-cell>
           </template>
           <div v-else class="file-upload">
-            <div class="file-box vh-color-text">
+            <div class="file-box vh-p-box vh-color-text">
               <!-- 图片集 -->
               <ImgView border></ImgView>
               <!-- 文件列表 -->

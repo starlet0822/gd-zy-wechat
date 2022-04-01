@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 13:57:15
+ * @LastEditTime: 2022-04-01 09:18:37
  */
 export default [
   {
@@ -49,12 +49,22 @@ export default [
       import(/* webpackChunkName: "vacation-check" */ '@/views/human-management/vacation/check')
   },
   {
+    path: '/rotational',
+    name: 'Rotational',
+    meta: {
+      title: '轮岗审批',
+      keepAlive: true
+    },
+    component: () =>
+      import(/* webpackChunkName: "rotational" */ '@/views/human-management/rotational/index.vue')
+  },
+  {
     path: '/rotational-check',
     name: 'RotationalCheck',
     meta: {
       title: '轮岗审批'
     },
     component: () =>
-      import(/* webpackChunkName: "rotational-check" */ '@/views/human-management/rotational-check')
+      import(/* webpackChunkName: "rotational-check" */ '@/views/human-management/rotational/check')
   }
 ]

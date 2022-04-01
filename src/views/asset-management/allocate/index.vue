@@ -1,10 +1,10 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:22:33
+ * @LastEditTime: 2022-04-01 13:33:15
 -->
 <template>
-  <div class="asset-transfers-wrapper vh-bg">
+  <div class="asset-allocate-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter v-model="query.title" @search="handleSearch"></search-filter>
     <van-tabs
@@ -25,7 +25,7 @@
             @load="onLoad"
           >
             <router-link
-              :to="{ name: 'AssetTransfersCheck' }"
+              :to="{ name: 'AssetAllocateCheck' }"
               v-for="(item, index) in dataList"
               :key="item.id + index"
             >
@@ -75,7 +75,7 @@ import { getFixCheckList } from '@/api/modules/asset-management'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetTransfers',
+  name: 'AssetAllocate',
   components: {
     SearchFilter,
     TagBox
@@ -152,7 +152,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-transfers-wrapper {
+.asset-allocate-wrapper {
   .list-item {
     margin: 10px;
     // padding: 10px;

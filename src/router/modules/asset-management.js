@@ -1,7 +1,7 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 15:40:30
+ * @LastEditTime: 2022-04-01 10:44:38
  */
 export default [
   {
@@ -37,40 +37,44 @@ export default [
       )
   },
   {
-    path: '/asset-transfers',
-    name: 'AssetTransfers',
+    path: '/asset-allocate',
+    name: 'AssetAllocate',
     meta: { title: '资产调拨', keepAlive: true },
     component: () =>
-      import(/* webpackChunkName: "asset-transfers" */ '@/views/asset-management/transfers/index')
+      import(/* webpackChunkName: "asset-allocate" */ '@/views/asset-management/allocate/index')
   },
   {
-    path: '/asset-transfers-check',
-    name: 'AssetTransfersCheck',
+    path: '/asset-allocate-check',
+    name: 'AssetAllocateCheck',
     meta: { title: '资产调拨审核' },
     component: () =>
       import(
-        /* webpackChunkName: "asset-transfers-check" */ '@/views/asset-management/transfers/check.vue'
+        /* webpackChunkName: "asset-allocate-check" */ '@/views/asset-management/allocate/check.vue'
       )
   },
   {
-    path: '/asset-transfers-detail',
-    name: 'AssetTransfersDetail',
+    path: '/asset-allocate-detail',
+    name: 'AssetAllocateDetail',
     meta: { title: '资产调拨明细' },
     component: () =>
       import(
-        /* webpackChunkName: "asset-transfers-detail" */ '@/views/asset-management/transfers/detail.vue'
+        /* webpackChunkName: "asset-allocate-detail" */ '@/views/asset-management/allocate/detail.vue'
+      )
+  },
+  {
+    path: '/asset-transfer',
+    name: 'AssetTransfer',
+    meta: { title: '资产转移', keepAlive: true },
+    component: () =>
+      import(/* webpackChunkName: "asset-transfer" */ '@/views/asset-management/transfer/index')
+  },
+  {
+    path: '/asset-transfer-check',
+    name: 'AssetTransferCheck',
+    meta: { title: '资产转移审核' },
+    component: () =>
+      import(
+        /* webpackChunkName: "asset-transfer-check" */ '@/views/asset-management/transfer/check.vue'
       )
   }
-  // {
-  //   path: '/asset-transfers',
-  //   name: 'AssetTransfers',
-  //   meta: { title: '资产调拨', keepAlive: true },
-  //   component: () => import(/* webpackChunkName: "asset-transfers" */ '@/views/asset-management/disposal/index')
-  // },
-  // {
-  //   path: '/asset-transfers-check',
-  //   name: 'AssetTransfersCheck',
-  //   meta: { title: '资产调拨审核' },
-  //   component: () => import(/* webpackChunkName: "asset-transfers-check" */ '@/views/asset-management/transfers/check.vue')
-  // }
 ]

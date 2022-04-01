@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:45:14
+ * @LastEditTime: 2022-04-01 11:51:48
 -->
 <template>
   <div class="file-card-wrapper">
@@ -62,7 +62,7 @@ export default {
 <style lang="less" scoped>
 .file-card-wrapper {
   .file-item {
-    padding: 8px 15px;
+    padding: 8px 0;
   }
 }
 </style>
