@@ -1,10 +1,10 @@
 <!--
- * @Description: 轮岗审批
+ * @Description: 轮转审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:26:25
+ * @LastEditTime: 2022-04-02 09:50:45
 -->
 <template>
-  <div class="rotational-check-wrapper vh-bg">
+  <div class="rotary-check-wrapper vh-bg">
     <vh-nav-bar @click-right="onClickCheck">
       <template #right>
         <div class="vh-color-white">审批详情</div>
@@ -30,68 +30,93 @@
               :title="'员工编号'"
               :value="dataInfo.userInfo.no"
             ></van-cell>
-            <!-- <van-cell
-              title-class="vh-color-tip"
-              v-for="citem in 5"
-              :key="citem"
-              :title="'资产名称' + citem"
-              value="xxx"
-            ></van-cell> -->
-          </template>
-        </van-collapse-item>
-        <van-collapse-item :name="1" class="vh-mb-100" :border="false">
-          <template #title>
-            <div class="vh-color-blue2">员工组织结构</div>
-          </template>
-          <template #default>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'所在单位'"
-              value="xxxx"
+              :title="'部门'"
+              :value="'xxxx'"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'所在部门'"
-              value="xxxx"
+              :title="'单位编号'"
+              :value="'xxxx'"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
               :title="'岗位'"
+              :value="'xxxx'"
+            ></van-cell>
+          </template>
+        </van-collapse-item>
+        <van-collapse-item :name="1" class="vh-mb-100" :border="false">
+          <template #title>
+            <div class="vh-color-blue2">人员离职信息</div>
+          </template>
+          <template #default>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'离职类别'"
+              value="辞职"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'离职时间'"
               value="xxxx"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'职务'"
+              :title="'调往单位'"
               value="xxxx"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'职级'"
+              :title="'离职原因类型'"
               value="xxxx"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'职等'"
+              :title="'行业原因：不在考虑从事此职业'"
               value="xxxx"
             ></van-cell>
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'开始日期'"
-              :value="dataInfo.rotationalInfo.applyDate | formatDate('YYYY-MM-DD')"
+              :title="'是否加入黑名单'"
+              value="xxxx"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'是否有补偿金'"
+              value="xxxx"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'补偿月数'"
+              value="2个月"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'是否有补偿金'"
+              value="xxxx"
             ></van-cell>
           </template>
         </van-collapse-item>
       </van-collapse>
     </div>
+    <!-- 查看附件 -->
+    <vh-button-group :btn-arr="[{ text: '查看附件', value: 'view' }]" />
     <!-- 表单 -->
-    <van-form @submit="onSubmit" class="vh-mb-10">
+    <van-form @submit="onSubmit" class="vh-mb-10 vh-mt-10">
       <van-field
         v-model="formInfo.opinion"
         name="opinion"
@@ -140,7 +165,7 @@ import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
 import TimeLine from '@comp/common/TimeLine'
 export default {
-  name: 'RotationalCheck',
+  name: 'DepartureCheck',
   components: { FileCard, ImgView, TimeLine },
   data() {
     return {
@@ -150,7 +175,7 @@ export default {
           no: '6675',
           depName: '信息管理办公室'
         },
-        rotationalInfo: {
+        rotaryInfo: {
           type: '年假',
           balance: '10.00',
           dayNum: 5,
@@ -211,7 +236,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.rotational-check-wrapper {
+.rotary-check-wrapper {
   /deep/.check-info {
     .van-collapse-item__title {
       background: @color-bg;

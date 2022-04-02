@@ -1,12 +1,12 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 18:42:09
+ * @LastEditTime: 2022-04-02 09:57:40
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
     <van-search
-      class="vh-flex1"
+      class="search-box vh-flex1"
       v-model="keyword"
       background="#fff"
       placeholder="请输入搜索关键词"
@@ -26,19 +26,6 @@
         </div>
       </template>
     </van-search>
-    <!-- <van-search
-      v-model="keyword"
-      show-action
-      label="地址"
-      placeholder="请输入搜索关键词"
-      @search="onSearch"
-    >
-      <template #action>
-        <div class="filter-box">
-          <van-icon name="filter-o" size="28" />
-        </div>
-      </template>
-    </van-search> -->
     <!-- 搜索组件 -->
     <van-popup v-model="visibleSearchPage" position="bottom" :style="{ height: '100%' }">
       <SearchPage v-model="keyword" @cancel="onCancel" @search="onSearch"></SearchPage>
@@ -145,6 +132,12 @@ export default {
 
 <style lang="less" scoped>
 .search-filter-wrapper {
+  /deep/ .search-box {
+    .van-icon-search:before {
+      color: @color-tip;
+    }
+  }
+
   .filter-box {
   }
 }

@@ -1,15 +1,9 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 09:18:37
+ * @LastEditTime: 2022-04-02 10:01:12
  */
 export default [
-  {
-    path: '/human-management',
-    name: 'HumanManagement',
-    component: () =>
-      import(/* webpackChunkName: "human-management" */ '@/views/human-management/index.vue')
-  },
   {
     path: '/attendance',
     name: 'Attendance',
@@ -66,5 +60,62 @@ export default [
     },
     component: () =>
       import(/* webpackChunkName: "rotational-check" */ '@/views/human-management/rotational/check')
+  },
+  {
+    path: '/secondment',
+    name: 'Secondment',
+    meta: {
+      title: '借调申请',
+      keepAlive: true
+    },
+    component: () =>
+      import(/* webpackChunkName: "secondment" */ '@/views/human-management/secondment/index.vue')
+  },
+  {
+    path: '/secondment-check',
+    name: 'SecondmentCheck',
+    meta: {
+      title: '借调审批'
+    },
+    component: () =>
+      import(/* webpackChunkName: "secondment-check" */ '@/views/human-management/secondment/check')
+  },
+  {
+    path: '/rotary',
+    name: 'Rotary',
+    meta: {
+      title: '轮转申请',
+      keepAlive: true
+    },
+    component: () =>
+      import(/* webpackChunkName: "rotary" */ '@/views/human-management/rotary/index.vue')
+  },
+  {
+    path: '/rotary-check',
+    name: 'RotaryCheck',
+    meta: {
+      title: '轮转审批'
+    },
+    component: () =>
+      import(/* webpackChunkName: "rotary-check" */ '@/views/human-management/rotary/check')
+  },
+  {
+    path: '/departure',
+    name: 'Departure',
+    meta: {
+      title: '离职申请',
+      keepAlive: true
+    },
+    component: () =>
+      import(/* webpackChunkName: "departure" */ '@/views/human-management/departure/index.vue')
+  },
+  {
+    path: '/departure-check',
+    name: 'DepartureCheck',
+    meta: {
+      title: '离职审批'
+    },
+    component: () =>
+      import(/* webpackChunkName: "departure-check" */ '@/views/human-management/departure/check')
   }
 ]
