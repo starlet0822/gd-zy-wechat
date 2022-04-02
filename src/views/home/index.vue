@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:42:07
+ * @LastEditTime: 2022-04-02 16:03:28
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -59,7 +59,7 @@ export default {
     return {
       list: [
         {
-          title: '资产管理',
+          title: '固定资产',
           children: [
             {
               text: '资产购置',
@@ -107,12 +107,12 @@ export default {
               icon: 'xiujia'
             },
             {
-              text: '轮岗审批',
+              text: '职工轮岗',
               to: '/rotational',
               icon: 'lungang'
             },
             {
-              text: '借调审批',
+              text: '职工借调',
               to: '/secondment',
               icon: 'jiediao'
             },

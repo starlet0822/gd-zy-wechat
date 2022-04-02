@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 10:01:12
+ * @LastEditTime: 2022-04-02 15:51:21
  */
 export default [
   {
@@ -46,7 +46,7 @@ export default [
     path: '/rotational',
     name: 'Rotational',
     meta: {
-      title: '轮岗审批',
+      title: '职工轮岗',
       keepAlive: true
     },
     component: () =>
@@ -65,7 +65,7 @@ export default [
     path: '/secondment',
     name: 'Secondment',
     meta: {
-      title: '借调申请',
+      title: '职工借调',
       keepAlive: true
     },
     component: () =>

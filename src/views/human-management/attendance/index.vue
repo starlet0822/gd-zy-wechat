@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 11:50:51
+ * @LastEditTime: 2022-04-02 15:56:45
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -28,7 +28,7 @@
           <router-link :to="{ name: 'AttendanceCheck' }" v-for="(item, index) in 5" :key="index">
             <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
               <van-row type="flex" align="center">
-                <van-col span="9">
+                <van-col span="12">
                   <p class="vh-font-14">
                     <span class="vh-tip">出勤部门：</span>
                     <span>{{ '审计处' }}</span>
@@ -42,7 +42,7 @@
                     <span>{{ '张三' }}</span>
                   </p>
                 </van-col>
-                <van-col span="15">
+                <van-col span="12">
                   <p class="vh-font-14">
                     <span class="vh-tip">发文科室：</span>
                     <span>{{ '审计处' }}</span>
@@ -56,7 +56,7 @@
                   </div>
                   <p class="vh-font-14">
                     <span class="vh-tip">考核时间：</span>
-                    <span>{{ new Date() | formatDate() }}</span>
+                    <span>{{ new Date() | formatDate('YYYY-MM-DD') }}</span>
                   </p>
                 </van-col>
                 <!-- <van-col span="1">
