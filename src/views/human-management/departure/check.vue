@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮转审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:50:45
+ * @LastEditTime: 2022-04-02 10:13:36
 -->
 <template>
   <div class="rotary-check-wrapper vh-bg">
@@ -77,13 +77,7 @@
               class="vh-font-14"
               title-class="vh-color-tip"
               :title="'离职原因类型'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'行业原因：不在考虑从事此职业'"
-              value="xxxx"
+              value="行业原因：不在考虑从事此职业"
             ></van-cell>
             <van-cell
               class="vh-font-14"
