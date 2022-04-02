@@ -1,25 +1,28 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-30 14:13:38
+ * @LastEditTime: 2022-04-02 11:20:34
  */
 'use strict'
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
 const defaultSettings = require('./src/config/settings')
-const IsBuild = ['production', 'prod'].includes(process.env.NODE_ENV)
 const CompressionPlugin = require('compression-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
+const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const port = process.env.port || process.env.npm_config_port || 8088 // dev port
+const { port, npm_config_port, NODE_ENV, VCONSOLE } = process.env
+// console.log('VCONSOLE', VCONSOLE)
+const DevPort = port || npm_config_port || 8088 // dev port
+const IsBuild = ['production', 'prod'].includes(NODE_ENV)
 module.exports = {
   publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
   // publicPath: defaultSettings.baseUrl, // 署应用包时的基本 URL。
   lintOnSave: false,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
-    port: port,
+    port: DevPort,
     open: false,
     overlay: {
       //  当出现编译器错误或警告时，在浏览器中显示全屏覆盖层
@@ -92,6 +95,11 @@ module.exports = {
       test: /\.(js|css)$/i,
       threshold: 10240,
       minRatio: 0.8
+    })) &&
+    // Vconsole 调试器
+    config.plugins.push(new VConsolePlugin({
+      filter: [],
+      enable: IsBuild && VCONSOLE
     }))
     // 打包分析
     // IsBuild && config.plugins.push(new BundleAnalyzerPlugin())
@@ -101,7 +109,7 @@ module.exports = {
     config.plugin('html').tap((args) => {
       args[0].title = defaultSettings.title
       return args
-    })
+    }).end()
     config.when(IsBuild, config => {
       // 配置删除 console.log
       config.optimization.minimizer('terser').tap(args => {
@@ -115,7 +123,7 @@ module.exports = {
         }
         return args
       })
-    })
+    }).end()
     // 开发环境可使用 开发工具
     // config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-source-map'))
     // 别名 alias
