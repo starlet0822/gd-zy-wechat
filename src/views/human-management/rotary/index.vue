@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮转申请列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:33:04
+ * @LastEditTime: 2022-04-02 14:06:17
 -->
 <template>
   <div class="rotary-wrapper vh-bg">
@@ -28,35 +28,35 @@
           <router-link :to="{ name: 'RotaryCheck' }" v-for="(item, index) in 5" :key="index">
             <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
               <van-row type="flex" align="center">
-                <van-col span="9">
+                <van-col span="12">
                   <p class="vh-font-14">
-                    <span class="vh-tip">出勤部门：</span>
-                    <span>{{ '审计处' }}</span>
-                  </p>
-                  <p class="vh-font-14 vh-py-5">
-                    <span class="vh-tip">考勤年份：</span>
-                    <span>{{ new Date() | formatDate('YYYY') }}</span>
-                  </p>
-                  <p class="vh-font-14">
-                    <span class="vh-tip">上报人员：</span>
+                    <span class="vh-tip">人员姓名：</span>
                     <span>{{ '张三' }}</span>
                   </p>
-                </van-col>
-                <van-col span="15">
-                  <p class="vh-font-14">
-                    <span class="vh-tip">发文科室：</span>
+                  <p class="vh-font-14 vh-py-5">
+                    <span class="vh-tip">所在部门：</span>
                     <span>{{ '审计处' }}</span>
+                  </p>
+                  <p class="vh-font-14">
+                    <span class="vh-tip">开始时间：</span>
+                    <span>{{ new Date() | formatDate('YYYY-MM-DD') }}</span>
+                  </p>
+                </van-col>
+                <van-col span="12">
+                  <p class="vh-font-14">
+                    <span class="vh-tip">员工类型：</span>
+                    <span>{{ '实习护士' }}</span>
                   </p>
                   <div class="vh-font-14 vh-py-5 vh-flex-ac-jb">
                     <p>
-                      <span class="vh-tip">考勤月份：</span>
-                      <span>{{ new Date() | formatDate('M') }}</span>
+                      <span class="vh-tip">轮转部门：</span>
+                      <span>{{ '护士部' }}</span>
                     </p>
                     <van-icon name="arrow" size="0.64rem" :color="themeColor" />
                   </div>
                   <p class="vh-font-14">
-                    <span class="vh-tip">考核时间：</span>
-                    <span>{{ new Date() | formatDate() }}</span>
+                    <span class="vh-tip">结束时间：</span>
+                    <span>{{ new Date() | formatDate('YYYY-MM-DD') }}</span>
                   </p>
                 </van-col>
                 <!-- <van-col span="1">

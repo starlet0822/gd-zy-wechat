@@ -1,7 +1,7 @@
 <!--
  * @Description: 离职申请列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:41:18
+ * @LastEditTime: 2022-04-02 14:25:02
 -->
 <template>
   <div class="departure-wrapper vh-bg">
@@ -28,35 +28,35 @@
           <router-link :to="{ name: 'DepartureCheck' }" v-for="(item, index) in 5" :key="index">
             <div class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white" v-waves>
               <van-row type="flex" align="center">
-                <van-col span="9">
+                <van-col span="12">
                   <p class="vh-font-14">
-                    <span class="vh-tip">出勤部门：</span>
-                    <span>{{ '审计处' }}</span>
-                  </p>
-                  <p class="vh-font-14 vh-py-5">
-                    <span class="vh-tip">考勤年份：</span>
-                    <span>{{ new Date() | formatDate('YYYY') }}</span>
-                  </p>
-                  <p class="vh-font-14">
-                    <span class="vh-tip">上报人员：</span>
+                    <span class="vh-tip">员工姓名：</span>
                     <span>{{ '张三' }}</span>
                   </p>
-                </van-col>
-                <van-col span="15">
+                  <p class="vh-font-14 vh-py-5">
+                    <span class="vh-tip">单位编号：</span>
+                    <span>{{ 'ZGFV01' }}</span>
+                  </p>
                   <p class="vh-font-14">
-                    <span class="vh-tip">发文科室：</span>
+                    <span class="vh-tip">离职类别：</span>
+                    <span>{{ '辞职' }}</span>
+                  </p>
+                </van-col>
+                <van-col span="12">
+                  <p class="vh-font-14">
+                    <span class="vh-tip">所在部门：</span>
                     <span>{{ '审计处' }}</span>
                   </p>
                   <div class="vh-font-14 vh-py-5 vh-flex-ac-jb">
                     <p>
-                      <span class="vh-tip">考勤月份：</span>
-                      <span>{{ new Date() | formatDate('M') }}</span>
+                      <span class="vh-tip">调往单位：</span>
+                      <span>{{ '无' }}</span>
                     </p>
                     <van-icon name="arrow" size="0.64rem" :color="themeColor" />
                   </div>
                   <p class="vh-font-14">
-                    <span class="vh-tip">考核时间：</span>
-                    <span>{{ new Date() | formatDate() }}</span>
+                    <span class="vh-tip">离职时间：</span>
+                    <span>{{ new Date() | formatDate('YYYY-MM-DD') }}</span>
                   </p>
                 </van-col>
                 <!-- <van-col span="1">

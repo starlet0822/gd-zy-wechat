@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 11:29:26
+ * @LastEditTime: 2022-04-02 11:41:26
  */
 import Vue from 'vue'
 import App from './App.vue'

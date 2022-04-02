@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:26:25
+ * @LastEditTime: 2022-04-02 14:14:00
 -->
 <template>
   <div class="rotational-check-wrapper vh-bg">
@@ -27,16 +27,33 @@
             <van-cell
               class="vh-font-14"
               title-class="vh-color-tip"
-              :title="'员工编号'"
-              :value="dataInfo.userInfo.no"
+              :title="'员工编码'"
+              :value="'xxxx'"
             ></van-cell>
-            <!-- <van-cell
+            <van-cell
+              class="vh-font-14"
               title-class="vh-color-tip"
-              v-for="citem in 5"
-              :key="citem"
-              :title="'资产名称' + citem"
-              value="xxx"
-            ></van-cell> -->
+              :title="'工作组'"
+              :value="'xxxx'"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'单位编码'"
+              :value="'xxxx'"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'职称'"
+              :value="'xxxx'"
+            ></van-cell>
+            <van-cell
+              class="vh-font-14"
+              title-class="vh-color-tip"
+              :title="'进单位时间'"
+              :value="`${formatDate(new Date(), 'YYYY-MM-DD')}`"
+            ></van-cell>
           </template>
         </van-collapse-item>
         <van-collapse-item :name="1" class="vh-mb-100" :border="false">
@@ -139,6 +156,7 @@ import vars from '@/assets/css/vars.less'
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
 import TimeLine from '@comp/common/TimeLine'
+import { formatDate } from '@/utils/date'
 export default {
   name: 'RotationalCheck',
   components: { FileCard, ImgView, TimeLine },
@@ -172,7 +190,8 @@ export default {
         { text: '同意', value: 'pass' }
       ],
       colorYellow: vars.colorYellow,
-      colorRed: vars.colorRed
+      colorRed: vars.colorRed,
+      formatDate
     }
   },
   created() {},
