@@ -1,7 +1,7 @@
 /*
  * @Description: 路由动态缓存
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 22:34:49
+ * @LastEditTime: 2022-04-06 10:40:48
  */
 import { isPlainObject, findLastIndex, remove } from 'lodash-es'
 const state = {
@@ -17,29 +17,29 @@ const getters = {
 const actions = {
   // 处理缓存问题方法
   handleInclude({ commit, dispatch, getters }, { to, from }) {
-    if (to.params.__routerType === 'push' || to.query.__routerType === 'push') {
-      // push 方法跳转
-      commit('PUSH_INCLUDE', to.name)
-      commit('PUSH_HISTORY_VIRTUAL_ROUTES', to)
-    } else if (to.params.__routerType === 'replace' || to.query.__routerType === 'replace') {
-      // replace 方法跳转
+    const len = getters.historyVirtualRoutes.length
+    const flag = len && getters.historyVirtualRoutes[len - 1].path === from.path
+    // console.log(to, from, flag)
+    if (flag) {
+      // 返回
       commit('POP_INCLUDE', from.name)
-      commit('PUSH_INCLUDE', to.name)
-      commit('POP_HISTORY_VIRTUAL_ROUTES', from)
-      commit('PUSH_HISTORY_VIRTUAL_ROUTES', to)
+      commit('POP_HISTORY_VIRTUAL_ROUTES')
     } else {
-      const len = getters.historyVirtualRoutes.length
-      const flag = len && getters.historyVirtualRoutes[len - 1].path === from.path
-      if (flag) {
-        // 返回
-        commit('POP_INCLUDE', to.name)
-        commit('POP_HISTORY_VIRTUAL_ROUTES')
-      } else {
-        // 非返回
-        commit('PUSH_INCLUDE', to.name)
-        commit('PUSH_HISTORY_VIRTUAL_ROUTES', to)
-      }
+      // 非返回
+      commit('PUSH_INCLUDE', to.name)
+      commit('PUSH_HISTORY_VIRTUAL_ROUTES', to)
     }
+    // if (to.params.__routerType === 'push' || to.query.__routerType === 'push') {
+    //   // push 方法跳转
+    //   commit('PUSH_INCLUDE', to.name)
+    //   commit('PUSH_HISTORY_VIRTUAL_ROUTES', to)
+    // } else if (to.params.__routerType === 'replace' || to.query.__routerType === 'replace') {
+    //   // replace 方法跳转
+    //   commit('POP_INCLUDE', from.name)
+    //   commit('PUSH_INCLUDE', to.name)
+    //   commit('POP_HISTORY_VIRTUAL_ROUTES', from)
+    //   commit('PUSH_HISTORY_VIRTUAL_ROUTES', to)
+    // }
     // 处理 meta.keepAlive 参数缓存
     dispatch('handleIncludeKeepAlive', to)
     dispatch('handleIncludeKeepAlive', from)
@@ -55,9 +55,13 @@ const actions = {
       }
     }
   },
-  // 重置缓存
+  // 清除缓存
   clearInclude({ commit }) {
     commit('CLEAR_INCLUDE')
+  },
+  // 重置缓存
+  resetKeepAlive({ commit }) {
+    commit('RESET_KEEP_ALIVE')
   }
 }
 const mutations = {
@@ -103,6 +107,12 @@ const mutations = {
   // 重置缓存集合
   CLEAR_INCLUDE(state) {
     state.include = []
+  },
+  // 初始化
+  RESET_KEEP_ALIVE(state) {
+    state.historyVirtualRoutes = []
+    state.include = []
+    state.exclude = []
   }
 }
 export default {

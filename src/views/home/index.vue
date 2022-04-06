@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 17:56:44
+ * @LastEditTime: 2022-04-06 10:42:20
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -120,6 +120,13 @@ export default {
         }
       ]
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(to, from)
+    next((vm) => {
+      // 通过 `vm` 访问组件实例
+      vm.$store.dispatch('cacheView/resetKeepAlive')
+    })
   },
   created() {},
   methods: {

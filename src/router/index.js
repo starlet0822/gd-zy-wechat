@@ -1,7 +1,7 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 22:35:11
+ * @LastEditTime: 2022-04-06 10:34:25
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -15,8 +15,8 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   // mode: 'history',
   base: process.env.BASE_URL,
-  routes
-  // scrollBehavior: () => ({ y: 0 }) // 刷新重置滚动条滚动值 0
+  routes,
+  scrollBehavior: () => ({ y: 0 }) // 刷新重置滚动条滚动值 0
   // scrollBehavior(to, from, savedPosition) {
   //   if (savedPosition) {
   //     return savedPosition
