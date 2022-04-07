@@ -1,11 +1,11 @@
 <!--
  * @Description:空数据状态组件
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 16:01:03
+ * @LastEditTime: 2022-03-17 10:11:27
 -->
 <template>
   <div class="empty-wrapper">
-    <van-empty description="暂无数据" />
+    <van-empty description="描述文字" />
   </div>
 </template>
 
@@ -13,14 +13,19 @@
 export default {
   name: 'Empty',
   data() {
-    return {}
+    return {
+
+    }
   },
-  created() {},
-  methods: {}
+  created() {
+
+  },
+  methods: {
+
+  }
 }
 </script>
 
-<style lang="less" scoped>
-.empty-wrapper {
-}
+<style lang='less' scoped>
+.empty-wrapper{}
 </style>

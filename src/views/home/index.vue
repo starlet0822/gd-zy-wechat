@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 16:22:10
+ * @LastEditTime: 2022-04-07 10:30:24
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -10,31 +10,24 @@
       v-for="(item, index) in list"
       :key="item.title + index"
     >
-      <template v-if="item.children && item.children.length">
-        <van-cell
-          title-class="vh-title"
-          class="vh-border-0 module-title vh-pb-0"
-          :title="item.title"
-        ></van-cell>
-        <van-grid :gutter="0" :border="false" :clickable="true">
-          <template v-if="item.children && item.children.length">
-            <van-grid-item
-              v-for="(cItem, cIndex) in item.children"
-              :key="cItem.meta.title + cIndex"
-              icon-prefix="iconfont icon"
-              :icon="cItem.meta.icon"
-              :text="cItem.meta.title"
-              v-bind="linkProps(cItem)"
-              badge=""
-              @click="onclickItem(cItem, index)"
-            />
-          </template>
-          <template v-else>
-            <div class="vh-p-box">暂无子模块</div>
-          </template>
-
-          <!-- 自定义内容 -->
-          <!-- <template v-if="false">
+      <van-cell
+        title-class="vh-title"
+        class="vh-border-0 module-title vh-pb-0"
+        :title="item.title"
+      ></van-cell>
+      <van-grid :gutter="0" :border="false" :clickable="true">
+        <van-grid-item
+          v-for="(cItem, cIndex) in item.children"
+          :key="cItem.text + cIndex"
+          icon-prefix="iconfont icon"
+          :icon="cItem.icon"
+          :text="cItem.text"
+          v-bind="linkProps(cItem)"
+          badge=""
+          @click="onclickItem(cItem, index)"
+        />
+        <!-- 自定义内容 -->
+        <template v-if="false">
           <van-grid-item
             v-for="(cItem, cIndex) in item.children"
             :key="cItem.text + cIndex"
@@ -48,29 +41,26 @@
                 @click="onclickItem(cItem, index)"
               >
                 <van-icon class="iconfont" size="0.6rem" class-prefix="icon" name="zhuanhuan" />
+                <!-- TODO van-ellipsis无效？  -->
                 <div class="vh-font-12 vh-mt-8 van-ellipsis">
                   {{ cItem.text }}
                 </div>
               </div>
             </template>
           </van-grid-item>
-        </template> -->
-        </van-grid>
-      </template>
+        </template>
+      </van-grid>
     </div>
   </div>
 </template>
 
 <script>
 import { isExternal } from '@/utils/is'
-import { handleMenus } from './hooks/use-menus'
-import { routes } from '@/router/routes'
 export default {
   name: 'Home',
   components: {},
   data() {
     return {
-      constantRoutes: routes.filter((v) => v?.meta?.modCode && v?.meta?.title),
       list: [
         {
           title: '财务报销',
@@ -165,11 +155,7 @@ export default {
       ]
     }
   },
-  created() {
-    const menus = this.$store.state.user.menus
-    // const menus = [{ modCode: '21', modName: '全景人力' }]
-    this.list = handleMenus(menus, this.constantRoutes)
-  },
+  created() {},
   methods: {
     onclickItem(item, index) {
       if (item.to === '') {
@@ -187,9 +173,9 @@ export default {
       // }
     },
     // 特殊处理 to url属性
-    linkProps({ path }) {
+    linkProps({ to }) {
       return {
-        [isExternal(path) ? 'url' : 'to']: path
+        [isExternal(to) ? 'url' : 'to']: to
       }
     }
   }
