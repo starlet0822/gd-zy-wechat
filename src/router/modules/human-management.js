@@ -1,16 +1,14 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 14:37:26
+ * @LastEditTime: 2022-04-02 15:51:21
  */
 export default [
   {
     path: '/attendance',
     name: 'Attendance',
     meta: {
-      title: '考勤申请',
-      icon: 'kaoqin',
-      modCode: '21',
+      title: '考勤审批',
       keepAlive: true
     },
     component: () =>
@@ -30,8 +28,6 @@ export default [
     name: 'Vacation',
     meta: {
       title: '休假申请',
-      icon: 'xiujia',
-      modCode: '21',
       keepAlive: true
     },
     component: () =>
@@ -51,8 +47,6 @@ export default [
     name: 'Rotational',
     meta: {
       title: '职工轮岗',
-      icon: 'lungang',
-      modCode: '21',
       keepAlive: true
     },
     component: () =>
@@ -72,8 +66,6 @@ export default [
     name: 'Secondment',
     meta: {
       title: '职工借调',
-      icon: 'jiediao',
-      modCode: '21',
       keepAlive: true
     },
     component: () =>
@@ -89,12 +81,29 @@ export default [
       import(/* webpackChunkName: "secondment-check" */ '@/views/human-management/secondment/check')
   },
   {
+    path: '/rotary',
+    name: 'Rotary',
+    meta: {
+      title: '轮转申请',
+      keepAlive: true
+    },
+    component: () =>
+      import(/* webpackChunkName: "rotary" */ '@/views/human-management/rotary/index.vue')
+  },
+  {
+    path: '/rotary-check',
+    name: 'RotaryCheck',
+    meta: {
+      title: '轮转审批'
+    },
+    component: () =>
+      import(/* webpackChunkName: "rotary-check" */ '@/views/human-management/rotary/check')
+  },
+  {
     path: '/departure',
     name: 'Departure',
     meta: {
       title: '离职申请',
-      icon: 'lizhi',
-      modCode: '21',
       keepAlive: true
     },
     component: () =>
@@ -108,26 +117,5 @@ export default [
     },
     component: () =>
       import(/* webpackChunkName: "departure-check" */ '@/views/human-management/departure/check')
-  },
-  // {
-  //   path: '/rotary',
-  //   name: 'Rotary',
-  //   meta: {
-  //     title: '轮转申请',
-  //     icon: 'lunzhuan',
-  //     modCode: '21',
-  //     keepAlive: true
-  //   },
-  //   component: () =>
-  //     import(/* webpackChunkName: "rotary" */ '@/views/human-management/rotary/index.vue')
-  // },
-  {
-    path: '/rotary-check',
-    name: 'RotaryCheck',
-    meta: {
-      title: '轮转审批'
-    },
-    component: () =>
-      import(/* webpackChunkName: "rotary-check" */ '@/views/human-management/rotary/check')
   }
 ]
