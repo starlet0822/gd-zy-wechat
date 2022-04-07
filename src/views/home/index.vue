@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 16:03:28
+ * @LastEditTime: 2022-04-07 10:30:24
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -10,7 +10,11 @@
       v-for="(item, index) in list"
       :key="item.title + index"
     >
-      <van-cell title-class="vh-title" class="vh-border-0 vh-pb-0" :title="item.title"></van-cell>
+      <van-cell
+        title-class="vh-title"
+        class="vh-border-0 module-title vh-pb-0"
+        :title="item.title"
+      ></van-cell>
       <van-grid :gutter="0" :border="false" :clickable="true">
         <van-grid-item
           v-for="(cItem, cIndex) in item.children"
@@ -59,6 +63,16 @@ export default {
     return {
       list: [
         {
+          title: '财务报销',
+          children: [
+            {
+              text: '智能报销',
+              to: 'http://hrp.gdhtcm.com:8111/OES/ctrl/crtlwechat/index/appmodellogin.jsp',
+              icon: 'baoxiao'
+            }
+          ]
+        },
+        {
           title: '固定资产',
           children: [
             {
@@ -80,17 +94,17 @@ export default {
               text: '资产转移',
               to: '/asset-transfer',
               icon: 'zhuanyi'
-            },
-            {
-              text: '项目库',
-              to: '',
-              icon: 'cangku'
-            },
-            {
-              text: '待处理消息',
-              to: '',
-              icon: 'xiaoxi'
             }
+            // {
+            //   text: '项目库',
+            //   to: '',
+            //   icon: 'cangku'
+            // },
+            // {
+            //   text: '待处理消息',
+            //   to: '',
+            //   icon: 'xiaoxi'
+            // }
           ]
         },
         {
@@ -125,16 +139,6 @@ export default {
               text: '轮转审批',
               to: '/rotary',
               icon: 'lunzhuan'
-            }
-          ]
-        },
-        {
-          title: '财务报销',
-          children: [
-            {
-              text: '智能报销',
-              to: 'http://hrp.gdhtcm.com:8111/OES/ctrl/crtlwechat/index/appmodellogin.jsp',
-              icon: 'baoxiao'
             }
           ]
         },
@@ -181,6 +185,9 @@ export default {
 <style lang="less" scoped>
 .home-wrapper {
   /deep/.module {
+    &-title {
+      font-weight: 600;
+    }
     .van-grid-item {
       .van-grid-item__icon {
         display: flex;
@@ -192,6 +199,9 @@ export default {
         font-size: 32px;
         background: rgba(243, 247, 255, 1);
         color: #2f6bf4;
+      }
+      .van-grid-item__text {
+        font-size: 15px;
       }
     }
     .module-children {

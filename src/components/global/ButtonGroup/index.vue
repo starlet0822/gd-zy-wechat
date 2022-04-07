@@ -1,7 +1,7 @@
 <!--
  * @Description: 功能按钮组
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:46:00
+ * @LastEditTime: 2022-04-07 10:29:27
 -->
 <template>
   <div class="button-group-placeholder">
@@ -95,7 +95,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'small',
+      default: 'normal',
       validator(val) {
         return ['large', 'small', 'mini', 'normal'].includes(val) // large small mini
       }
@@ -159,7 +159,7 @@ export default {
 <style lang="less" scoped>
 .button-group-placeholder {
   // padding-top: 52px;
-  height: 52px; // BUG这种方案 页面内容减少时会顶上去
+  height: 64px; // BUG这种方案 页面内容减少时会顶上去
 
   .button-group-wrapper {
     // height: 1.3867rem;
@@ -173,7 +173,7 @@ export default {
       //   background-color: @color-bg;
       // }
       &--other {
-        height: 36px;
+        height: 40px;
       }
     }
   }

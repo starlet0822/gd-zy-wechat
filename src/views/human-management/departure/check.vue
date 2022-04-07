@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮转审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 10:13:36
+ * @LastEditTime: 2022-04-07 10:37:29
 -->
 <template>
   <div class="rotary-check-wrapper vh-bg">
@@ -108,7 +108,7 @@
       </van-collapse>
     </div>
     <!-- 查看附件 -->
-    <vh-button-group :btn-arr="[{ text: '查看附件', value: 'view' }]" />
+    <!-- <vh-button-group :btn-arr="[{ text: '查看附件', value: 'view' }]" /> -->
     <!-- 表单 -->
     <van-form @submit="onSubmit" class="vh-mb-10 vh-mt-10">
       <van-field

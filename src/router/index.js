@@ -1,7 +1,7 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 09:43:06
+ * @LastEditTime: 2022-04-07 10:22:50
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -32,7 +32,8 @@ router.beforeEach((to, from, next) => {
   console.log(to, from)
   // const hasCode = getCode()
   store.dispatch('user/judgeLoginState', {
-    code: '2QGyUJWXN1e1woH3W1lmke-5_CTCSTsfLYu7EJMdI9o' || getCode()
+    code: 'dzvldczOAc19tG7o0nKOOJpNx3KrjDL26Dx5HAGz2iw' || getCode(),
+    state: ''
   })
   next()
 })

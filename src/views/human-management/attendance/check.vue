@@ -1,21 +1,25 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-03-29 09:39:47
+ * @LastEditTime: 2022-04-07 10:34:49
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
-    <vh-nav-bar></vh-nav-bar>
+    <vh-nav-bar @click-right="onClickCheck">
+      <template #right>
+        <div class="vh-color-white">审批详情</div>
+      </template>
+    </vh-nav-bar>
     <div class="check-info vh-bg-white vh-p-10 vh-m-10 vh-rounded-6">
       <div class="vh-flex-ac-jb vh-pb-8">
         <span>{{ '黄晶如' }}</span>
-        <van-button
+        <!-- <van-button
           :color="showCheckDetail ? colorRed : colorYellow"
           size="mini"
           @click="onClickCheck"
         >
           {{ showCheckDetail ? '隐藏流程' : '查看流程' }}
-        </van-button>
+        </van-button> -->
       </div>
       <p class="vh-pb-8">
         <span class="vh-color-tip">工号：</span>
@@ -61,11 +65,11 @@
         <span class="vh-color-tip">补考勤年：</span>
         <span>{{ new Date() | formatDate('YYYY') }}</span>
       </p>
-      <transition name="van-slide-up">
+      <!-- <transition name="van-slide-up">
         <div v-show="showCheckDetail">
           <TimeLine class="vh-p-0"></TimeLine>
         </div>
-      </transition>
+      </transition> -->
     </div>
     <!-- 表单 -->
     <van-form @submit="onSubmit" class="vh-mb-10">
@@ -84,16 +88,16 @@
     </van-form>
     <!-- 底部按钮组 -->
     <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn"></vh-button-group>
-    <!-- <van-popup
+    <van-popup
       v-model="showCheckDetail"
       position="right"
       closeable
-      :style="{ width: '100%', height: '100%' }"
+      :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-flex-center vh-pt-40">
         <TimeLine></TimeLine>
       </div>
-    </van-popup> -->
+    </van-popup>
   </div>
 </template>
 
