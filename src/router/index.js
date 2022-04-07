@@ -1,11 +1,13 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-06 18:51:53
+ * @LastEditTime: 2022-04-07 09:43:06
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
+import store from '@/store'
+import { getCode } from '@/utils'
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   console.log(to, from)
+  // const hasCode = getCode()
+  store.dispatch('user/judgeLoginState', {
+    code: '2QGyUJWXN1e1woH3W1lmke-5_CTCSTsfLYu7EJMdI9o' || getCode()
+  })
   next()
 })
 

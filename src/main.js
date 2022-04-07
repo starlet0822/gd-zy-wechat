@@ -16,7 +16,7 @@ import common from './mixins/common'
 import { registerFilter } from './filters/index'
 import { registerGlobComp } from '@/components/global/index'
 import { registerGlobDirective } from '@/directives/index' // 注册全局自定义指令
-import { getCode } from './utils/code'
+import { getCode, setCode } from './utils/code'
 registerFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
 registerGlobDirective(Vue)
@@ -26,7 +26,7 @@ registerGlobDirective(Vue)
 // mockXHR()
 // // }
 
-getCode()
+setCode(getCode)
 
 console.log('当前运行环境：', ENV)
 Vue.use(common) // 公共混入注册

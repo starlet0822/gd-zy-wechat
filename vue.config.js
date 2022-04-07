@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 09:08:50
+ * @LastEditTime: 2022-04-07 09:49:20
  */
 'use strict'
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -33,7 +33,7 @@ module.exports = {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_API_BASEURL]: {
-        target: `http://10.10.254.24:8089/`,
+        target: `http://10.10.247.74:8089/`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_API_BASEURL]: ''
