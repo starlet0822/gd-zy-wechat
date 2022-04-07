@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 17:56:14
+ * @LastEditTime: 2022-04-06 16:28:33
  */
 import Vue from 'vue'
 import {
@@ -41,7 +41,9 @@ import {
   DatetimePicker,
   Toast,
   Row,
-  Col
+  Col,
+  CheckboxGroup,
+  Checkbox
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -80,3 +82,5 @@ Vue.use(Button)
   .use(DropdownMenu)
   .use(DropdownItem)
   .use(DatetimePicker)
+  .use(CheckboxGroup)
+  .use(Checkbox)

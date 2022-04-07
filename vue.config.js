@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 11:45:18
+ * @LastEditTime: 2022-04-07 09:08:50
  */
 'use strict'
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -28,18 +28,18 @@ module.exports = {
       //  当出现编译器错误或警告时，在浏览器中显示全屏覆盖层
       warnings: false,
       errors: true
+    },
+    proxy: {
+      // change xxx-api/login => mock/login
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_API_BASEURL]: {
+        target: `http://10.10.254.24:8089/`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_API_BASEURL]: ''
+        }
+      }
     }
-    // proxy: {
-    //   // change xxx-api/login => mock/login
-    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
-    //   [process.env.VUE_APP_API_BASEURL]: {
-    //     target: `http://localhost:${port}/`,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_API_BASEURL]: ''
-    //     }
-    //   }
-    // },
     // before: require('./mock/mock-server.js')
   },
   css: {
@@ -54,10 +54,7 @@ module.exports = {
             // 'text-color': '#111',
             // 'border-color': '#eee',
             // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
-            hack: `true; @import "${path.resolve(
-              __dirname,
-              './src/assets/css/vant.less'
-            )}";`
+            hack: `true; @import "${path.resolve(__dirname, './src/assets/css/vant.less')}";`
           }
         }
       }
@@ -90,40 +87,49 @@ module.exports = {
       })
     )
     // TODO生产环境才开启 gzip压缩
-    config.plugins.push(new CompressionPlugin({
-      filename: '[path][name].gz',
-      test: /\.(js|css)$/i,
-      threshold: 10240,
-      minRatio: 0.8
-    })) &&
-    // Vconsole 调试器
-    config.plugins.push(new VConsolePlugin({
-      filter: [],
-      enable: IsBuild && VCONSOLE
-    }))
+    config.plugins.push(
+      new CompressionPlugin({
+        filename: '[path][name].gz',
+        test: /\.(js|css)$/i,
+        threshold: 10240,
+        minRatio: 0.8
+      })
+    ) &&
+      // Vconsole 调试器
+      config.plugins.push(
+        new VConsolePlugin({
+          filter: [],
+          enable: IsBuild && VCONSOLE
+        })
+      )
     // 打包分析
     // IsBuild && config.plugins.push(new BundleAnalyzerPlugin())
   },
   chainWebpack: (config) => {
     console.log('当前环境为：' + process.env.NODE_ENV)
-    config.plugin('html').tap((args) => {
-      args[0].title = defaultSettings.title
-      return args
-    }).end()
-    config.when(IsBuild, config => {
-      // 配置删除 console.log
-      config.optimization.minimizer('terser').tap(args => {
-      // remove debugger
-        args[0].terserOptions.compress.drop_debugger = true
-        // 移除 console.log
-        args[0].terserOptions.compress.pure_funcs = ['console.log']
-        // 去掉注释 如果需要看chunk-vendors公共部分插件，可以注释掉就可以看到注释了
-        args[0].terserOptions.output = {
-          comments: false
-        }
+    config
+      .plugin('html')
+      .tap((args) => {
+        args[0].title = defaultSettings.title
         return args
       })
-    }).end()
+      .end()
+    config
+      .when(IsBuild, (config) => {
+        // 配置删除 console.log
+        config.optimization.minimizer('terser').tap((args) => {
+          // remove debugger
+          args[0].terserOptions.compress.drop_debugger = true
+          // 移除 console.log
+          args[0].terserOptions.compress.pure_funcs = VCONSOLE ? [] : ['console.log']
+          // 去掉注释 如果需要看chunk-vendors公共部分插件，可以注释掉就可以看到注释了
+          args[0].terserOptions.output = {
+            comments: false
+          }
+          return args
+        })
+      })
+      .end()
     // 开发环境可使用 开发工具
     // config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-source-map'))
     // 别名 alias

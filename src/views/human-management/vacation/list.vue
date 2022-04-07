@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:25:57
+ * @LastEditTime: 2022-04-06 16:46:29
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -9,43 +9,55 @@
     <!-- 列表 -->
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <template v-for="item in 5">
-          <van-row
-            v-waves
-            class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
-            type="flex"
-            align="center"
-            :key="item"
-            @click="handleClickCheck"
-          >
-            <van-col span="16">
-              <div class="vacation-item-info">
-                <p>{{ '年假审批_张三_2022-03-29' }}</p>
-                <p class="vh-tip">{{ '特批年假6天' }}</p>
-                <p class="vh-tip">{{ '财务部审计处_张三' }}</p>
-              </div>
-            </van-col>
-            <van-col span="8" class="vh-flex-center">
-              <van-button
-                class="vh-px-8"
-                size="mini"
-                :color="colorBlue"
-                @click.stop="handleClickCheck"
-              >
-                {{ '审批' }}
-              </van-button>
-              <div class="vh-mx-10"></div>
-              <van-button
-                class="vh-px-8"
-                size="mini"
-                :color="colorOrange"
-                @click.stop="handleClickReject"
-              >
-                {{ '驳回' }}
-              </van-button>
-            </van-col>
-          </van-row>
-          <!-- <div class="vacation-item vh-bg-white vh-p-10 vh-border-b-1 vh-flex-ac-jb" :key="item">
+        <van-checkbox-group v-model="result">
+          <template v-for="item in 5">
+            <van-row
+              v-waves
+              class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
+              type="flex"
+              align="center"
+              :key="item"
+            >
+              <van-col span="2">
+                <van-checkbox
+                  :name="item"
+                  @click.stop="
+                    () => {
+                      return
+                    }
+                  "
+                ></van-checkbox>
+              </van-col>
+              <van-col span="14" @click.stop="handleClickCheck">
+                <div class="vacation-item-info">
+                  <div class="vh-flex-ac">
+                    <p>{{ '年假审批_张三_2022-03-29' }}</p>
+                  </div>
+                  <p class="vh-tip">{{ '特批年假6天' }}</p>
+                  <p class="vh-tip">{{ '财务部审计处_张三' }}</p>
+                </div>
+              </van-col>
+              <van-col span="8" class="vh-flex-center">
+                <van-button
+                  class="vh-px-8"
+                  size="mini"
+                  :color="colorBlue"
+                  @click.stop="handleClickCheck"
+                >
+                  {{ '审批' }}
+                </van-button>
+                <div class="vh-mx-10"></div>
+                <van-button
+                  class="vh-px-8"
+                  size="mini"
+                  :color="colorOrange"
+                  @click.stop="handleClickReject"
+                >
+                  {{ '驳回' }}
+                </van-button>
+              </van-col>
+            </van-row>
+            <!-- <div class="vacation-item vh-bg-white vh-p-10 vh-border-b-1 vh-flex-ac-jb" :key="item">
         <div class="vacation-item-info">
           <p>{{ '年假审批_张三_2022-03-29' }}</p>
           <p>{{ '特批年假6天' }}</p>
@@ -60,7 +72,8 @@
           </div>
         </div>
       </div> -->
-        </template>
+          </template>
+        </van-checkbox-group>
       </van-list>
     </van-pull-refresh>
   </div>
@@ -75,6 +88,7 @@ export default {
     return {
       colorBlue: vars.colorBlue,
       colorOrange: vars.colorOrange,
+      result: [1],
       dataList: [],
       loading: false,
       finished: false,

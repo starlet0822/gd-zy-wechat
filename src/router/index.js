@@ -1,7 +1,7 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-03-27 15:30:01
+ * @LastEditTime: 2022-04-06 18:51:53
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -24,6 +24,11 @@ const router = new VueRouter({
       return { x: 0, y: to.meta.savedPosition || 0 }
     }
   }
+})
+
+router.beforeEach((to, from, next) => {
+  console.log(to, from)
+  next()
 })
 
 export default router

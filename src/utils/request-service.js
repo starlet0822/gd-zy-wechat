@@ -1,19 +1,19 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-03-30 09:53:49
+ * @LastEditTime: 2022-04-06 16:57:38
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
 // import { Toast } from 'vant'
 const service = axios.create({
   baseURL: API_BASEURL,
-  timeout: API_TIMEOUT,
-  headers: {
-    post: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    }
-  }
+  timeout: API_TIMEOUT
+  // headers: {
+  //   post: {
+  //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  //   }
+  // }
 })
 
 // 请求拦截器
