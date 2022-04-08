@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-04-06 16:28:33
+ * @LastEditTime: 2022-04-08 16:35:56
  */
 import Vue from 'vue'
 import {
@@ -43,7 +43,8 @@ import {
   Row,
   Col,
   CheckboxGroup,
-  Checkbox
+  Checkbox,
+  Switch
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -84,3 +85,4 @@ Vue.use(Button)
   .use(DatetimePicker)
   .use(CheckboxGroup)
   .use(Checkbox)
+  .use(Switch)

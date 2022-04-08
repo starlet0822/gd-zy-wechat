@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:55:42
+ * @LastEditTime: 2022-04-08 18:30:48
 -->
 <template>
   <div class="timeline-wrapper vh-p-box33">
@@ -11,9 +11,9 @@
         <!-- 年月标签 -->
         <div class="timeline-item-left">
           <p>
-            {{ item.time | formatDate('YYYY-MM-DD') }}
+            {{ item.completeTime | formatDate('YYYY-MM-DD') }}
             <br />
-            {{ item.time | formatDate('HH:mm:ss') }}
+            {{ item.completeTime | formatDate('HH:mm:ss') }}
           </p>
         </div>
         <div class="timeline-item-right vh-pt-5 vh-flex-row">
@@ -24,17 +24,17 @@
           <!-- 时间项容器 -->
           <div class="timeline-item__wrapper">
             <!-- 时间项内容 -->
-            <div class="timeline-item_content vh-flex-ac-jb">
-              <div>{{ item.name }}</div>
-              <div class="vh-color-tip vh-px-8">{{ item.result }}</div>
-              <div class="vh-color-tip">{{ '主任审核' }}</div>
+            <div class="timeline-item_content vh-flex-ac">
+              <div>{{ item.userEntityName }}</div>
+              <div class="vh-color-tip vh-px-8">{{ item.name || '--' }}</div>
+              <div class="vh-color-tip">{{ item.remark || '--' }}</div>
             </div>
             <!-- 时间线时间 -->
             <!-- <div class="timeline-item_timestamp vh-color-tip vh-mt-8">{{ `2022-0${item}-21` }}</div> -->
           </div>
         </div>
       </li>
-      <template v-if="isShowToggle">
+      <template v-if="length > 5 && isShowToggle">
         <div class="pick-btn vh-color-blue" @click="handleToggle">
           {{ isPickup ? '展开' : '收起' }}
           <van-icon :name="isPickup ? 'arrow-down' : 'arrow-up'" />
@@ -45,9 +45,14 @@
 </template>
 
 <script>
+import { findCheckInfo } from '@/api/modules/common'
 export default {
   name: 'TimeLine',
   props: {
+    id: {
+      type: String,
+      default: ''
+    },
     // 时间线数据源
     timeList: {
       type: [Array],
@@ -72,7 +77,11 @@ export default {
   data() {
     return {
       isPickup: true, // 默认显示展开按钮
-      list: this.timeList.slice(0, +this.length)
+      list: this.timeList.slice(0, +this.length),
+      typeCode: 'hr_vacation'
+      // params: {
+
+      // }
     }
   },
   computed: {
@@ -83,11 +92,22 @@ export default {
       }
     }
   },
+  mounted() {
+    this.findCheckInfo()
+  },
   methods: {
+    // 获取审批流程
+    async findCheckInfo() {
+      const params = { typeCode: this.typeCode, busKey: this.id }
+      const { errcode, data } = await findCheckInfo(params)
+      if (errcode === '0') {
+        this.list = data || []
+      }
+    },
     // 展开收起切换
     handleToggle() {
       this.isPickup = !this.isPickup
-      this.list = this.isPickup ? this.timeList.slice(0, +this.length) : this.timeList
+      this.list = this.isPickup ? this.list.slice(0, +this.length) : this.list
     }
   }
 }
@@ -96,6 +116,8 @@ export default {
 <style lang="less" scoped>
 .timeline-wrapper {
   background-color: #fff;
+  padding: 10px;
+
   .timeline__header {
     // font-size: 18px;
     // line-height: 1.5;

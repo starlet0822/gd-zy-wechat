@@ -1,11 +1,15 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 14:59:52
+ * @LastEditTime: 2022-04-08 18:31:34
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
-    <vh-nav-bar></vh-nav-bar>
+    <vh-nav-bar @click-right="onClickCheck">
+      <template #right>
+        <div class="vh-color-white">审批流程</div>
+      </template>
+    </vh-nav-bar>
     <div class="check-info vh-mb-10 vh-bg-white">
       <!-- 折叠面板 -->
       <van-collapse v-model="activeNames" :border="false">
@@ -60,7 +64,17 @@
       />
     </van-form>
     <!-- 底部按钮组 -->
-    <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn"></vh-button-group>
+    <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn" />
+    <van-popup
+      v-model="showCheckDetail"
+      position="right"
+      closeable
+      :style="{ width: '90%', height: '100%' }"
+    >
+      <div class="vh-flex-center vh-pt-40">
+        <TimeLine :id="parameters.billId"></TimeLine>
+      </div>
+    </van-popup>
   </div>
 </template>
 
@@ -70,9 +84,10 @@ import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { findCodeName } from './hooks'
 import ImgView from '@comp/common/ImgView'
 import FileCard from '@comp/common/FileCard'
+import TimeLine from '@comp/common/TimeLine'
 export default {
   name: 'VacationCheck',
-  components: { ImgView, FileCard },
+  components: { ImgView, FileCard, TimeLine },
   data() {
     return {
       formData: [],

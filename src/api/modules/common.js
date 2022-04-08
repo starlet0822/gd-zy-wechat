@@ -1,7 +1,7 @@
 /*
  * @Description:公共接口
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 15:34:08
+ * @LastEditTime: 2022-04-08 17:07:12
  */
 import { get, postForm } from '@/utils/request-method'
 // 获取审批列表
@@ -24,4 +24,8 @@ export function sendCheck(params) {
 // 审批驳回
 export function getCheckCount(params) {
   return postForm(`/api/common/getCheckCount`, params)
+}
+// 查看审批流程详情接口
+export function findCheckInfo(params) {
+  return postForm(`/api/common/findCheckInfo`, params)
 }

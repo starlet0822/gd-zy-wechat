@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 15:11:33
+ * @LastEditTime: 2022-04-08 17:25:46
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -22,25 +22,40 @@
           </template>
         </van-search>
       </div>
+      <van-cell center class="vh-border-0" v-if="dataList.length">
+        <template #title>
+          <div class="vh-tip">
+            共查询到
+            <span class="vh-color-orange">{{ dataList.length }}</span>
+            条记录
+          </div>
+        </template>
+        <template #right-icon>
+          <span class="vh-font-14">{{ showMulti ? '批量审批' : '单个审批' }}</span>
+          <van-switch size="0.64rem" class="vh-ml-10" v-model="showMulti"></van-switch>
+        </template>
+      </van-cell>
       <!-- 列表 -->
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model="loading"
+          :error="error"
           :finished="finished"
           :finished-text="finishedText"
           @load="onLoad"
         >
-          <!-- <van-checkbox-group v-model="result"> -->
-          <template v-for="(item, index) in dataList">
+          <!-- <van-switch v-if="dataList.length" size="0.64rem" class="vh-ml-10" v-model="showMulti" /> -->
+          <van-checkbox-group v-model="result">
             <van-row
               v-waves
               class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
               type="flex"
               align="center"
+              v-for="(item, index) in dataList"
               :key="item.billId + index"
               @click="handleClickCheck(item)"
             >
-              <!-- <van-col span="2">
+              <van-col span="2">
                 <van-checkbox
                   :name="item"
                   @click.stop="
@@ -49,31 +64,21 @@
                     }
                   "
                 ></van-checkbox>
-              </van-col> -->
-              <!-- <van-col span="22" @click.stop="handleClickCheck(item)">
-                <div class="vacation-item-info">
-                  <div class="vh-flex-ac">
-                    <p>{{ item.title }}</p>
-                  </div>
-                  <p class="vh-tip">{{ '特批年假6天' }}</p>
-                  <p class="vh-tip">{{ '财务部审计处_张三' }}</p>
-                </div>
-              </van-col> -->
-              <van-col span="12">
+              </van-col>
+              <van-col span="11">
                 <p v-for="(left, leftIdx) in item.formData.slice(0, 2)" :key="leftIdx">
                   <span class="vh-tip">{{ left.fieldKey }}：</span>
                   <span>{{ left.fieldValue }}</span>
                 </p>
               </van-col>
-              <van-col span="12">
+              <van-col span="11">
                 <p v-for="(left, leftIdx) in item.formData.slice(2)" :key="leftIdx">
                   <span class="vh-tip">{{ left.fieldKey }}：</span>
                   <span>{{ left.fieldValue }}</span>
                 </p>
               </van-col>
             </van-row>
-          </template>
-          <!-- </van-checkbox-group> -->
+          </van-checkbox-group>
           <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
         </van-list>
       </van-pull-refresh>
@@ -94,10 +99,12 @@ export default {
       colorBlue: vars.colorBlue,
       colorOrange: vars.colorOrange,
       themeColor,
+      showMulti: false, // 是否批量
       result: [1],
       tabActive: 0,
       tabs: ['待处理', '已处理', '全部'],
       dataList: [],
+      error: false,
       loading: false,
       finished: false,
       refreshing: false,
@@ -128,41 +135,56 @@ export default {
   },
   created() {},
   methods: {
-    async onLoad() {
-      // return
-      if (this.refreshing) {
-        this.dataList = []
+    onLoad() {
+      this.getList()
+    },
+    // 获取数据列表
+    async getList() {
+      try {
+        // 组织请求参数
+        const params = {
+          typeCode: this.typeCode,
+          pageRequest: this.pageRequest,
+          parameters: this.parameters
+        }
+        const {
+          errcode,
+          data: { dataList: data, totalSize }
+        } = await findHrCheckList(params)
+        if (errcode === '0') {
+          this.totalSize = totalSize
+          if (params.pageRequest.pageNum === 1) {
+            this.dataList = data || []
+          } else {
+            this.dataList = this.dataList.concat(data || [])
+          }
+          if (this.dataList.length < this.totalSize) {
+            params.pageRequest.pageNum = params.pageRequest.pageNum + 1
+          }
+        }
+        if (this.dataList.length >= this.totalSize) this.finished = true
+      } catch (e) {
+        console.log('捕获异常', e)
+        this.error = true
+        this.pageRequest.pageNum = 1 // 重置为初始页码
+      } finally {
         this.refreshing = false
-      }
-      const {
-        errcode,
-        data: { dataList: data, totalSize }
-      } = await findHrCheckList({
-        typeCode: this.typeCode,
-        pageRequest: this.pageRequest,
-        parameters: this.parameters
-      })
-      console.log('findHrCheckList', data)
-      if (errcode === '0') {
-        this.total = totalSize
-        this.dataList = this.dataList.concat(data)
-      }
-      this.loading = false
-      if (this.dataList.length >= this.total) {
-        this.finished = true
+        this.loading = false
       }
     },
+    // 列表刷新
     onRefresh() {
+      console.log('列表数据刷新---')
       // 清空列表数据
-      this.dataList = []
       this.finished = false
-
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
+      this.refreshing = true
       this.loading = true
+      this.dataList = []
+      this.totalSize = 0
+      this.pageRequest.pageNum = 1
       this.onLoad()
     },
-    //
+    // 标签页切换回调
     handleTasChange(val) {
       this.parameters.dataState = ['0', '1', 'all'][val]
       this.onRefresh()

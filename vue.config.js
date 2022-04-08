@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 15:26:43
+ * @LastEditTime: 2022-04-08 15:35:45
  */
 'use strict'
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -14,13 +14,11 @@ const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { port, npm_config_port, NODE_ENV, VCONSOLE } = process.env
 // console.log('VCONSOLE', VCONSOLE)
-console.log('defaultSettings', defaultSettings.publicPath)
 const DevPort = port || npm_config_port || 8088 // dev port
 const IsBuild = ['production', 'prod'].includes(NODE_ENV)
 module.exports = {
-  // publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
-  publicPath: defaultSettings.publicPath, // 署应用包时的基本 URL。
-  // publicPath: PUBLIC_PATH,
+  publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
+  // publicPath: defaultSettings.publicPath, // 署应用包时的基本 URL。
   lintOnSave: !IsBuild,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
