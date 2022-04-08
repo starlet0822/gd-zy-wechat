@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 09:49:20
+ * @LastEditTime: 2022-04-08 15:26:43
  */
 'use strict'
 // const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -14,11 +14,13 @@ const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { port, npm_config_port, NODE_ENV, VCONSOLE } = process.env
 // console.log('VCONSOLE', VCONSOLE)
+console.log('defaultSettings', defaultSettings.publicPath)
 const DevPort = port || npm_config_port || 8088 // dev port
 const IsBuild = ['production', 'prod'].includes(NODE_ENV)
 module.exports = {
-  publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
-  // publicPath: defaultSettings.baseUrl, // 署应用包时的基本 URL。
+  // publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
+  publicPath: defaultSettings.publicPath, // 署应用包时的基本 URL。
+  // publicPath: PUBLIC_PATH,
   lintOnSave: !IsBuild,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
@@ -32,11 +34,12 @@ module.exports = {
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
-      [process.env.VUE_APP_API_BASEURL]: {
-        target: `http://10.10.247.74:8089/`,
+      // [process.env.VUE_APP_API_BASEURL]: {
+      '/dev': {
+        target: `http://10.10.247.31:8089/`,
         changeOrigin: true,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_API_BASEURL]: ''
+          '^/dev': ''
         }
       }
     }

@@ -1,13 +1,13 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 16:39:17
+ * @LastEditTime: 2022-04-08 15:34:28
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 import store from '@/store'
-import { getCode } from '@/utils'
+// import { getCode } from '@/utils'
 
 Vue.use(VueRouter)
 
@@ -32,19 +32,18 @@ router.beforeEach(async(to, from, next) => {
   console.log(to, from)
   // const hasCode = getCode()
   console.log(store.state.user.openId)
-  if (!store.getters.openId) {
-    const data = await store.dispatch('user/judgeLoginState', {
-      code: 'aboOQqIaiGAktVbTp9ChkYTQja7hQdejFMkqWS4b7RA' || getCode(),
-      state: ''
-    })
-    const { authority } = data
-    if (authority === '1') {
-      next('/login')
-    } else {
-      next('/')
-    }
-  }
-
+  // if (!store.getters.openId) {
+  //   const data = await store.dispatch('user/judgeLoginState', {
+  //     code: 'aboOQqIaiGAktVbTp9ChkYTQja7hQdejFMkqWS4b7RA' || getCode(),
+  //     state: ''
+  //   })
+  //   const { authority } = data
+  //   if (authority === '1') {
+  //     next('/login')
+  //   } else {
+  //     next('/')
+  //   }
+  // }
   next()
 })
 

@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 11:51:48
+ * @LastEditTime: 2022-04-08 14:18:40
 -->
 <template>
   <div class="file-card-wrapper">
@@ -10,6 +10,7 @@
       v-for="(file, index) in fileList"
       :key="file.fileName + index"
       v-waves
+      @click="onClickFile(file)"
     >
       <div class="vh-flex-center">
         <van-icon size="32" name="description" />
@@ -18,13 +19,15 @@
         <div class="file-name vh-font-14 van-multi-ellipsis--l2">
           {{ file.fileName }}
         </div>
-        <div class="file-size vh-tip">{{ file.fileSize }}</div>
+        <div class="file-size vh-tip">{{ getFileSize(file.fileSize) }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { isPic } from '@/utils/is'
+import { getFileSize } from '@/utils/flle'
 export default {
   name: 'FileCard',
   props: {
@@ -49,11 +52,24 @@ export default {
       ]
     }
   },
+  data() {
+    return {
+      getFileSize
+    }
+  },
   computed: {
     fileList: {
       get() {
-        return this.value
+        return this.value.filter((v) => !isPic(v.fileType))
       }
+    }
+  },
+  methods: {
+    // 点击文件 TODO: 文件大小转换
+    onClickFile(file) {
+      const prefix = 'http://10.10.247.31:8089/'
+      const url = prefix + `/api/file/getUrlFile?path=${file.filePath}&isview=1`
+      window.open(url)
     }
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 09:02:45
+ * @LastEditTime: 2022-04-08 14:59:52
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -9,99 +9,37 @@
     <div class="check-info vh-mb-10 vh-bg-white">
       <!-- 折叠面板 -->
       <van-collapse v-model="activeNames" :border="false">
-        <van-collapse-item :name="0" class="vh-mb-100" :border="false">
+        <van-collapse-item
+          v-for="(item, index) in formData"
+          :key="index"
+          :name="index"
+          class="vh-mb-100"
+          :border="false"
+        >
           <template #title>
-            <div class="vh-color-blue2">人员基本信息</div>
+            <div class="vh-color-blue2">{{ item.title }}</div>
           </template>
           <template #default>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'员工姓名'"
-              :value="dataInfo.userInfo.name"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'员工编号'"
-              :value="dataInfo.userInfo.no"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'部门'"
-              :value="dataInfo.userInfo.depName"
-            ></van-cell>
-            <!-- <van-cell
-              title-class="vh-color-tip"
-              v-for="citem in 5"
-              :key="citem"
-              :title="'资产名称' + citem"
-              value="xxx"
-            ></van-cell> -->
-          </template>
-        </van-collapse-item>
-        <van-collapse-item :name="1" :border="false">
-          <template #title>
-            <div class="vh-color-blue2">考勤休假申请表</div>
-          </template>
-          <template #default>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'休假类型'"
-              :value="dataInfo.vacationInfo.type"
-            ></van-cell>
-            <van-cell class="vh-font-14" title-class="vh-color-tip" :title="'休假余额'">
-              <template #default>
-                <div>
-                  <span class="vh-color-orange">{{ dataInfo.vacationInfo.balance }}</span>
-                  天
-                </div>
+            <template v-if="item.type === 'jsonText'">
+              <van-cell
+                v-for="(row, rowIdx) in item.rowData"
+                :key="rowIdx"
+                title-class="vh-color-tip"
+                :title="row.fieldName"
+                :value="row.fieldValue || '--'"
+              ></van-cell>
+            </template>
+            <!-- 附件 -->
+            <div v-else class="vh-p-box">
+              <template v-if="item.rowData && item.rowData.length">
+                <!-- 图片集 -->
+                <ImgView v-model="item.rowData" border></ImgView>
+                <FileCard v-model="item.rowData" class="vh-color-text"></FileCard>
               </template>
-            </van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'休假天数'"
-              :value="dataInfo.vacationInfo.dayNum + '天'"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'申请日期'"
-              :value="dataInfo.vacationInfo.applyDate | formatDate('YYYY-MM-DD')"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'开始日期'"
-              :value="dataInfo.vacationInfo.startDate | formatDate('YYYY-MM-DD')"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'结束日期'"
-              :value="dataInfo.vacationInfo.endDate | formatDate('YYYY-MM-DD')"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'申请原因'"
-              :value="dataInfo.vacationInfo.reason"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'开始上下午'"
-              :value="dataInfo.vacationInfo.start"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'结束上下午'"
-              :value="dataInfo.vacationInfo.end"
-            ></van-cell>
+              <template v-else>
+                <div>暂无附件</div>
+              </template>
+            </div>
           </template>
         </van-collapse-item>
       </van-collapse>
@@ -109,8 +47,8 @@
     <!-- 表单 -->
     <van-form @submit="onSubmit" class="vh-mb-10">
       <van-field
-        v-model="formInfo.opinion"
-        name="opinion"
+        v-model="checkParam.remark"
+        name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
         type="textarea"
@@ -128,44 +66,87 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
+import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
+import { findCodeName } from './hooks'
+import ImgView from '@comp/common/ImgView'
+import FileCard from '@comp/common/FileCard'
 export default {
   name: 'VacationCheck',
-  components: {},
+  components: { ImgView, FileCard },
   data() {
     return {
-      dataInfo: {
-        userInfo: {
-          name: '张三',
-          no: '6675',
-          depName: '信息管理办公室'
-        },
-        vacationInfo: {
-          type: '年假',
-          balance: '10.00',
-          dayNum: 5,
-          applyDate: new Date(),
-          startDate: new Date(),
-          endDate: new Date(),
-          reason: '休年假',
-          start: '上午',
-          end: '下午'
-        }
-      },
-      activeNames: [0, 1],
+      formData: [],
+      activeNames: [],
       showCheckDetail: false,
-      formInfo: {
-        opinion: ''
-      },
       btnList: [
-        { text: '驳回', value: 'nopass' },
-        { text: '同意', value: 'pass' }
+        { text: '驳回', value: 'NO' },
+        { text: '同意', value: 'YES' }
       ],
       colorYellow: vars.colorYellow,
-      colorRed: vars.colorRed
+      colorRed: vars.colorRed,
+      // 请求参数
+      typeCode: 'hr_vacation',
+      parameters: {
+        billId: ''
+      },
+      checkParam: {
+        // empName: '谢杰伟',
+        // empCode: 538,
+        busKey: '',
+        checkState: 'NO',
+        remark: '',
+        openId: 'xiejiewei'
+      }
     }
   },
-  created() {},
+  created() {
+    // this.checkParam.openId = this.$store.state.user.openId
+    this.getInfo()
+  },
   methods: {
+    async getInfo() {
+      const { id } = this.$route.params
+      this.parameters.billId = this.checkParam.busKey = id
+      const { errcode, data } = await findCheckInfoDetail({
+        typeCode: this.typeCode,
+        parameters: this.parameters
+      })
+      if (errcode === '0') {
+        this.formData = data.formData || []
+        this.activeNames = [...Array(this.formData.length).keys()]
+        // 获取code name
+        const user = findCodeName(this.formData)
+        this.checkParam = { ...user, ...this.checkParam }
+      }
+    },
+    // 驳回
+    async checkInfo(type) {
+      const { id } = this.$route.params
+      this.parameters.billId = id
+      const { errcode, errmsg } = await sendCheck({
+        typeCode: this.typeCode,
+        checkParam: this.checkParam
+      })
+      if (errcode === '0') {
+        this.$toast({
+          message: type === 'YES' ? '已同意' : '已驳回',
+          type: 'success',
+          duration: 800,
+          // overlay: true,
+          forbidClick: true
+        })
+        this.$router.back()
+      }
+      if (errcode === '1') {
+        this.$toast({
+          message: errmsg,
+          type: 'error',
+          duration: 1500,
+          // overlay: true,
+          forbidClick: true
+        })
+      }
+    },
     onClickCheck() {
       this.showCheckDetail = !this.showCheckDetail
     },
@@ -174,26 +155,16 @@ export default {
     },
     // 按钮回调
     handleClickBtn({ value }) {
-      switch (value) {
-        case 'pass':
-          this.$toast({
-            message: '已同意',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
-          break
-        case 'nopass':
-          this.$toast({
-            message: '已驳回',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
-          break
-      }
+      this.checkParam.checkState = value
+      this.checkInfo(value)
+      // switch (value) {
+      //   case 'YES':
+      //     this.checkInfo()
+      //     break
+      //   case 'NO':
+      //     this.checkInfo()
+      //     break
+      // }
     }
   }
 }
@@ -203,6 +174,7 @@ export default {
 .vacation-check-wrapper {
   /deep/.check-info {
     .van-collapse-item__title {
+      // background: rgba(47, 107, 244, 0.1);
       background: @color-bg;
     }
     .van-collapse-item__content {

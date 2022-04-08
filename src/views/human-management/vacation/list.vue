@@ -1,24 +1,46 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-06 16:46:29
+ * @LastEditTime: 2022-04-08 15:11:33
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
+    <!-- TODO 批量审批 -->
     <vh-nav-bar></vh-nav-bar>
-    <!-- 列表 -->
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-        <van-checkbox-group v-model="result">
-          <template v-for="item in 5">
+    <MoveTabs v-model.trim="tabActive" :tabs="tabs" offset-top="48" @change="handleTasChange">
+      <div class="vh-w-full vh-flex-ac">
+        <van-search
+          class="vh-flex1"
+          v-model="parameters.queryTerm"
+          placeholder="请输入员工姓名"
+          :show-action="true"
+        >
+          <template #action>
+            <div class="vh-flex-center" @click="handleSearch">
+              <van-button class="vh-px-12" type="info" size="mini">查询</van-button>
+            </div>
+          </template>
+        </van-search>
+      </div>
+      <!-- 列表 -->
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          :finished-text="finishedText"
+          @load="onLoad"
+        >
+          <!-- <van-checkbox-group v-model="result"> -->
+          <template v-for="(item, index) in dataList">
             <van-row
               v-waves
               class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
               type="flex"
               align="center"
-              :key="item"
+              :key="item.billId + index"
+              @click="handleClickCheck(item)"
             >
-              <van-col span="2">
+              <!-- <van-col span="2">
                 <van-checkbox
                   :name="item"
                   @click.stop="
@@ -27,95 +49,112 @@
                     }
                   "
                 ></van-checkbox>
-              </van-col>
-              <van-col span="14" @click.stop="handleClickCheck">
+              </van-col> -->
+              <!-- <van-col span="22" @click.stop="handleClickCheck(item)">
                 <div class="vacation-item-info">
                   <div class="vh-flex-ac">
-                    <p>{{ '年假审批_张三_2022-03-29' }}</p>
+                    <p>{{ item.title }}</p>
                   </div>
                   <p class="vh-tip">{{ '特批年假6天' }}</p>
                   <p class="vh-tip">{{ '财务部审计处_张三' }}</p>
                 </div>
+              </van-col> -->
+              <van-col span="12">
+                <p v-for="(left, leftIdx) in item.formData.slice(0, 2)" :key="leftIdx">
+                  <span class="vh-tip">{{ left.fieldKey }}：</span>
+                  <span>{{ left.fieldValue }}</span>
+                </p>
               </van-col>
-              <van-col span="8" class="vh-flex-center">
-                <van-button
-                  class="vh-px-8"
-                  size="mini"
-                  :color="colorBlue"
-                  @click.stop="handleClickCheck"
-                >
-                  {{ '审批' }}
-                </van-button>
-                <div class="vh-mx-10"></div>
-                <van-button
-                  class="vh-px-8"
-                  size="mini"
-                  :color="colorOrange"
-                  @click.stop="handleClickReject"
-                >
-                  {{ '驳回' }}
-                </van-button>
+              <van-col span="12">
+                <p v-for="(left, leftIdx) in item.formData.slice(2)" :key="leftIdx">
+                  <span class="vh-tip">{{ left.fieldKey }}：</span>
+                  <span>{{ left.fieldValue }}</span>
+                </p>
               </van-col>
             </van-row>
-            <!-- <div class="vacation-item vh-bg-white vh-p-10 vh-border-b-1 vh-flex-ac-jb" :key="item">
-        <div class="vacation-item-info">
-          <p>{{ '年假审批_张三_2022-03-29' }}</p>
-          <p>{{ '特批年假6天' }}</p>
-          <p>{{ '财务部审计处_张三' }}</p>
-        </div>
-        <div class="vacation-item-info">
-          <van-button class="vh-px-8" size="mini" :color="colorBlue">{{ '审批' }}</van-button>
-          <div class="vh-ml-10">
-            <van-button class="vh-px-8" size="mini" :color="colorOrange">
-              {{ '驳回' }}
-            </van-button>
-          </div>
-        </div>
-      </div> -->
           </template>
-        </van-checkbox-group>
-      </van-list>
-    </van-pull-refresh>
+          <!-- </van-checkbox-group> -->
+          <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
+        </van-list>
+      </van-pull-refresh>
+    </MoveTabs>
   </div>
 </template>
 
 <script>
+import MoveTabs from '@comp/common/MoveTabs'
 import vars from '@/assets/css/vars.less'
+import { themeColor } from '@/config/constants'
+import { findHrCheckList } from '@/api/modules/common'
 export default {
   name: 'Vacation',
-  components: {},
+  components: { MoveTabs },
   data() {
     return {
       colorBlue: vars.colorBlue,
       colorOrange: vars.colorOrange,
+      themeColor,
       result: [1],
+      tabActive: 0,
+      tabs: ['待处理', '已处理', '全部'],
       dataList: [],
       loading: false,
       finished: false,
-      refreshing: false
+      refreshing: false,
+      totalSize: 0,
+      typeCode: 'hr_vacation',
+      pageRequest: {
+        pageNum: 1,
+        pageSize: 10
+      },
+      parameters: {
+        dataState: '0', // 默认待处理
+        queryTerm: ''
+      }
+    }
+  },
+  computed: {
+    showAction: {
+      get() {
+        return String(this.parameters.queryTerm).trim() !== '' // TODO 清空两边空格无效
+      }
+    },
+    finishedText: {
+      // 共${this.dataList.length}条数据
+      get() {
+        return this.dataList.length ? `没有更多了` : ''
+      }
     }
   },
   created() {},
   methods: {
-    onLoad() {
-      setTimeout(() => {
-        if (this.refreshing) {
-          this.dataList = []
-          this.refreshing = false
-        }
-
-        for (let i = 0; i < 10; i++) {
-          this.dataList.push(this.dataList.length + 1)
-        }
-        this.loading = false
-
-        if (this.dataList.length >= 40) {
-          this.finished = true
-        }
-      }, 1000)
+    async onLoad() {
+      // return
+      if (this.refreshing) {
+        this.dataList = []
+        this.refreshing = false
+      }
+      const {
+        errcode,
+        data: { dataList: data, totalSize }
+      } = await findHrCheckList({
+        typeCode: this.typeCode,
+        pageRequest: this.pageRequest,
+        parameters: this.parameters
+      })
+      console.log('findHrCheckList', data)
+      if (errcode === '0') {
+        this.total = totalSize
+        this.dataList = this.dataList.concat(data)
+      }
+      this.loading = false
+      if (this.dataList.length >= this.total) {
+        this.finished = true
+      }
     },
     onRefresh() {
       // 清空列表数据
+      this.dataList = []
       this.finished = false
 
       // 重新加载数据
@@ -123,9 +162,18 @@ export default {
       this.loading = true
       this.onLoad()
     },
+    //
+    handleTasChange(val) {
+      this.parameters.dataState = ['0', '1', 'all'][val]
+      this.onRefresh()
+    },
+    // 搜索
+    handleSearch() {
+      this.onRefresh()
+    },
     // 审批
-    handleClickCheck() {
-      this.$router.push(`/vacation-check`)
+    handleClickCheck({ billId }) {
+      this.$router.push(`/vacation-check/${billId}`)
     },
     // 驳回
     handleClickReject() {

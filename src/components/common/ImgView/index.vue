@@ -1,7 +1,7 @@
 <!--
  * @Description: 图片展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 11:51:37
+ * @LastEditTime: 2022-04-08 13:42:52
 -->
 <template>
   <div class="imgView-wrapper vh-p-box12 vh-bg-white" :class="{ 'van-hairline--bottom': border }">
@@ -25,6 +25,7 @@
 
 <script>
 import { ImagePreview } from 'vant'
+import { isPic } from '@/utils/is'
 export default {
   name: 'ImgView',
   props: {
@@ -56,7 +57,12 @@ export default {
   computed: {
     imgList: {
       get() {
-        return this.value.map((item) => item.filePath)
+        const imgs = this.value.filter((v) => isPic(v.fileType))
+        return imgs.map((item) => {
+          const prefix = 'http://10.10.247.31:8089/'
+          const url = prefix + `/api/file/getUrlFile?path=${item.filePath}&isview=1`
+          return url
+        })
       }
     }
   },

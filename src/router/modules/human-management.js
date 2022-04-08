@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 14:37:26
+ * @LastEditTime: 2022-04-08 09:19:24
  */
 export default [
   {
@@ -38,7 +38,7 @@ export default [
       import(/* webpackChunkName: "vacation" */ '@/views/human-management/vacation/list.vue')
   },
   {
-    path: '/vacation-check',
+    path: '/vacation-check/:id',
     name: 'VacationCheck',
     meta: {
       title: '休假审批'

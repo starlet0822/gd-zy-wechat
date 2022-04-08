@@ -1,12 +1,12 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-03-31 16:22:10
+ * @LastEditTime: 2022-04-07 17:10:26
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter v-model="query.title" @search="handleSearch"></search-filter>
+    <search-filter v-model="parameters.fixName" @search="handleSearch"></search-filter>
     <van-tabs
       v-model="active"
       animated
@@ -71,7 +71,7 @@
 
 <script>
 import { themeColor, checkStatus } from '@/config/constants'
-import { getFixCheckList } from '@/api/modules/asset-management'
+import { getFixCheckList } from '@/api/modules/common'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
@@ -96,11 +96,11 @@ export default {
       checkStatus, // 审批状态
       // 列表相关
       mockArr: 1,
-      query: {
-        title: '',
-        page: 1,
-        limit: 10,
-        checkState: 'NO'
+      typeCode: 'fix_acquisition',
+      parameters: {
+        fixName: ''
+        // page: 1,
+        // limit: 10
       },
       dataList: [],
       loading: false,
@@ -115,9 +115,9 @@ export default {
         this.dataList = []
         this.refreshing = false
       }
-      const res = await getFixCheckList(this.query)
-      // console.log(res)
-      if (res.errcode === 0) {
+      const res = await getFixCheckList({ typeCode: this.typeCode, parameters: this.parameters })
+      console.log('getFixCheckList', res)
+      if (res.errcode === '0') {
         this.dataList = this.dataList.concat(res.data)
       }
       this.loading = false
@@ -138,13 +138,13 @@ export default {
     // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
-      this.query.title = val
+      this.parameters.fixName = val
       this.onRefresh()
     },
     // 标签页切换
     onTabsChange(id, title) {
       console.log(id)
-      this.query.checkState = id
+      this.parameters.checkState = id
       this.onRefresh()
     }
   }

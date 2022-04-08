@@ -1,8 +1,10 @@
 /*
  * @Description:校验工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 16:11:52
+ * @LastEditTime: 2022-04-08 14:16:01
  */
+export { isNumber as _isNumber } from 'lodash-es'
+
 /**
  * @desc 是否是数组
  * @param {Array} arg
@@ -17,4 +19,8 @@ export function isArray(arg) {
 
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
+}
+
+export function isPic(arg) {
+  return /(png|jpg|jpeg)/.test(arg)
 }
