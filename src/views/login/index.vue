@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 11:49:36
+ * @LastEditTime: 2022-04-11 16:09:25
 -->
 <template>
   <div class="login-wrapper vh-flex-center">
@@ -22,7 +22,7 @@
         :rules="[{ required: true, message: '请填写密码' }]"
       />
       <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit">提交</van-button>
+        <van-button round block type="info" native-type="submit">登录</van-button>
       </div>
     </van-form>
   </div>
@@ -30,7 +30,7 @@
 
 <script>
 // import { getToken, login } from '@api/modules/user'
-// import { Loading } from "vant"
+import { debounce } from '@/utils'
 export default {
   name: 'Login',
   components: {},
@@ -56,17 +56,19 @@ export default {
     // 登录绑定
     async loginFn() {
       try {
-        // 开启loading
+        this.$toast.loading({ message: '登录中...' }) // 开启loading
         const data = await this.$store.dispatch('user/login', this.loginForm)
+        this.$toast.loading().clear() // 清除loading
         this.$router.push({ path: '/' })
         this.dataList = data || []
       } catch {
-        // 清除loading
+        this.$toast.loading().clear() // 清除loading
       }
     },
+    // 表单提交
     onSubmit(values) {
       console.log('submit', values)
-      this.loginFn()
+      debounce(this.loginFn(), 150) // TODO 无效？
     }
   }
 }

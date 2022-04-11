@@ -1,11 +1,11 @@
 <!--
  * @Description:404页面
  * @Author: wuxxing
- * @LastEditTime: 2022-03-17 12:31:20
+ * @LastEditTime: 2022-04-11 14:11:35
 -->
 <template>
   <div class="error404-wrapper">
-    404
+    <vh-empty image="network" description="404"></vh-empty>
   </div>
 </template>
 
@@ -13,19 +13,14 @@
 export default {
   name: 'Error404',
   data() {
-    return {
-
-    }
+    return {}
   },
-  created() {
-
-  },
-  methods: {
-
-  }
+  created() {},
+  methods: {}
 }
 </script>
 
-<style lang='less' scoped>
-.error404-wrapper{}
+<style lang="less" scoped>
+.error404-wrapper {
+}
 </style>

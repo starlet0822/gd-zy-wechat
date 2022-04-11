@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 16:35:56
+ * @LastEditTime: 2022-04-11 09:56:44
  */
 import Vue from 'vue'
 import {
@@ -44,7 +44,8 @@ import {
   Col,
   CheckboxGroup,
   Checkbox,
-  Switch
+  Switch,
+  Loading
 } from 'vant'
 Vue.use(Button)
   .use(Cell)
@@ -70,6 +71,7 @@ Vue.use(Button)
   .use(Lazyload, { lazyComponent: false })
   .use(Dialog)
   .use(Toast)
+  .use(Loading)
   .use(Popup)
   .use(Popover)
   .use(ActionSheet)

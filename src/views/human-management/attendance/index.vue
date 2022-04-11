@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 15:56:45
+ * @LastEditTime: 2022-04-11 11:12:40
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -10,7 +10,7 @@
       <div class="vh-w-full vh-flex-ac">
         <van-search
           class="vh-flex1"
-          v-model="keyword"
+          v-model.trim="keyword"
           placeholder="请输入员工姓名"
           :show-action="showAction"
           @search="handleSearch"

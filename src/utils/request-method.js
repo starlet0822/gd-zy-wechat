@@ -1,7 +1,7 @@
 /*
  * @Description:请求方法 封装
  * @Author: wuxxing
- * @LastEditTime: 2022-03-24 09:34:06
+ * @LastEditTime: 2022-04-11 14:43:32
  */
 import request from './request-service'
 import Qs from 'qs'
@@ -24,10 +24,11 @@ export const get = (url, params, config = {}) => {
 
 // axios#post(url[, data[, config]])
 // `data` 是放在请求的body里
+// Content-Type: application/json 参数格式
 export const post = (url, data, config = {}) => {
   return new Promise((resolve, reject) => {
     request
-      .post(url, Qs.stringify(data), config)
+      .post(url, data, config)
       .then((res) => {
         resolve(res.data)
       })
@@ -36,11 +37,12 @@ export const post = (url, data, config = {}) => {
       })
   })
 }
+// Content-Type: application/x-www-form-urlencoded 参数格式
 export const postForm = (url, params, config = {}) => {
-  config.timeout = config.timeout || 60000
+  // config.timeout = config.timeout || 60000
   return new Promise((resolve, reject) => {
     request
-      .post(url, params, config)
+      .post(url, Qs.stringify(params), config)
       .then((res) => {
         resolve(res.data)
       })

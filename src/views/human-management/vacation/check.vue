@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 18:31:34
+ * @LastEditTime: 2022-04-11 11:53:33
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -189,13 +189,26 @@ export default {
 .vacation-check-wrapper {
   /deep/.check-info {
     .van-collapse-item__title {
-      // background: rgba(47, 107, 244, 0.1);
-      background: @color-bg;
+      // background: rgba(0, 0, 0, 0.1);
+      // background: @color-bg;
+      border-bottom: 1px solid #e6e6e6;
+      height: 40px;
+      // &::before {
+      //   content: ' ';
+      //   display: block;
+      //   height: 40%;
+      //   // line-height: 80%;
+      //   width: 3px;
+      //   background-color: @color-orange;
+      //   position: absolute;
+      //   left: 3%;
+      //   top: 50%;
+      //   transform: translateY(-40%);
+      // }
     }
     .van-collapse-item__content {
       padding: 0;
       .van-cell {
-        // font-size: @font14;
         padding-top: 5px;
         padding-bottom: 5px;
         &::after {

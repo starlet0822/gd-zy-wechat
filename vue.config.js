@@ -1,10 +1,10 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 15:35:45
+ * @LastEditTime: 2022-04-11 16:04:28
  */
 'use strict'
-// const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
+const prodGzipExtensions = /\.(js|css|json|txt|html)$/i
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
 const defaultSettings = require('./src/config/settings')
@@ -12,14 +12,14 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
 const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-const { port, npm_config_port, NODE_ENV, VCONSOLE } = process.env
+const { port, VUE_APP_PORT, npm_config_port, NODE_ENV, VCONSOLE } = process.env
 // console.log('VCONSOLE', VCONSOLE)
-const DevPort = port || npm_config_port || 8088 // dev port
-const IsBuild = ['production', 'prod'].includes(NODE_ENV)
+const DevPort = port || npm_config_port || VUE_APP_PORT // dev port
+const isBuild = ['production', 'prod'].includes(NODE_ENV)
 module.exports = {
-  publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
-  // publicPath: defaultSettings.publicPath, // 署应用包时的基本 URL。
-  lintOnSave: !IsBuild,
+  // publicPath: './', // 署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
+  publicPath: defaultSettings.publicPath, // 署应用包时的基本 URL。
+  lintOnSave: !isBuild,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
     port: DevPort,
@@ -34,7 +34,7 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       // [process.env.VUE_APP_API_BASEURL]: {
       '/dev': {
-        target: `http://10.10.247.31:8089/`,
+        target: `http://10.10.247.41:8089/`,
         changeOrigin: true,
         pathRewrite: {
           '^/dev': ''
@@ -91,20 +91,20 @@ module.exports = {
     config.plugins.push(
       new CompressionPlugin({
         filename: '[path][name].gz',
-        test: /\.(js|css)$/i,
+        test: prodGzipExtensions,
         threshold: 10240,
         minRatio: 0.8
       })
-    ) &&
-      // Vconsole 调试器
-      config.plugins.push(
-        new VConsolePlugin({
-          filter: [],
-          enable: IsBuild && VCONSOLE
-        })
-      )
+    )
+    // Vconsole 调试器
+    config.plugins.push(
+      new VConsolePlugin({
+        filter: [],
+        enable: isBuild && VCONSOLE
+      })
+    )
     // 打包分析
-    // IsBuild && config.plugins.push(new BundleAnalyzerPlugin())
+    // isBuild && config.plugins.push(new BundleAnalyzerPlugin())
   },
   chainWebpack: (config) => {
     console.log('当前环境为：' + process.env.NODE_ENV)
@@ -116,7 +116,7 @@ module.exports = {
       })
       .end()
     config
-      .when(IsBuild, (config) => {
+      .when(isBuild, (config) => {
         // 配置删除 console.log
         config.optimization.minimizer('terser').tap((args) => {
           // remove debugger

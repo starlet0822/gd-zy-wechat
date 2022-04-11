@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 11:00:57
+ * @LastEditTime: 2022-04-11 13:56:53
  */
 export function findCodeName(target) {
   for (const item of target) {
@@ -18,7 +18,6 @@ export function findCodeName(target) {
     console.log(user)
     if (user.empCode && user.empName) {
       return user
-      // break
     }
   }
 }

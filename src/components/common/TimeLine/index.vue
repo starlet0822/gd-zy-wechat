@@ -1,46 +1,49 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 18:30:48
+ * @LastEditTime: 2022-04-11 13:56:18
 -->
 <template>
   <div class="timeline-wrapper vh-p-box33">
-    <div class="timeline__header vh-color-blue">{{ '审批流程' }}</div>
-    <ul class="timeline">
-      <li class="timeline-item vh-flex-row" v-for="(item, index) in list" :key="index">
-        <!-- 年月标签 -->
-        <div class="timeline-item-left">
-          <p>
-            {{ item.completeTime | formatDate('YYYY-MM-DD') }}
-            <br />
-            {{ item.completeTime | formatDate('HH:mm:ss') }}
-          </p>
-        </div>
-        <div class="timeline-item-right vh-pt-5 vh-flex-row">
-          <!-- 时间线条 -->
-          <div class="timeline-item__tail"></div>
-          <!-- 节点 -->
-          <div class="timeline-item__node"></div>
-          <!-- 时间项容器 -->
-          <div class="timeline-item__wrapper">
-            <!-- 时间项内容 -->
-            <div class="timeline-item_content vh-flex-ac">
-              <div>{{ item.userEntityName }}</div>
-              <div class="vh-color-tip vh-px-8">{{ item.name || '--' }}</div>
-              <div class="vh-color-tip">{{ item.remark || '--' }}</div>
-            </div>
-            <!-- 时间线时间 -->
-            <!-- <div class="timeline-item_timestamp vh-color-tip vh-mt-8">{{ `2022-0${item}-21` }}</div> -->
+    <template v-if="list.length > 0">
+      <div class="timeline__header vh-color-blue">{{ '审批流程' }}</div>
+      <ul class="timeline">
+        <li class="timeline-item vh-flex-row" v-for="(item, index) in list" :key="index">
+          <!-- 年月标签 -->
+          <div class="timeline-item-left">
+            <p>
+              {{ item.completeTime | formatDate('YYYY-MM-DD') }}
+              <br />
+              {{ item.completeTime | formatDate('HH:mm:ss') }}
+            </p>
           </div>
-        </div>
-      </li>
-      <template v-if="length > 5 && isShowToggle">
-        <div class="pick-btn vh-color-blue" @click="handleToggle">
-          {{ isPickup ? '展开' : '收起' }}
-          <van-icon :name="isPickup ? 'arrow-down' : 'arrow-up'" />
-        </div>
-      </template>
-    </ul>
+          <div class="timeline-item-right vh-pt-5 vh-flex-row">
+            <!-- 时间线条 -->
+            <div class="timeline-item__tail"></div>
+            <!-- 节点 -->
+            <div class="timeline-item__node"></div>
+            <!-- 时间项容器 -->
+            <div class="timeline-item__wrapper">
+              <!-- 时间项内容 -->
+              <div class="timeline-item_content vh-flex-ac">
+                <div>{{ item.userEntityName }}</div>
+                <div class="vh-color-tip vh-px-8">{{ item.name || '--' }}</div>
+                <div class="vh-color-tip">{{ item.remark || '--' }}</div>
+              </div>
+              <!-- 时间线时间 -->
+              <!-- <div class="timeline-item_timestamp vh-color-tip vh-mt-8">{{ `2022-0${item}-21` }}</div> -->
+            </div>
+          </div>
+        </li>
+        <template v-if="length > 5 && isShowToggle">
+          <div class="pick-btn vh-color-blue" @click="handleToggle">
+            {{ isPickup ? '展开' : '收起' }}
+            <van-icon :name="isPickup ? 'arrow-down' : 'arrow-up'" />
+          </div>
+        </template>
+      </ul>
+    </template>
+    <vh-empty v-else></vh-empty>
   </div>
 </template>
 
@@ -98,10 +101,15 @@ export default {
   methods: {
     // 获取审批流程
     async findCheckInfo() {
-      const params = { typeCode: this.typeCode, busKey: this.id }
-      const { errcode, data } = await findCheckInfo(params)
-      if (errcode === '0') {
-        this.list = data || []
+      try {
+        // this.$toast.loading({ message: '加载中...' })
+        const params = { typeCode: this.typeCode, busKey: this.id }
+        const { errcode, data } = await findCheckInfo(params)
+        if (errcode === '0') {
+          this.list = data || []
+        }
+      } finally {
+        // this.$toast.loading().clear()
       }
     },
     // 展开收起切换

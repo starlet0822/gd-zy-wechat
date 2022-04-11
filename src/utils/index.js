@@ -1,7 +1,7 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 09:04:28
+ * @LastEditTime: 2022-04-11 09:46:34
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray } from '@utils/is'
@@ -9,7 +9,9 @@ export {
   upperFirst as _upperFirst,
   camelCase as _camelCase,
   capitalize as _capitalize,
-  kebabCase as _kebabCase
+  kebabCase as _kebabCase,
+  debounce as _debounce,
+  throttle as _throttle
 } from 'lodash-es'
 
 /**
@@ -42,4 +44,45 @@ export function urlQuery2Object(url) {
     return rs
   })
   return obj
+}
+
+/**
+ * @param {Function} func
+ * @param {number} wait
+ * @param {boolean} immediate
+ * @return {*}
+ */
+export function debounce(func, wait, immediate) {
+  let timeout, args, context, timestamp, result
+
+  const later = function () {
+    // 据上一次触发时间间隔
+    const last = +new Date() - timestamp
+
+    // 上次被包装函数被调用时间间隔 last 小于设定时间间隔 wait
+    if (last < wait && last > 0) {
+      timeout = setTimeout(later, wait - last)
+    } else {
+      timeout = null
+      // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
+      if (!immediate) {
+        result = func.apply(context, args)
+        if (!timeout) context = args = null
+      }
+    }
+  }
+
+  return function (...args) {
+    context = this
+    timestamp = +new Date()
+    const callNow = immediate && !timeout
+    // 如果延时不存在，重新设定延时
+    if (!timeout) timeout = setTimeout(later, wait)
+    if (callNow) {
+      result = func.apply(context, args)
+      context = args = null
+    }
+
+    return result
+  }
 }

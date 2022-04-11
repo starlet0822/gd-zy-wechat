@@ -1,13 +1,13 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 16:36:46
+ * @LastEditTime: 2022-04-11 14:24:37
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 const state = {
   code: null,
   openId: null,
-  menus: JSON.parse(sessionStorage.getItem('menus')) || [],
+  menus: JSON.parse(localStorage.getItem('menus')) || [],
   userName: 'startlet_wu',
   roles: ['admin']
 }
@@ -44,7 +44,7 @@ const actions = {
           const { errcode, data } = res
           if (errcode === '0') {
             commit('SET_MENUS', data || [])
-            sessionStorage.setItem('menus', JSON.stringify(data))
+            localStorage.setItem('menus', JSON.stringify(data))
           }
           resolve(data)
         })

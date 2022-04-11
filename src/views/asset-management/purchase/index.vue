@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 17:10:26
+ * @LastEditTime: 2022-04-11 09:32:58
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { themeColor, checkStatus } from '@/config/constants'
+import { themeColor, checkStatus, dataState } from '@/config/constants'
 import { getFixCheckList } from '@/api/modules/common'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
@@ -82,14 +82,7 @@ export default {
   },
   data() {
     return {
-      tabs: [
-        // { title: '全部', id: '0' },
-        { title: '待处理', id: 'NO' },
-        { title: '已处理', id: 'YES' },
-        { title: '全部', id: '' }
-        // { title: '执行完成', id: '4' },
-        // { title: '中止', id: '5' }
-      ],
+      tabs: [],
       title: '',
       active: '1',
       activeColor: themeColor,
@@ -108,7 +101,11 @@ export default {
       refreshing: false
     }
   },
-  created() {},
+  created() {
+    for (const [k, v] of dataState.entries()) {
+      this.tabs.push({ id: k, title: v })
+    }
+  },
   methods: {
     async onLoad() {
       if (this.refreshing) {

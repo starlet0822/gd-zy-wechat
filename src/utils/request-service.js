@@ -1,17 +1,18 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-04-06 16:57:38
+ * @LastEditTime: 2022-04-11 14:51:20
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
-// import { Toast } from 'vant'
+import { Toast } from 'vant'
+const settings = require('../config/settings')
 const service = axios.create({
   baseURL: API_BASEURL,
   timeout: API_TIMEOUT
   // headers: {
   //   post: {
-  //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  //     'Content-Type': 'Content-Type: application/json' // 默认参数格式
   //   }
   // }
 })
@@ -19,6 +20,15 @@ const service = axios.create({
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
+    console.log('config', config)
+    // 不传递默认开启loading
+    if (settings.showAxiosLoading && !config.noLoading) {
+      Toast.loading({
+        loadingType: 'spinner',
+        message: '加载中...',
+        forbidClick: true
+      })
+    }
     // const token = store.getters.token || sessionStorage.getItem('mobile_base_token')
     // if (token) {
     //   config.headers['Authorization'] = token
@@ -37,7 +47,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     // console.log('response', response)
-    // Toast.clear()
+    Toast.clear()
     const res = response
     if (res.status && res.status !== 200) {
       // 登录超时,重新登录
@@ -51,7 +61,7 @@ service.interceptors.response.use(
     return Promise.resolve(res)
   },
   (error) => {
-    // Toast.clear()
+    Toast.clear()
     console.error('err' + error)
     return Promise.reject(error)
   }
