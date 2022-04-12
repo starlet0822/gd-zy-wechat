@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 10:30:24
+ * @LastEditTime: 2022-04-12 09:15:43
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -134,12 +134,12 @@ export default {
               text: '离职审批',
               to: '/departure',
               icon: 'lizhi'
-            },
-            {
-              text: '轮转审批',
-              to: '/rotary',
-              icon: 'lunzhuan'
             }
+            // {
+            //   text: '轮转审批',
+            //   to: '/rotary',
+            //   icon: 'lunzhuan'
+            // }
           ]
         },
         {

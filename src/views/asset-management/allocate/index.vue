@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 13:33:15
+ * @LastEditTime: 2022-04-12 09:22:52
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -71,7 +71,7 @@
 
 <script>
 import { themeColor, checkStatus } from '@/config/constants'
-import { getFixCheckList } from '@/api/modules/asset-management'
+// import { getFixCheckList } from '@/api/modules/asset-management'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
@@ -115,13 +115,36 @@ export default {
         this.dataList = []
         this.refreshing = false
       }
-      const res = await getFixCheckList(this.query)
+      // const res = await getFixCheckList(this.query)
       // console.log(res)
-      if (res.errcode === 0) {
-        this.dataList = this.dataList.concat(res.data)
-      }
+      // if (res.errcode === 0) {
+      this.dataList = [
+        {
+          id: 0,
+          title: '鼠标',
+          dateTime: '2022-05-19 16:01',
+          checkState: 'NO',
+          formData: [
+            { fieldKey: '申请单号', fieldValue: 'GZEC1636545132' },
+            { fieldKey: '申请科室', fieldValue: '设备科' },
+            { fieldKey: '总预算', fieldValue: '100.00' }
+          ]
+        },
+        {
+          id: 1,
+          title: '办公屏风卡座',
+          dateTime: '2022-05-19 16:01',
+          checkState: 'NO',
+          formData: [
+            { fieldKey: '申请单号', fieldValue: 'GZEC1636545132' },
+            { fieldKey: '申请科室', fieldValue: '设备科' },
+            { fieldKey: '总预算', fieldValue: '100.00' }
+          ]
+        }
+      ]
+      // }
       this.loading = false
-      if (this.dataList.length >= res.total) {
+      if (this.dataList.length >= 2) {
         this.finished = true
       }
     },
