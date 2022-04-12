@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 10:34:49
+ * @LastEditTime: 2022-04-12 11:09:29
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -10,16 +10,12 @@
         <div class="vh-color-white">审批详情</div>
       </template>
     </vh-nav-bar>
-    <div class="check-info vh-bg-white vh-p-10 vh-m-10 vh-rounded-6">
+    <div class="vh-p-box0">
+      <UserTable></UserTable>
+    </div>
+    <div v-if="false" class="check-info vh-bg-white vh-p-10 vh-m-10 vh-rounded-6">
       <div class="vh-flex-ac-jb vh-pb-8">
         <span>{{ '黄晶如' }}</span>
-        <!-- <van-button
-          :color="showCheckDetail ? colorRed : colorYellow"
-          size="mini"
-          @click="onClickCheck"
-        >
-          {{ showCheckDetail ? '隐藏流程' : '查看流程' }}
-        </van-button> -->
       </div>
       <p class="vh-pb-8">
         <span class="vh-color-tip">工号：</span>
@@ -72,7 +68,7 @@
       </transition> -->
     </div>
     <!-- 表单 -->
-    <van-form @submit="onSubmit" class="vh-mb-10">
+    <van-form @submit="onSubmit" class="vh-mt-10">
       <van-field
         v-model="formInfo.opinion"
         name="opinion"
@@ -104,9 +100,10 @@
 <script>
 import vars from '@/assets/css/vars.less'
 import TimeLine from '@comp/common/TimeLine'
+import UserTable from './components/UserTable.vue'
 export default {
   name: 'AttendanceCheck',
-  components: { TimeLine },
+  components: { TimeLine, UserTable },
   data() {
     return {
       showCheckDetail: false,

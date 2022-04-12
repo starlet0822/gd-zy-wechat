@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-03-26 13:14:12
+ * @LastEditTime: 2022-04-12 11:53:15
  */
 const env = process.env.NODE_ENV
 const propList = env === '1development' ? [] : ['*', '!border']
@@ -27,7 +27,8 @@ module.exports = {
       rootValue: 37.5, // 基准值 Vant 官方根字体大小是 37.5
       unitPrecision: 5, // （数字）允许REM单位增长的十进制数字
       propList: propList,
-      selectorBlackList: ['.norem', '.vh-border'] // 选择器黑名单 匹配则不会转换成 rem单位, 大写PX不转换
+      selectorBlackList: ['.norem', '.vh-border'], // 选择器黑名单 匹配则不会转换成 rem单位, 大写PX不转换
+      mediaQuery: true // 是否允许在媒体查询中转换px。
       // exclude: /node_modules/i  // （字符串，正则表达式，函数）要忽略并保留为px的文件路径 TODO:这句有点毛病
     }
   }

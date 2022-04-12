@@ -1,7 +1,7 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 14:51:20
+ * @LastEditTime: 2022-04-12 09:37:37
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
@@ -26,7 +26,8 @@ service.interceptors.request.use(
       Toast.loading({
         loadingType: 'spinner',
         message: '加载中...',
-        forbidClick: true
+        forbidClick: true,
+        duration: 0
       })
     }
     // const token = store.getters.token || sessionStorage.getItem('mobile_base_token')
@@ -47,8 +48,10 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     // console.log('response', response)
-    Toast.clear()
     const res = response
+    if ([200, 304].includes(res.status)) {
+      Toast.clear()
+    }
     if (res.status && res.status !== 200) {
       // 登录超时,重新登录
       // if (res.status === 401) {

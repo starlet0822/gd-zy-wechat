@@ -1,7 +1,7 @@
 <!--
  * @Description: 功能按钮组
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 10:29:27
+ * @LastEditTime: 2022-04-12 14:17:49
 -->
 <template>
   <div class="button-group-placeholder">
@@ -162,7 +162,6 @@ export default {
   height: 64px; // BUG这种方案 页面内容减少时会顶上去
 
   .button-group-wrapper {
-    // height: 1.3867rem;
     padding: 10px 8px;
     box-sizing: border-box;
     z-index: 1;
