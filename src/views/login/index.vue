@@ -1,13 +1,13 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 17:38:54
+ * @LastEditTime: 2022-04-14 15:05:37
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
     <header class="login__header vh-flex-center vh-flex-col vh-pb-20">
-      <van-image :src="logoImg"></van-image>
-      <div class="vh-pt-10 logo-name">{{ '医疗高效运营企业微信' }}</div>
+      <van-image class="logoImg" :src="logoImg"></van-image>
+      <!-- <div class="vh-pt-10 logo-name">{{ logoName }}</div> -->
     </header>
     <van-form @submit="onSubmit">
       <van-field
@@ -39,7 +39,7 @@
 
 <script>
 // import { getToken, login } from '@api/modules/user'
-import logoImg from '@/assets/images/logo.png'
+import logoImg from '@/assets/images/logoImg.png'
 import { debounce } from '@/utils'
 export default {
   name: 'Login',
@@ -51,7 +51,8 @@ export default {
         password: 'Hrp@123' // Hrp@123
       },
       dataList: [],
-      logoImg: logoImg
+      logoImg: logoImg,
+      logoName: '医疗高效运营企业微信'
     }
   },
   created() {
@@ -92,6 +93,11 @@ export default {
 <style lang="less" scoped>
 .login-wrapper {
   .login__header {
+    .logoImg {
+      width: 80%;
+      // width: 167px;
+      // height: 36px;
+    }
     .logo-name {
       font-weight: 600;
       font-size: 18px;

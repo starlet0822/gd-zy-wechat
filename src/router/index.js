@@ -1,7 +1,7 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 15:34:28
+ * @LastEditTime: 2022-04-14 15:50:34
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -10,10 +10,11 @@ import store from '@/store'
 // import { getCode } from '@/utils'
 
 Vue.use(VueRouter)
-
+console.log(process.env.BASE_URL)
 const router = new VueRouter({
   // mode: 'history',
   base: process.env.BASE_URL,
+  // base: process.env.VUE_APP_PUBLIC_PATH,
   routes,
   // scrollBehavior: () => ({ y: 0 }) // 刷新重置滚动条滚动值 0
   scrollBehavior(to, from, savedPosition) {
