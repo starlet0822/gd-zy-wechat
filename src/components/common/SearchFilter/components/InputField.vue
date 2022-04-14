@@ -1,12 +1,12 @@
 <!--
  * @Description: 输入文本类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-24 15:31:28
+ * @LastEditTime: 2022-04-14 09:53:18
 -->
 <template>
   <div class="input-field-wrapper vh-border-b-11">
     <van-field
-      v-model="defaultVal"
+      v-model.trim="defaultVal"
       :label="label"
       :placeholder="placeholder"
       input-align="right"

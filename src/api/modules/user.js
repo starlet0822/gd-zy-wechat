@@ -1,7 +1,7 @@
 /*
  * @Description:用户相关接口
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 15:01:59
+ * @LastEditTime: 2022-04-13 13:52:21
  */
 import { get, post, postForm } from '@/utils/request-method'
 // 获取token
@@ -10,7 +10,7 @@ export function getToken(params) {
 }
 // 用户登录
 export function login(params) {
-  return postForm(`/api/singlesignon/loginProcessor`, params)
+  return postForm(`/api/singlesignon/loginProcessor`, params, { noLoading: true })
 }
 // 判断是否跳转登录页
 export function judgeLoginState(params) {

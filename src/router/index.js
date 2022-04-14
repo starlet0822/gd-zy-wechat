@@ -28,7 +28,7 @@ const router = new VueRouter({
   }
 })
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   console.log(to, from)
   // const hasCode = getCode()
   console.log(store.state.user.openId)

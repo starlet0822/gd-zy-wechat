@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:57:40
+ * @LastEditTime: 2022-04-14 11:00:40
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -9,7 +9,7 @@
       class="search-box vh-flex1"
       v-model="keyword"
       background="#fff"
-      placeholder="请输入搜索关键词"
+      :placeholder="placeholder"
       show-action
       :readonly="dialog"
       @focus="onFocus"
@@ -69,7 +69,11 @@ export default {
       default: ''
     },
     border: Boolean,
-    dialog: Boolean // 是否弹出
+    dialog: Boolean, // 是否弹出
+    placeholder: {
+      type: String,
+      default: '搜索'
+    }
   },
   data() {
     return {
@@ -120,11 +124,10 @@ export default {
       this.visibleFilterMenu = false
       this.$emit('confirm', filterQuery, noEmptyObj)
     },
-    // 关闭动作面板触发的回调
+    // TODO关闭动作面板触发的回调
     onCloseFilterMenu() {
-      const filterMenuRef = this.$refs.filterMenuRef
-      // console.log(filterMenuRef, 555)
-      filterMenuRef.filterConfirm()
+      // const filterMenuRef = this.$refs.filterMenuRef
+      // filterMenuRef.filterConfirm()
     }
   }
 }

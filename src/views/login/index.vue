@@ -1,10 +1,14 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 16:09:25
+ * @LastEditTime: 2022-04-13 17:38:54
 -->
 <template>
-  <div class="login-wrapper vh-flex-center">
+  <div class="login-wrapper vh-flex-center vh-flex-col">
+    <header class="login__header vh-flex-center vh-flex-col vh-pb-20">
+      <van-image :src="logoImg"></van-image>
+      <div class="vh-pt-10 logo-name">{{ '医疗高效运营企业微信' }}</div>
+    </header>
     <van-form @submit="onSubmit">
       <van-field
         v-model="loginForm.userAccount"
@@ -25,11 +29,17 @@
         <van-button round block type="info" native-type="submit">登录</van-button>
       </div>
     </van-form>
+
+    <footer class="copy">
+      <p>主办单位：广东省中医院</p>
+      <p>技术支持：望海（广东）科技有限公司</p>
+    </footer>
   </div>
 </template>
 
 <script>
 // import { getToken, login } from '@api/modules/user'
+import logoImg from '@/assets/images/logo.png'
 import { debounce } from '@/utils'
 export default {
   name: 'Login',
@@ -37,11 +47,11 @@ export default {
   data() {
     return {
       loginForm: {
-        // openId: this.$store.state.user.openId || 'xiejiewei',
-        userAccount: '2516',
-        password: 'Hrp@123'
+        userAccount: '3532', // 2516 demo
+        password: 'Hrp@123' // Hrp@123
       },
-      dataList: []
+      dataList: [],
+      logoImg: logoImg
     }
   },
   created() {
@@ -56,13 +66,18 @@ export default {
     // 登录绑定
     async loginFn() {
       try {
-        this.$toast.loading({ message: '登录中...' }) // 开启loading
-        const data = await this.$store.dispatch('user/login', this.loginForm)
-        this.$toast.loading().clear() // 清除loading
-        this.$router.push({ path: '/' })
-        this.dataList = data || []
+        this.$toast.loading({ message: '登录中...', forbidClick: true, duration: 0 }) // 开启loading
+        const { errcode } = await this.$store.dispatch('user/login', this.loginForm)
+        if (errcode === '0') {
+          this.$toast.clear() // 清除loading
+          this.$router.push({ path: '/' })
+          // this.dataList = data || []
+        } else {
+          this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })
+        }
       } catch {
-        this.$toast.loading().clear() // 清除loading
+        this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })
+        // this.$toast.clear() // 清除loading
       }
     },
     // 表单提交
@@ -76,5 +91,17 @@ export default {
 
 <style lang="less" scoped>
 .login-wrapper {
+  .login__header {
+    .logo-name {
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+  .copy {
+    position: absolute;
+    bottom: 20px;
+    color: @color-tip;
+    text-align: center;
+  }
 }
 </style>

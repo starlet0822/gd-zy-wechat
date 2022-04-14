@@ -1,7 +1,7 @@
 /*
  * @Description:字典管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 09:29:34
+ * @LastEditTime: 2022-04-13 17:01:14
  */
 
 import vars from '@css/vars.less'
@@ -19,6 +19,8 @@ export const dataState = new Map([
 ])
 // 模块code
 export const typeCode = new Map([
+  ['acquisition', 'fix_acquisition'], // 资产购置10W以下
+  ['allocation', 'fix_allocation'], // 资产调拨
   ['attendance', 'hr_attendance_result'], // 考勤
   ['vacation', 'hr_vacation'] // 休假
 ])

@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 16:22:10
+ * @LastEditTime: 2022-04-13 09:45:47
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -32,29 +32,6 @@
           <template v-else>
             <div class="vh-p-box">暂无子模块</div>
           </template>
-
-          <!-- 自定义内容 -->
-          <!-- <template v-if="false">
-          <van-grid-item
-            v-for="(cItem, cIndex) in item.children"
-            :key="cItem.text + cIndex"
-            dot
-            badge="1"
-          >
-            <template #default>
-              <div
-                v-waves
-                class="module-children vh-flex-col vh-flex-center"
-                @click="onclickItem(cItem, index)"
-              >
-                <van-icon class="iconfont" size="0.6rem" class-prefix="icon" name="zhuanhuan" />
-                <div class="vh-font-12 vh-mt-8 van-ellipsis">
-                  {{ cItem.text }}
-                </div>
-              </div>
-            </template>
-          </van-grid-item>
-        </template> -->
         </van-grid>
       </template>
     </div>
@@ -167,7 +144,6 @@ export default {
   },
   created() {
     const menus = this.$store.state.user.menus
-    // const menus = [{ modCode: '21', modName: '全景人力' }]
     this.list = handleMenus(menus, this.constantRoutes)
   },
   methods: {

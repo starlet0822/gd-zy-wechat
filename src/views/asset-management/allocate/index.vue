@@ -1,67 +1,54 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 13:33:15
+ * @LastEditTime: 2022-04-14 10:56:12
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter v-model="query.title" @search="handleSearch"></search-filter>
-    <van-tabs
-      v-model="active"
-      animated
-      sticky
-      offset-top="1.28rem"
-      :color="activeColor"
-      @change="onTabsChange"
-    >
+    <search-filter
+      v-model="parameters.queryTerm"
+      @search="handleSearch"
+      @confirm="handleFilterConfirm"
+      :filter-menu="filterMenu"
+    ></search-filter>
+    <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
+            :error="error"
             :finished="finished"
-            finished-text="没有更多了"
+            :finished-text="finishedText"
             @load="onLoad"
           >
-            <router-link
-              :to="{ name: 'AssetAllocateCheck' }"
+            <div
+              class="list-item vh-p-10 vh-bg-white vh-rounded-6"
+              v-waves
               v-for="(item, index) in dataList"
-              :key="item.id + index"
+              :key="item.billId + index"
+              @click="toCheck(item)"
             >
-              <div class="list-item vh-p-10 vh-bg-white vh-rounded-6" v-waves>
-                <div class="vh-flex-jb-ac">
-                  <div class="vh-title">{{ item.title }}</div>
-                  <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
-                </div>
-                <div
-                  class="vh-flex-ac"
-                  v-for="(field, fieldIndex) in item.formData"
-                  :key="fieldIndex"
-                >
-                  <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                  <span :class="{ 'vh-color-blue': field.fieldKey === '处置单号' }">
-                    {{ field.fieldValue }}
-                  </span>
-                </div>
-                <!--<div class="vh-flex-ac">
-                  <span class="vh-color-tip">申请科室：</span>
-                  <span>{{ '设备科' }}</span>
-                </div>
-                <div class="vh-flex-ac">
-                  <span class="vh-color-tip">总预算：</span>
-                  <span>{{ '1000.00' }}</span>
-                </div> -->
-                <div class="btn-status">
-                  <TagBox
-                    plain
-                    size="medium"
-                    :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text"
-                  ></TagBox>
-                </div>
+              <div class="vh-flex-jb-ac">
+                <div class="vh-title">{{ item.title }}</div>
+                <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
               </div>
-            </router-link>
+              <div
+                class="vh-flex-ac"
+                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
+                :key="fieldIndex"
+              >
+                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_code' }">
+                  {{ field.fieldValue }}
+                </span>
+              </div>
+              <div class="btn-status">
+                <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
+              </div>
+            </div>
+            <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -70,81 +57,120 @@
 </template>
 
 <script>
-import { themeColor, checkStatus } from '@/config/constants'
-import { getFixCheckList } from '@/api/modules/asset-management'
+import vars from '@/assets/css/vars.less'
+import { typeCode, dataState, checkStatus } from '@/config/constants'
+import { findFixCheckList } from '@/api/modules/common'
+import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
   name: 'AssetAllocate',
+  mixins: [list],
   components: {
     SearchFilter,
     TagBox
   },
   data() {
     return {
-      tabs: [
-        // { title: '全部', id: '0' },
-        { title: '待处理', id: 'NO' },
-        { title: '已处理', id: 'YES' },
-        { title: '全部', id: '' }
-        // { title: '执行完成', id: '4' },
-        // { title: '中止', id: '5' }
-      ],
-      title: '',
-      active: '1',
-      activeColor: themeColor,
+      tabs: [],
+      tabActive: '0',
+      tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      // 列表相关
-      mockArr: 1,
-      query: {
-        title: '',
-        page: 1,
-        limit: 10,
-        checkState: 'NO'
-      },
-      dataList: [],
-      loading: false,
-      finished: false,
-      refreshing: false
+      typeCode: typeCode.get('allocation'),
+      filterMenu: [
+        // 筛选菜单
+        {
+          field: 'empName',
+          label: '申请人',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'billNo',
+          label: '申请单据号',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'applyDeptCode',
+          label: '申请科室',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: ['applyDate', 'applyEndDate'],
+          label: '申请时间',
+          placeholder: ['开始时间', '结束时间'],
+          type: 'date',
+          value: ''
+        }
+      ],
+      filterQuery: {} // 筛选参数
     }
   },
-  created() {},
+  created() {
+    for (const [k, v] of dataState.entries()) {
+      this.tabs.push({ id: k, title: v })
+    }
+  },
   methods: {
-    async onLoad() {
-      if (this.refreshing) {
-        this.dataList = []
+    // 获取数据列表
+    async getList() {
+      try {
+        // 组织请求参数
+        const params = {
+          typeCode: this.typeCode,
+          pageRequest: this.pageRequest,
+          parameters: { ...this.parameters, ...this.filterQuery }
+        }
+        const {
+          errcode,
+          data: { dataList: data, totalSize }
+        } = await findFixCheckList(params)
+        if (errcode === '0') {
+          this.totalSize = totalSize
+          if (params.pageRequest.pageNum === 1) {
+            this.dataList = data || []
+          } else {
+            this.dataList = this.dataList.concat(data || [])
+          }
+          if (this.dataList.length < this.totalSize) {
+            params.pageRequest.pageNum = params.pageRequest.pageNum + 1
+          }
+        }
+        if (this.dataList.length >= this.totalSize) this.finished = true
+      } catch (e) {
+        console.error('捕获异常', e)
+        this.error = true
+        this.pageRequest.pageNum = 1 // 重置为初始页码
+      } finally {
         this.refreshing = false
+        this.loading = false
       }
-      const res = await getFixCheckList(this.query)
-      // console.log(res)
-      if (res.errcode === 0) {
-        this.dataList = this.dataList.concat(res.data)
-      }
-      this.loading = false
-      if (this.dataList.length >= res.total) {
-        this.finished = true
-      }
-    },
-    onRefresh() {
-      // 清空列表数据
-      this.dataList = []
-      this.finished = false
-
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
-      this.loading = true
-      this.onLoad()
     },
     // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
-      this.query.title = val
+      this.parameters.queryTerm = val
       this.onRefresh()
+    },
+    // 筛选回调
+    handleFilterConfirm(query) {
+      console.log('筛选回调', query)
+      this.filterQuery = query
+      this.onRefresh()
+    },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-allocate-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {
       console.log(id)
-      this.query.checkState = id
+      this.parameters.dataState = id
       this.onRefresh()
     }
   }
@@ -155,7 +181,6 @@ export default {
 .asset-allocate-wrapper {
   .list-item {
     margin: 10px;
-    // padding: 10px;
     .btn-status {
       text-align: right;
       display: flex;

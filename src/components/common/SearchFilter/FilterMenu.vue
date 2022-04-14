@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-03-26 18:29:31
+ * @LastEditTime: 2022-04-14 10:55:14
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -12,28 +12,28 @@
         <RadioField
           ref="radioFieldRef"
           v-if="pItem.type === 'radio'"
-          :key="pItem.field"
+          :key="pItem.label"
           v-bind="{ ...pItem, result }"
           @change="handleChangeRadio($event, pItem)"
         ></RadioField>
         <SelectField
           ref="selectFieldRef"
           v-if="pItem.type === 'select'"
-          :key="pItem.field"
+          :key="pItem.label"
           v-bind="{ ...pItem, result }"
           @change="handleSelect($event, pItem)"
         ></SelectField>
         <InputField
           ref="inputFieldRef"
           v-if="pItem.type === 'input'"
-          :key="pItem.field"
+          :key="pItem.label"
           v-bind="{ ...pItem, result }"
           @input="handleInput($event, pItem)"
         ></InputField>
         <DateField
           ref="dateFieldRef"
           v-if="pItem.type === 'date'"
-          :key="pItem.field"
+          :key="pItem.label"
           v-bind="{ ...pItem, result }"
           @change="handleChangeDate($event, pItem)"
         ></DateField>
@@ -84,47 +84,55 @@ export default {
       default: () => [
         // 复杂数据（有层级关联的） TODO:待做
         // 普通筛选 数据结构（无关联关系的）
-        {
-          field: 'status',
-          label: '状态',
-          value: '',
-          type: 'radio', // 单选
-          // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
-          // multiple: false, // 是否开启多选 TODO:先不做
-          options: [
-            { label: '未审核', value: '-1' },
-            { label: '已审核', value: '0' },
-            { label: '未通过', value: '1' },
-            { label: '审核中', value: '2' },
-            { label: '已退回', value: '3' }
-          ]
-        },
+        // {
+        //   field: 'status',
+        //   label: '状态',
+        //   value: '',
+        //   type: 'radio', // 单选
+        //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
+        //   // multiple: false, // 是否开启多选 TODO:先不做
+        //   options: [
+        //     { label: '未审核', value: '-1' },
+        //     { label: '已审核', value: '0' },
+        //     { label: '未通过', value: '1' },
+        //     { label: '审核中', value: '2' },
+        //     { label: '已退回', value: '3' }
+        //   ]
+        // },
         // pick选择
-        {
-          field: 'department',
-          label: '科室',
-          // placeholder: '请输入',
-          type: 'select',
-          value: '',
-          options: [
-            { text: '请选择', value: '' },
-            { text: '科室1', value: '0' },
-            { text: '科室2', value: '1' },
-            { text: '科室3', value: '2' }
-          ]
-        },
+        // {
+        //   field: 'department',
+        //   label: '科室',
+        //   // placeholder: '请输入',
+        //   type: 'select',
+        //   value: '',
+        //   options: [
+        //     { text: '请选择', value: '' },
+        //     { text: '科室1', value: '0' },
+        //     { text: '科室2', value: '1' },
+        //     { text: '科室3', value: '2' }
+        //   ]
+        // },
         // 输入框
         {
-          field: 'name',
-          label: '制单人',
+          field: 'empName',
+          label: '申请人',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         // 输入框
         {
-          field: 'no',
-          label: '单据号',
+          field: 'billNo',
+          label: '申请单据号',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        // 输入框
+        {
+          field: 'applyDeptCode',
+          label: '申请科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
@@ -132,9 +140,10 @@ export default {
         // 范围 选择（e.g:时间区间|价格区间等） TODO
         // 输入框
         {
-          field: 'createDate',
-          label: '申请日期',
-          placeholder: '请选择',
+          // field: 'createDate',
+          field: ['applyDate', 'applyEndDate'],
+          label: '申请时间',
+          placeholder: ['开始时间', '结束时间'],
           type: 'date',
           value: ''
         }
@@ -154,11 +163,9 @@ export default {
   created() {},
 
   methods: {
-    // filterConfirm() {},
     handleInput(val, item) {
       console.log('handleInput', val, item)
-      // if (val.trim() === '') return
-      this.result[item.field] = val
+      this.result[item.field] = val.trim()
     },
     handleSelect(val, item) {
       console.log('handleSelect', val, item)
@@ -167,12 +174,18 @@ export default {
     handleChangeRadio(val, item) {
       console.log('handleChangeRadio', val, item)
       this.result[item.field] = val
-      // this.result = { ...this.result, ...val }
     },
     handleChangeDate(val, item) {
       console.log('handleChangeDate', val, item)
-      this.result[item.field] = val
-      // this.result = { ...this.result, ...val }
+      if (isArray(item.field) && item.field?.length >= 1) {
+        const [startField, endField] = item.field
+        const [startVal, endVal] = val
+        // 字段为数组时先这样赋值
+        this.result[startField] = startVal
+        this.result[endField] = endVal
+      } else {
+        this.result[item.field] = val
+      }
     },
     // 取消
     filterCancel() {
@@ -211,7 +224,14 @@ export default {
 
         if (item.type && item.type === 'date') {
           item.value = ''
-          this.result[item.field] = ''
+          if (isArray(item.field) && item.field?.length >= 1) {
+            const [startField, endField] = item.field
+            // 字段为数组时先这样赋值
+            this.result[startField] = ''
+            this.result[endField] = ''
+          } else {
+            this.result[item.field] = ''
+          }
           // 获取dom
           const dateFieldRef = this.$refs.dateFieldRef
           dateFieldRef.forEach((ref) => {
@@ -278,8 +298,8 @@ export default {
       //     }
       //   }
       // })
+      // TODO 过滤掉值为空的字段
       for (const key in result) {
-        console.log(key)
         if (key && String(result[key]).trim() === '') {
           this.$delete(result, key)
         }

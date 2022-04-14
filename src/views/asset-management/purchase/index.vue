@@ -1,67 +1,51 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 09:32:58
+ * @LastEditTime: 2022-04-14 11:38:58
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter v-model="parameters.fixName" @search="handleSearch"></search-filter>
-    <van-tabs
-      v-model="active"
-      animated
-      sticky
-      offset-top="1.28rem"
-      :color="activeColor"
-      @change="onTabsChange"
-    >
+    <search-filter v-model="parameters.queryTerm" @search="handleSearch"></search-filter>
+    <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
+            :error="error"
             :finished="finished"
-            finished-text="没有更多了"
+            :finished-text="finishedText"
             @load="onLoad"
           >
-            <router-link
-              :to="{ name: 'AssetPurchaseCheck' }"
+            <div
+              class="list-item vh-p-10 vh-bg-white vh-rounded-6"
               v-for="(item, index) in dataList"
-              :key="item.id + index"
+              :key="item.billId + index"
+              v-waves
+              @click="toCheck(item)"
             >
-              <div class="list-item vh-p-10 vh-bg-white vh-rounded-6" v-waves>
-                <div class="vh-flex-jb-ac">
-                  <div class="vh-title">{{ item.title }}</div>
-                  <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
-                </div>
-                <div
-                  class="vh-flex-ac"
-                  v-for="(field, fieldIndex) in item.formData"
-                  :key="fieldIndex"
-                >
-                  <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                  <span :class="{ 'vh-color-blue': field.fieldKey === '处置单号' }">
-                    {{ field.fieldValue }}
-                  </span>
-                </div>
-                <!--<div class="vh-flex-ac">
-                  <span class="vh-color-tip">申请科室：</span>
-                  <span>{{ '设备科' }}</span>
-                </div>
-                <div class="vh-flex-ac">
-                  <span class="vh-color-tip">总预算：</span>
-                  <span>{{ '1000.00' }}</span>
-                </div> -->
-                <div class="btn-status">
-                  <TagBox
-                    plain
-                    size="medium"
-                    :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text"
-                  ></TagBox>
-                </div>
+              <div class="vh-flex-jb-ac">
+                <div class="vh-title">{{ item.title }}</div>
+                <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
               </div>
-            </router-link>
+              <div
+                class="vh-flex-ac"
+                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
+                :key="fieldIndex"
+              >
+                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
+                  {{ field.fieldValue }}
+                </span>
+              </div>
+              <div class="btn-status">
+                <!-- :color="checkStatus.get(item.checkState).color"
+                    :text="checkStatus.get(item.checkState).text" -->
+                <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
+              </div>
+            </div>
+            <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -70,8 +54,9 @@
 </template>
 
 <script>
-import { themeColor, checkStatus, dataState } from '@/config/constants'
-import { getFixCheckList } from '@/api/modules/common'
+import vars from '@/assets/css/vars.less'
+import { typeCode, checkStatus, dataState } from '@/config/constants'
+import { findFixCheckList } from '@/api/modules/common'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
@@ -83,22 +68,34 @@ export default {
   data() {
     return {
       tabs: [],
-      title: '',
-      active: '1',
-      activeColor: themeColor,
+      tabActive: '0',
+      tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      // 列表相关
-      mockArr: 1,
-      typeCode: 'fix_acquisition',
-      parameters: {
-        fixName: ''
-        // page: 1,
-        // limit: 10
-      },
       dataList: [],
+      error: false,
       loading: false,
       finished: false,
-      refreshing: false
+      refreshing: false,
+      totalSize: 0,
+      typeCode: typeCode.get('acquisition'),
+      // 请求参数
+      pageRequest: {
+        pageNum: 1,
+        pageSize: 10
+      },
+      parameters: {
+        // fixName: '',
+        dataState: '0', // 默认待处理
+        queryTerm: ''
+      }
+    }
+  },
+  computed: {
+    finishedText: {
+      // 共${this.dataList.length}条数据
+      get() {
+        return this.dataList.length ? `没有更多了` : ''
+      }
     }
   },
   created() {
@@ -107,41 +104,69 @@ export default {
     }
   },
   methods: {
-    async onLoad() {
-      if (this.refreshing) {
-        this.dataList = []
+    onLoad() {
+      this.getList()
+    },
+    // 获取数据列表
+    async getList() {
+      try {
+        // 组织请求参数
+        const params = {
+          typeCode: this.typeCode,
+          pageRequest: this.pageRequest,
+          parameters: this.parameters
+        }
+        const {
+          errcode,
+          data: { dataList: data, totalSize }
+        } = await findFixCheckList(params)
+        if (errcode === '0') {
+          this.totalSize = totalSize
+          if (params.pageRequest.pageNum === 1) {
+            this.dataList = data || []
+          } else {
+            this.dataList = this.dataList.concat(data || [])
+          }
+          if (this.dataList.length < this.totalSize) {
+            params.pageRequest.pageNum = params.pageRequest.pageNum + 1
+          }
+        }
+        if (this.dataList.length >= this.totalSize) this.finished = true
+      } catch (e) {
+        console.error('捕获异常', e)
+        this.error = true
+        this.pageRequest.pageNum = 1 // 重置为初始页码
+      } finally {
         this.refreshing = false
-      }
-      const res = await getFixCheckList({ typeCode: this.typeCode, parameters: this.parameters })
-      console.log('getFixCheckList', res)
-      if (res.errcode === '0') {
-        this.dataList = this.dataList.concat(res.data)
-      }
-      this.loading = false
-      if (this.dataList.length >= res.total) {
-        this.finished = true
+        this.loading = false
       }
     },
+    // 列表刷新
     onRefresh() {
+      console.log('列表数据刷新---')
       // 清空列表数据
-      this.dataList = []
       this.finished = false
-
-      // 重新加载数据
-      // 将 loading 设置为 true，表示处于加载状态
+      this.refreshing = true
       this.loading = true
+      this.dataList = []
+      this.totalSize = 0
+      this.pageRequest.pageNum = 1
       this.onLoad()
     },
     // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
-      this.parameters.fixName = val
+      this.parameters.queryTerm = val
       this.onRefresh()
+    },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-purchase-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {
       console.log(id)
-      this.parameters.checkState = id
+      this.parameters.dataState = id
       this.onRefresh()
     }
   }

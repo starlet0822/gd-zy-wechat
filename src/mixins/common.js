@@ -6,7 +6,7 @@
 import { _joinKey2String } from '@/utils/index'
 
 export default {
-  install: function(Vue) {
+  install: function (Vue) {
     Vue.mixin({
       data() {
         return {

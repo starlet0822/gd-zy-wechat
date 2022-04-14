@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 13:48:29
+ * @LastEditTime: 2022-04-13 09:36:38
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -225,6 +225,7 @@ export default {
     switchChange(val) {
       console.log('switchChange', val)
       this.showMulti = val
+      this.result = []
     },
     // TODO 批量审批
     onClickCheck() {}
@@ -235,8 +236,6 @@ export default {
 <style lang="less" scoped>
 .vacation-list-wrapper {
   .vacation-item {
-    // border-radius: 6px;
-    // border-bottom: 1px solid @color-border;
   }
 }
 </style>

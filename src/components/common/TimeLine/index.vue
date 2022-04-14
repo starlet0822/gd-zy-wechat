@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 13:56:18
+ * @LastEditTime: 2022-04-14 09:46:30
 -->
 <template>
   <div class="timeline-wrapper vh-p-box33">
@@ -11,7 +11,12 @@
         <li class="timeline-item vh-flex-row" v-for="(item, index) in list" :key="index">
           <!-- 年月标签 -->
           <div class="timeline-item-left">
-            <p>
+            <p v-if="item.type === -1">
+              {{ item.createTime | formatDate('YYYY-MM-DD') }}
+              <br />
+              {{ item.createTime | formatDate('HH:mm:ss') }}
+            </p>
+            <p v-else>
               {{ item.completeTime | formatDate('YYYY-MM-DD') }}
               <br />
               {{ item.completeTime | formatDate('HH:mm:ss') }}
@@ -24,18 +29,16 @@
             <div class="timeline-item__node"></div>
             <!-- 时间项容器 -->
             <div class="timeline-item__wrapper">
-              <!-- 时间项内容 -->
-              <div class="timeline-item_content vh-flex-ac">
+              <!-- 时间项内容 vh-flex-ac-jb -->
+              <div class="timeline-item_content">
                 <div>{{ item.userEntityName }}</div>
-                <div class="vh-color-tip vh-px-8">{{ item.name || '--' }}</div>
-                <div class="vh-color-tip">{{ item.remark || '--' }}</div>
+                <div class="vh-color-tip">{{ item.name }}</div>
               </div>
-              <!-- 时间线时间 -->
-              <!-- <div class="timeline-item_timestamp vh-color-tip vh-mt-8">{{ `2022-0${item}-21` }}</div> -->
+              <div class="vh-color-tip">{{ item.remark }}</div>
             </div>
           </div>
         </li>
-        <template v-if="length > 5 && isShowToggle">
+        <template v-if="isShowToggle">
           <div class="pick-btn vh-color-blue" @click="handleToggle">
             {{ isPickup ? '展开' : '收起' }}
             <van-icon :name="isPickup ? 'arrow-down' : 'arrow-up'" />
@@ -43,7 +46,7 @@
         </template>
       </ul>
     </template>
-    <vh-empty v-else></vh-empty>
+    <vh-empty v-if="!loading && list.length === 0"></vh-empty>
   </div>
 </template>
 
@@ -56,20 +59,24 @@ export default {
       type: String,
       default: ''
     },
-    // 时间线数据源
-    timeList: {
-      type: [Array],
-      default: () => [
-        { time: new Date(), name: '张三', result: '执行' },
-        { time: new Date(), name: '李四', result: '执行' },
-        { time: new Date(), name: '王五', result: '执行' },
-        { time: new Date(), name: '老六', result: '同意' },
-        { time: new Date(), name: '李四', result: '执行' },
-        { time: new Date(), name: '王五', result: '执行' },
-        { time: new Date(), name: '老六', result: '同意' },
-        { time: new Date(), name: '陈真', result: '同意' }
-      ]
+    typeCode: {
+      type: String,
+      default: 'hr_vacation'
     },
+    // 时间线数据源
+    // timeList: {
+    //   type: [Array],
+    //   default: () => [
+    //     // { time: new Date(), name: '张三', result: '执行' },
+    //     // { time: new Date(), name: '李四', result: '执行' },
+    //     // { time: new Date(), name: '王五', result: '执行' },
+    //     // { time: new Date(), name: '老六', result: '同意' },
+    //     // { time: new Date(), name: '李四', result: '执行' },
+    //     // { time: new Date(), name: '王五', result: '执行' },
+    //     // { time: new Date(), name: '老六', result: '同意' },
+    //     // { time: new Date(), name: '陈真', result: '同意' }
+    //   ]
+    // },
     reverse: Boolean, // 指定节点排序方向，默认为正序
     // 默认显示几条
     length: {
@@ -79,9 +86,10 @@ export default {
   },
   data() {
     return {
+      loading: false,
       isPickup: true, // 默认显示展开按钮
-      list: this.timeList.slice(0, +this.length),
-      typeCode: 'hr_vacation'
+      originData: [] // 原始数组
+      // list: originData.slice(0, +this.length)
       // params: {
 
       // }
@@ -91,8 +99,17 @@ export default {
     // 是否显示切换按钮
     isShowToggle: {
       get() {
-        return this.timeList.length > +this.length
+        return this.originData.length > +this.length
       }
+    },
+    list: {
+      get() {
+        if (this.isPickup) {
+          return this.originData.slice(0, +this.length)
+        }
+        return this.originData
+      },
+      set() {}
     }
   },
   mounted() {
@@ -102,20 +119,22 @@ export default {
     // 获取审批流程
     async findCheckInfo() {
       try {
+        this.loading = true
         // this.$toast.loading({ message: '加载中...' })
         const params = { typeCode: this.typeCode, busKey: this.id }
         const { errcode, data } = await findCheckInfo(params)
         if (errcode === '0') {
-          this.list = data || []
+          this.list = this.originData = data || []
         }
       } finally {
+        this.loading = false
         // this.$toast.loading().clear()
       }
     },
     // 展开收起切换
     handleToggle() {
       this.isPickup = !this.isPickup
-      this.list = this.isPickup ? this.list.slice(0, +this.length) : this.list
+      // this.list = this.isPickup ? this.originData.slice(0, +this.length) : this.originData
     }
   }
 }
@@ -137,7 +156,7 @@ export default {
     .timeline-item {
       .timeline-item-left {
         text-align: center;
-        margin-right: 10px;
+        margin-right: 6px;
       }
       .timeline-item-right {
         position: relative;

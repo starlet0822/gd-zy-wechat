@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 14:24:37
+ * @LastEditTime: 2022-04-13 17:38:33
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 const state = {
@@ -39,14 +39,14 @@ const actions = {
   // 用户登录
   login({ state, commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      login({ ...userInfo, openId: state.openId || 'xiejiewei' })
+      login({ ...userInfo, openId: state.openId || 'xiejiewei3532' })
         .then((res) => {
           const { errcode, data } = res
           if (errcode === '0') {
             commit('SET_MENUS', data || [])
             localStorage.setItem('menus', JSON.stringify(data))
           }
-          resolve(data)
+          resolve(res)
         })
         .catch((error) => {
           reject(error)

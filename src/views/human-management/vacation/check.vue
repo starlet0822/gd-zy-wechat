@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 11:53:33
+ * @LastEditTime: 2022-04-13 11:46:42
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -72,7 +72,7 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-flex-center vh-pt-40">
-        <TimeLine :id="parameters.billId"></TimeLine>
+        <TimeLine :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>

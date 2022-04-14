@@ -1,7 +1,7 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 15:58:21
+ * @LastEditTime: 2022-04-13 17:13:15
  */
 export default [
   {
@@ -12,7 +12,7 @@ export default [
       import(/* webpackChunkName: "asset-purchase" */ '@/views/asset-management/purchase/index.vue')
   },
   {
-    path: '/asset-purchase-check',
+    path: '/asset-purchase-check/:id',
     name: 'AssetPurchaseCheck',
     meta: { title: '资产购置审核' },
     component: () =>
@@ -44,7 +44,7 @@ export default [
       import(/* webpackChunkName: "asset-allocate" */ '@/views/asset-management/allocate/index')
   },
   {
-    path: '/asset-allocate-check',
+    path: '/asset-allocate-check/:id',
     name: 'AssetAllocateCheck',
     meta: { title: '资产调拨审核' },
     component: () =>

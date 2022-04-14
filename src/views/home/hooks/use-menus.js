@@ -1,7 +1,7 @@
 /*
  * @Description: 前端分类菜单
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 16:01:40
+ * @LastEditTime: 2022-04-13 09:46:49
  */
 export function handleMenus(menus, routes) {
   const homeMenus = []
@@ -13,7 +13,7 @@ export function handleMenus(menus, routes) {
         item.push(route)
       }
     })
-    console.log(item)
+    // console.log(item)
     if (parent) {
       item && parent.children.push(item)
     } else {

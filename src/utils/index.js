@@ -1,10 +1,10 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 09:46:34
+ * @LastEditTime: 2022-04-13 18:02:12
  */
 // 函数库别名导出(避免命名冲突)
-import { isArray } from '@utils/is'
+import { isArray, _isNumber } from '@utils/is'
 export {
   upperFirst as _upperFirst,
   camelCase as _camelCase,
@@ -85,4 +85,10 @@ export function debounce(func, wait, immediate) {
 
     return result
   }
+}
+
+// 获取递增数字数组 [0,1,2,...]
+export function getIncreasingArr(length = 1) {
+  if (!_isNumber(+length)) return
+  return [...Array(length).keys()]
 }

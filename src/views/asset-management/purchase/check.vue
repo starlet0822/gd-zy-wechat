@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-01 13:31:38
+ * @LastEditTime: 2022-04-13 18:06:02
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -15,30 +15,34 @@
       <van-collapse-item
         class="vh-mb-10 vh-rounded-6"
         :name="index"
-        v-for="(item, index) in detailData"
+        v-for="(item, index) in formData"
         :key="item.title"
         :border="false"
       >
         <template #title>
-          <div class="vh-color-blue">{{ item.type === 'file' ? '附件' : `${item.title}` }}</div>
+          <div class="vh-color-blue">{{ item.title }}</div>
         </template>
         <template #default>
-          <template v-if="item.type !== 'file'">
+          <template v-if="item.type === 'jsonText'">
             <van-cell
               title-class="vh-color-tip"
-              v-for="citem in item.rowData"
+              v-for="citem in item.rowData.filter((v) => v.isShow === 1)"
               :key="citem.fieldName"
               :title="citem.fieldName"
-              value="xxxx"
+              :value="citem.fieldValue || '--'"
+              :value-class="{ 'vh-color-blue': citem.filedId === 'purcNo---' }"
             ></van-cell>
           </template>
-          <div v-else class="file-upload">
-            <div class="file-box vh-p-box vh-color-text">
+          <!-- 附件 -->
+          <div v-else class="vh-p-box">
+            <template v-if="item.rowData && item.rowData.length">
               <!-- 图片集 -->
-              <ImgView border></ImgView>
-              <!-- 文件列表 -->
-              <FileCard></FileCard>
-            </div>
+              <ImgView v-model="item.rowData" border></ImgView>
+              <FileCard v-model="item.rowData" class="vh-color-text"></FileCard>
+            </template>
+            <template v-else>
+              <div>暂无附件</div>
+            </template>
           </div>
         </template>
       </van-collapse-item>
@@ -57,19 +61,26 @@
     <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
     <!-- 节点弹窗 -->
     <van-dialog
+      class-name="user-dialog"
       v-model="showCheckUser"
-      title="下一节审批人"
+      :title="checkPeopleData.title"
       show-cancel-button
       :close-on-click-overlay="false"
       @confirm="handleConfirmUser"
     >
       <template #default>
-        <div class="vh-p-20">
-          <van-radio-group v-model="radio" icon-size="0.64rem">
-            <van-radio class="vh-mb-10" v-for="(user, index) in users" :key="index" :name="index">
-              {{ user }}
-            </van-radio>
-          </van-radio-group>
+        <div class="user-check vh-p-20">
+          <van-checkbox-group v-model="approvers" icon-size="0.64rem">
+            <!-- TODO: 记得去掉.slice(0, 10)-->
+            <van-checkbox
+              class="vh-mb-10"
+              v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
+              :key="user.id + index"
+              :name="user.id"
+            >
+              {{ user.empName }}
+            </van-checkbox>
+          </van-checkbox-group>
         </div>
       </template>
     </van-dialog>
@@ -82,7 +93,7 @@
       @get-container="getContainer"
     >
       <div class="vh-flex-center vh-pt-40">
-        <TimeLine></TimeLine>
+        <TimeLine :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
@@ -93,7 +104,9 @@ import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
 import TimeLine from '@comp/common/TimeLine'
 import ButtonGroup from '@comp/global/ButtonGroup'
-import { detailData } from './mock'
+import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
+import { typeCode } from '@/config/constants'
+import { getIncreasingArr } from '@/utils'
 export default {
   name: 'AssetPurchaseCheck',
   components: { FileCard, ImgView, TimeLine, ButtonGroup },
@@ -102,37 +115,107 @@ export default {
       showCheckUser: false,
       showCheckDetail: false,
       active: 0,
-      radio: 0,
-      activeNames: [0],
-      users: ['张三', '李四', '王五'],
-      detailData,
+      approvers: [], // 审批人集合
+      activeNames: [],
+      formData: [],
+      checkPeopleData: {}, // 审批下一人数据
       btnList: [
-        { text: '驳回', value: 'nopass' },
-        // { text: '提交', value: 'submit' },
-        { text: '通过', value: 'pass' }
-      ]
+        { text: '驳回', value: 'NO' },
+        { text: '通过', value: 'YES' }
+      ],
+      typeCode: typeCode.get('acquisition'),
+      parameters: {
+        billId: ''
+      },
+      checkParam: {
+        busKey: '',
+        checkState: 'NO',
+        remark: '',
+        approver: '',
+        openId: 'xiejieweidemo',
+        state: ''
+      }
     }
   },
-  created() {},
+  created() {
+    this.getInfo()
+  },
   methods: {
-    handleConfirmUser() {
-      // 调佣接口
+    async getInfo() {
+      const { id } = this.$route.params
+      this.parameters.billId = this.checkParam.busKey = id
+      const { errcode, data } = await findCheckInfoDetail({
+        typeCode: this.typeCode,
+        parameters: this.parameters
+      })
+      if (errcode === '0') {
+        data.formData.forEach((item) => {
+          if (item.type === 'jsonText') {
+            const state = item.rowData.find((v) => v.filedId === 'state')
+            console.log(state)
+            this.checkParam.state = state.fieldValue
+          }
+        })
+        this.formData = data.formData || []
+        this.checkPeopleData = data.checkPeopleData || {}
+        this.activeNames = getIncreasingArr(data.formData?.length)
+        // 获取code name
+        // const user = findCodeName(this.formData)
+        // this.checkParam = { ...user, ...this.checkParam }
+      }
+    },
+    // 审批or驳回
+    async checkInfo(type) {
+      const { id } = this.$route.params
+      this.parameters.billId = id
+      this.checkParam.checkState = type
+      const { errcode, errmsg } = await sendCheck({
+        typeCode: this.typeCode,
+        checkParam: this.checkParam
+      })
+      if (errcode === '0') {
+        this.$toast({
+          message: type === 'YES' ? '已同意' : '已驳回',
+          type: 'success',
+          duration: 800,
+          // overlay: true,
+          forbidClick: true
+        })
+        // this.$router.back()
+      } else {
+        this.$toast({
+          message: errmsg,
+          type: 'fail',
+          duration: 3000,
+          // className: 'vh-color-orange',
+          forbidClick: true
+        })
+      }
+    },
+    handleConfirmUser(type = 'YES') {
+      if (!this.approvers.length) {
+        this.$toast({
+          message: `请选择下一审批人！`,
+          type: 'error',
+          duration: 1500,
+          // overlay: true,
+          forbidClick: true
+        })
+        return
+      }
+      this.checkParam.approver = this.approvers.join(',')
+      // 调接口
+      this.checkInfo(type)
     },
     // 按钮回调
     handleClickBtn({ value }) {
       switch (value) {
-        case 'pass':
+        case 'YES':
           this.showCheckUser = true
           break
-        case 'nopass':
-          // this.showCheckUser = true
-          this.$toast({
-            message: '已驳回',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
+        case 'NO':
+          this.checkParam.approver = ''
+          this.checkInfo(value)
           break
       }
     },
@@ -156,12 +239,31 @@ export default {
   /deep/ .van-collapse-item__content {
     padding: 0;
     .van-cell {
-      font-size: @font14;
       padding-top: 5px;
       padding-bottom: 5px;
       &::after {
         border: 0;
       }
+    }
+  }
+  /deep/.user-dialog {
+    max-height: 50%;
+    overflow: auto;
+    // position: relative;
+
+    .van-dialog__header {
+      position: sticky;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      background-color: #ffffff;
+      border-bottom: 1px solid @color-shadow;
+      // color: #ffffff;
+    }
+    .van-dialog__footer {
+      position: sticky;
+      left: 0;
+      bottom: 0;
     }
   }
 }

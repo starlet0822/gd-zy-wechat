@@ -1,7 +1,7 @@
 <!--
  * @Description: 日期时间选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 11:01:27
+ * @LastEditTime: 2022-04-14 10:51:11
 -->
 <template>
   <div class="date-field-wrapper">
@@ -12,7 +12,7 @@
         readonly
         input-align="center"
         left-icon="clock-o2"
-        :placeholder="placeholder"
+        :placeholder="placeholder[0]"
         shape="round"
         background="#fff"
         @focus="onFocus('0')"
@@ -23,7 +23,7 @@
         readonly
         input-align="center"
         left-icon="clock-o2"
-        :placeholder="placeholder"
+        :placeholder="placeholder[1]"
         shape="round"
         background="#fff"
         @focus="onFocus('1')"
@@ -47,14 +47,17 @@
 
 <script>
 import { formatDate } from '@/utils/date'
+// import { isArray } from '@/utils/is'
 export default {
   name: 'DateField',
   props: {
-    field: String,
+    field: [String, Array],
     label: String,
     placeholder: {
-      type: String,
-      default: '请选择'
+      type: [String, Array],
+      default: () => {
+        return ['开始时间', '结束时间']
+      }
     },
     value: [String, Number, Array],
     options: {
@@ -82,6 +85,13 @@ export default {
   },
   created() {},
   methods: {
+    // handlePlaceholder() {
+    //   if (isArray(this.placeholder) && this.placeholder?.length >= 2) {
+    //     // const [start, end] = this.placeholder
+    //     return this.placeholder
+    //   }
+    //   return this.placeholder
+    // },
     onConfirmDate(val) {
       const dateVal = formatDate(val, this.format)
       this.defaultVal[this.curIndex] = dateVal
