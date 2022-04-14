@@ -1,60 +1,54 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 14:59:29
+ * @LastEditTime: 2022-04-14 17:33:37
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter v-model="query.title" @search="handleSearch"></search-filter>
+    <search-filter
+      v-model="parameters.queryTerm"
+      @search="handleSearch"
+      @confirm="handleFilterConfirm"
+      :filter-menu="filterMenu"
+    ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
+            :error="error"
             :finished="finished"
-            finished-text="没有更多了"
+            :finished-text="finishedText"
             @load="onLoad"
           >
-            <router-link
-              :to="{ name: 'AssetDisposalCheck' }"
+            <div
+              class="list-item vh-p-10 vh-bg-white vh-rounded-6"
+              v-waves
               v-for="(item, index) in dataList"
-              :key="item.id + index"
+              :key="item.billId + index"
+              @click="toCheck(item)"
             >
-              <div class="list-item vh-p-10 vh-bg-white vh-rounded-6" v-waves>
-                <div class="vh-flex-jb-ac">
-                  <div class="vh-title">{{ item.title }}</div>
-                  <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
-                </div>
-                <div
-                  class="vh-flex-ac"
-                  v-for="(field, fieldIndex) in item.formData"
-                  :key="fieldIndex"
-                >
-                  <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                  <span :class="{ 'vh-color-blue': field.fieldKey === '处置单号' }">
-                    {{ field.fieldValue }}
-                  </span>
-                </div>
-                <!--<div class="vh-flex-ac">
-                  <span class="vh-color-tip">申请科室：</span>
-                  <span>{{ '设备科' }}</span>
-                </div>
-                <div class="vh-flex-ac">
-                  <span class="vh-color-tip">总预算：</span>
-                  <span>{{ '1000.00' }}</span>
-                </div> -->
-                <div class="btn-status">
-                  <TagBox
-                    plain
-                    size="medium"
-                    :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text"
-                  ></TagBox>
-                </div>
+              <div class="vh-flex-jb-ac">
+                <div class="vh-title">{{ item.title }}</div>
+                <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
               </div>
-            </router-link>
+              <div
+                class="vh-flex-ac"
+                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
+                :key="fieldIndex"
+              >
+                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_code' }">
+                  {{ field.fieldValue }}
+                </span>
+              </div>
+              <div class="btn-status">
+                <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
+              </div>
+            </div>
+            <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -82,7 +76,7 @@ export default {
       tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('allocation'),
+      typeCode: typeCode.get('allocation'), // TODO disposal
       filterMenu: [
         // 筛选菜单
         {
@@ -171,7 +165,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-allocate-check/${billId}`)
+      this.$router.push(`/asset-disposal-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {

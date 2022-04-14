@@ -1,7 +1,7 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 17:13:15
+ * @LastEditTime: 2022-04-14 17:24:39
  */
 export default [
   {
@@ -28,7 +28,7 @@ export default [
       import(/* webpackChunkName: "asset-disposal" */ '@/views/asset-management/disposal/index')
   },
   {
-    path: '/asset-disposal-check',
+    path: '/asset-disposal-check/:id',
     name: 'AssetDisposalCheck',
     meta: { title: '资产处置审核' },
     component: () =>
