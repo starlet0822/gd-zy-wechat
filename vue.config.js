@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 09:16:05
+ * @LastEditTime: 2022-04-14 18:56:49
  */
 'use strict'
 const prodGzipExtensions = /\.(js|css|json|txt|html)$/i

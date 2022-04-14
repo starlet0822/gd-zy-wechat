@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 18:06:02
+ * @LastEditTime: 2022-04-14 17:57:06
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -69,19 +69,24 @@
       @confirm="handleConfirmUser"
     >
       <template #default>
-        <div class="user-check vh-p-20">
-          <van-checkbox-group v-model="approvers" icon-size="0.64rem">
-            <!-- TODO: 记得去掉.slice(0, 10)-->
-            <van-checkbox
-              class="vh-mb-10"
-              v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
-              :key="user.id + index"
-              :name="user.id"
-            >
-              {{ user.empName }}
-            </van-checkbox>
-          </van-checkbox-group>
-        </div>
+        <template v-if="checkPeopleData.rowData && checkPeopleData.rowData.length">
+          <div class="user-check vh-p-20">
+            <van-checkbox-group v-model="approvers" icon-size="0.64rem">
+              <!-- TODO: 记得去掉.slice(0, 10)-->
+              <van-checkbox
+                class="vh-mb-10"
+                v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
+                :key="user.id + index"
+                :name="user.id"
+              >
+                {{ user.empName }}
+              </van-checkbox>
+            </van-checkbox-group>
+          </div>
+        </template>
+        <template v-else>
+          <div class="vh-p-box">{{ '暂无审批人员' }}</div>
+        </template>
       </template>
     </van-dialog>
 
@@ -178,6 +183,7 @@ export default {
           message: type === 'YES' ? '已同意' : '已驳回',
           type: 'success',
           duration: 800,
+          closeOnClick: true,
           // overlay: true,
           forbidClick: true
         })
@@ -187,6 +193,8 @@ export default {
           message: errmsg,
           type: 'fail',
           duration: 3000,
+          closeOnClick: true,
+          // overlay: true,
           // className: 'vh-color-orange',
           forbidClick: true
         })

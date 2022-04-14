@@ -1,12 +1,17 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 11:38:58
+ * @LastEditTime: 2022-04-14 17:49:06
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter v-model="parameters.queryTerm" @search="handleSearch"></search-filter>
+    <search-filter
+      v-model="parameters.queryTerm"
+      @search="handleSearch"
+      @confirm="handleFilterConfirm"
+      :filter-menu="filterMenu"
+    ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
@@ -57,10 +62,12 @@
 import vars from '@/assets/css/vars.less'
 import { typeCode, checkStatus, dataState } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
+import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
   name: 'AssetPurchase',
+  mixins: [list],
   components: {
     SearchFilter,
     TagBox
@@ -71,31 +78,39 @@ export default {
       tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      dataList: [],
-      error: false,
-      loading: false,
-      finished: false,
-      refreshing: false,
-      totalSize: 0,
       typeCode: typeCode.get('acquisition'),
-      // 请求参数
-      pageRequest: {
-        pageNum: 1,
-        pageSize: 10
-      },
-      parameters: {
-        // fixName: '',
-        dataState: '0', // 默认待处理
-        queryTerm: ''
-      }
-    }
-  },
-  computed: {
-    finishedText: {
-      // 共${this.dataList.length}条数据
-      get() {
-        return this.dataList.length ? `没有更多了` : ''
-      }
+      filterMenu: [
+        // 筛选菜单
+        {
+          field: 'empName',
+          label: '申请人',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'billNo',
+          label: '申请单据号',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'applyDeptCode',
+          label: '申请科室',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: ['applyDate', 'applyEndDate'],
+          label: '申请时间',
+          placeholder: ['开始时间', '结束时间'],
+          type: 'date',
+          value: ''
+        }
+      ],
+      filterQuery: {} // 筛选参数
     }
   },
   created() {
@@ -104,9 +119,6 @@ export default {
     }
   },
   methods: {
-    onLoad() {
-      this.getList()
-    },
     // 获取数据列表
     async getList() {
       try {
@@ -114,7 +126,7 @@ export default {
         const params = {
           typeCode: this.typeCode,
           pageRequest: this.pageRequest,
-          parameters: this.parameters
+          parameters: { ...this.parameters, ...this.filterQuery }
         }
         const {
           errcode,
@@ -141,22 +153,16 @@ export default {
         this.loading = false
       }
     },
-    // 列表刷新
-    onRefresh() {
-      console.log('列表数据刷新---')
-      // 清空列表数据
-      this.finished = false
-      this.refreshing = true
-      this.loading = true
-      this.dataList = []
-      this.totalSize = 0
-      this.pageRequest.pageNum = 1
-      this.onLoad()
-    },
     // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
       this.parameters.queryTerm = val
+      this.onRefresh()
+    },
+    // 筛选回调
+    handleFilterConfirm(query) {
+      console.log('筛选回调', query)
+      this.filterQuery = query
       this.onRefresh()
     },
     // 审批
@@ -177,7 +183,6 @@ export default {
 .asset-purchase-wrapper {
   .list-item {
     margin: 10px;
-    // padding: 10px;
     .btn-status {
       text-align: right;
       display: flex;
