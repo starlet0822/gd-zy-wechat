@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 17:49:06
+ * @LastEditTime: 2022-04-15 16:12:05
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -50,7 +50,7 @@
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
-            <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
+            <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
           </van-list>
         </van-pull-refresh>
       </van-tab>

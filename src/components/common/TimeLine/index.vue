@@ -46,7 +46,7 @@
         </template>
       </ul>
     </template>
-    <vh-empty v-if="!loading && list.length === 0"></vh-empty>
+    <vh-tip v-if="!loading && list.length === 0"></vh-tip>
   </div>
 </template>
 

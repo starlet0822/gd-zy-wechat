@@ -48,7 +48,7 @@
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
-            <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
+            <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
           </van-list>
         </van-pull-refresh>
       </van-tab>

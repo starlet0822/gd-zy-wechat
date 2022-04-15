@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-15 11:23:03
+ * @LastEditTime: 2022-04-15 15:59:04
  */
 'use strict'
 const prodGzipExtensions = /\.(js|css|json|txt|html)$/i
@@ -139,7 +139,7 @@ module.exports = {
       .set('@comp', resolve('src/components'))
       .set('@views', resolve('src/views'))
       .set('@css', resolve('src/assets/css'))
-      .set('@img', resolve('src/assets/img'))
+      .set('@img', resolve('src/assets/images'))
       .set('@utils', resolve('src/utils'))
       .set('@api', resolve('src/api'))
   }

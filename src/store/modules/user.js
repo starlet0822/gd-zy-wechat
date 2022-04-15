@@ -1,13 +1,13 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 17:38:33
+ * @LastEditTime: 2022-04-15 17:47:46
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 const state = {
   code: null,
   openId: null,
-  menus: JSON.parse(localStorage.getItem('menus')) || [],
+  menus: JSON.parse(localStorage.getItem('menus')) || [], // TODO
   userName: 'startlet_wu',
   roles: ['admin']
 }

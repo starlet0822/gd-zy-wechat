@@ -76,7 +76,7 @@
     </div>
 
     <h2 class="vh-p-10 vh-border-y-1">上吧{{ ret }}</h2>
-    <vh-empty></vh-empty>
+    <vh-tip></vh-tip>
     <van-tabbar v-model="active" fixed placeholder>
       <van-tabbar-item icon="home-o">标签</van-tabbar-item>
       <van-tabbar-item icon="search">标签</van-tabbar-item>

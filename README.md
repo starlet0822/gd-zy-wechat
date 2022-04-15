@@ -57,6 +57,11 @@ yarn lint           # 格式化代码
 compression-webpack-plugin
 ```
 
+## 业务
+
+- md5 加密
+- 权限判断
+
 ### 更多配置
 
 请查阅官方文档 [Vue CLi](https://cli.vuejs.org/config/)

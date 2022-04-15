@@ -1,13 +1,13 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 15:50:34
+ * @LastEditTime: 2022-04-15 18:12:17
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
-import store from '@/store'
-// import { getCode } from '@/utils'
+// import store from '@/store'
+// import { judgeRoutePower } from '@/utils/permission'
 
 Vue.use(VueRouter)
 console.log(process.env.BASE_URL)
@@ -31,8 +31,9 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   console.log(to, from)
-  // const hasCode = getCode()
-  console.log(store.state.user.openId)
+  // judgeRoutePower(to, next)
+  // // const hasCode = getCode()
+  // console.log(store.state.user.openId)
   // if (!store.getters.openId) {
   //   const data = await store.dispatch('user/judgeLoginState', {
   //     code: 'aboOQqIaiGAktVbTp9ChkYTQja7hQdejFMkqWS4b7RA' || getCode(),
@@ -47,5 +48,8 @@ router.beforeEach(async (to, from, next) => {
   // }
   next()
 })
+
+// 路由后置守卫
+router.afterEach((to, from) => {})
 
 export default router

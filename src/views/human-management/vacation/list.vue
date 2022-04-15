@@ -83,7 +83,7 @@
               </van-col>
             </van-row>
           </van-checkbox-group>
-          <vh-empty v-if="dataList.length === 0 && !loading"></vh-empty>
+          <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
         </van-list>
       </van-pull-refresh>
     </MoveTabs>
