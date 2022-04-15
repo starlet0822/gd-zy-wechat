@@ -1,36 +1,39 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 15:05:37
+ * @LastEditTime: 2022-04-15 11:49:15
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
-    <header class="login__header vh-flex-center vh-flex-col vh-pb-20">
-      <van-image class="logoImg" :src="logoImg"></van-image>
-      <!-- <div class="vh-pt-10 logo-name">{{ logoName }}</div> -->
-    </header>
-    <van-form @submit="onSubmit">
-      <van-field
-        v-model="loginForm.userAccount"
-        name="userAccount"
-        label="用户名"
-        placeholder="用户名"
-        :rules="[{ required: true, message: '请填写用户名' }]"
-      />
-      <van-field
-        v-model="loginForm.password"
-        type="password"
-        name="password"
-        label="密码"
-        placeholder="密码"
-        :rules="[{ required: true, message: '请填写密码' }]"
-      />
-      <div style="margin: 16px">
-        <van-button round block type="info" native-type="submit">登录</van-button>
-      </div>
-    </van-form>
+    <main class="login__main">
+      <header class="login__logo vh-flex-center vh-flex-col vh-pb-20">
+        <van-image class="logoImg" :src="logoImg"></van-image>
+      </header>
+      <van-form @submit="onSubmit">
+        <van-field
+          v-model="loginForm.userAccount"
+          name="userAccount"
+          label="用户名"
+          label-class="vh-color-blue2"
+          placeholder="用户名"
+          :rules="[{ required: true, message: '请填写用户名' }]"
+        />
+        <van-field
+          v-model="loginForm.password"
+          type="password"
+          name="password"
+          label="密码"
+          label-class="vh-color-blue2"
+          placeholder="密码"
+          :rules="[{ required: true, message: '请填写密码' }]"
+        />
+        <div style="margin: 16px">
+          <van-button round block type="info" native-type="submit">登录</van-button>
+        </div>
+      </van-form>
+    </main>
 
-    <footer class="copy">
+    <footer class="login__footer">
       <p>主办单位：广东省中医院</p>
       <p>技术支持：望海（广东）科技有限公司</p>
     </footer>
@@ -92,7 +95,15 @@ export default {
 
 <style lang="less" scoped>
 .login-wrapper {
-  .login__header {
+  .login__main {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0 16px;
+  }
+  .login__logo {
     .logoImg {
       width: 80%;
       // width: 167px;
@@ -103,7 +114,8 @@ export default {
       font-size: 18px;
     }
   }
-  .copy {
+  .login__footer {
+    width: 100%;
     position: absolute;
     bottom: 20px;
     color: @color-tip;

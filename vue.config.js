@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 18:56:49
+ * @LastEditTime: 2022-04-15 11:23:03
  */
 'use strict'
 const prodGzipExtensions = /\.(js|css|json|txt|html)$/i
@@ -34,7 +34,7 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       // [process.env.VUE_APP_API_BASEURL]: {
       '/dev': {
-        target: `http://10.10.246.215:8089/`,
+        target: `http://10.10.247.108:8089/`,
         changeOrigin: true,
         pathRewrite: {
           '^/dev': ''

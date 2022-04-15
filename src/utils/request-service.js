@@ -1,15 +1,16 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-04-12 09:37:37
+ * @LastEditTime: 2022-04-15 14:06:34
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
 import { Toast } from 'vant'
 const settings = require('../config/settings')
 const service = axios.create({
-  baseURL: API_BASEURL,
-  timeout: API_TIMEOUT
+  baseURL: API_BASEURL, // 请求前缀
+  timeout: API_TIMEOUT, // 请求超时
+  withCredentials: true // 跨域请求时是否携带上cookie（凭证）
   // headers: {
   //   post: {
   //     'Content-Type': 'Content-Type: application/json' // 默认参数格式
