@@ -1,9 +1,11 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-15 17:47:46
+ * @LastEditTime: 2022-04-18 09:26:12
  */
 import { judgeLoginState, login } from '@/api/modules/user'
+import { encryptByMd5 } from '@/utils/cipher'
+
 const state = {
   code: null,
   openId: null,
@@ -39,7 +41,12 @@ const actions = {
   // 用户登录
   login({ state, commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      login({ ...userInfo, openId: state.openId || 'xiejiewei3532' })
+      const { userAccount, password } = userInfo
+      login({
+        userAccount: userAccount.trim(),
+        password: encryptByMd5(password),
+        openId: state.openId || 'xiejiewei3532'
+      })
         .then((res) => {
           const { errcode, data } = res
           if (errcode === '0') {
