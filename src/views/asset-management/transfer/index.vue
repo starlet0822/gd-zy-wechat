@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 11:35:59
+ * @LastEditTime: 2022-04-18 16:43:02
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
@@ -159,7 +159,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-transfer-check/${billId}`)
+      this.$router.push(`/asset-transfer-check/${billId}/${this.tabActive}`)
     },
     // 标签页切换
     onTabsChange(id, title) {

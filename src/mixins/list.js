@@ -1,11 +1,13 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 14:31:55
+ * @LastEditTime: 2022-04-18 17:12:50
  */
 export default {
   data() {
     return {
+      tabs: [],
+      tabActive: '0',
       dataList: [],
       error: false,
       loading: false,
@@ -46,6 +48,10 @@ export default {
       this.totalSize = 0
       this.pageRequest.pageNum = 1
       this.onLoad()
+    },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-disposal-check/${billId}/${this.tabActive}`)
     }
   }
 }

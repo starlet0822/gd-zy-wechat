@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-15 16:12:05
+ * @LastEditTime: 2022-04-18 17:15:23
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -74,8 +74,6 @@ export default {
   },
   data() {
     return {
-      tabs: [],
-      tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
       typeCode: typeCode.get('acquisition'),
@@ -164,10 +162,6 @@ export default {
       console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
-    },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-purchase-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {

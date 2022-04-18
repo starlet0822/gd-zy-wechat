@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 10:57:02
+ * @LastEditTime: 2022-04-18 17:26:08
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -16,7 +16,7 @@
         class="vh-mb-10 vh-rounded-6"
         :name="index"
         v-for="(item, index) in formData"
-        :key="item.title"
+        :key="item.title + index"
         :border="false"
       >
         <template #title>
@@ -30,7 +30,7 @@
               :key="citem.fieldName"
               :title="citem.fieldName"
               :value="citem.fieldValue || '--'"
-              :value-class="{ 'vh-color-blue': citem.filedId === 'purcNo---' }"
+              :value-class="['vh-flex2']"
             ></van-cell>
           </template>
           <!-- 附件 -->
@@ -48,7 +48,12 @@
       </van-collapse-item>
     </van-collapse>
     <!-- 底部按钮组 -->
-    <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
+    <vh-button-group
+      v-if="canCheck"
+      :btn-arr="btnList"
+      fixed
+      @click="handleClickBtn"
+    ></vh-button-group>
     <!-- 节点弹窗 -->
     <van-dialog
       class-name="user-dialog"
@@ -85,50 +90,25 @@
       position="right"
       closeable
       :style="{ width: '90%', height: '100%' }"
-      @get-container="getContainer"
     >
       <div class="vh-flex-center vh-pt-40">
-        <TimeLine :id="parameters.billId" :type-code="typeCode"></TimeLine>
+        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
 </template>
 
 <script>
-import FileCard from '@comp/common/FileCard'
-import ImgView from '@comp/common/ImgView'
-import TimeLine from '@comp/common/TimeLine'
-import ButtonGroup from '@comp/global/ButtonGroup'
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { typeCode } from '@/config/constants'
 import { getIncreasingArr } from '@/utils'
+import check from '@/mixins/check'
 export default {
   name: 'AssetPurchaseCheck',
-  components: { FileCard, ImgView, TimeLine, ButtonGroup },
+  mixins: [check],
   data() {
     return {
-      showCheckUser: false,
-      showCheckDetail: false,
-      approvers: [], // 审批人集合
-      activeNames: [],
-      formData: [],
-      checkPeopleData: {}, // 审批下一人数据
-      btnList: [
-        { text: '驳回', value: 'NO' },
-        { text: '通过', value: 'YES' }
-      ],
-      typeCode: typeCode.get('acquisition'),
-      parameters: {
-        billId: ''
-      },
-      checkParam: {
-        busKey: '',
-        checkState: 'NO',
-        remark: '',
-        approver: '',
-        openId: 'xiejieweidemo',
-        state: ''
-      }
+      typeCode: typeCode.get('acquisition')
     }
   },
   created() {
@@ -150,9 +130,9 @@ export default {
             this.checkParam.state = state.fieldValue
           }
         })
-        this.formData = data.formData || []
+        this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || {}
-        this.activeNames = getIncreasingArr(data.formData?.length)
+        this.activeNames = getIncreasingArr(this.formData?.length)
         // 获取code name
         // const user = findCodeName(this.formData)
         // this.checkParam = { ...user, ...this.checkParam }
@@ -220,10 +200,6 @@ export default {
     handleRightClick() {
       // console.log(555);
       this.showCheckDetail = true
-    },
-    // TODO 无效
-    getContainer() {
-      return document.querySelector('#app')
     }
   }
 }

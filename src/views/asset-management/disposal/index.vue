@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 18:55:20
+ * @LastEditTime: 2022-04-18 17:14:48
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -40,7 +40,7 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_code' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'equi_out_doc_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
@@ -72,8 +72,6 @@ export default {
   },
   data() {
     return {
-      tabs: [],
-      tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
       typeCode: typeCode.get('disposal'), // TODO disposal
@@ -162,10 +160,6 @@ export default {
       console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
-    },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-disposal-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {

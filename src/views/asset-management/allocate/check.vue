@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 13:50:07
+ * @LastEditTime: 2022-04-18 17:26:11
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -16,7 +16,7 @@
         class="vh-mb-10 vh-rounded-6"
         :name="index"
         v-for="(item, index) in formData"
-        :key="item.title"
+        :key="item.title + index"
         :border="false"
         @click="handleClickItem(item)"
       >
@@ -31,7 +31,7 @@
               :key="citem.fieldName"
               :title="citem.fieldName"
               :value="citem.fieldValue || '--'"
-              :value-class="{ 'vh-color-blue': citem.filedId === 'purcNo---' }"
+              :value-class="['vh-flex2']"
             ></van-cell>
           </template>
           <!-- 附件 -->
@@ -49,7 +49,12 @@
       </van-collapse-item>
     </van-collapse>
     <!-- 底部按钮组 -->
-    <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
+    <vh-button-group
+      v-if="canCheck"
+      :btn-arr="btnList"
+      fixed
+      @click="handleClickBtn"
+    ></vh-button-group>
     <!-- 节点弹窗 -->
     <van-dialog
       v-if="checkPeopleData"
@@ -82,7 +87,6 @@
       position="right"
       closeable
       :style="{ width: '90%', height: '100%' }"
-      @get-container="getContainer"
     >
       <div class="vh-flex-center vh-pt-20">
         <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
@@ -92,41 +96,16 @@
 </template>
 
 <script>
-import FileCard from '@comp/common/FileCard'
-import ImgView from '@comp/common/ImgView'
-import TimeLine from '@comp/common/TimeLine'
-import ButtonGroup from '@comp/global/ButtonGroup'
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { typeCode } from '@/config/constants'
 import { getIncreasingArr } from '@/utils'
+import check from '@/mixins/check'
 export default {
   name: 'AssetAllocateCheck',
-  components: { FileCard, ImgView, TimeLine, ButtonGroup },
+  mixins: [check],
   data() {
     return {
-      showCheckUser: false,
-      showCheckDetail: false,
-      active: 0,
-      approvers: [], // 审批人集合
-      activeNames: [],
-      formData: [],
-      checkPeopleData: {}, // 审批下一人数据
-      btnList: [
-        { text: '驳回', value: 'NO' },
-        { text: '通过', value: 'YES' }
-      ],
-      typeCode: typeCode.get('allocation'),
-      parameters: {
-        billId: ''
-      },
-      checkParam: {
-        busKey: '',
-        checkState: '',
-        remark: '',
-        approver: '',
-        openId: 'xiejiewei3532',
-        state: ''
-      }
+      typeCode: typeCode.get('allocation')
     }
   },
   created() {
@@ -141,19 +120,11 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        // data.formData.forEach((item) => {
-        //   if (item.type === 'jsonText') {
-        //     const state = item.rowData.find((v) => v.filedId === 'state')
-        //     console.log(state)
-        //     this.checkParam.state = state.fieldValue
-        //   }
-        // })
-        // const tempArr = []
         data.detailData.forEach((item) => {
           this.$set(item, 'canView', true)
         })
         this.formData = [...data.formData, ...data.detailData] || []
-        this.checkPeopleData = data.checkPeopleData
+        this.checkPeopleData = data.checkPeopleData || []
         this.activeNames = getIncreasingArr(this.formData?.length)
         // 获取code name
         // const user = findCodeName(this.formData)
@@ -231,10 +202,6 @@ export default {
     handleClickItem({ billId, canView }) {
       if (!canView) return // 不是副表不能进入明细
       this.$router.push(`/asset-allocate-detail/${billId}`)
-    },
-    // TODO 无效
-    getContainer() {
-      return document.querySelector('#app')
     }
   }
 }

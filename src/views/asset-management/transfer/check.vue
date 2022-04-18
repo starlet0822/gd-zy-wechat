@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 14:35:46
+ * @LastEditTime: 2022-04-18 17:00:47
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -27,10 +27,10 @@
             <van-cell
               title-class="vh-color-tip"
               v-for="(citem, cindex) in item.rowData.filter((v) => v.isShow === 1)"
-              :key="citem.fieldName + cindex"
+              :key="citem.filedId + cindex"
               :title="citem.fieldName"
               :value="citem.fieldValue || '--'"
-              :value-class="{ 'vh-color-blue': false }"
+              :value-class="['vh-flex2']"
             ></van-cell>
           </template>
           <!-- 附件 -->
@@ -51,6 +51,7 @@
     <van-form v-if="formData.length" @submit="onSubmit" class="vh-mb-10" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
+        :readonly="!canCheck"
         name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
@@ -64,7 +65,12 @@
       />
     </van-form>
     <!-- 底部按钮组 -->
-    <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
+    <vh-button-group
+      v-if="canCheck"
+      :btn-arr="btnList"
+      fixed
+      @click="handleClickBtn"
+    ></vh-button-group>
     <!-- 节点弹窗 -->
     <van-dialog
       class-name="user-dialog"
@@ -75,7 +81,9 @@
       @confirm="handleConfirmUser"
     >
       <template #default>
-        <template v-if="checkPeopleData.rowData && checkPeopleData.rowData.length">
+        <template
+          v-if="checkPeopleData && checkPeopleData.rowData && checkPeopleData.rowData.length"
+        >
           <div class="user-check vh-p-20">
             <van-checkbox-group v-model="approvers" icon-size="0.64rem">
               <!-- TODO: 记得去掉.slice(0, 10)-->
@@ -110,39 +118,17 @@
 </template>
 
 <script>
-import FileCard from '@comp/common/FileCard'
-import ImgView from '@comp/common/ImgView'
-import TimeLine from '@comp/common/TimeLine'
-import ButtonGroup from '@comp/global/ButtonGroup'
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
-import { typeCode } from '@/config/constants'
-import { getIncreasingArr, findState } from '@/utils'
+import { typeCode, checkStateTips } from '@/config/constants'
+import { getIncreasingArr, findField } from '@/utils'
+import check from '@/mixins/check'
 export default {
   name: 'AssetTransferCheck',
-  components: { FileCard, ImgView, TimeLine, ButtonGroup },
+  mixins: [check],
   data() {
     return {
-      showCheckUser: false,
-      showCheckDetail: false,
-      activeNames: [],
-      formData: [],
-      checkPeopleData: null, // 审批下一人数据
-      btnList: [
-        { text: '驳回', value: 'NO' },
-        { text: '通过', value: 'YES' }
-      ],
       typeCode: typeCode.get('transfer'),
-      parameters: {
-        billId: ''
-      },
-      checkParam: {
-        busKey: '',
-        checkState: 'NO',
-        remark: '同意',
-        approver: '',
-        openId: 'xiejieweidemo',
-        state: ''
-      }
+      inOutType: ''
     }
   },
   created() {
@@ -157,17 +143,11 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        // data.formData.forEach((item) => {
-        //   if (item.type === 'jsonText') {
-        //     const state = item.rowData.find((v) => v.filedId === 'state')
-        //     console.log(state)
-        //     this.checkParam.state = state.fieldValue
-        //   }
-        // })
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData
         this.activeNames = getIncreasingArr(this.formData?.length)
-        this.checkParam.state = findState(data.formData).fieldValue
+        this.checkParam.state = findField(data.formData, 'state').fieldValue
+        this.inOutType = findField(data.formData, 'inOutType').fieldValue
         // 获取code name
         // const user = findCodeName(this.formData)
         // this.checkParam = { ...user, ...this.checkParam }
@@ -175,11 +155,6 @@ export default {
     },
     // 审批or驳回
     async checkInfo(type) {
-      if (!this.checkParam.remark) {
-        this.$toast.fail(`请输入审批意见`)
-        return
-      }
-      this.checkParam.checkState = type
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam
@@ -217,25 +192,72 @@ export default {
       }
       this.checkParam.approver = this.approvers.join(',')
       // 调接口
-      this.checkInfo(type)
+      this.$dialog
+        .confirm({
+          title: `提示信息`,
+          message: checkStateTips.get(this.checkParam.state)
+        })
+        .then(async () => {
+          await this.checkInfo(type)
+        })
+        .catch(() => {})
     },
     onSubmit(values) {
       console.log('submit', values)
     },
     // 按钮回调
     handleClickBtn({ value }) {
+      if (!this.checkParam.remark) {
+        this.$toast.fail(`请输入审批意见`)
+        return
+      }
+      this.checkParam.checkState = value
       switch (value) {
         case 'YES': {
-          if (!this.checkPeopleData) {
-            this.checkInfo(value)
-          } else {
+          if (this.checkPeopleData) {
             this.showCheckUser = true
+          } else {
+            this.$dialog
+              .confirm({
+                title: `提示信息`,
+                message: checkStateTips.get(this.checkParam.state) || `确定要通过吗？`
+              })
+              .then(async () => {
+                await this.checkInfo(value)
+              })
+              .catch(() => {})
           }
           break
         }
         case 'NO':
           this.checkParam.approver = ''
-          this.checkInfo(value)
+          if (['30', '10', '0'].includes(this.checkParam.state)) {
+            this.$dialog
+              .alert({
+                title: `提示信息`,
+                message: '此单据状态不能进行驳回操作!'
+              })
+              .then(() => {})
+            return false
+          } else if (['2', '3'].includes(this.inOutType)) {
+            this.$dialog
+              .alert({
+                title: `提示信息`,
+                message: '转移类型为仓库至仓库、科室至科室的记录才能进行销审操作。'
+              })
+              .then(() => {})
+            return false
+          } else {
+            this.$dialog
+              .confirm({
+                title: `提示信息`,
+                message: `确认要驳回吗？`
+              })
+              .then(async () => {
+                await this.checkInfo(value)
+              })
+              .catch(() => {})
+          }
           break
       }
     },

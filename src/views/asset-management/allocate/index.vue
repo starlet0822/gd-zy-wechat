@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 10:56:12
+ * @LastEditTime: 2022-04-18 17:28:24
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -72,8 +72,6 @@ export default {
   },
   data() {
     return {
-      tabs: [],
-      tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
       typeCode: typeCode.get('allocation'),
@@ -162,10 +160,6 @@ export default {
       console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
-    },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-allocate-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {

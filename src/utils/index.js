@@ -1,10 +1,11 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 14:32:37
+ * @LastEditTime: 2022-04-18 16:04:34
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray, _isNumber } from '@utils/is'
+import { camelCase } from 'lodash-es'
 export {
   upperFirst as _upperFirst,
   camelCase as _camelCase,
@@ -93,13 +94,15 @@ export function getIncreasingArr(length = 1) {
   return [...Array(length).keys()]
 }
 
-export function findState(arg) {
-  let state = null
+// 按字段查找当前项
+// filedId：必须以camelCase（小驼峰）命名
+export function findField(arg, filedId) {
+  let field = null
   arg.forEach((item) => {
     if (item.rowData && item.rowData.length) {
-      state = item.rowData.find((v) => v.filedId === 'state')
-      // console.log('findState', state)
+      field = item.rowData.find((v) => camelCase(v.filedId) === filedId)
+      console.log('findField', field)
     }
   })
-  return state
+  return field
 }
