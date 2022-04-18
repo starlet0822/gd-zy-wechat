@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 11:00:40
+ * @LastEditTime: 2022-04-18 11:34:46
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -10,7 +10,7 @@
       v-model="keyword"
       background="#fff"
       :placeholder="placeholder"
-      show-action
+      :show-action="showFilter"
       :readonly="dialog"
       @focus="onFocus"
       @input="handleInputChange"
@@ -41,6 +41,7 @@
         ref="filterMenuRef"
         @cancel="visibleFilterMenu = false"
         @confirm="onFilterConfirm"
+        v-bind="$attrs"
       ></FilterMenu>
     </van-action-sheet>
     <!-- <van-popup
@@ -59,6 +60,7 @@ import FilterMenu from './FilterMenu.vue'
 import vars from '@css/vars.less'
 export default {
   name: 'SearchFilter',
+  // inheritAttrs: false,
   components: {
     SearchPage,
     FilterMenu
@@ -67,6 +69,11 @@ export default {
     value: {
       type: [String, Number],
       default: ''
+    },
+    // 是否开启过滤，默认开启
+    showFilter: {
+      type: Boolean,
+      default: true
     },
     border: Boolean,
     dialog: Boolean, // 是否弹出
@@ -84,16 +91,6 @@ export default {
       themeColor: vars.themeColor,
       colorTip: vars.colorTip
     }
-  },
-  computed: {
-    // value: {
-    //   get() {
-    //     return this.value
-    //   }
-    //   // set(val) {
-    //   //   this.keyword = val
-    //   // }
-    // }
   },
   methods: {
     onFocus() {

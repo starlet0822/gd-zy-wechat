@@ -1,10 +1,10 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 09:26:12
+ * @LastEditTime: 2022-04-18 14:37:57
  */
 import { judgeLoginState, login } from '@/api/modules/user'
-import { encryptByMd5 } from '@/utils/cipher'
+// import { encryptByMd5 } from '@/utils/cipher'
 
 const state = {
   code: null,
@@ -44,7 +44,8 @@ const actions = {
       const { userAccount, password } = userInfo
       login({
         userAccount: userAccount.trim(),
-        password: encryptByMd5(password),
+        password,
+        // password: encryptByMd5(password), TODO:
         openId: state.openId || 'xiejiewei3532'
       })
         .then((res) => {

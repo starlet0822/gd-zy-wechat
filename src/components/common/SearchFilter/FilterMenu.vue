@@ -1,53 +1,50 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 10:55:14
+ * @LastEditTime: 2022-04-18 11:35:12
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
     <!-- 标题 -->
     <!-- 筛选组 -->
-    <div class="filter-main vh-p-box2">
-      <div v-for="(pItem, pIndex) in filterMenu" :key="pIndex" class="filter-item">
-        <RadioField
-          ref="radioFieldRef"
-          v-if="pItem.type === 'radio'"
-          :key="pItem.label"
-          v-bind="{ ...pItem, result }"
-          @change="handleChangeRadio($event, pItem)"
-        ></RadioField>
-        <SelectField
-          ref="selectFieldRef"
-          v-if="pItem.type === 'select'"
-          :key="pItem.label"
-          v-bind="{ ...pItem, result }"
-          @change="handleSelect($event, pItem)"
-        ></SelectField>
-        <InputField
-          ref="inputFieldRef"
-          v-if="pItem.type === 'input'"
-          :key="pItem.label"
-          v-bind="{ ...pItem, result }"
-          @input="handleInput($event, pItem)"
-        ></InputField>
-        <DateField
-          ref="dateFieldRef"
-          v-if="pItem.type === 'date'"
-          :key="pItem.label"
-          v-bind="{ ...pItem, result }"
-          @change="handleChangeDate($event, pItem)"
-        ></DateField>
-      </div>
+    <div class="filter-main">
+      <template v-if="list && list.length">
+        <div v-for="(pItem, pIndex) in list" :key="pIndex" class="filter-item">
+          <RadioField
+            ref="radioFieldRef"
+            v-if="pItem.type === 'radio'"
+            :key="pItem.label"
+            v-bind="{ ...pItem, result }"
+            @change="handleChangeRadio($event, pItem)"
+          ></RadioField>
+          <SelectField
+            ref="selectFieldRef"
+            v-if="pItem.type === 'select'"
+            :key="pItem.label"
+            v-bind="{ ...pItem, result }"
+            @change="handleSelect($event, pItem)"
+          ></SelectField>
+          <InputField
+            ref="inputFieldRef"
+            v-if="pItem.type === 'input'"
+            :key="pItem.label"
+            v-bind="{ ...pItem, result }"
+            @input="handleInput($event, pItem)"
+          ></InputField>
+          <DateField
+            ref="dateFieldRef"
+            v-if="pItem.type === 'date'"
+            :key="pItem.label"
+            v-bind="{ ...pItem, result }"
+            @change="handleChangeDate($event, pItem)"
+          ></DateField>
+        </div>
+      </template>
+      <vh-tip v-else description="暂未配置筛选项"></vh-tip>
     </div>
     <!-- 底部按钮 -->
     <footer class="filter-footer">
       <div class="filter-button__content vh-flex-ac vh-border-t-1">
-        <!-- <div
-          class="filter-button filter-button--cancel vh-flex-center vh-bg-white vh-flex1 vh-border-r-1"
-          @click.stop="filterCancel"
-        >
-          取消
-        </div> -->
         <div
           v-waves
           class="filter-button filter-button--reset vh-flex-center vh-bg-white vh-flex1 vh-color-blue"
@@ -69,7 +66,7 @@
 
 <script>
 import { RadioField, InputField, SelectField, DateField } from './components/index'
-import { isArray } from 'lodash-es'
+import { isArray } from '@/utils/is'
 export default {
   name: 'FilterMenu',
   components: {
@@ -80,6 +77,10 @@ export default {
   },
   props: {
     filterMenu: {
+      // required: () => {
+      //   console.log(this)
+      //   return this.showFilter
+      // },
       type: Array,
       default: () => [
         // 复杂数据（有层级关联的） TODO:待做
@@ -114,44 +115,49 @@ export default {
         //   ]
         // },
         // 输入框
-        {
-          field: 'empName',
-          label: '申请人',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        // 输入框
-        {
-          field: 'billNo',
-          label: '申请单据号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        // 输入框
-        {
-          field: 'applyDeptCode',
-          label: '申请科室',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        // 范围 选择（e.g:时间区间|价格区间等） TODO
-        // 输入框
-        {
-          // field: 'createDate',
-          field: ['applyDate', 'applyEndDate'],
-          label: '申请时间',
-          placeholder: ['开始时间', '结束时间'],
-          type: 'date',
-          value: ''
-        }
+        // {
+        //   field: 'empName',
+        //   label: '申请人',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // // 输入框
+        // {
+        //   field: 'billNo',
+        //   label: '申请单据号',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // // 输入框
+        // {
+        //   field: 'applyDeptCode',
+        //   label: '申请科室',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // // 范围 选择（e.g:时间区间|价格区间等） TODO
+        // // 输入框
+        // {
+        //   // field: 'createDate',
+        //   field: ['applyDate', 'applyEndDate'],
+        //   label: '申请时间',
+        //   placeholder: ['开始时间', '结束时间'],
+        //   type: 'date',
+        //   value: ''
+        // }
       ],
       validator(val) {
         return isArray(val)
       }
     }
+    // 是否开启过滤，默认开启
+    // showFilter: {
+    //   type: Boolean,
+    //   default: false
+    // }
   },
   data() {
     return {
@@ -160,8 +166,6 @@ export default {
       result: {} // 筛选结果
     }
   },
-  created() {},
-
   methods: {
     handleInput(val, item) {
       console.log('handleInput', val, item)

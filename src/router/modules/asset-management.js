@@ -1,7 +1,7 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 17:24:39
+ * @LastEditTime: 2022-04-18 10:53:53
  */
 export default [
   {
@@ -69,7 +69,7 @@ export default [
       import(/* webpackChunkName: "asset-transfer" */ '@/views/asset-management/transfer/index')
   },
   {
-    path: '/asset-transfer-check',
+    path: '/asset-transfer-check/:id',
     name: 'AssetTransferCheck',
     meta: { title: '资产转移审核' },
     component: () =>

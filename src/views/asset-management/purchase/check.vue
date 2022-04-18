@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 17:57:06
+ * @LastEditTime: 2022-04-18 10:57:02
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -47,16 +47,6 @@
         </template>
       </van-collapse-item>
     </van-collapse>
-    <!-- 附件上传 -->
-    <div class="asset-info vh-rounded-12 vh-m-10 file-upload" v-if="false">
-      <van-cell title-class="vh-color-blue" :title="'附件'"></van-cell>
-      <div class="file-box">
-        <!-- 图片集 -->
-        <ImgView border></ImgView>
-        <!-- 文件列表 -->
-        <FileCard></FileCard>
-      </div>
-    </div>
     <!-- 底部按钮组 -->
     <ButtonGroup :btn-arr="btnList" fixed @click="handleClickBtn"></ButtonGroup>
     <!-- 节点弹窗 -->
@@ -119,7 +109,6 @@ export default {
     return {
       showCheckUser: false,
       showCheckDetail: false,
-      active: 0,
       approvers: [], // 审批人集合
       activeNames: [],
       formData: [],

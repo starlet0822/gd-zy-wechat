@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 09:44:27
+ * @LastEditTime: 2022-04-18 13:50:07
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -162,8 +162,6 @@ export default {
     },
     // 审批or驳回
     async checkInfo(type) {
-      const { id } = this.$route.params
-      this.parameters.billId = id
       this.checkParam.checkState = type
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
@@ -209,7 +207,8 @@ export default {
         case 'YES':
           if (!this.checkPeopleData) {
             this.checkInfo(value)
-            return
+          } else {
+            this.showCheckUser = true
           }
           this.showCheckUser = true
           break

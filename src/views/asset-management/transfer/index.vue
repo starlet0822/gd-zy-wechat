@@ -1,18 +1,19 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 17:37:08
+ * @LastEditTime: 2022-04-18 11:35:59
 -->
 <template>
-  <div class="asset-disposal-wrapper vh-bg">
+  <div class="asset-transfer-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
       v-model="parameters.queryTerm"
+      :filter-menu="filterMenu"
+      show-filter
       @search="handleSearch"
       @confirm="handleFilterConfirm"
-      :filter-menu="filterMenu"
     ></search-filter>
-    <van-tabs v-model="active" animated sticky offset-top="1.28rem" @change="onTabsChange">
+    <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
@@ -40,7 +41,7 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_code' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'transfer_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
@@ -76,36 +77,29 @@ export default {
       tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('allocation'), // TODO transfer
+      typeCode: typeCode.get('transfer'),
       filterMenu: [
-        // 筛选菜单
         {
           field: 'empName',
-          label: '申请人',
+          label: '制单人',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'billNo',
-          label: '申请单据号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'applyDeptCode',
-          label: '申请科室',
+          field: 'transfer_no',
+          label: '移交单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '申请时间',
+          label: '会计年月',
           placeholder: ['开始时间', '结束时间'],
           type: 'date',
-          value: ''
+          value: '',
+          format: 'YYYY-MM'
         }
       ],
       filterQuery: {} // 筛选参数
@@ -165,7 +159,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-disposal-check/${billId}`)
+      this.$router.push(`/asset-transfer-check/${billId}`)
     },
     // 标签页切换
     onTabsChange(id, title) {
@@ -178,10 +172,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-disposal-wrapper {
+.asset-transfer-wrapper {
   .list-item {
     margin: 10px;
-    // padding: 10px;
     .btn-status {
       text-align: right;
       display: flex;

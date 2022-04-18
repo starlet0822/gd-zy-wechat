@@ -1,7 +1,7 @@
 <!--
  * @Description: 日期时间选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-14 10:51:11
+ * @LastEditTime: 2022-04-18 10:00:59
 -->
 <template>
   <div class="date-field-wrapper">
@@ -65,6 +65,7 @@ export default {
       default: () => []
     },
     type: String,
+    // 回显格式
     format: {
       type: String,
       default: 'YYYY-MM-DD'

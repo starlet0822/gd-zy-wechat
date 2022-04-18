@@ -1,7 +1,7 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 18:02:12
+ * @LastEditTime: 2022-04-18 14:32:37
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray, _isNumber } from '@utils/is'
@@ -91,4 +91,15 @@ export function debounce(func, wait, immediate) {
 export function getIncreasingArr(length = 1) {
   if (!_isNumber(+length)) return
   return [...Array(length).keys()]
+}
+
+export function findState(arg) {
+  let state = null
+  arg.forEach((item) => {
+    if (item.rowData && item.rowData.length) {
+      state = item.rowData.find((v) => v.filedId === 'state')
+      // console.log('findState', state)
+    }
+  })
+  return state
 }
