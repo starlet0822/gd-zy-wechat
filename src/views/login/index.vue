@@ -1,14 +1,14 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-15 11:49:15
+ * @LastEditTime: 2022-04-19 09:31:39
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
     <main class="login__main">
-      <header class="login__logo vh-flex-center vh-flex-col vh-pb-20">
-        <van-image class="logoImg" :src="logoImg"></van-image>
-      </header>
+      <div class="login__logo vh-flex-center vh-flex-col vh-pb-20">
+        <van-image class="logo-img" :src="logoImg"></van-image>
+      </div>
       <van-form @submit="onSubmit">
         <van-field
           v-model="loginForm.userAccount"
@@ -81,7 +81,6 @@ export default {
         }
       } catch {
         this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })
-        // this.$toast.clear() // 清除loading
       }
     },
     // 表单提交
@@ -104,7 +103,7 @@ export default {
     padding: 0 16px;
   }
   .login__logo {
-    .logoImg {
+    .logo-img {
       width: 80%;
       // width: 167px;
       // height: 36px;

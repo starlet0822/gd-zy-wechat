@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:14:48
+ * @LastEditTime: 2022-04-19 09:34:41
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -74,7 +74,7 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('disposal'), // TODO disposal
+      typeCode: typeCode.get('disposal'),
       filterMenu: [
         // 筛选菜单
         {

@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 09:39:31
+ * @LastEditTime: 2022-04-19 09:47:47
  */
 'use strict'
 const prodGzipExtensions = /\.(js|css|json|txt|html)$/i
@@ -34,7 +34,7 @@ module.exports = {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       // [process.env.VUE_APP_API_BASEURL]: {
       '/dev': {
-        target: `http://10.10.246.196:8089/`,
+        target: `http://10.10.246.171:8089/`,
         changeOrigin: true,
         pathRewrite: {
           '^/dev': ''
@@ -88,14 +88,15 @@ module.exports = {
       })
     )
     // TODO生产环境才开启 gzip压缩
-    config.plugins.push(
-      new CompressionPlugin({
-        filename: '[path][name].gz',
-        test: prodGzipExtensions,
-        threshold: 10240,
-        minRatio: 0.8
-      })
-    )
+    isBuild &&
+      config.plugins.push(
+        new CompressionPlugin({
+          filename: '[path][name].gz',
+          test: prodGzipExtensions,
+          threshold: 10240,
+          minRatio: 0.8
+        })
+      )
     // Vconsole 调试器
     config.plugins.push(
       new VConsolePlugin({

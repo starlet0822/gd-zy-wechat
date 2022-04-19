@@ -1,7 +1,7 @@
 /*
  * @Description:校验工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 14:16:01
+ * @LastEditTime: 2022-04-19 09:24:39
  */
 export { isNumber as _isNumber } from 'lodash-es'
 
@@ -22,5 +22,5 @@ export function isExternal(path) {
 }
 
 export function isPic(arg) {
-  return /(png|jpg|jpeg)/.test(arg)
+  return /\.?(png|jpg|jpeg)/.test(arg)
 }

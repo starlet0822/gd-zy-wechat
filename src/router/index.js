@@ -1,7 +1,7 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-15 18:12:17
+ * @LastEditTime: 2022-04-18 17:46:27
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
@@ -31,6 +31,7 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   console.log(to, from)
+  // TODO 嵌套在企业微信再解开
   // judgeRoutePower(to, next)
   // // const hasCode = getCode()
   // console.log(store.state.user.openId)

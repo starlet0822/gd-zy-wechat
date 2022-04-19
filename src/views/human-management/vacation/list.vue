@@ -1,11 +1,10 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 09:36:38
+ * @LastEditTime: 2022-04-19 09:38:29
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
-    <!-- TODO 批量审批 -->
     <vh-nav-bar @click-right="onClickCheck">
       <template #right>
         <div v-show="showCheckBtn" class="vh-color-white">批量审批</div>
@@ -16,7 +15,7 @@
         <!-- @input="handleSearch" -->
         <van-search
           class="vh-flex1"
-          v-model="parameters.queryTerm"
+          v-model.trim="parameters.queryTerm"
           placeholder="请输入员工姓名"
           :show-action="true"
         >
