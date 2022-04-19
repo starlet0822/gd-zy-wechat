@@ -1,13 +1,13 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:15:23
+ * @LastEditTime: 2022-04-19 10:07:58
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
-      v-model="parameters.queryTerm"
+      v-model.trim="parameters.queryTerm"
       @search="handleSearch"
       @confirm="handleFilterConfirm"
       :filter-menu="filterMenu"
@@ -150,6 +150,10 @@ export default {
         this.refreshing = false
         this.loading = false
       }
+    },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-purchase-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {

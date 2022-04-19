@@ -1,7 +1,7 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:10:12
+ * @LastEditTime: 2022-04-19 10:42:37
  */
 export default [
   {
@@ -12,7 +12,7 @@ export default [
       import(/* webpackChunkName: "asset-purchase" */ '@/views/asset-management/purchase/index.vue')
   },
   {
-    path: '/asset-purchase-check/:id',
+    path: '/asset-purchase-check/:id/:dataState',
     name: 'AssetPurchaseCheck',
     meta: { title: '资产购置审核' },
     component: () =>
@@ -44,7 +44,7 @@ export default [
       import(/* webpackChunkName: "asset-allocate" */ '@/views/asset-management/allocate/index')
   },
   {
-    path: '/asset-allocate-check/:id',
+    path: '/asset-allocate-check/:id/:dataState',
     name: 'AssetAllocateCheck',
     meta: { title: '资产调拨审核' },
     component: () =>
@@ -75,6 +75,24 @@ export default [
     component: () =>
       import(
         /* webpackChunkName: "asset-transfer-check" */ '@/views/asset-management/transfer/check.vue'
+      )
+  },
+  {
+    path: '/asset-project-lib',
+    name: 'AssetProjectLib',
+    meta: { title: '项目库', icon: 'cangku', modCode: '05', keepAlive: true },
+    component: () =>
+      import(
+        /* webpackChunkName: "asset-project-lib" */ '@/views/asset-management/project-lib/index.vue'
+      )
+  },
+  {
+    path: '/asset-project-lib-check/:id/:dataState',
+    name: 'AssetProjectLibCheck',
+    meta: { title: '项目库审核' },
+    component: () =>
+      import(
+        /* webpackChunkName: "asset-project-lib-check" */ '@/views/asset-management/project-lib/check.vue'
       )
   }
 ]

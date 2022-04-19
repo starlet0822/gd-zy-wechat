@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:26:11
+ * @LastEditTime: 2022-04-19 10:38:30
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -124,7 +124,7 @@ export default {
           this.$set(item, 'canView', true)
         })
         this.formData = [...data.formData, ...data.detailData] || []
-        this.checkPeopleData = data.checkPeopleData || []
+        this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)
         // 获取code name
         // const user = findCodeName(this.formData)
@@ -176,12 +176,11 @@ export default {
     handleClickBtn({ value }) {
       switch (value) {
         case 'YES':
-          if (!this.checkPeopleData) {
-            this.checkInfo(value)
-          } else {
+          if (this.checkPeopleData?.rowData.length) {
             this.showCheckUser = true
+          } else {
+            this.checkInfo(value)
           }
-          this.showCheckUser = true
           break
         case 'NO':
           this.checkParam.approver = ''

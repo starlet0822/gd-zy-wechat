@@ -1,7 +1,7 @@
 /*
  * @Description:字典管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 16:27:26
+ * @LastEditTime: 2022-04-19 10:01:43
  */
 
 import vars from '@css/vars.less'
@@ -23,6 +23,7 @@ export const typeCode = new Map([
   ['allocation', 'fix_allocation'], // 资产调拨
   ['disposal', 'fix_disposal'], // 资产处置
   ['transfer', 'fix_transfer_dept'], // 资产转移
+  ['approval_apply', 'fix_approval_apply'], // 项目库（资产购置10W以上）
   // === 人力资源 ===
   ['attendance', 'hr_attendance_result'], // 考勤
   ['vacation', 'hr_vacation'] // 休假

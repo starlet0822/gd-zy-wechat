@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:33:00
+ * @LastEditTime: 2022-04-19 10:45:31
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -106,11 +106,11 @@ import { typeCode } from '@/config/constants'
 import { getIncreasingArr } from '@/utils'
 import check from '@/mixins/check'
 export default {
-  name: 'AssetPurchaseCheck',
+  name: 'AssetProjectLibCheck',
   mixins: [check],
   data() {
     return {
-      typeCode: typeCode.get('acquisition')
+      typeCode: typeCode.get('approval_apply')
     }
   },
   created() {

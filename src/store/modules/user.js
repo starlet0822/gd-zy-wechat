@@ -1,10 +1,11 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 09:34:19
+ * @LastEditTime: 2022-04-19 14:09:58
  */
 import { judgeLoginState, login } from '@/api/modules/user'
-// import { encryptByMd5 } from '@/utils/cipher'
+import md5 from 'js-md5'
+import { str2UTF8Bytes } from '@/utils'
 
 const state = {
   code: null,
@@ -42,10 +43,11 @@ const actions = {
   login({ state, commit }, userInfo) {
     return new Promise((resolve, reject) => {
       const { userAccount, password } = userInfo
+      const _password = md5.base64(str2UTF8Bytes(password)) // 加密处理
+      // console.log('加密处理后', _password)
       login({
         userAccount: userAccount.trim(),
-        password,
-        // password: encryptByMd5(password), TODO:
+        password: _password,
         openId: state.openId || 'xiejiewei3532'
       })
         .then((res) => {

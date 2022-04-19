@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:28:24
+ * @LastEditTime: 2022-04-19 10:36:27
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -148,6 +148,10 @@ export default {
         this.refreshing = false
         this.loading = false
       }
+    },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-allocate-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {

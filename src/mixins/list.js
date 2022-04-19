@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:12:50
+ * @LastEditTime: 2022-04-19 10:06:23
  */
 export default {
   data() {
@@ -48,10 +48,6 @@ export default {
       this.totalSize = 0
       this.pageRequest.pageNum = 1
       this.onLoad()
-    },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-disposal-check/${billId}/${this.tabActive}`)
     }
   }
 }
