@@ -26,7 +26,7 @@
           </template>
         </van-search>
       </div>
-      <van-cell center class="vh-border-0" v-if="dataList.length">
+      <!-- <van-cell center class="vh-border-0" v-if="dataList.length">
         <template #title>
           <div class="vh-tip">
             共查询到
@@ -44,7 +44,7 @@
             @change="switchChange"
           ></van-switch>
         </template>
-      </van-cell>
+      </van-cell> -->
       <!-- 列表 -->
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list

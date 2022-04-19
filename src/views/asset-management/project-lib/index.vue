@@ -1,10 +1,10 @@
 <!--
- * @Description:资产购置
+ * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:45:38
+ * @LastEditTime: 2022-04-19 15:06:46
 -->
 <template>
-  <div class="asset-purchase-wrapper vh-bg">
+  <div class="asset-project-lib-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
       v-model.trim="parameters.queryTerm"
@@ -40,7 +40,7 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'approval_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
@@ -153,7 +153,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-purchase-check/${billId}/${this.tabActive}`)
+      this.$router.push(`/asset-project-lib-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {
@@ -178,7 +178,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-purchase-wrapper {
+.asset-project-lib-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {

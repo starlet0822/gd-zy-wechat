@@ -1,11 +1,12 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:10:57
+ * @LastEditTime: 2022-04-19 18:06:03
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
 import TimeLine from '@comp/common/TimeLine'
+import { mapGetters } from 'vuex'
 export default {
   components: { FileCard, ImgView, TimeLine },
   data() {
@@ -14,7 +15,9 @@ export default {
       showCheckDetail: false, // 显隐审批流程
       activeNames: [],
       approvers: [], // 下一审批人集合
-      formData: [], // 页面数据
+      dataInfo: {}, // 审批数据
+      formData: [], // 基本信息数据
+      detailData: [], // 明细数据
       checkPeopleData: null, // 审批下一人数据
       // 底部按钮
       btnList: [
@@ -30,7 +33,7 @@ export default {
         checkState: 'NO',
         remark: '同意',
         approver: '',
-        openId: 'xiejieweidemo',
+        openId: 'xiejiewei1390',
         state: ''
       }
     }
@@ -41,7 +44,12 @@ export default {
     canCheck() {
       const { dataState } = this.$route.params
       return dataState === '0' // 待处理才显示
-    }
+    },
+    ...mapGetters(['openId', 'userAccount'])
+  },
+  created() {
+    // console.log(this.openId, this.userAccount)
+    this.checkParam.openId = this.openId + this.userAccount // test
   },
   methods: {}
 }

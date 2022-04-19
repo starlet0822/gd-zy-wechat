@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 09:31:39
+ * @LastEditTime: 2022-04-19 15:31:42
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -44,13 +44,14 @@
 // import { getToken, login } from '@api/modules/user'
 import logoImg from '@/assets/images/logoImg.png'
 import { debounce } from '@/utils'
+import store from '@/store'
 export default {
   name: 'Login',
   components: {},
   data() {
     return {
       loginForm: {
-        userAccount: '3532', // 2516 demo
+        userAccount: store.state.user.userAccount || '3532', // TODO
         password: 'Hrp@123' // Hrp@123
       },
       dataList: [],
