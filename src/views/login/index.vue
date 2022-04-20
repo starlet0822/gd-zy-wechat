@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 15:31:42
+ * @LastEditTime: 2022-04-20 11:26:47
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -41,17 +41,15 @@
 </template>
 
 <script>
-// import { getToken, login } from '@api/modules/user'
 import logoImg from '@/assets/images/logoImg.png'
 import { debounce } from '@/utils'
-import store from '@/store'
 export default {
   name: 'Login',
   components: {},
   data() {
     return {
       loginForm: {
-        userAccount: store.state.user.userAccount || '3532', // TODO
+        userAccount: 'demo', // TODO 测试 2516 demo 1390 2541
         password: 'Hrp@123' // Hrp@123
       },
       dataList: [],
@@ -59,19 +57,18 @@ export default {
       logoName: '医疗高效运营企业微信'
     }
   },
-  created() {
-    // this.getToken()
+  computed: {
+    openId() {
+      return 'xiejiewei' + this.loginForm.userAccount
+    }
   },
+  created() {},
   methods: {
-    async getToken() {
-      // const res = await getToken()
-      // console.log(res)
-      // const res2 = await login({ code: res, userAccount: '2516', password: 'Hrp@123' })
-    },
     // 登录绑定
     async loginFn() {
       try {
         this.$toast.loading({ message: '登录中...', forbidClick: true, duration: 0 }) // 开启loading
+        this.loginForm.openId = this.openId // TODO for test
         const { errcode } = await this.$store.dispatch('user/login', this.loginForm)
         if (errcode === '0') {
           this.$toast.clear() // 清除loading

@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 18:33:05
+ * @LastEditTime: 2022-04-20 11:28:09
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 import md5 from 'js-md5'
@@ -10,7 +10,6 @@ import { str2UTF8Bytes } from '@/utils'
 const state = {
   code: null,
   // openId: null,
-  userAccount: '2541', // TODO 测试 2516 demo 1390
   openId: 'xiejiewei', // TODO 测试
   menus: JSON.parse(localStorage.getItem('menus')) || [], // TODO
   userName: 'startlet_wu',
@@ -44,13 +43,12 @@ const actions = {
   // 用户登录
   login({ state, commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      const { userAccount, password } = userInfo
+      const { userAccount, password, openId } = userInfo
       const _password = md5.base64(str2UTF8Bytes(password)) // 加密处理
-      // console.log('加密处理后', _password)
       login({
         userAccount: userAccount.trim(),
         password: _password,
-        openId: state.openId + state.userAccount // TODO 测试
+        openId: openId // TODO 测试
         // openId: state.openId
       })
         .then((res) => {
