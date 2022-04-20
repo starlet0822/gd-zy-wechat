@@ -62,6 +62,8 @@ compression-webpack-plugin
 - md5 加密
 - 权限判断
 
+1.
+
 ### 更多配置
 
 请查阅官方文档 [Vue CLi](https://cli.vuejs.org/config/)
