@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-04-12 11:53:15
+ * @LastEditTime: 2022-04-21 16:52:01
  */
 const env = process.env.NODE_ENV
 const propList = env === '1development' ? [] : ['*', '!border']
@@ -28,7 +28,7 @@ module.exports = {
       unitPrecision: 5, // （数字）允许REM单位增长的十进制数字
       propList: propList,
       selectorBlackList: ['.norem', '.vh-border'], // 选择器黑名单 匹配则不会转换成 rem单位, 大写PX不转换
-      mediaQuery: true // 是否允许在媒体查询中转换px。
+      mediaQuery: false // 是否允许在媒体查询中转换px。
       // exclude: /node_modules/i  // （字符串，正则表达式，函数）要忽略并保留为px的文件路径 TODO:这句有点毛病
     }
   }

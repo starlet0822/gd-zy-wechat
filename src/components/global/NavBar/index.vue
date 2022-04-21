@@ -1,7 +1,7 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-03-30 10:38:17
+ * @LastEditTime: 2022-04-21 17:19:38
 -->
 <template>
   <div class="navbar-wrapper">
@@ -9,6 +9,7 @@
       :title="navTitle"
       :left-text="leftArrow ? '返回' : ''"
       :fixed="fixed"
+      safe-area-inset-top
       :left-arrow="leftArrow"
       :placeholder="false"
       v-bind="$attrs"

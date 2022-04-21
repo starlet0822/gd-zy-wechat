@@ -40,6 +40,11 @@ yarn lint           # 格式化代码
 - vscode 用户建议安装 Vetur + eslint + Prettier - Code formatter （格式代码时建议使用 Prettier）
 - [vue 规范]()
 
+#### 如何忽略
+
+- 1.[eslint](https://www.prettier.cn/docs/ignore.html)
+- 2.[prettier](https://www.prettier.cn/docs/ignore.html)
+
 ## git 提交
 
 - `"lint-staged": "8.1.5" + "husky": "1.3.1"` 约束 git 提交检测 eslint 并自动修复，部分需要手动修正！！！
