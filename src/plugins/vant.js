@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 09:56:44
+ * @LastEditTime: 2022-04-20 18:26:18
  */
 import Vue from 'vue'
 import {
@@ -47,6 +47,7 @@ import {
   Switch,
   Loading
 } from 'vant'
+Toast.setDefaultOptions('loading', { forbidClick: true, loadingType: 'spinner' })
 Vue.use(Button)
   .use(Cell)
   .use(Form)

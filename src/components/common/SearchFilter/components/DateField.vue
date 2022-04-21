@@ -1,34 +1,51 @@
 <!--
  * @Description: 日期时间选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 10:00:59
+ * @LastEditTime: 2022-04-21 09:48:44
 -->
 <template>
-  <div class="date-field-wrapper">
-    <van-cell class="vh-border-0 vh-pb-0" title-class="vh-color-text" :title="label"></van-cell>
-    <div class="field-box vh-flex-ac">
-      <van-search
-        v-model="defaultVal[0]"
-        readonly
-        input-align="center"
-        left-icon="clock-o2"
-        :placeholder="placeholder[0]"
-        shape="round"
-        background="#fff"
-        @focus="onFocus('0')"
-      ></van-search>
-      <span class="vh-color-tip">—</span>
-      <van-search
-        v-model="defaultVal[1]"
-        readonly
-        input-align="center"
-        left-icon="clock-o2"
-        :placeholder="placeholder[1]"
-        shape="round"
-        background="#fff"
-        @focus="onFocus('1')"
-      ></van-search>
-    </div>
+  <div class="date-field-wrapper" ref="dateFieldRef">
+    <template v-if="ifRange">
+      <van-cell class="vh-border-0 vh-pb-0" title-class="vh-color-text" :title="label"></van-cell>
+      <div class="field-box vh-flex-ac">
+        <van-search
+          v-model="defaultVal[0]"
+          readonly
+          input-align="center"
+          left-icon="clock-o2"
+          :placeholder="placeholder[0]"
+          shape="round"
+          background="#fff"
+          @focus="onFocus('0')"
+        ></van-search>
+        <span class="vh-color-tip">{{ rangeSeparator }}</span>
+        <van-search
+          v-model="defaultVal[1]"
+          readonly
+          input-align="center"
+          left-icon="clock-o2"
+          :placeholder="placeholder[1]"
+          shape="round"
+          background="#fff"
+          @focus="onFocus('1')"
+        ></van-search>
+      </div>
+    </template>
+
+    <template v-else>
+      <van-field
+        class="vh-border-0"
+        v-model.trim="defaultVal"
+        :label="label"
+        :placeholder="placeholder"
+        input-align="right"
+        center
+        clearable
+        v-bind="$attrs"
+        v-on="$listeners"
+        @focus="onFocus"
+      ></van-field>
+    </template>
 
     <!-- 日期选择 -->
     <van-popup v-model="showDatePicker" position="bottom">
@@ -47,7 +64,8 @@
 
 <script>
 import { formatDate } from '@/utils/date'
-// import { isArray } from '@/utils/is'
+import { isArray } from '@/utils/is'
+// import dayjs from 'dayjs'
 export default {
   name: 'DateField',
   props: {
@@ -55,8 +73,8 @@ export default {
     label: String,
     placeholder: {
       type: [String, Array],
-      default: () => {
-        return ['开始时间', '结束时间']
+      default: function () {
+        return isArray(this.value) ? ['开始', '结束'] : '请选择'
       }
     },
     value: [String, Number, Array],
@@ -70,6 +88,11 @@ export default {
       type: String,
       default: 'YYYY-MM-DD'
     },
+    // 选择范围时的分隔符
+    rangeSeparator: {
+      type: String,
+      default: '—'
+    },
     result: {
       type: Object,
       default: () => {}
@@ -77,14 +100,23 @@ export default {
   },
   data() {
     return {
-      defaultVal: ['', ''],
-      curIndex: '0', // 默认操作第一个
+      defaultVal: this.value,
+      storageVal: this.value, // 记录默认绑定值 TODO: 为啥会双向绑定？
+      curIndex: 0, // 默认操作第一个
       showDatePicker: false, // 显示时间选择
-      minDate: new Date(2021, 0, 1),
+      minDate: new Date(2017, 0, 1),
       maxDate: new Date(2023, 11, 31)
     }
   },
-  created() {},
+  computed: {
+    // 是否是范围选择
+    ifRange() {
+      return isArray(this.value)
+    }
+  },
+  created() {
+    console.log(this.$options.data.call(this))
+  },
   methods: {
     // handlePlaceholder() {
     //   if (isArray(this.placeholder) && this.placeholder?.length >= 2) {
@@ -93,9 +125,56 @@ export default {
     //   }
     //   return this.placeholder
     // },
+    // 设置绑定值
+    setDefaultVal() {
+      this.$emit('save', this.defaultVal)
+      // 特殊处理
+      if (this.ifRange) {
+        this.field.forEach((k, i) => {
+          this.result[k] = this.defaultVal[i]
+        })
+      } else {
+        this.result[this.field] = this.defaultVal
+      }
+    },
+    // 重置绑定值 TODO: 无效
+    resetDefaultVal() {
+      const initData = this.$options.data.call(this)
+      // console.log('初始data状态', initData, this.defaultVal)
+      // if (_isEqual(this.defaultVal, initData.defaultVal)) return
+      // if (_isEqual(this.defaultVal, this.storageVal)) return
+      console.log(`重置${this.field}`)
+      // this.defaultVal = ['']
+      // 特殊处理
+      if (this.ifRange) {
+        this.defaultVal.forEach((k, i) => {
+          console.log(k, i)
+          this.defaultVal.splice(i, 1, initData.storageVal[i])
+        })
+      } else {
+        this.defaultVal = initData.storageVal
+      }
+    },
+
+    /**
+     * 设置默认时间
+     * 1、获取当月 月份
+     * 2、获取当月天数
+     * 3、计算开始结束日期
+     */
+    // setDefaultVal(date = new Date()) {
+    //   const start = dayjs(date).startOf('month').format(this.format)
+    //   const end = dayjs(date).endOf('month').format(this.format)
+    //   console.log(start, end)
+    //   return [start, end]
+    // },
     onConfirmDate(val) {
       const dateVal = formatDate(val, this.format)
-      this.defaultVal[this.curIndex] = dateVal
+      if (this.ifRange) {
+        this.defaultVal[this.curIndex] = dateVal
+      } else {
+        this.defaultVal = dateVal
+      }
       this.$emit('change', this.defaultVal)
       this.showDatePicker = false
     },

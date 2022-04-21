@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 15:06:46
+ * @LastEditTime: 2022-04-20 13:38:37
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -88,22 +88,22 @@ export default {
         },
         {
           field: 'billNo',
-          label: '申请单据号',
+          label: '立项单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: 'applyDeptCode',
-          label: '申请科室',
+          label: '立项类型',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '申请时间',
-          placeholder: ['开始时间', '结束时间'],
+          label: '制单日期',
+          placeholder: ['起始', '结束'],
           type: 'date',
           value: ''
         }

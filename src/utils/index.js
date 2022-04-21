@@ -1,7 +1,7 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 14:06:16
+ * @LastEditTime: 2022-04-20 16:54:16
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray, _isNumber } from '@utils/is'

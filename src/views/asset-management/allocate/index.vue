@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:36:27
+ * @LastEditTime: 2022-04-20 14:10:55
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -78,30 +78,30 @@ export default {
       filterMenu: [
         // 筛选菜单
         {
-          field: 'empName',
-          label: '申请人',
+          field: 'transferNo',
+          label: '单据号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'billNo',
-          label: '申请单据号',
+          field: 'empName',
+          label: '调出单位',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: 'applyDeptCode',
-          label: '申请科室',
+          label: '调入单位',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: ['applyDate', 'applyEndDate'],
-          label: '申请时间',
-          placeholder: ['开始时间', '结束时间'],
+          field: ['acctStartYear', 'acctEndYear'],
+          label: '制单日期',
+          placeholder: ['开始', '结束'],
           type: 'date',
           value: ''
         }

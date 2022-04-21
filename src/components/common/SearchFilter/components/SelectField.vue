@@ -1,7 +1,7 @@
 <!--
  * @Description: pick选择项类型
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 11:34:30
+ * @LastEditTime: 2022-04-20 17:40:15
 -->
 <template>
   <div class="select-field-wrapper">
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { _isEqual } from '@/utils/is'
 import { themeColor } from '@/config/constants'
 export default {
   name: 'SelectField',
@@ -51,6 +52,13 @@ export default {
   },
   created() {},
   methods: {
+    // 重置绑定值
+    resetDefaultVal() {
+      const initData = this.$options.data.call(this)
+      if (_isEqual(this.defaultVal, initData.defaultVal)) return
+      console.log(`重置${this.field}`)
+      this.defaultVal = initData.defaultVal
+    },
     onMenuChange(val) {
       this.$emit('change', val)
     }

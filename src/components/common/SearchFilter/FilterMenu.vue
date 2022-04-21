@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 11:35:12
+ * @LastEditTime: 2022-04-21 09:47:15
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -9,8 +9,13 @@
     <!-- 筛选组 -->
     <div class="filter-main">
       <template v-if="list && list.length">
-        <div v-for="(pItem, pIndex) in list" :key="pIndex" class="filter-item">
-          <RadioField
+        <div ref="filterItemRef" v-for="(pItem, pIndex) in list" :key="pIndex" class="filter-item">
+          <component
+            ref="fieldRef"
+            :is="componentId(pItem)"
+            v-bind="{ key: pItem.label, ...pItem, result }"
+          ></component>
+          <!-- <RadioField
             ref="radioFieldRef"
             v-if="pItem.type === 'radio'"
             :key="pItem.label"
@@ -37,7 +42,7 @@
             :key="pItem.label"
             v-bind="{ ...pItem, result }"
             @change="handleChangeDate($event, pItem)"
-          ></DateField>
+          ></DateField> -->
         </div>
       </template>
       <vh-tip v-else description="暂未配置筛选项"></vh-tip>
@@ -48,14 +53,14 @@
         <div
           v-waves
           class="filter-button filter-button--reset vh-flex-center vh-bg-white vh-flex1 vh-color-blue"
-          @click.stop="filterReset"
+          @click.stop="filterReset('fieldRef')"
         >
           重置
         </div>
         <div
           v-waves
           class="filter-button filter-button--confirm vh-flex-center vh-flex2 vh-color-white"
-          @click.stop="filterConfirm"
+          @click.stop="filterConfirm('fieldRef')"
         >
           确定
         </div>
@@ -67,6 +72,7 @@
 <script>
 import { RadioField, InputField, SelectField, DateField } from './components/index'
 import { isArray } from '@/utils/is'
+import { isEqual } from 'lodash-es'
 export default {
   name: 'FilterMenu',
   components: {
@@ -159,6 +165,17 @@ export default {
     //   default: false
     // }
   },
+  watch: {
+    filterMenu: {
+      handler(newVal, oldVal) {
+        if (isEqual(newVal, oldVal)) return false
+        console.log(newVal)
+        this.handleResult(newVal)
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   data() {
     return {
       activeArr: [0],
@@ -167,29 +184,29 @@ export default {
     }
   },
   methods: {
-    handleInput(val, item) {
-      console.log('handleInput', val, item)
-      this.result[item.field] = val.trim()
+    // 处理已注册组件名称
+    componentId({ type: name }) {
+      return `${name}-field`
     },
-    handleSelect(val, item) {
-      console.log('handleSelect', val, item)
-      this.result[item.field] = val
-    },
-    handleChangeRadio(val, item) {
-      console.log('handleChangeRadio', val, item)
-      this.result[item.field] = val
-    },
-    handleChangeDate(val, item) {
-      console.log('handleChangeDate', val, item)
-      if (isArray(item.field) && item.field?.length >= 1) {
-        const [startField, endField] = item.field
-        const [startVal, endVal] = val
-        // 字段为数组时先这样赋值
-        this.result[startField] = startVal
-        this.result[endField] = endVal
-      } else {
-        this.result[item.field] = val
-      }
+    // 初始化筛选数据结构
+    handleResult(data) {
+      data.forEach((item) => {
+        const { type, field, value } = item
+        if (type === 'input') {
+          this.result[field] = value
+        }
+        // 特殊处理日期筛选
+        if (type === 'date') {
+          if (isArray(value)) {
+            field.forEach((k, i) => {
+              this.result[k] = value[i]
+            })
+          } else {
+            this.result[field] = value
+          }
+        }
+      })
+      console.log('初始化筛选数据结构', this.result)
     },
     // 取消
     filterCancel() {
@@ -197,117 +214,43 @@ export default {
     },
 
     // 重置
-    filterReset() {
-      this.list.forEach((item, index) => {
-        // if (item.type && item.type === 'tree') {
-        //   // 特殊处理层级关联类型的值
-        //   item.valueShow = ''
-        //   item.value = ''
-        // }
-        if (item.type && item.type === 'input') {
-          item.value = ''
-          this.result[item.field] = ''
-          // 获取dom
-          const inputFieldRef = this.$refs.inputFieldRef
-          console.log(inputFieldRef)
-          inputFieldRef.forEach((ref) => {
-            ref.defaultVal = ''
-          })
+    filterReset(refName) {
+      this.$toast({
+        type: 'loading',
+        message: `重置中...`,
+        duration: 0,
+        forbidClick: true,
+        getContainer: () => {
+          return this.$el.querySelector('.filter-main')
         }
-
-        if (item.type && item.type === 'select') {
-          item.value = ''
-          this.result[item.field] = ''
-          // 获取dom
-          const selectFieldRef = this.$refs.selectFieldRef
-          console.log(selectFieldRef)
-          selectFieldRef.forEach((ref) => {
-            ref.defaultVal = ''
-          })
-        }
-
-        if (item.type && item.type === 'date') {
-          item.value = ''
-          if (isArray(item.field) && item.field?.length >= 1) {
-            const [startField, endField] = item.field
-            // 字段为数组时先这样赋值
-            this.result[startField] = ''
-            this.result[endField] = ''
-          } else {
-            this.result[item.field] = ''
+      })
+      this.$nextTick(function () {
+        const fieldRefs = this.$refs[refName]
+        console.log('fieldRefs', fieldRefs)
+        fieldRefs.forEach((fieldRef, index) => {
+          fieldRef.resetDefaultVal()
+          if (index === fieldRefs?.length - 1) {
+            this.$toast.clear()
           }
-          // 获取dom
-          const dateFieldRef = this.$refs.dateFieldRef
-          dateFieldRef.forEach((ref) => {
-            ref.defaultVal = ['', '']
-          })
-        }
-
-        if (item.type && item.type === 'radio') {
-          item.value = ''
-          this.result[item.field] = ''
-          // 获取dom
-          const radioFieldRef = this.$refs.radioFieldRef
-          radioFieldRef.forEach((ref) => {
-            ref.defaultVal = ''
-          })
-
-          if (item.options && item.options.length) {
-            item.options.forEach((v, i) => {
-              v.checked = false
-              this.list[index].options.splice(i, 1, v)
-              // if (v.value === 'all') {
-              //   v.label = '全选'
-              // }
-            })
-          }
-        }
-
-        // if (item.options && item.options.length) {
-        //   item.options.forEach((v, i) => {
-        //     v.checked = false
-        //     // this.$set(v, 'checked', false)
-        //     this.list[index].options.splice(i, 1, v)
-        //     // if (v.value === 'all') {
-        //     //   v.label = '全选'
-        //     // }
-        //   })
-        // }
+        })
       })
     },
 
     // 确定
-    filterConfirm() {
+    filterConfirm(refName) {
       const { result } = this // 筛选后的结果
-      // this.list.forEach((v) => {
-      //   // input 类型
-      //   if ((v.type === 'input') & (v.value.trim() !== '')) {
-      //     result[v.field] = v.value
-      //   }
-      //   if (v.options && v.options.length) {
-      //     const checkedArr = v.options.reduce((count, pre) => {
-      //       if (pre.value !== 'all' && pre.checked) {
-      //         count.push(pre.value)
-      //       }
-      //       return count
-      //     }, [])
-      //     // console.log(checkedArr)
-      //     // 处理级联数据value
-      //     if (v.type === 'tree' && v.value !== '') {
-      //       result[v.field] = v.value
-      //     }
-      //     // 过滤掉无效参数 所有选项value是否不为 ''
-      //     if (checkedArr.join(',') !== '') {
-      //       result[v.field] = checkedArr.join(',')
-      //     }
-      //   }
-      // })
-      // TODO 过滤掉值为空的字段
-      for (const key in result) {
-        if (key && String(result[key]).trim() === '') {
-          this.$delete(result, key)
+      // this.$nextTick(function () {
+      const fieldRefs = this.$refs[refName]
+      console.log('fieldRefs', fieldRefs)
+      fieldRefs.forEach((fieldRef) => {
+        fieldRef.setDefaultVal()
+        // TODO 过滤掉值为空的字段
+        for (const key in result) {
+          if (key && String(result[key]).trim() === '') {
+            this.$delete(result, key)
+          }
         }
-      }
+      })
       const noEmptyObj = Object.keys(result).length !== 0 // 有数据
       console.log('result', result, noEmptyObj)
       this.$emit('confirm', result, noEmptyObj)
@@ -325,6 +268,9 @@ export default {
       // /deep/ .van-cell__value {
       //   color: #8c8c8c;
       // }
+    }
+    /deep/.van-toast {
+      position: absolute;
     }
   }
   .filter-footer {

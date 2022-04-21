@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:29:08
+ * @LastEditTime: 2022-04-20 18:28:54
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -78,32 +78,32 @@ export default {
       filterMenu: [
         // 筛选菜单
         {
-          field: 'empName',
-          label: '申请人',
+          field: 'billNo',
+          label: '处置单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'billNo',
-          label: '申请单据号',
+          field: 'empName',
+          label: '处置类型',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: 'applyDeptCode',
-          label: '申请科室',
+          label: '科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '申请时间',
-          placeholder: ['开始时间', '结束时间'],
+          label: '会计年月',
+          placeholder: ['开始', '结束'],
           type: 'date',
-          value: ''
+          value: ['', '']
         }
       ],
       filterQuery: {} // 筛选参数

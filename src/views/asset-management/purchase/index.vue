@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:07:58
+ * @LastEditTime: 2022-04-21 09:03:35
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -88,7 +88,7 @@ export default {
         },
         {
           field: 'billNo',
-          label: '申请单据号',
+          label: '申请单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
@@ -101,11 +101,13 @@ export default {
           value: ''
         },
         {
-          field: ['applyDate', 'applyEndDate'],
-          label: '申请时间',
-          placeholder: ['开始时间', '结束时间'],
+          // field: ['applyDate', 'applyEndDate'],
+          field: 'applyDate',
+          label: '申请日期',
+          // placeholder: ['开始', '结束'],
           type: 'date',
-          value: ''
+          // value: ['2022-04-01', '2022-04-30']
+          value: '2022-04-01'
         }
       ],
       filterQuery: {} // 筛选参数
@@ -163,7 +165,6 @@ export default {
     },
     // 筛选回调
     handleFilterConfirm(query) {
-      console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
     },
