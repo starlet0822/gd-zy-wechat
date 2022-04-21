@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 09:16:07
+ * @LastEditTime: 2022-04-21 15:08:53
  */
 'use strict'
 const prodGzipExtensions = /\.(js|css|json|txt|html)$/i
@@ -88,7 +88,7 @@ module.exports = {
         }
       })
     )
-    // TODO生产环境才开启 gzip压缩
+    // 生产环境才开启 gzip压缩
     isBuild &&
       config.plugins.push(
         new CompressionPlugin({

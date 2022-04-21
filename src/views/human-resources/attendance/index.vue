@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:56:03
+ * @LastEditTime: 2022-04-21 15:29:48
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -69,14 +69,6 @@ export default {
       typeCode: typeCode.get('attendance')
     }
   },
-  computed: {
-    showAction: {
-      get() {
-        return true // TODO 清空两边空格无效
-        // return String(this.keyword).trim() !== '' // TODO 清空两边空格无效
-      }
-    }
-  },
   created() {},
   methods: {
     // 获取数据列表
@@ -86,7 +78,7 @@ export default {
         const params = {
           typeCode: this.typeCode,
           pageRequest: this.pageRequest,
-          parameters: { ...this.parameters, ...this.filterQuery }
+          parameters: { ...this.parameters }
         }
         const {
           errcode,

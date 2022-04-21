@@ -1,7 +1,7 @@
 /*
  * @Description:字典管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:01:43
+ * @LastEditTime: 2022-04-21 15:22:24
  */
 
 import vars from '@css/vars.less'
@@ -35,5 +35,7 @@ export const checkStateTips = new Map([
   ['11', '确定要执行调入确认操作吗？'],
   ['12', '确定要执行审核操作吗？'],
   ['13', '确定要执行审核操作吗？']
-  // TODO驳回 ['30' || '10' || '0', '此单据状态不能进行驳回操作!']
 ])
+
+// 驳回状态提示文案
+export const noStateTips = new Map([[('30' || '10' || '0', '此单据状态不能进行驳回操作!')]])

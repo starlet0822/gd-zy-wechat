@@ -166,7 +166,7 @@
       closeable
       :style="{ width: '90%', height: '100%' }"
     >
-      <div class="vh-flex-center vh-pt-40">
+      <div class="vh-pt-20 vh-pl-5">
         <TimeLine></TimeLine>
       </div>
     </van-popup>

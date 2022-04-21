@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 09:38:29
+ * @LastEditTime: 2022-04-21 15:18:05
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -10,23 +10,15 @@
         <div v-show="showCheckBtn" class="vh-color-white">批量审批</div>
       </template>
     </vh-nav-bar>
-    <MoveTabs v-model.trim="tabActive" :tabs="tabs" offset-top="48" @change="handleTasChange">
-      <div class="vh-w-full vh-flex-ac">
-        <!-- @input="handleSearch" -->
-        <van-search
-          class="vh-flex1"
+    <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
+      <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
+        <search-filter
           v-model.trim="parameters.queryTerm"
           placeholder="请输入员工姓名"
-          :show-action="true"
-        >
-          <template #action>
-            <div class="vh-flex-center" @click="handleSearch">
-              <van-button class="vh-px-12" type="info" size="mini">查询</van-button>
-            </div>
-          </template>
-        </van-search>
-      </div>
-      <!-- <van-cell center class="vh-border-0" v-if="dataList.length">
+          @search="handleSearch"
+          :can-filter="false"
+        ></search-filter>
+        <!-- <van-cell center class="vh-border-0" v-if="dataList.length">
         <template #title>
           <div class="vh-tip">
             共查询到
@@ -45,58 +37,62 @@
           ></van-switch>
         </template>
       </van-cell> -->
-      <!-- 列表 -->
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list
-          v-model="loading"
-          :error="error"
-          :finished="finished"
-          :finished-text="finishedText"
-          @load="onLoad"
-        >
-          <van-checkbox-group v-model="result">
-            <van-row
-              v-waves
-              class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
-              type="flex"
-              align="center"
-              v-for="(item, index) in dataList"
-              :key="item.billId + index"
-            >
-              <!-- <transition :name="'van-slide-left'"> -->
-              <van-col span="2" v-show="showMulti">
-                <van-checkbox :name="item.billId"></van-checkbox>
-              </van-col>
-              <!-- </transition> -->
-              <van-col :span="showMulti ? 11 : 12" @click="toCheck(item)">
-                <p v-for="(left, leftIdx) in item.formData.slice(0, 2)" :key="leftIdx">
-                  <span class="vh-tip">{{ left.fieldKey }}：</span>
-                  <span>{{ left.fieldValue }}</span>
-                </p>
-              </van-col>
-              <van-col :span="showMulti ? 11 : 12" @click="toCheck(item)">
-                <p v-for="(left, leftIdx) in item.formData.slice(2)" :key="leftIdx">
-                  <span class="vh-tip">{{ left.fieldKey }}：</span>
-                  <span>{{ left.fieldValue }}</span>
-                </p>
-              </van-col>
-            </van-row>
-          </van-checkbox-group>
-          <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
-        </van-list>
-      </van-pull-refresh>
-    </MoveTabs>
+        <!-- 列表 -->
+        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+          <van-list
+            v-model="loading"
+            :error="error"
+            :finished="finished"
+            :finished-text="finishedText"
+            @load="onLoad"
+          >
+            <van-checkbox-group v-model="result">
+              <van-row
+                v-waves
+                class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
+                type="flex"
+                align="center"
+                v-for="(item, index) in dataList"
+                :key="item.billId + index"
+              >
+                <!-- <transition :name="'van-slide-left'"> -->
+                <van-col span="2" v-show="showMulti">
+                  <van-checkbox :name="item.billId"></van-checkbox>
+                </van-col>
+                <!-- </transition> -->
+                <van-col :span="showMulti ? 11 : 12" @click="toCheck(item)">
+                  <p v-for="(left, leftIdx) in item.formData.slice(0, 2)" :key="leftIdx">
+                    <span class="vh-tip">{{ left.fieldKey }}：</span>
+                    <span>{{ left.fieldValue }}</span>
+                  </p>
+                </van-col>
+                <van-col :span="showMulti ? 11 : 12" @click="toCheck(item)">
+                  <p v-for="(left, leftIdx) in item.formData.slice(2)" :key="leftIdx">
+                    <span class="vh-tip">{{ left.fieldKey }}：</span>
+                    <span>{{ left.fieldValue }}</span>
+                  </p>
+                </van-col>
+              </van-row>
+            </van-checkbox-group>
+            <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
+          </van-list>
+        </van-pull-refresh>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
 <script>
-import MoveTabs from '@comp/common/MoveTabs'
 import vars from '@/assets/css/vars.less'
 import { themeColor, typeCode } from '@/config/constants'
 import { findHrCheckList } from '@/api/modules/common'
+import list from '@/mixins/list'
+import SearchFilter from '@comp/common/SearchFilter'
+
 export default {
   name: 'Vacation',
-  components: { MoveTabs },
+  mixins: [list],
+  components: { SearchFilter },
   data() {
     return {
       colorBlue: vars.colorBlue,
@@ -104,23 +100,7 @@ export default {
       themeColor,
       showMulti: false, // 是否批量
       result: [],
-      tabActive: 0,
-      tabs: ['待处理', '已处理', '全部'],
-      dataList: [],
-      error: false,
-      loading: false,
-      finished: false,
-      refreshing: false,
-      totalSize: 0,
-      typeCode: typeCode.get('vacation'),
-      pageRequest: {
-        pageNum: 1,
-        pageSize: 10
-      },
-      parameters: {
-        dataState: '0', // 默认待处理
-        queryTerm: ''
-      }
+      typeCode: typeCode.get('vacation')
     }
   },
   computed: {
@@ -129,24 +109,10 @@ export default {
       get() {
         return this.showMulti && this.result.length > 0
       }
-    },
-    showAction: {
-      get() {
-        return String(this.parameters.queryTerm).trim() !== '' // TODO 清空两边空格无效
-      }
-    },
-    finishedText: {
-      // 共${this.dataList.length}条数据
-      get() {
-        return this.dataList.length ? `没有更多了` : ''
-      }
     }
   },
   created() {},
   methods: {
-    onLoad() {
-      this.getList()
-    },
     // 获取数据列表
     async getList() {
       try {
@@ -154,7 +120,7 @@ export default {
         const params = {
           typeCode: this.typeCode,
           pageRequest: this.pageRequest,
-          parameters: this.parameters
+          parameters: { ...this.parameters, ...this.filterQuery }
         }
         const {
           errcode,
@@ -184,32 +150,21 @@ export default {
         this.loading = false
       }
     },
-    // 列表刷新
-    onRefresh() {
-      console.log('列表数据刷新---')
-      // 清空列表数据
-      this.finished = false
-      this.refreshing = true
-      this.loading = true
-      this.dataList = []
-      this.totalSize = 0
-      this.pageRequest.pageNum = 1
-      this.onLoad()
-    },
-    // 标签页切换回调
-    handleTasChange(val) {
-      this.parameters.dataState = ['0', '1', 'all'][val]
-      this.onRefresh()
-    },
-    // 搜索
-    handleSearch(val) {
-      console.log('搜索')
-      // throttle(this.onRefresh, 150)
-      this.onRefresh()
-    },
+
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/vacation-check/${billId}`)
+    },
+    // 搜索
+    handleSearch(val) {
+      this.parameters.queryTerm = val
+      this.onRefresh()
+    },
+    // 标签页切换
+    onTabsChange(id, title) {
+      console.log(id)
+      this.parameters.dataState = id
+      this.onRefresh()
     },
     // 驳回
     handleClickReject() {

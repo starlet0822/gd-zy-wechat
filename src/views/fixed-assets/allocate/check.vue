@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:38:30
+ * @LastEditTime: 2022-04-21 15:40:28
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -88,7 +88,7 @@
       closeable
       :style="{ width: '90%', height: '100%' }"
     >
-      <div class="vh-flex-center vh-pt-20">
+      <div class="vh-pt-20 vh-pl-5">
         <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>

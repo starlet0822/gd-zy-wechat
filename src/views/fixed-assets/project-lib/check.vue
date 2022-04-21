@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 18:23:06
+ * @LastEditTime: 2022-04-21 15:36:03
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -110,7 +110,7 @@
       closeable
       :style="{ width: '90%', height: '100%' }"
     >
-      <div class="vh-flex-center vh-pt-40">
+      <div class="vh-pt-20 vh-pl-5">
         <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
@@ -147,6 +147,8 @@ export default {
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)
+        // 处理审批意见
+        this.checkParam.remark += handleDetailStr(this.dataInfo.detailData)
         // 获取code name
         // const user = findCodeName(this.formData)
         // this.checkParam = { ...user, ...this.checkParam }
@@ -155,9 +157,6 @@ export default {
     // 审批or驳回
     async checkInfo(type) {
       this.checkParam.checkState = type
-      // 处理审批意见
-      this.checkParam.remark += handleDetailStr(this.dataInfo.detailData)
-
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam

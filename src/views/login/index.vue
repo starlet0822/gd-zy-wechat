@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 11:53:49
+ * @LastEditTime: 2022-04-21 15:24:20
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       loginForm: {
-        userAccount: 'demo', // TODO 测试 2516 demo 1390 2541
+        userAccount: 'demo', // TODO 测试账号：2516 demo 1390 2541
         password: 'Hrp@123' // Hrp@123
       },
       dataList: [],
@@ -68,7 +68,6 @@ export default {
     async loginFn() {
       try {
         this.$toast.loading({ message: '登录中...', forbidClick: true, duration: 0 }) // 开启loading
-        // this.loginForm.openId = this.openId // TODO for test
         const { errcode } = await this.$store.dispatch('user/login', this.loginForm)
         if (errcode === '0') {
           this.$toast.clear() // 清除loading

@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 11:54:29
+ * @LastEditTime: 2022-04-21 15:47:30
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 import md5 from 'js-md5'
@@ -11,7 +11,7 @@ const state = {
   code: null,
   // openId: null,
   openId: 'xiejiewei', // TODO 测试
-  menus: JSON.parse(localStorage.getItem('menus')) || [], // TODO
+  menus: JSON.parse(localStorage.getItem('menus')) || [],
   userName: 'startlet_wu',
   roles: ['admin']
 }
@@ -50,7 +50,7 @@ const actions = {
       login({
         userAccount: userAccount.trim(),
         password: _password,
-        openId: openId // TODO 测试
+        openId: openId
         // openId: state.openId
       })
         .then((res) => {
