@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-12 11:09:29
+ * @LastEditTime: 2022-04-21 14:56:21
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -68,14 +68,16 @@
       </transition> -->
     </div>
     <!-- 表单 -->
-    <van-form @submit="onSubmit" class="vh-mt-10">
+    <van-form v-if="formData.length" scroll-to-error>
       <van-field
-        v-model="formInfo.opinion"
-        name="opinion"
+        v-model="checkParam.remark"
+        :readonly="!canCheck"
+        name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
         type="textarea"
         rows="3"
+        label-class="vh-color-tip"
         autosize
         maxlength="200"
         show-word-limit
@@ -99,27 +101,49 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import TimeLine from '@comp/common/TimeLine'
+import { getAtteDetailList } from '@/api/modules/human-resources'
+import { typeCode } from '@/config/constants'
+import check from '@/mixins/check'
 import UserTable from './components/UserTable.vue'
 export default {
   name: 'AttendanceCheck',
-  components: { TimeLine, UserTable },
+  mixins: [check],
+  components: { UserTable },
   data() {
     return {
-      showCheckDetail: false,
-      formInfo: {
-        opinion: ''
-      },
-      btnList: [
-        { text: '驳回', value: 'nopass' },
-        { text: '同意', value: 'pass' }
-      ],
       colorYellow: vars.colorYellow,
-      colorRed: vars.colorRed
+      colorRed: vars.colorRed,
+      typeCode: typeCode.get('attendance'),
+      // 参数相关
+      parameters: {
+        billId: '',
+        empName: ''
+      },
+      checkParam: {
+        busKey: '',
+        checkState: 'NO',
+        remark: '同意',
+        approver: '',
+        openId: 'xiejiewei1390',
+        state: ''
+      }
     }
   },
-  created() {},
+  created() {
+    this.getInfo()
+  },
   methods: {
+    async getInfo() {
+      const { id } = this.$route.params
+      this.parameters.billId = this.checkParam.busKey = id
+      const { errcode, data } = await getAtteDetailList({
+        typeCode: this.typeCode,
+        parameters: this.parameters
+      })
+      if (errcode === '0') {
+        console.log(data)
+      }
+    },
     onClickCheck() {
       this.showCheckDetail = !this.showCheckDetail
     },

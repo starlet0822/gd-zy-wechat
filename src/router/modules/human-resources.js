@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 09:19:24
+ * @LastEditTime: 2022-04-21 14:53:54
  */
 export default [
   {
@@ -14,16 +14,16 @@ export default [
       keepAlive: true
     },
     component: () =>
-      import(/* webpackChunkName: "attendance" */ '@/views/human-management/attendance/index.vue')
+      import(/* webpackChunkName: "attendance" */ '@/views/human-resources/attendance/index.vue')
   },
   {
-    path: '/attendance-check',
+    path: '/attendance-check/:id/:dataState?',
     name: 'AttendanceCheck',
     meta: {
       title: '考勤审批'
     },
     component: () =>
-      import(/* webpackChunkName: "attendance-check" */ '@/views/human-management/attendance/check')
+      import(/* webpackChunkName: "attendance-check" */ '@/views/human-resources/attendance/check')
   },
   {
     path: '/vacation',
@@ -35,16 +35,16 @@ export default [
       keepAlive: true
     },
     component: () =>
-      import(/* webpackChunkName: "vacation" */ '@/views/human-management/vacation/list.vue')
+      import(/* webpackChunkName: "vacation" */ '@/views/human-resources/vacation/list.vue')
   },
   {
-    path: '/vacation-check/:id',
+    path: '/vacation-check/:id/:dataState?',
     name: 'VacationCheck',
     meta: {
       title: '休假审批'
     },
     component: () =>
-      import(/* webpackChunkName: "vacation-check" */ '@/views/human-management/vacation/check')
+      import(/* webpackChunkName: "vacation-check" */ '@/views/human-resources/vacation/check')
   },
   {
     path: '/rotational',
@@ -56,7 +56,7 @@ export default [
       keepAlive: true
     },
     component: () =>
-      import(/* webpackChunkName: "rotational" */ '@/views/human-management/rotational/index.vue')
+      import(/* webpackChunkName: "rotational" */ '@/views/human-resources/rotational/index.vue')
   },
   {
     path: '/rotational-check',
@@ -65,7 +65,7 @@ export default [
       title: '轮岗审批'
     },
     component: () =>
-      import(/* webpackChunkName: "rotational-check" */ '@/views/human-management/rotational/check')
+      import(/* webpackChunkName: "rotational-check" */ '@/views/human-resources/rotational/check')
   },
   {
     path: '/secondment',
@@ -77,7 +77,7 @@ export default [
       keepAlive: true
     },
     component: () =>
-      import(/* webpackChunkName: "secondment" */ '@/views/human-management/secondment/index.vue')
+      import(/* webpackChunkName: "secondment" */ '@/views/human-resources/secondment/index.vue')
   },
   {
     path: '/secondment-check',
@@ -86,7 +86,7 @@ export default [
       title: '借调审批'
     },
     component: () =>
-      import(/* webpackChunkName: "secondment-check" */ '@/views/human-management/secondment/check')
+      import(/* webpackChunkName: "secondment-check" */ '@/views/human-resources/secondment/check')
   },
   {
     path: '/departure',
@@ -98,7 +98,7 @@ export default [
       keepAlive: true
     },
     component: () =>
-      import(/* webpackChunkName: "departure" */ '@/views/human-management/departure/index.vue')
+      import(/* webpackChunkName: "departure" */ '@/views/human-resources/departure/index.vue')
   },
   {
     path: '/departure-check',
@@ -107,7 +107,7 @@ export default [
       title: '离职审批'
     },
     component: () =>
-      import(/* webpackChunkName: "departure-check" */ '@/views/human-management/departure/check')
+      import(/* webpackChunkName: "departure-check" */ '@/views/human-resources/departure/check')
   },
   // {
   //   path: '/rotary',
@@ -119,7 +119,7 @@ export default [
   //     keepAlive: true
   //   },
   //   component: () =>
-  //     import(/* webpackChunkName: "rotary" */ '@/views/human-management/rotary/index.vue')
+  //     import(/* webpackChunkName: "rotary" */ '@/views/human-resources/rotary/index.vue')
   // },
   {
     path: '/rotary-check',
@@ -128,6 +128,6 @@ export default [
       title: '轮转审批'
     },
     component: () =>
-      import(/* webpackChunkName: "rotary-check" */ '@/views/human-management/rotary/check')
+      import(/* webpackChunkName: "rotary-check" */ '@/views/human-resources/rotary/check')
   }
 ]

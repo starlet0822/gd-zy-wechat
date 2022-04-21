@@ -1,13 +1,15 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 10:06:23
+ * @LastEditTime: 2022-04-21 14:04:23
  */
+import { dataState } from '@/config/constants'
 export default {
   data() {
     return {
-      tabs: [],
+      // tabs: [],
       tabActive: '0',
+      // 列表相关
       dataList: [],
       error: false,
       loading: false,
@@ -31,7 +33,19 @@ export default {
       get() {
         return this.dataList.length ? `没有更多了` : ''
       }
+    },
+    tabs: {
+      get() {
+        const tabs = []
+        for (const [k, v] of dataState.entries()) {
+          tabs.push({ id: k, title: v })
+        }
+        return tabs
+      }
     }
+  },
+  created() {
+    // this.setTabs()
   },
   methods: {
     onLoad() {
@@ -48,6 +62,12 @@ export default {
       this.totalSize = 0
       this.pageRequest.pageNum = 1
       this.onLoad()
+    },
+    // 设置标签页数据
+    setTabs() {
+      for (const [k, v] of dataState.entries()) {
+        this.tabs.push({ id: k, title: v })
+      }
     }
   }
 }

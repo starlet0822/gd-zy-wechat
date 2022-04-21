@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-19 18:06:03
+ * @LastEditTime: 2022-04-21 11:52:25
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -45,11 +45,11 @@ export default {
       const { dataState } = this.$route.params
       return dataState === '0' // 待处理才显示
     },
-    ...mapGetters(['openId', 'userAccount'])
+    ...mapGetters(['openId'])
   },
   created() {
     // console.log(this.openId, this.userAccount)
-    this.checkParam.openId = this.openId + this.userAccount // test
+    this.checkParam.openId = this.openId // test
   },
   methods: {}
 }

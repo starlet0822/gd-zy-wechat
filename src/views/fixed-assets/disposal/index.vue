@@ -1,17 +1,16 @@
 <!--
- * @Description:资处转移
+ * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 16:43:02
+ * @LastEditTime: 2022-04-21 10:19:08
 -->
 <template>
-  <div class="asset-transfer-wrapper vh-bg">
+  <div class="asset-disposal-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
       v-model="parameters.queryTerm"
-      :filter-menu="filterMenu"
-      show-filter
       @search="handleSearch"
       @confirm="handleFilterConfirm"
+      :filter-menu="filterMenu"
     ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
@@ -37,11 +36,11 @@
               </div>
               <div
                 class="vh-flex-ac"
-                v-for="(field, fieldIndex) in item.formData"
+                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'transfer_no' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'equi_out_doc_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
@@ -59,13 +58,13 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode, dataState, checkStatus } from '@/config/constants'
+import { typeCode, checkStatus } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetTransfer',
+  name: 'AssetDisposal',
   mixins: [list],
   components: {
     SearchFilter,
@@ -73,22 +72,28 @@ export default {
   },
   data() {
     return {
-      tabs: [],
-      tabActive: '0',
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('transfer'),
+      typeCode: typeCode.get('disposal'),
       filterMenu: [
+        // 筛选菜单
         {
-          field: 'empName',
-          label: '制单人',
+          field: 'billNo',
+          label: '处置单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'transfer_no',
-          label: '移交单号',
+          field: 'empName',
+          label: '处置类型',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'applyDeptCode',
+          label: '科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
@@ -96,20 +101,15 @@ export default {
         {
           field: ['applyDate', 'applyEndDate'],
           label: '会计年月',
-          placeholder: ['开始时间', '结束时间'],
+          placeholder: ['开始', '结束'],
           type: 'date',
-          value: '',
-          format: 'YYYY-MM'
+          value: ['', '']
         }
       ],
       filterQuery: {} // 筛选参数
     }
   },
-  created() {
-    for (const [k, v] of dataState.entries()) {
-      this.tabs.push({ id: k, title: v })
-    }
-  },
+  created() {},
   methods: {
     // 获取数据列表
     async getList() {
@@ -145,6 +145,10 @@ export default {
         this.loading = false
       }
     },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-disposal-check/${billId}/${this.tabActive}`)
+    },
     // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
@@ -157,10 +161,6 @@ export default {
       this.filterQuery = query
       this.onRefresh()
     },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-transfer-check/${billId}/${this.tabActive}`)
-    },
     // 标签页切换
     onTabsChange(id, title) {
       console.log(id)
@@ -172,7 +172,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-transfer-wrapper {
+.asset-disposal-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {

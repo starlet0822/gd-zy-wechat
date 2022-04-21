@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 11:28:09
+ * @LastEditTime: 2022-04-21 11:54:29
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 import md5 from 'js-md5'
@@ -43,7 +43,9 @@ const actions = {
   // 用户登录
   login({ state, commit }, userInfo) {
     return new Promise((resolve, reject) => {
-      const { userAccount, password, openId } = userInfo
+      const { userAccount, password } = userInfo
+      const openId = state.openId + userAccount // test
+      commit('SET_OPENID', openId)
       const _password = md5.base64(str2UTF8Bytes(password)) // 加密处理
       login({
         userAccount: userAccount.trim(),

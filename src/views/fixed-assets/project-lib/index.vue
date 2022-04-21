@@ -1,13 +1,13 @@
 <!--
- * @Description:资产调拨
+ * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 14:10:55
+ * @LastEditTime: 2022-04-21 10:18:58
 -->
 <template>
-  <div class="asset-allocate-wrapper vh-bg">
+  <div class="asset-project-lib-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
-      v-model="parameters.queryTerm"
+      v-model.trim="parameters.queryTerm"
       @search="handleSearch"
       @confirm="handleFilterConfirm"
       :filter-menu="filterMenu"
@@ -25,9 +25,9 @@
           >
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
-              v-waves
               v-for="(item, index) in dataList"
               :key="item.billId + index"
+              v-waves
               @click="toCheck(item)"
             >
               <div class="vh-flex-jb-ac">
@@ -40,11 +40,13 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_code' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'approval_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
               <div class="btn-status">
+                <!-- :color="checkStatus.get(item.checkState).color"
+                    :text="checkStatus.get(item.checkState).text" -->
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
@@ -58,13 +60,13 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode, dataState, checkStatus } from '@/config/constants'
+import { typeCode, checkStatus } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetAllocate',
+  name: 'AssetProjectLib',
   mixins: [list],
   components: {
     SearchFilter,
@@ -74,34 +76,34 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('allocation'),
+      typeCode: typeCode.get('approval_apply'),
       filterMenu: [
         // 筛选菜单
         {
-          field: 'transferNo',
-          label: '单据号',
+          field: 'empName',
+          label: '申请人',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'empName',
-          label: '调出单位',
+          field: 'billNo',
+          label: '立项单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: 'applyDeptCode',
-          label: '调入单位',
+          label: '立项类型',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: ['acctStartYear', 'acctEndYear'],
+          field: ['applyDate', 'applyEndDate'],
           label: '制单日期',
-          placeholder: ['开始', '结束'],
+          placeholder: ['起始', '结束'],
           type: 'date',
           value: ''
         }
@@ -109,11 +111,7 @@ export default {
       filterQuery: {} // 筛选参数
     }
   },
-  created() {
-    for (const [k, v] of dataState.entries()) {
-      this.tabs.push({ id: k, title: v })
-    }
-  },
+  created() {},
   methods: {
     // 获取数据列表
     async getList() {
@@ -151,7 +149,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-allocate-check/${billId}/${this.tabActive}`)
+      this.$router.push(`/asset-project-lib-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {
@@ -176,7 +174,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-allocate-wrapper {
+.asset-project-lib-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {

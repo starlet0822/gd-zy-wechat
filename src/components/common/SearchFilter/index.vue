@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 11:34:46
+ * @LastEditTime: 2022-04-21 14:20:51
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -10,19 +10,25 @@
       v-model="keyword"
       background="#fff"
       :placeholder="placeholder"
-      :show-action="showFilter"
+      :show-action="true"
       :readonly="dialog"
       @focus="onFocus"
       @input="handleInputChange"
+      @search="onSearch"
     >
       <template #action>
-        <div class="filter-box vh-flex-center">
+        <!-- 过滤按钮 -->
+        <div v-if="canFilter && showFilter" class="filter-box vh-flex-center">
           <van-icon
             :color="filtered ? themeColor : colorTip"
             name="filter-o"
             size="0.7rem"
             @click="onFilter"
           />
+        </div>
+        <!-- 搜索按钮 -->
+        <div v-else class="vh-flex-center" @click="onSearch">
+          <van-button class="vh-px-12" type="info" size="mini">查询</van-button>
         </div>
       </template>
     </van-search>
@@ -71,7 +77,7 @@ export default {
       default: ''
     },
     // 是否开启过滤，默认开启
-    showFilter: {
+    canFilter: {
       type: Boolean,
       default: true
     },
@@ -86,6 +92,7 @@ export default {
     return {
       keyword: this.value,
       filtered: false, // 是否已有筛选数据
+      showFilter: this.canFilter, // 控制查询和筛选显隐
       visibleSearchPage: false,
       visibleFilterMenu: false,
       themeColor: vars.themeColor,
@@ -95,22 +102,27 @@ export default {
   methods: {
     onFocus() {
       // TODO 先不搞弹出交互
+      this.showFilter = false
       if (!this.dialog) return false
       // this.visibleSearchPage = true
+    },
+    onBlur() {
+      this.showFilter = true
     },
     // 点击筛选
     onFilter() {
       this.visibleFilterMenu = true
     },
     handleInputChange(keyword) {
-      this.$emit('update:value', keyword)
-      this.$emit('search', keyword)
+      // this.$emit('update:value', keyword)
+      // this.$emit('search', keyword)
     },
     // 确定搜索
-    onSearch(val) {
-      this.$emit('search', val)
-      this.onCancel()
-      this.keyword = val
+    onSearch() {
+      console.log('确定搜索', this.keyword)
+      this.$emit('search', this.keyword)
+      this.onBlur()
+      // this.onCancel()
     },
     // 取消搜索
     onCancel() {

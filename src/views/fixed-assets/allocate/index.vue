@@ -1,13 +1,13 @@
 <!--
- * @Description:资产购置
+ * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 09:03:35
+ * @LastEditTime: 2022-04-21 14:28:01
 -->
 <template>
-  <div class="asset-purchase-wrapper vh-bg">
+  <div class="asset-allocate-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
-      v-model.trim="parameters.queryTerm"
+      v-model="parameters.queryTerm"
       @search="handleSearch"
       @confirm="handleFilterConfirm"
       :filter-menu="filterMenu"
@@ -25,9 +25,9 @@
           >
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
+              v-waves
               v-for="(item, index) in dataList"
               :key="item.billId + index"
-              v-waves
               @click="toCheck(item)"
             >
               <div class="vh-flex-jb-ac">
@@ -40,13 +40,11 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_code' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
               <div class="btn-status">
-                <!-- :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text" -->
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
@@ -60,13 +58,13 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode, checkStatus, dataState } from '@/config/constants'
+import { typeCode, checkStatus } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetPurchase',
+  name: 'AssetAllocate',
   mixins: [list],
   components: {
     SearchFilter,
@@ -76,48 +74,42 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('acquisition'),
+      typeCode: typeCode.get('allocation'),
       filterMenu: [
         // 筛选菜单
         {
-          field: 'empName',
-          label: '申请人',
+          field: 'transferNo',
+          label: '单据号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'billNo',
-          label: '申请单号',
+          field: 'empName',
+          label: '调出单位',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: 'applyDeptCode',
-          label: '申请科室',
+          label: '调入单位',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          // field: ['applyDate', 'applyEndDate'],
-          field: 'applyDate',
-          label: '申请日期',
-          // placeholder: ['开始', '结束'],
+          field: ['acctStartYear', 'acctEndYear'],
+          label: '制单日期',
+          placeholder: ['开始', '结束'],
           type: 'date',
-          // value: ['2022-04-01', '2022-04-30']
-          value: '2022-04-01'
+          value: ['', '']
         }
       ],
       filterQuery: {} // 筛选参数
     }
   },
-  created() {
-    for (const [k, v] of dataState.entries()) {
-      this.tabs.push({ id: k, title: v })
-    }
-  },
+  created() {},
   methods: {
     // 获取数据列表
     async getList() {
@@ -155,7 +147,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-purchase-check/${billId}/${this.tabActive}`)
+      this.$router.push(`/asset-allocate-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {
@@ -165,6 +157,7 @@ export default {
     },
     // 筛选回调
     handleFilterConfirm(query) {
+      console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
     },
@@ -179,7 +172,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-purchase-wrapper {
+.asset-allocate-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {

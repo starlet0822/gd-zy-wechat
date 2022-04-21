@@ -1,16 +1,17 @@
 <!--
- * @Description:资产购置10W以上(项目库)
+ * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 13:38:37
+ * @LastEditTime: 2022-04-21 14:29:15
 -->
 <template>
-  <div class="asset-project-lib-wrapper vh-bg">
+  <div class="asset-transfer-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
-      v-model.trim="parameters.queryTerm"
+      v-model="parameters.queryTerm"
+      :filter-menu="filterMenu"
+      show-filter
       @search="handleSearch"
       @confirm="handleFilterConfirm"
-      :filter-menu="filterMenu"
     ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
@@ -25,9 +26,9 @@
           >
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
+              v-waves
               v-for="(item, index) in dataList"
               :key="item.billId + index"
-              v-waves
               @click="toCheck(item)"
             >
               <div class="vh-flex-jb-ac">
@@ -36,17 +37,15 @@
               </div>
               <div
                 class="vh-flex-ac"
-                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
+                v-for="(field, fieldIndex) in item.formData"
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'approval_no' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'transfer_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
               <div class="btn-status">
-                <!-- :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text" -->
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
@@ -60,13 +59,13 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode, checkStatus, dataState } from '@/config/constants'
+import { typeCode, checkStatus } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetProjectLib',
+  name: 'AssetTransfer',
   mixins: [list],
   components: {
     SearchFilter,
@@ -76,46 +75,35 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('approval_apply'),
+      typeCode: typeCode.get('transfer'),
       filterMenu: [
-        // 筛选菜单
         {
           field: 'empName',
-          label: '申请人',
+          label: '制单人',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'billNo',
-          label: '立项单号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'applyDeptCode',
-          label: '立项类型',
+          field: 'transfer_no',
+          label: '移交单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '制单日期',
-          placeholder: ['起始', '结束'],
+          label: '会计年月',
+          placeholder: ['开始', '结束'],
           type: 'date',
-          value: ''
+          value: ['', ''],
+          format: 'YYYY-MM'
         }
       ],
       filterQuery: {} // 筛选参数
     }
   },
-  created() {
-    for (const [k, v] of dataState.entries()) {
-      this.tabs.push({ id: k, title: v })
-    }
-  },
+  created() {},
   methods: {
     // 获取数据列表
     async getList() {
@@ -151,10 +139,6 @@ export default {
         this.loading = false
       }
     },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-project-lib-check/${billId}/${this.tabActive}`)
-    },
     // 搜索
     handleSearch(val) {
       console.log('handleSearch', val)
@@ -167,6 +151,10 @@ export default {
       this.filterQuery = query
       this.onRefresh()
     },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`/asset-transfer-check/${billId}/${this.tabActive}`)
+    },
     // 标签页切换
     onTabsChange(id, title) {
       console.log(id)
@@ -178,7 +166,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-project-lib-wrapper {
+.asset-transfer-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {

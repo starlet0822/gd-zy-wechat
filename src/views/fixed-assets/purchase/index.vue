@@ -1,13 +1,13 @@
 <!--
- * @Description:资产处置
+ * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 18:28:54
+ * @LastEditTime: 2022-04-21 14:26:06
 -->
 <template>
-  <div class="asset-disposal-wrapper vh-bg">
+  <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <search-filter
-      v-model="parameters.queryTerm"
+      v-model.trim="parameters.queryTerm"
       @search="handleSearch"
       @confirm="handleFilterConfirm"
       :filter-menu="filterMenu"
@@ -25,9 +25,9 @@
           >
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
-              v-waves
               v-for="(item, index) in dataList"
               :key="item.billId + index"
+              v-waves
               @click="toCheck(item)"
             >
               <div class="vh-flex-jb-ac">
@@ -40,11 +40,13 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'equi_out_doc_no' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
               <div class="btn-status">
+                <!-- :color="checkStatus.get(item.checkState).color"
+                    :text="checkStatus.get(item.checkState).text" -->
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
@@ -58,13 +60,13 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode, dataState, checkStatus } from '@/config/constants'
+import { typeCode, checkStatus } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
-  name: 'AssetDisposal',
+  name: 'AssetPurchase',
   mixins: [list],
   components: {
     SearchFilter,
@@ -74,46 +76,44 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('disposal'),
+      typeCode: typeCode.get('acquisition'),
       filterMenu: [
         // 筛选菜单
         {
-          field: 'billNo',
-          label: '处置单号',
+          field: 'empName',
+          label: '申请人',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'empName',
-          label: '处置类型',
+          field: 'billNo',
+          label: '申请单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: 'applyDeptCode',
-          label: '科室',
+          label: '申请科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '会计年月',
+          // field: 'applyDate',
+          label: '申请日期',
           placeholder: ['开始', '结束'],
           type: 'date',
           value: ['', '']
+          // value: '2022-04-01'
         }
       ],
       filterQuery: {} // 筛选参数
     }
   },
-  created() {
-    for (const [k, v] of dataState.entries()) {
-      this.tabs.push({ id: k, title: v })
-    }
-  },
+  created() {},
   methods: {
     // 获取数据列表
     async getList() {
@@ -151,17 +151,15 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/asset-disposal-check/${billId}/${this.tabActive}`)
+      this.$router.push(`/asset-purchase-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {
-      console.log('handleSearch', val)
       this.parameters.queryTerm = val
       this.onRefresh()
     },
     // 筛选回调
     handleFilterConfirm(query) {
-      console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
     },
@@ -176,7 +174,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-disposal-wrapper {
+.asset-purchase-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {
