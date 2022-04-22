@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:04:23
+ * @LastEditTime: 2022-04-22 11:58:00
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -24,7 +24,41 @@ export default {
       parameters: {
         dataState: '0', // 默认待处理
         queryTerm: ''
-      }
+      },
+      filterMenu: [
+        // 筛选菜单
+        {
+          field: 'empName',
+          label: '申请人',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'billNo',
+          label: '申请单号',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: 'applyDeptCode', // TODO
+          label: '申请科室',
+          placeholder: '请输入',
+          type: 'input',
+          value: ''
+        },
+        {
+          field: ['applyDate', 'applyEndDate'],
+          // field: 'applyDate',
+          label: '申请日期',
+          placeholder: ['开始', '结束'],
+          type: 'date',
+          value: ['', '']
+          // value: '2022-04-01'
+        }
+      ],
+      filterQuery: {} // 筛选参数
     }
   },
   computed: {

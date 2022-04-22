@@ -1,10 +1,9 @@
 <!--
  * @Description: 标签
  * @Author: wuxxing
- * @LastEditTime: 2022-03-25 15:45:29
+ * @LastEditTime: 2022-04-22 09:57:50
 -->
 <template>
-  <!--  <div class="tag-box-wrapper">-->
   <van-tag
     class="tag-box-wrapper"
     :color="color"
@@ -18,7 +17,6 @@
   >
     {{ text }}
   </van-tag>
-  <!--  </div>-->
 </template>
 
 <script>

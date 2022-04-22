@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 18:26:18
+ * @LastEditTime: 2022-04-22 10:30:26
  */
 import Vue from 'vue'
 import {
@@ -45,7 +45,9 @@ import {
   CheckboxGroup,
   Checkbox,
   Switch,
-  Loading
+  Loading,
+  Swipe,
+  SwipeItem
 } from 'vant'
 Toast.setDefaultOptions('loading', { forbidClick: true, loadingType: 'spinner' })
 Vue.use(Button)
@@ -89,3 +91,5 @@ Vue.use(Button)
   .use(CheckboxGroup)
   .use(Checkbox)
   .use(Switch)
+  .use(Swipe)
+  .use(SwipeItem)

@@ -1,7 +1,7 @@
 <!--
  * @Description: 日期时间选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 09:48:44
+ * @LastEditTime: 2022-04-22 11:09:56
 -->
 <template>
   <div class="date-field-wrapper" ref="dateFieldRef">
@@ -149,7 +149,8 @@ export default {
       if (this.ifRange) {
         this.defaultVal.forEach((k, i) => {
           console.log(k, i)
-          this.defaultVal.splice(i, 1, initData.storageVal[i])
+          // this.defaultVal.splice(i, 1, initData.storageVal[i])
+          this.defaultVal.splice(i, 1, '') // TODO 先这么处理
         })
       } else {
         this.defaultVal = initData.storageVal

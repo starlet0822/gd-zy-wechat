@@ -64,7 +64,7 @@ compression-webpack-plugin
 
 ## 业务
 
-- md5 加密
+- md5 加密 √
 - 权限判断
 
 1.

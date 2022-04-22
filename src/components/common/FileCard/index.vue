@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 14:18:40
+ * @LastEditTime: 2022-04-22 09:56:21
 -->
 <template>
   <div class="file-card-wrapper">
@@ -13,7 +13,7 @@
       @click="onClickFile(file)"
     >
       <div class="vh-flex-center">
-        <van-icon size="32" name="description" />
+        <van-icon size="0.8533rem" name="description" />
       </div>
       <div class="file-info vh-ml-12 vh-flex1">
         <div class="file-name vh-font-14 van-multi-ellipsis--l2">

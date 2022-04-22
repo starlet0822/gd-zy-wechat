@@ -1,10 +1,9 @@
 /*
  * @Description:精度计算
  * @Author: wuxxing
- * @LastEditTime: 2022-03-22 18:17:30
+ * @LastEditTime: 2022-04-22 10:00:57
  */
 import Decimal from 'decimal.js'
-// console.log('Decimal', new Decimal(0))
 /**
  * @desc 加法运算
  * @param  {Number|String} arg 参数个数不固定

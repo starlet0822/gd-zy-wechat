@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:26:06
+ * @LastEditTime: 2022-04-22 12:04:02
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -94,7 +94,7 @@ export default {
           value: ''
         },
         {
-          field: 'applyDeptCode',
+          field: 'applyDeptCode', // TODO
           label: '申请科室',
           placeholder: '请输入',
           type: 'input',

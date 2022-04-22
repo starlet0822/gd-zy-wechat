@@ -1,11 +1,11 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:29:15
+ * @LastEditTime: 2022-04-22 12:03:42
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
-    <vh-nav-bar :left-arrow="true"></vh-nav-bar>
+    <vh-nav-bar></vh-nav-bar>
     <search-filter
       v-model="parameters.queryTerm"
       :filter-menu="filterMenu"
