@@ -1,13 +1,13 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 17:19:38
+ * @LastEditTime: 2022-04-22 09:36:04
 -->
 <template>
   <div class="navbar-wrapper">
     <van-nav-bar
       :title="navTitle"
-      :left-text="leftArrow ? '返回' : ''"
+      :left-text="leftText"
       :fixed="fixed"
       safe-area-inset-top
       :left-arrow="leftArrow"
@@ -60,15 +60,17 @@ export default {
     navTitle: {
       get() {
         const { title: routeTitle } = this.$route.meta
-        // console.log(routeTitle)
-        return this.title.trim() !== '' ? this.title : routeTitle
+        return this.title !== '' ? this.title : routeTitle
+      }
+    },
+    leftText: {
+      get() {
+        return this.leftArrow ? '返回' : ''
       }
     }
   },
   created() {
-    // const { title } = this.$route.meta
-    // if (title) {
-    // }
+    console.log(this.title)
   },
   methods: {
     // 点击左侧

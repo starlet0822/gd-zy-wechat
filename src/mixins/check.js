@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 11:52:25
+ * @LastEditTime: 2022-04-22 09:42:55
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -15,7 +15,7 @@ export default {
       showCheckDetail: false, // 显隐审批流程
       activeNames: [],
       approvers: [], // 下一审批人集合
-      dataInfo: {}, // 审批数据
+      dataInfo: null, // 审批详情数据
       formData: [], // 基本信息数据
       detailData: [], // 明细数据
       checkPeopleData: null, // 审批下一人数据

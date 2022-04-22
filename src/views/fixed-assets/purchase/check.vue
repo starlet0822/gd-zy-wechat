@@ -1,11 +1,11 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 15:42:51
+ * @LastEditTime: 2022-04-22 09:28:34
 -->
 <template>
   <div class="check-wrapper vh-bg">
-    <vh-nav-bar @click-right="handleRightClick">
+    <vh-nav-bar :title="dataInfo && dataInfo.title" @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>
@@ -149,6 +149,7 @@ export default {
             this.checkParam.state = state.fieldValue
           }
         })
+        this.dataInfo = data
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)

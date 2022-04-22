@@ -1,11 +1,11 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 15:40:28
+ * @LastEditTime: 2022-04-22 09:41:06
 -->
 <template>
   <div class="check-wrapper vh-bg">
-    <vh-nav-bar @click-right="handleRightClick">
+    <vh-nav-bar :title="dataInfo && dataInfo.title" @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>
@@ -123,6 +123,7 @@ export default {
         data.detailData.forEach((item) => {
           this.$set(item, 'canView', true)
         })
+        this.dataInfo = data
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)

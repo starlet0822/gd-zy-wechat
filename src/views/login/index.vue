@@ -1,13 +1,13 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 15:24:20
+ * @LastEditTime: 2022-04-22 09:08:30
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
     <main class="login__main">
       <div class="login__logo vh-flex-center vh-flex-col vh-pb-20">
-        <van-image class="logo-img" :src="logoImg"></van-image>
+        <van-image class="logo-img" :src="logoImg" alt="医疗高效运营管理系统"></van-image>
       </div>
       <van-form @submit="onSubmit">
         <van-field
@@ -54,7 +54,7 @@ export default {
       },
       dataList: [],
       logoImg: logoImg,
-      logoName: '医疗高效运营企业微信'
+      logoName: '医疗高效运营管理系统'
     }
   },
   computed: {

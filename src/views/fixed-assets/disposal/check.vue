@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="check-wrapper vh-bg">
-    <vh-nav-bar @click-right="handleRightClick">
+    <vh-nav-bar :title="dataInfo && dataInfo.title" @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>
@@ -135,6 +135,7 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
+        this.dataInfo = data
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || {}
         this.activeNames = getIncreasingArr(this.formData?.length)
