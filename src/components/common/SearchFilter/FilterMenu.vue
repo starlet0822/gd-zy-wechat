@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 09:47:15
+ * @LastEditTime: 2022-04-22 15:34:16
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -70,13 +70,14 @@
 </template>
 
 <script>
-import { RadioField, InputField, SelectField, DateField } from './components/index'
+import { RadioField, CheckboxField, InputField, SelectField, DateField } from './components/index'
 import { isArray } from '@/utils/is'
 import { isEqual } from 'lodash-es'
 export default {
   name: 'FilterMenu',
   components: {
     RadioField,
+    CheckboxField,
     InputField,
     SelectField,
     DateField

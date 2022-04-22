@@ -1,10 +1,10 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 10:38:27
+ * @LastEditTime: 2022-04-22 17:03:43
  */
 const env = process.env.NODE_ENV
-const propList = env === 'development' ? [] : ['*', '!border']
+const propList = env === '1development' ? [] : ['*', '!border']
 
 module.exports = {
   plugins: {

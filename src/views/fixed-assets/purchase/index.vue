@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 12:04:02
+ * @LastEditTime: 2022-04-22 18:11:52
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -79,6 +79,46 @@ export default {
       typeCode: typeCode.get('acquisition'),
       filterMenu: [
         // 筛选菜单
+        // {
+        //   field: 'status',
+        //   label: '状态',
+        //   type: 'radio', // 单选
+        //   value: '',
+        //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
+        //   // multiple: false, // 是否开启多选 TODO:先不做
+        //   options: [
+        //     { label: '未审核', value: '-1' },
+        //     { label: '已审核', value: '0' },
+        //     { label: '未通过', value: '1' },
+        //     { label: '审核中', value: '2' },
+        //     { label: '已退回', value: '3' },
+        //     { label: '已退回', value: '3' },
+        //     { label: '已退回', value: '3' },
+        //     { label: '已退回', value: '3' },
+        //     { label: '已退回', value: '3' },
+        //     { label: '已退回', value: '3' }
+        //   ]
+        // },
+        // {
+        //   field: 'status2',
+        //   label: '状态',
+        //   type: 'checkbox', // 多选
+        //   value: [],
+        //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
+        //   options: [
+        //     // { label: '全选', value: 'all' },
+        //     { label: '未审核', value: '-1' },
+        //     { label: '已审核', value: '0' },
+        //     { label: '未通过', value: '1' },
+        //     { label: '审核中', value: '2' },
+        //     { label: '已退回', value: '3' }
+        //     // { label: '已退回', value: '3' },
+        //     // { label: '已退回', value: '3' },
+        //     // { label: '已退回', value: '3' },
+        //     // { label: '已退回', value: '3' },
+        //     // { label: '已退回', value: '3' }
+        //   ]
+        // },
         {
           field: 'empName',
           label: '申请人',

@@ -1,7 +1,7 @@
 <!--
- * @Description: 点击选择类型
+ * @Description: 点击多选类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 17:24:46
+ * @LastEditTime: 2022-04-22 18:11:45
 -->
 <template>
   <div class="radio-field-wrapper vh-bg2">
@@ -19,7 +19,7 @@
         </div>
       </template>
     </van-cell>
-    <van-radio-group v-model="defaultVal">
+    <van-checkbox-group v-model="defaultVal" ref="checkboxGroup">
       <div class="gird vh-pb-5 vh-flex-wrap" :style="{ 'padding-left': gutter }">
         <div
           class="gird-item"
@@ -33,12 +33,14 @@
         >
           <div v-waves :class="['grid-item__content', 'vh-rounded-6', 'vh-flex-center']">
             <div :class="['grid-item__text']">
-              <van-radio :name="item.value">{{ item.label }}</van-radio>
+              <van-checkbox :name="item.value" @click="onCheckboxChange(item)">
+                {{ item.label }}
+              </van-checkbox>
             </div>
           </div>
         </div>
       </div>
-    </van-radio-group>
+    </van-checkbox-group>
   </div>
 </template>
 
@@ -47,15 +49,15 @@ import { div, mul } from '@/utils/calculate'
 import { _isEqual } from '@/utils/is'
 import { RootValue } from '@/config/constants'
 export default {
-  name: 'RadioField',
+  name: 'CheckboxField',
   props: {
     field: String,
     label: String,
     placeholder: {
       type: String,
-      default: '单选'
+      default: '多选'
     },
-    value: [String, Number],
+    value: [Array],
     options: {
       type: Array,
       default: () => []
@@ -70,6 +72,8 @@ export default {
       type: [String, Number],
       default: 6
     },
+    // 开启全选/反选
+    canAll: Boolean,
     // 格子之间的间距
     columnNum: {
       type: [String, Number],
@@ -110,7 +114,7 @@ export default {
     // 设置绑定值
     setDefaultVal() {
       this.$emit('save', this.defaultVal)
-      this.result[this.field] = this.defaultVal
+      this.result[this.field] = this.defaultVal.join(',')
     },
     // 重置绑定值
     resetDefaultVal() {
@@ -121,6 +125,21 @@ export default {
     },
     handleToggle() {
       this.isPickup = !this.isPickup
+    },
+    onCheckboxChange({ label, value }) {
+      console.log('onCheckboxChange', label, value)
+      // const allItem = this.options.find((v) => v.value === 'all')
+      // let isAll = false
+      // isAll = this.defaultVal.length === this.options.length - 1 // 选中的项目总数
+      // if (isAll && !this.defaultVal.includes('all')) {
+      //   this.$refs.checkboxGroup.toggleAll(isAll)
+      //   allItem.label = isAll ? '反选' : '全选'
+      // }
+      // if (value === 'all') {
+      //   isAll = this.defaultVal.includes('all')
+      //   this.$refs.checkboxGroup.toggleAll(isAll)
+      //   allItem.label = isAll ? '反选' : '全选'
+      // }
     }
   }
 }
@@ -135,14 +154,14 @@ export default {
         .grid-item__text {
           flex: 1;
           font-size: 13px;
-          .van-radio {
+          .van-checkbox {
             flex: 1;
             justify-content: center;
           }
-          .van-radio__icon {
+          .van-checkbox__icon {
             display: none;
           }
-          .van-radio__label {
+          .van-checkbox__label {
             flex: 1;
             margin-left: 0;
             padding: 6px 8px;
@@ -153,8 +172,8 @@ export default {
             color: @color-tip;
             background-color: #f0f0f0;
           }
-          .van-radio__icon--checked {
-            & + .van-radio__label {
+          .van-checkbox__icon--checked {
+            & + .van-checkbox__label {
               color: @color-blue;
               background: rgba(107, 186, 255, 0.15);
             }
