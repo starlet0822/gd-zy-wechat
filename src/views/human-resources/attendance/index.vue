@@ -1,15 +1,17 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 15:29:48
+ * @LastEditTime: 2022-04-24 17:45:26
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
     <vh-nav-bar></vh-nav-bar>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
-      <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
+      <van-tab v-for="tab in tabs" :title="tab.title" :key="tab.id" :name="tab.id">
         <search-filter
-          v-model.trim="parameters.queryTerm"
+          ref="searchFilterRef"
+          :key-id="tab.id"
+          :value.sync="parameters.queryTerm"
           placeholder="请输入员工姓名"
           @search="handleSearch"
           :can-filter="false"
@@ -18,6 +20,7 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"
@@ -66,7 +69,10 @@ export default {
   data() {
     return {
       themeColor,
-      typeCode: typeCode.get('attendance')
+      typeCode: typeCode.get('attendance'),
+      pageRequest: {
+        pageSize: 15 // TODO 特殊处理
+      }
     }
   },
   created() {},
@@ -118,7 +124,13 @@ export default {
     onTabsChange(id, title) {
       console.log(id)
       this.parameters.dataState = id
-      this.onRefresh()
+      this.parameters.queryTerm = ''
+      this.$nextTick(() => {
+        const searchFilterRefs = this.$refs.searchFilterRef
+        const curSearchFilterRef = searchFilterRefs.find((v) => v.keyId === id)
+        this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
+        this.onRefresh()
+      })
     }
   }
 }

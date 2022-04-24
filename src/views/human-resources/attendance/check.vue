@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 11:56:46
+ * @LastEditTime: 2022-04-24 17:51:22
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -10,10 +10,16 @@
         <div class="vh-color-white">审批详情</div>
       </template>
     </vh-nav-bar>
-    <!-- <div class="vh-p-box0">
+    <search-filter
+      v-model.trim="parameters.empName"
+      placeholder="请输入员工姓名"
+      @search="handleSearch"
+      :can-filter="false"
+    ></search-filter>
+    <div class="" v-if="false">
       <UserTable :headData="tableHead" :bodyData="matirialUsed"></UserTable>
-    </div> -->
-    <van-swipe class="my-swipe" @change="onChange">
+    </div>
+    <van-swipe v-if="true" class="my-swipe" @change="onChange">
       <van-swipe-item v-for="item in 5" :key="item">
         <div v-if="true" class="check-info vh-bg-white vh-p-10 vh-m-10 vh-rounded-6">
           <div class="vh-flex-ac-jb vh-pb-8">
@@ -111,11 +117,12 @@ import vars from '@/assets/css/vars.less'
 import { getAtteDetailList } from '@/api/modules/human-resources'
 import { typeCode } from '@/config/constants'
 import check from '@/mixins/check'
-// import UserTable from './components/UserTable.vue'
+import SearchFilter from '@comp/common/SearchFilter'
+import UserTable from './components/UserTable.vue'
 export default {
   name: 'AttendanceCheck',
   mixins: [check],
-  // components: { UserTable },
+  components: { SearchFilter, UserTable },
   data() {
     return {
       colorYellow: vars.colorYellow,
@@ -124,22 +131,19 @@ export default {
       typeCode: typeCode.get('attendance'),
       // 参数相关
       parameters: {
-        billId: '',
         empName: ''
       },
+      // 独有审批参数
       checkParam: {
-        busKey: '',
-        checkState: 'NO',
-        remark: '同意',
-        approver: '',
-        openId: 'xiejiewei1390',
-        state: ''
+        atteYear: '',
+        atteMonth: '',
+        deptId: ''
       },
       tableHead: [
         {
           name: '工号', // 注意传进去的列名
           span: '4',
-          prop: 'name' // 注意传进去的列属性名，要跟实际取得的数据的属性名一致，如matirialUsed数组的每一项的属性名
+          prop: 'no' // 注意传进去的列属性名，要跟实际取得的数据的属性名一致，如matirialUsed数组的每一项的属性名
         },
         {
           name: '姓名',
@@ -148,44 +152,48 @@ export default {
         },
         {
           name: '休假类型',
-          span: '4',
-          prop: 'num'
+          span: '6',
+          prop: 'type'
         },
         {
           name: '开始时间',
-          span: '6',
-          prop: 'num'
+          span: '5',
+          prop: 'startTime'
         },
         {
           name: '回院时间',
           span: '5',
-          prop: 'num'
+          prop: 'endTime'
         }
       ],
       matirialUsed: [
         {
-          name: '',
-          model: '',
-          num: '0',
-          editDisable: true // 是否可编辑
+          no: '4052',
+          name: '张三',
+          type: '年假',
+          startTime: '2020-10-01',
+          endTime: '2020-10-11'
         },
         {
-          name: '',
-          model: '',
-          num: '0',
-          editDisable: true
+          no: '4052',
+          name: '张三',
+          type: '年假',
+          startTime: '2020-10-01',
+          endTime: '2020-10-11'
         },
         {
-          name: '',
-          model: '',
-          num: '0',
-          editDisable: true
+          no: '4052',
+          name: '张三',
+          type: '年假',
+          startTime: '2020-10-01',
+          endTime: '2020-10-11'
         },
         {
-          name: '',
-          model: '',
-          num: '0',
-          editDisable: true
+          no: '4052',
+          name: '张三',
+          type: '年假',
+          startTime: '2020-10-01',
+          endTime: '2020-10-11'
         }
       ]
     }
@@ -236,6 +244,11 @@ export default {
           })
           break
       }
+    },
+    // 搜索
+    handleSearch(val) {
+      this.parameters.empName = val
+      this.getInfo()
     }
   }
 }

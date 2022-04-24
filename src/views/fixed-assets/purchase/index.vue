@@ -1,13 +1,14 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 18:11:52
+ * @LastEditTime: 2022-04-24 17:57:14
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
-    <vh-nav-bar :left-arrow="true"></vh-nav-bar>
+    <vh-nav-bar></vh-nav-bar>
     <search-filter
-      v-model.trim="parameters.queryTerm"
+      ref="searchFilterRef"
+      :value.sync="parameters.queryTerm"
       @search="handleSearch"
       @confirm="handleFilterConfirm"
       :filter-menu="filterMenu"
@@ -18,15 +19,15 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
-            :error="error"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"
           >
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
-              v-for="(item, index) in dataList"
-              :key="item.billId + index"
+              v-for="item in dataList"
+              :key="item.billId"
               v-waves
               @click="toCheck(item)"
             >

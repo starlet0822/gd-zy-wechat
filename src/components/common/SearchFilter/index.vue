@@ -1,13 +1,13 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:20:51
+ * @LastEditTime: 2022-04-24 17:25:58
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
     <van-search
       class="search-box vh-flex1"
-      v-model="keyword"
+      v-model.trim="keyword"
       background="#fff"
       :placeholder="placeholder"
       :show-action="true"
@@ -86,7 +86,8 @@ export default {
     placeholder: {
       type: String,
       default: '搜索'
-    }
+    },
+    keyId: [String, Number] // 标识key
   },
   data() {
     return {
@@ -114,7 +115,7 @@ export default {
       this.visibleFilterMenu = true
     },
     handleInputChange(keyword) {
-      // this.$emit('update:value', keyword)
+      this.$emit('update:value', keyword)
       // this.$emit('search', keyword)
     },
     // 确定搜索

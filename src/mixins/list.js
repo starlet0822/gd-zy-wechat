@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 11:58:00
+ * @LastEditTime: 2022-04-24 17:42:37
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -66,6 +66,11 @@ export default {
       // 共${this.dataList.length}条数据
       get() {
         return this.dataList.length ? `没有更多了` : ''
+      }
+    },
+    errorText: {
+      get() {
+        return this.error ? `请求失败，点击重新加载` : ''
       }
     },
     tabs: {
