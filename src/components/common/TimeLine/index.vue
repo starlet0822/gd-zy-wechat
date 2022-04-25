@@ -1,7 +1,7 @@
 <!--
  * @Description: 时间线
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:58:49
+ * @LastEditTime: 2022-04-25 13:50:42
 -->
 <template>
   <div class="timeline-wrapper vh-p-box33">
@@ -119,12 +119,14 @@ export default {
     // 获取审批流程
     async findCheckInfo() {
       try {
+        this.loading = true
         const params = { typeCode: this.typeCode, busKey: this.id }
         const { errcode, data } = await findCheckInfo(params)
         if (errcode === '0') {
           this.list = this.originData = data || []
         }
       } finally {
+        this.loading = false
       }
     },
     // 展开收起切换

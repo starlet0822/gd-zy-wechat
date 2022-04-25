@@ -1,11 +1,11 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 11:22:55
+ * @LastEditTime: 2022-04-25 13:46:22
 -->
 <template>
   <div class="check-wrapper vh-bg">
-    <vh-nav-bar @click-right="handleRightClick">
+    <vh-nav-bar :title="dataInfo && dataInfo.title" @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>

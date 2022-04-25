@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
-    <vh-nav-bar @click-right="onClickCheck">
+    <vh-nav-bar @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>
@@ -212,7 +212,7 @@ export default {
         console.log(data)
       }
     },
-    onClickCheck() {
+    handleRightClick() {
       this.showCheckDetail = !this.showCheckDetail
     },
     onSubmit(values) {

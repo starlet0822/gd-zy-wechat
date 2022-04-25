@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
-    <vh-nav-bar @click-right="onClickCheck">
+    <vh-nav-bar @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批流程</div>
       </template>
@@ -162,7 +162,7 @@ export default {
         })
       }
     },
-    onClickCheck() {
+    handleRightClick() {
       this.showCheckDetail = !this.showCheckDetail
     },
     onSubmit(values) {

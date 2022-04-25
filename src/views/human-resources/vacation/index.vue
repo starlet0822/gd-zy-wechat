@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
-    <vh-nav-bar @click-right="onClickCheck">
+    <vh-nav-bar @click-right="handleRightClick">
       <template #right>
         <div v-show="showCheckBtn" class="vh-color-white">批量审批</div>
       </template>
@@ -182,7 +182,7 @@ export default {
       this.result = []
     },
     // TODO 批量审批
-    onClickCheck() {}
+    handleRightClick() {}
   }
 }
 </script>

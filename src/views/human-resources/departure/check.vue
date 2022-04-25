@@ -1,11 +1,11 @@
 <!--
  * @Description: 轮转审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-07 10:37:29
+ * @LastEditTime: 2022-04-25 13:43:43
 -->
 <template>
   <div class="rotary-check-wrapper vh-bg">
-    <vh-nav-bar @click-right="onClickCheck">
+    <vh-nav-bar @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>
@@ -196,7 +196,7 @@ export default {
   },
   created() {},
   methods: {
-    onClickCheck() {
+    handleRightClick() {
       this.showCheckDetail = !this.showCheckDetail
     },
     onSubmit(values) {
