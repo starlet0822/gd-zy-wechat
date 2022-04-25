@@ -57,7 +57,6 @@
         placeholder="请输入审批意见"
         type="textarea"
         rows="3"
-        label-class="vh-color-tip"
         autosize
         maxlength="200"
         show-word-limit
