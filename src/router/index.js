@@ -1,12 +1,13 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-18 17:46:27
+ * @LastEditTime: 2022-04-25 16:17:38
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
 // import store from '@/store'
+// import { getCode } from '@/utils/code'
 // import { judgeRoutePower } from '@/utils/permission'
 
 Vue.use(VueRouter)
@@ -33,13 +34,11 @@ router.beforeEach(async (to, from, next) => {
   console.log(to, from)
   // TODO 嵌套在企业微信再解开
   // judgeRoutePower(to, next)
-  // // const hasCode = getCode()
-  // console.log(store.state.user.openId)
+  // const Code = getCode()
   // if (!store.getters.openId) {
-  //   const data = await store.dispatch('user/judgeLoginState', {
-  //     code: 'aboOQqIaiGAktVbTp9ChkYTQja7hQdejFMkqWS4b7RA' || getCode(),
-  //     state: ''
-  //   })
+  //   const params = { code: getCode(), state: '' }
+  //   console.log('openId', store.state.user.openId, params)
+  //   const data = await store.dispatch('user/judgeLoginState', params)
   //   const { authority } = data
   //   if (authority === '1') {
   //     next('/login')
