@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 11:22:20
+ * @LastEditTime: 2022-04-25 17:54:39
  */
 export default [
   {
@@ -101,7 +101,7 @@ export default [
       import(/* webpackChunkName: "departure" */ '@/views/human-resources/departure/index.vue')
   },
   {
-    path: '/departure-check',
+    path: '/departure-check/:id/:dataState?',
     name: 'DepartureCheck',
     meta: {
       title: '离职审批'

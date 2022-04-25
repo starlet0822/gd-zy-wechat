@@ -40,7 +40,9 @@
                     :key="fieldIndex"
                   >
                     <span class="vh-tip">{{ field.fieldKey }}：</span>
-                    <span>{{ field.fieldValue }}</span>
+                    <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
+                      {{ field.fieldValue }}
+                    </span>
                   </p>
                 </van-col>
                 <van-col span="2">

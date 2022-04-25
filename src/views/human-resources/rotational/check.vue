@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 13:45:38
+ * @LastEditTime: 2022-04-25 17:57:57
 -->
 <template>
   <div class="rotational-check-wrapper vh-bg">
@@ -128,30 +128,7 @@ export default {
   components: {},
   data() {
     return {
-      typeCode: typeCode.get('workShift'),
-      dataInfo: {
-        userInfo: {
-          name: '张三',
-          no: '6675',
-          depName: '信息管理办公室'
-        },
-        rotationalInfo: {
-          type: '年假',
-          balance: '10.00',
-          dayNum: 5,
-          applyDate: new Date(),
-          startDate: new Date(),
-          endDate: new Date(),
-          reason: '休年假',
-          start: '上午',
-          end: '下午'
-        }
-      },
-      activeNames: [0, 1],
-      showCheckDetail: false,
-      formInfo: {
-        opinion: ''
-      }
+      typeCode: typeCode.get('workShift')
     }
   },
   created() {
