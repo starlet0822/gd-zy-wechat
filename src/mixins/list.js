@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-24 17:42:37
+ * @LastEditTime: 2022-04-25 09:25:11
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -101,12 +101,6 @@ export default {
       this.totalSize = 0
       this.pageRequest.pageNum = 1
       this.onLoad()
-    },
-    // 设置标签页数据
-    setTabs() {
-      for (const [k, v] of dataState.entries()) {
-        this.tabs.push({ id: k, title: v })
-      }
     }
   }
 }

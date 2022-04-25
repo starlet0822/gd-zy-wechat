@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:41:06
+ * @LastEditTime: 2022-04-25 10:29:13
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -147,7 +147,7 @@ export default {
           // overlay: true,
           forbidClick: true
         })
-        // this.$router.back()
+        this.$router.back()
       } else {
         this.$toast({
           message: errmsg,

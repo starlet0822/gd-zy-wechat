@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:37:55
+ * @LastEditTime: 2022-04-25 10:29:26
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -51,7 +51,7 @@
     <van-form v-if="formData.length" @submit="onSubmit" class="vh-mb-10" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
-        :readonly="!canCheck"
+        v-if="canCheck"
         name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
@@ -169,7 +169,7 @@ export default {
           // overlay: true,
           forbidClick: true
         })
-        // this.$router.back()
+        this.$router.back()
       } else {
         this.$toast({
           message: errmsg,

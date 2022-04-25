@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 15:18:05
+ * @LastEditTime: 2022-04-25 09:53:37
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -41,7 +41,7 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
-            :error="error"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"

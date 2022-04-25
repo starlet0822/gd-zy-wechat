@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 15:47:30
+ * @LastEditTime: 2022-04-25 10:36:15
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 import md5 from 'js-md5'
@@ -10,7 +10,7 @@ import { str2UTF8Bytes } from '@/utils'
 const state = {
   code: null,
   // openId: null,
-  openId: 'xiejiewei', // TODO 测试
+  openId: JSON.parse(localStorage.getItem('openId')) || 'xiejiewei', // TODO 测试
   menus: JSON.parse(localStorage.getItem('menus')) || [],
   userName: 'startlet_wu',
   roles: ['admin']
@@ -24,6 +24,7 @@ const mutations = {
   },
   SET_OPENID(state, openId) {
     state.openId = openId
+    localStorage.setItem('openId', JSON.stringify(openId)) // for test
   },
   SET_MENUS(state, val) {
     state.menus = val
@@ -42,6 +43,7 @@ const actions = {
   },
   // 用户登录
   login({ state, commit }, userInfo) {
+    commit('SET_OPENID', 'xiejiewei')
     return new Promise((resolve, reject) => {
       const { userAccount, password } = userInfo
       const openId = state.openId + userAccount // test

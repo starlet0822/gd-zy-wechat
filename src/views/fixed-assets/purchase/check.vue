@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:28:34
+ * @LastEditTime: 2022-04-25 11:06:39
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -26,8 +26,8 @@
           <template v-if="item.type === 'jsonText'">
             <van-cell
               title-class="vh-color-tip"
-              v-for="citem in item.rowData.filter((v) => v.isShow === 1)"
-              :key="citem.fieldName"
+              v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)"
+              :key="citem.fieldName + cidx"
               :title="citem.fieldName"
               :value="citem.fieldValue || '--'"
               :value-class="['vh-flex2']"
@@ -51,7 +51,7 @@
     <van-form v-if="formData.length" class="vh-mb-10" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
-        :readonly="!canCheck"
+        v-if="canCheck"
         name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
@@ -174,7 +174,7 @@ export default {
           // overlay: true,
           forbidClick: true
         })
-        // this.$router.back()
+        this.$router.back()
       } else {
         this.$toast({
           message: errmsg,

@@ -1,7 +1,7 @@
 <!--
  * @Description: 图片展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-08 13:42:52
+ * @LastEditTime: 2022-04-25 10:00:29
 -->
 <template>
   <div class="imgView-wrapper vh-p-box12 vh-bg-white" :class="{ 'van-hairline--bottom': border }">
@@ -26,27 +26,29 @@
 <script>
 import { ImagePreview } from 'vant'
 import { isPic } from '@/utils/is'
+import { API_BASEURL, ISDEV } from '@/config'
+const { devProxyTarget } = require('@/config/settings')
 export default {
   name: 'ImgView',
   props: {
     value: {
       type: Array,
       default: () => [
-        {
-          fileName: '文件名称1.doc',
-          fileSize: '1024kb',
-          filePath: 'https://img01.yzcdn.cn/vant/cat.jpeg'
-        },
-        {
-          fileName: '文件名称2.xlsx',
-          fileSize: '20kb',
-          filePath: 'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hh0x9kj30go0rpadd.jpg'
-        },
-        {
-          fileName: '文件名称3.ppt',
-          fileSize: '108kb',
-          filePath: 'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hyxqnxj30go0uwtds.jpg'
-        }
+        // {
+        //   fileName: '文件名称1.doc',
+        //   fileSize: '1024kb',
+        //   filePath: 'https://img01.yzcdn.cn/vant/cat.jpeg'
+        // },
+        // {
+        //   fileName: '文件名称2.xlsx',
+        //   fileSize: '20kb',
+        //   filePath: 'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hh0x9kj30go0rpadd.jpg'
+        // },
+        // {
+        //   fileName: '文件名称3.ppt',
+        //   fileSize: '108kb',
+        //   filePath: 'http://tva1.sinaimg.cn/large/006nwNl2gy1h0e2hyxqnxj30go0uwtds.jpg'
+        // }
       ]
     },
     border: Boolean
@@ -59,7 +61,7 @@ export default {
       get() {
         const imgs = this.value.filter((v) => isPic(v.fileType))
         return imgs.map((item) => {
-          const prefix = 'http://10.10.247.31:8089/'
+          const prefix = ISDEV ? devProxyTarget : API_BASEURL
           const url = prefix + `/api/file/getUrlFile?path=${item.filePath}&isview=1`
           return url
         })

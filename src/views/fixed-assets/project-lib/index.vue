@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 10:18:58
+ * @LastEditTime: 2022-04-25 09:52:35
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -18,7 +18,7 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
-            :error="error"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"

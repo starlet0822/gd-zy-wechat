@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:53:54
+ * @LastEditTime: 2022-04-25 11:22:20
  */
 export default [
   {
@@ -35,7 +35,7 @@ export default [
       keepAlive: true
     },
     component: () =>
-      import(/* webpackChunkName: "vacation" */ '@/views/human-resources/vacation/list.vue')
+      import(/* webpackChunkName: "vacation" */ '@/views/human-resources/vacation/index.vue')
   },
   {
     path: '/vacation-check/:id/:dataState?',
@@ -59,7 +59,7 @@ export default [
       import(/* webpackChunkName: "rotational" */ '@/views/human-resources/rotational/index.vue')
   },
   {
-    path: '/rotational-check',
+    path: '/rotational-check/:id/:dataState?',
     name: 'RotationalCheck',
     meta: {
       title: '轮岗审批'
@@ -80,7 +80,7 @@ export default [
       import(/* webpackChunkName: "secondment" */ '@/views/human-resources/secondment/index.vue')
   },
   {
-    path: '/secondment-check',
+    path: '/secondment-check/:id/:dataState?',
     name: 'SecondmentCheck',
     meta: {
       title: '借调审批'
@@ -122,7 +122,7 @@ export default [
   //     import(/* webpackChunkName: "rotary" */ '@/views/human-resources/rotary/index.vue')
   // },
   {
-    path: '/rotary-check',
+    path: '/rotary-check/:id/:dataState?',
     name: 'RotaryCheck',
     meta: {
       title: '轮转审批'

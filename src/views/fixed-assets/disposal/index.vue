@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 10:19:08
+ * @LastEditTime: 2022-04-25 09:52:14
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -18,7 +18,7 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
-            :error="error"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"

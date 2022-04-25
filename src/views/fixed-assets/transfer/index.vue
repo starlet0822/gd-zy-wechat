@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 12:03:42
+ * @LastEditTime: 2022-04-25 09:52:45
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
@@ -19,7 +19,7 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
-            :error="error"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"

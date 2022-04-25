@@ -84,7 +84,7 @@
     <van-form v-if="formData.length" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
-        :readonly="!canCheck"
+        v-if="canCheck"
         name="remark"
         label="审批意见"
         placeholder="请输入审批意见"

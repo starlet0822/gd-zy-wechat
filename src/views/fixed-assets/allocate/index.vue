@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:28:01
+ * @LastEditTime: 2022-04-25 09:52:24
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -18,7 +18,7 @@
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
             v-model="loading"
-            :error="error"
+            :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
             @load="onLoad"

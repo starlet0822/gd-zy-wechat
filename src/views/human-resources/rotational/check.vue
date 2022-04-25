@@ -1,11 +1,11 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 14:14:00
+ * @LastEditTime: 2022-04-25 11:16:56
 -->
 <template>
   <div class="rotational-check-wrapper vh-bg">
-    <vh-nav-bar @click-right="onClickCheck">
+    <vh-nav-bar @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>
@@ -13,129 +13,98 @@
     <div class="check-info vh-mb-10 vh-bg-white">
       <!-- 折叠面板 -->
       <van-collapse v-model="activeNames" :border="false">
-        <van-collapse-item :name="0" class="vh-mb-100" :border="false">
+        <van-collapse-item
+          class="vh-mb-10"
+          :name="index"
+          v-for="(item, index) in formData"
+          :key="item.title + index"
+          :border="false"
+        >
           <template #title>
-            <div class="vh-color-blue2">人员基本信息</div>
+            <div class="vh-color-blue2">{{ item.title }}</div>
           </template>
           <template #default>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'员工姓名'"
-              :value="dataInfo.userInfo.name"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'员工编码'"
-              :value="'xxxx'"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'工作组'"
-              :value="'xxxx'"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'单位编码'"
-              :value="'xxxx'"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'职称'"
-              :value="'xxxx'"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'进单位时间'"
-              :value="`${formatDate(new Date(), 'YYYY-MM-DD')}`"
-            ></van-cell>
-          </template>
-        </van-collapse-item>
-        <van-collapse-item :name="1" class="vh-mb-100" :border="false">
-          <template #title>
-            <div class="vh-color-blue2">员工组织结构</div>
-          </template>
-          <template #default>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'所在单位'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'所在部门'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'岗位'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'职务'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'职级'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'职等'"
-              value="xxxx"
-            ></van-cell>
-            <van-cell
-              class="vh-font-14"
-              title-class="vh-color-tip"
-              :title="'开始日期'"
-              :value="dataInfo.rotationalInfo.applyDate | formatDate('YYYY-MM-DD')"
-            ></van-cell>
+            <template v-if="item.type === 'jsonText'">
+              <van-cell
+                title-class="vh-color-tip"
+                v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)"
+                :key="citem.fieldName + cidx"
+                :title="citem.fieldName"
+                :value="citem.fieldValue || '--'"
+                :value-class="['vh-flex2']"
+              ></van-cell>
+            </template>
+            <!-- 附件 -->
+            <div v-else class="vh-p-box">
+              <template v-if="item.rowData && item.rowData.length">
+                <!-- 图片集 -->
+                <ImgView v-model="item.rowData" border></ImgView>
+                <FileCard v-model="item.rowData" class="vh-color-text"></FileCard>
+              </template>
+              <template v-else>
+                <div>暂无附件</div>
+              </template>
+            </div>
           </template>
         </van-collapse-item>
       </van-collapse>
     </div>
     <!-- 表单 -->
-    <van-form @submit="onSubmit" class="vh-mb-10">
+    <van-form v-if="formData.length" class="vh-mb-10" scroll-to-error>
       <van-field
-        v-model="formInfo.opinion"
-        name="opinion"
+        v-model="checkParam.remark"
+        v-if="canCheck"
+        name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
         type="textarea"
         rows="3"
+        label-class="vh-color-tip"
         autosize
         maxlength="200"
         show-word-limit
         :rules="[{ required: false, message: '请输入审批意见' }]"
       />
     </van-form>
-    <!-- 附件上传 -->
-    <van-collapse v-model="activeNames" :border="false">
-      <van-collapse-item :name="0" class="vh-mb-10" :border="false">
-        <template #title>
-          <div class="vh-color-blue">附件</div>
+    <!-- 底部按钮组 -->
+    <vh-button-group
+      v-if="canCheck"
+      :btn-arr="btnList"
+      fixed
+      @click="handleClickBtn"
+    ></vh-button-group>
+    <!-- 节点弹窗 -->
+    <van-dialog
+      class-name="user-dialog"
+      v-model="showCheckUser"
+      :title="checkPeopleData && checkPeopleData.title"
+      show-cancel-button
+      :close-on-click-overlay="false"
+      @confirm="handleConfirmUser"
+    >
+      <template #default>
+        <template
+          v-if="checkPeopleData && checkPeopleData.rowData && checkPeopleData.rowData.length"
+        >
+          <div class="user-check vh-p-20">
+            <van-checkbox-group v-model="approvers" icon-size="0.64rem">
+              <!-- TODO: 记得去掉.slice(0, 10)-->
+              <van-checkbox
+                class="vh-mb-10"
+                v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
+                :key="user.id + index"
+                :name="user.id"
+              >
+                {{ user.empName }}
+              </van-checkbox>
+            </van-checkbox-group>
+          </div>
         </template>
-        <template #default>
-          <!-- 图片集 -->
-          <ImgView border></ImgView>
-          <!-- 文件列表 -->
-          <FileCard class="vh-color-text"></FileCard>
+        <template v-else>
+          <div class="vh-p-box">{{ '暂无审批人员' }}</div>
         </template>
-      </van-collapse-item>
-    </van-collapse>
+      </template>
+    </van-dialog>
     <van-popup
       v-model="showCheckDetail"
       position="right"
@@ -143,25 +112,24 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-pt-20 vh-pl-5">
-        <TimeLine></TimeLine>
+        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
-    <!-- 底部按钮组 -->
-    <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn"></vh-button-group>
   </div>
 </template>
 
 <script>
-import vars from '@/assets/css/vars.less'
-import FileCard from '@comp/common/FileCard'
-import ImgView from '@comp/common/ImgView'
-import TimeLine from '@comp/common/TimeLine'
-import { formatDate } from '@/utils/date'
+import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
+import { typeCode } from '@/config/constants'
+import { getIncreasingArr } from '@/utils'
+import check from '@/mixins/check'
 export default {
   name: 'RotationalCheck',
-  components: { FileCard, ImgView, TimeLine },
+  mixins: [check],
+  components: {},
   data() {
     return {
+      typeCode: typeCode.get('workShift'),
       dataInfo: {
         userInfo: {
           name: '张三',
@@ -184,46 +152,101 @@ export default {
       showCheckDetail: false,
       formInfo: {
         opinion: ''
-      },
-      btnList: [
-        { text: '驳回', value: 'nopass' },
-        { text: '同意', value: 'pass' }
-      ],
-      colorYellow: vars.colorYellow,
-      colorRed: vars.colorRed,
-      formatDate
+      }
     }
   },
-  created() {},
+  created() {
+    this.getInfo()
+  },
   methods: {
-    onClickCheck() {
-      this.showCheckDetail = !this.showCheckDetail
+    async getInfo() {
+      const { id } = this.$route.params
+      this.parameters.billId = this.checkParam.busKey = id
+      const { errcode, data } = await findCheckInfoDetail({
+        typeCode: this.typeCode,
+        parameters: this.parameters
+      })
+      if (errcode === '0') {
+        // data.formData.forEach((item) => {
+        //   if (item.type === 'jsonText') {
+        //     const state = item.rowData.find((v) => v.filedId === 'state')
+        //     console.log(state)
+        //     this.checkParam.state = state.fieldValue
+        //   }
+        // })
+        this.dataInfo = data
+        this.formData = [...data.formData, ...data.detailData] || []
+        this.checkPeopleData = data.checkPeopleData || null
+        this.activeNames = getIncreasingArr(this.formData?.length)
+        // 获取code name
+        // const user = findCodeName(this.formData)
+        // this.checkParam = { ...user, ...this.checkParam }
+      }
     },
-    onSubmit(values) {
-      console.log('submit', values)
+    // 审批or驳回
+    async checkInfo(type) {
+      this.checkParam.checkState = type
+      const { errcode, errmsg } = await sendCheck({
+        typeCode: this.typeCode,
+        checkParam: this.checkParam
+      })
+      if (errcode === '0') {
+        this.$toast({
+          message: type === 'YES' ? '已同意' : '已驳回',
+          type: 'success',
+          duration: 800,
+          closeOnClick: true,
+          // overlay: true,
+          forbidClick: true
+        })
+        this.$router.back()
+      } else {
+        this.$toast({
+          message: errmsg,
+          type: 'fail',
+          duration: 3000,
+          closeOnClick: true,
+          // overlay: true,
+          // className: 'vh-color-orange',
+          forbidClick: true
+        })
+      }
+    },
+    handleConfirmUser(type = 'YES') {
+      if (!this.approvers.length) {
+        this.$toast({
+          message: `请选择下一审批人！`,
+          type: 'error',
+          duration: 1500,
+          // overlay: true,
+          forbidClick: true
+        })
+        return
+      }
+      this.checkParam.approver = this.approvers.join(',')
+      // 调接口
+      this.checkInfo(type)
     },
     // 按钮回调
     handleClickBtn({ value }) {
       switch (value) {
-        case 'pass':
-          this.$toast({
-            message: '已同意',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
+        case 'YES':
+          if (this.checkPeopleData?.rowData.length) {
+            this.showCheckUser = true
+          } else {
+            this.checkInfo(value)
+          }
           break
-        case 'nopass':
-          this.$toast({
-            message: '已驳回',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
+        case 'NO':
+          this.checkParam.approver = ''
+          this.checkInfo(value)
           break
       }
+    },
+    // 查看审批详情
+    handleRightClick() {
+      // console.log(555);
+      this.showCheckDetail = true
     }
   }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:56:21
+ * @LastEditTime: 2022-04-25 10:00:12
 -->
 <template>
   <div class="file-card-wrapper">
@@ -26,29 +26,31 @@
 </template>
 
 <script>
-import { isPic } from '@/utils/is'
 import { getFileSize } from '@/utils/flle'
+import { isPic } from '@/utils/is'
+import { API_BASEURL, ISDEV } from '@/config'
+const { devProxyTarget } = require('@/config/settings')
 export default {
   name: 'FileCard',
   props: {
     value: {
       type: [Array],
       default: () => [
-        {
-          fileName: '文件名称1.doc',
-          fileSize: '1024kb',
-          filePath: 'https://xxx'
-        },
-        {
-          fileName: '文件名称2.xlsx',
-          fileSize: '20kb',
-          filePath: 'https://xxx'
-        },
-        {
-          fileName: '文件名称3.ppt',
-          fileSize: '108kb',
-          filePath: 'https://xxx'
-        }
+        // {
+        //   fileName: '文件名称1.doc',
+        //   fileSize: '1024kb',
+        //   filePath: 'https://xxx'
+        // },
+        // {
+        //   fileName: '文件名称2.xlsx',
+        //   fileSize: '20kb',
+        //   filePath: 'https://xxx'
+        // },
+        // {
+        //   fileName: '文件名称3.ppt',
+        //   fileSize: '108kb',
+        //   filePath: 'https://xxx'
+        // }
       ]
     }
   },
@@ -67,7 +69,7 @@ export default {
   methods: {
     // 点击文件 TODO: 文件大小转换
     onClickFile(file) {
-      const prefix = 'http://10.10.247.31:8089/'
+      const prefix = ISDEV ? devProxyTarget : API_BASEURL
       const url = prefix + `/api/file/getUrlFile?path=${file.filePath}&isview=1`
       window.open(url)
     }
