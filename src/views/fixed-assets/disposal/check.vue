@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 10:29:20
+ * @LastEditTime: 2022-04-26 10:06:00
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -200,11 +200,6 @@ export default {
           this.checkInfo(value)
           break
       }
-    },
-    // 查看审批详情
-    handleRightClick() {
-      // console.log(555);
-      this.showCheckDetail = true
     }
   }
 }

@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:42:55
+ * @LastEditTime: 2022-04-26 09:54:03
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -51,5 +51,13 @@ export default {
     // console.log(this.openId, this.userAccount)
     this.checkParam.openId = this.openId // test
   },
-  methods: {}
+  methods: {
+    // 查看审批详情
+    handleRightClick() {
+      this.showCheckDetail = true
+      this.$nextTick(() => {
+        this.$refs.timeLineRef.findCheckInfo()
+      })
+    }
+  }
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 10:29:13
+ * @LastEditTime: 2022-04-26 10:05:45
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -188,15 +188,6 @@ export default {
           this.checkInfo(value)
           break
       }
-    },
-    // 查看审批详情
-    handleRightClick() {
-      // console.log(555);
-      this.showCheckDetail = true
-      this.$nextTick(() => {
-        // console.log(this.$refs.timeLineRef)
-        this.$refs.timeLineRef.findCheckInfo()
-      })
     },
     // 查看副表明细
     handleClickItem({ billId, canView }) {

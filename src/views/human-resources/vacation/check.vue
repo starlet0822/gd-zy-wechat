@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-13 11:46:42
+ * @LastEditTime: 2022-04-26 10:07:01
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -161,9 +161,6 @@ export default {
           forbidClick: true
         })
       }
-    },
-    handleRightClick() {
-      this.showCheckDetail = !this.showCheckDetail
     },
     onSubmit(values) {
       console.log('submit', values)

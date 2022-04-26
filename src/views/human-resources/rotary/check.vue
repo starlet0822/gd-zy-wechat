@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮转审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-02 09:34:29
+ * @LastEditTime: 2022-04-26 10:06:46
 -->
 <template>
   <div class="rotary-check-wrapper vh-bg">
@@ -230,9 +230,6 @@ export default {
   },
   created() {},
   methods: {
-    handleRightClick() {
-      this.showCheckDetail = !this.showCheckDetail
-    },
     onSubmit(values) {
       console.log('submit', values)
     },

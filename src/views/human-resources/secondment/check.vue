@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 13:46:22
+ * @LastEditTime: 2022-04-26 10:06:57
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -218,11 +218,6 @@ export default {
           this.checkInfo(value)
           break
       }
-    },
-    // 查看审批详情
-    handleRightClick() {
-      // console.log(555);
-      this.showCheckDetail = true
     }
   }
 }

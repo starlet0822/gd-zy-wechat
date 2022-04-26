@@ -212,9 +212,6 @@ export default {
         console.log(data)
       }
     },
-    handleRightClick() {
-      this.showCheckDetail = !this.showCheckDetail
-    },
     onSubmit(values) {
       console.log('submit', values)
     },

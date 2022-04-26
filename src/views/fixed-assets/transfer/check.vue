@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 10:29:26
+ * @LastEditTime: 2022-04-26 10:06:12
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -260,14 +260,6 @@ export default {
           }
           break
       }
-    },
-    // 查看审批详情
-    handleRightClick() {
-      this.showCheckDetail = true
-      this.$nextTick(() => {
-        // console.log(this.$refs.timeLineRef)
-        this.$refs.timeLineRef.findCheckInfo()
-      })
     }
   }
 }
