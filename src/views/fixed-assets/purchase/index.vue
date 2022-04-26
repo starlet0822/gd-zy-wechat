@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-24 17:57:14
+ * @LastEditTime: 2022-04-26 15:01:15
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -120,13 +120,13 @@ export default {
         //     // { label: '已退回', value: '3' }
         //   ]
         // },
-        {
-          field: 'empName',
-          label: '申请人',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
+        // {
+        //   field: 'empName',
+        //   label: '申请人',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
         {
           field: 'billNo',
           label: '申请单号',
@@ -135,7 +135,7 @@ export default {
           value: ''
         },
         {
-          field: 'applyDeptCode', // TODO
+          field: 'deptCode', // TODO
           label: '申请科室',
           placeholder: '请输入',
           type: 'input',

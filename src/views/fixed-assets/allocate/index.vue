@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 09:52:24
+ * @LastEditTime: 2022-04-26 15:22:04
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -78,33 +78,56 @@ export default {
       filterMenu: [
         // 筛选菜单
         {
-          field: 'transferNo',
-          label: '单据号',
+          field: 'billNo',
+          label: '申请单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'empName',
-          label: '调出单位',
+          field: 'deptCode', // TODO
+          label: '申请科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'applyDeptCode',
-          label: '调入单位',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: ['acctStartYear', 'acctEndYear'],
-          label: '制单日期',
+          field: ['applyDate', 'applyEndDate'],
+          // field: 'applyDate',
+          label: '申请日期',
           placeholder: ['开始', '结束'],
           type: 'date',
           value: ['', '']
+          // value: '2022-04-01'
         }
+        // {
+        //   field: 'transferNo',
+        //   label: '单据号',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'empName',
+        //   label: '调出单位',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'applyDeptCode',
+        //   label: '调入单位',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: ['acctStartYear', 'acctEndYear'],
+        //   label: '制单日期',
+        //   placeholder: ['开始', '结束'],
+        //   type: 'date',
+        //   value: ['', '']
+        // }
       ],
       filterQuery: {} // 筛选参数
     }

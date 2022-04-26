@@ -1,13 +1,13 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 11:47:45
+ * @LastEditTime: 2022-04-26 14:12:27
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
     <main class="login__main">
       <div class="login__logo vh-flex-center vh-flex-col vh-pb-20">
-        <van-image class="logo-img" :src="logoImg" alt="医疗高效运营管理系统"></van-image>
+        <van-image class="logo-img" :src="logoImg" :alt="logoName"></van-image>
       </div>
       <van-form @submit="onSubmit">
         <van-field
@@ -82,7 +82,7 @@ export default {
     },
     // 表单提交
     onSubmit(values) {
-      console.log('submit', values)
+      // console.log('submit', values)
       debounce(this.loginFn(), 150) // TODO 无效？
     }
   }

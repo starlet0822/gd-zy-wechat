@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 09:52:14
+ * @LastEditTime: 2022-04-26 15:20:24
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -79,32 +79,55 @@ export default {
         // 筛选菜单
         {
           field: 'billNo',
-          label: '处置单号',
+          label: '申请单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'empName',
-          label: '处置类型',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'applyDeptCode',
-          label: '科室',
+          field: 'deptCode', // TODO
+          label: '申请科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '会计年月',
+          // field: 'applyDate',
+          label: '申请日期',
           placeholder: ['开始', '结束'],
           type: 'date',
           value: ['', '']
+          // value: '2022-04-01'
         }
+        // {
+        //   field: 'billNo',
+        //   label: '处置单号',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'empName',
+        //   label: '处置类型',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'applyDeptCode',
+        //   label: '科室',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: ['applyDate', 'applyEndDate'],
+        //   label: '会计年月',
+        //   placeholder: ['开始', '结束'],
+        //   type: 'date',
+        //   value: ['', '']
+        // }
       ],
       filterQuery: {} // 筛选参数
     }

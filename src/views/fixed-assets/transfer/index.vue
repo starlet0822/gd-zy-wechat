@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 09:52:45
+ * @LastEditTime: 2022-04-26 15:22:28
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
@@ -78,27 +78,50 @@ export default {
       typeCode: typeCode.get('transfer'),
       filterMenu: [
         {
-          field: 'empName',
-          label: '制单人',
+          field: 'billNo',
+          label: '申请单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'transfer_no',
-          label: '移交单号',
+          field: 'deptCode', // TODO
+          label: '申请科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '会计年月',
+          // field: 'applyDate',
+          label: '申请日期',
           placeholder: ['开始', '结束'],
           type: 'date',
-          value: ['', ''],
-          format: 'YYYY-MM'
+          value: ['', '']
+          // value: '2022-04-01'
         }
+        // {
+        //   field: 'empName',
+        //   label: '制单人',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'transfer_no',
+        //   label: '移交单号',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: ['applyDate', 'applyEndDate'],
+        //   label: '会计年月',
+        //   placeholder: ['开始', '结束'],
+        //   type: 'date',
+        //   value: ['', ''],
+        //   format: 'YYYY-MM'
+        // }
       ],
       filterQuery: {} // 筛选参数
     }

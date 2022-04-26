@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 11:36:53
+ * @LastEditTime: 2022-04-26 15:22:18
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -80,33 +80,56 @@ export default {
       filterMenu: [
         // 筛选菜单
         {
-          field: 'empName',
-          label: '申请人',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
           field: 'billNo',
-          label: '立项单号',
+          label: '申请单号',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
-          field: 'applyDeptCode',
-          label: '立项类型',
+          field: 'deptCode', // TODO
+          label: '申请科室',
           placeholder: '请输入',
           type: 'input',
           value: ''
         },
         {
           field: ['applyDate', 'applyEndDate'],
-          label: '制单日期',
-          placeholder: ['起始', '结束'],
+          // field: 'applyDate',
+          label: '申请日期',
+          placeholder: ['开始', '结束'],
           type: 'date',
-          value: ''
+          value: ['', '']
+          // value: '2022-04-01'
         }
+        // {
+        //   field: 'empName',
+        //   label: '申请人',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'billNo',
+        //   label: '立项单号',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: 'applyDeptCode',
+        //   label: '立项类型',
+        //   placeholder: '请输入',
+        //   type: 'input',
+        //   value: ''
+        // },
+        // {
+        //   field: ['applyDate', 'applyEndDate'],
+        //   label: '制单日期',
+        //   placeholder: ['起始', '结束'],
+        //   type: 'date',
+        //   value: ''
+        // }
       ],
       filterQuery: {} // 筛选参数
     }
