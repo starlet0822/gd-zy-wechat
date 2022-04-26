@@ -1,7 +1,7 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 16:54:16
+ * @LastEditTime: 2022-04-26 09:22:28
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray, _isNumber } from '@utils/is'
@@ -12,7 +12,8 @@ export {
   capitalize as _capitalize,
   kebabCase as _kebabCase,
   debounce as _debounce,
-  throttle as _throttle
+  throttle as _throttle,
+  orderBy as _orderBy
 } from 'lodash-es'
 
 /**
