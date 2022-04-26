@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 09:52:35
+ * @LastEditTime: 2022-04-26 11:36:53
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -25,8 +25,8 @@
           >
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
-              v-for="(item, index) in dataList"
-              :key="item.billId + index"
+              v-for="item in dataList"
+              :key="item.billId"
               v-waves
               @click="toCheck(item)"
             >

@@ -1,7 +1,7 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 09:22:28
+ * @LastEditTime: 2022-04-26 11:22:51
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray, _isNumber } from '@utils/is'
@@ -46,6 +46,14 @@ export function urlQuery2Object(url) {
     return rs
   })
   return obj
+}
+
+/**
+ * 10000 => "10,000"
+ * @param {number} num
+ */
+export function toThousand(num) {
+  return (+num || 0).toString().replace(/^-?\d+/g, (m) => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
 
 /**

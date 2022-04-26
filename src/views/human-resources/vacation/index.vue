@@ -52,8 +52,8 @@
                 class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
                 type="flex"
                 align="center"
-                v-for="(item, index) in dataList"
-                :key="item.billId + index"
+                v-for="item in dataList"
+                :key="item.billId"
               >
                 <!-- <transition :name="'van-slide-left'"> -->
                 <van-col span="2" v-show="showMulti">

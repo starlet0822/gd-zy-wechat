@@ -26,8 +26,8 @@
             <div
               class="list-item vh-p-10 vh-bg-white vh-rounded-6"
               v-waves
-              v-for="(item, index) in dataList"
-              :key="item.billId + index"
+              v-for="item in dataList"
+              :key="item.billId"
               @click="toCheck(item)"
             >
               <div class="vh-flex-jb-ac">
