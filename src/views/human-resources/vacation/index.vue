@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 09:53:37
+ * @LastEditTime: 2022-04-27 10:20:20
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -162,7 +162,6 @@ export default {
     },
     // 标签页切换
     onTabsChange(id, title) {
-      console.log(id)
       this.parameters.dataState = id
       this.onRefresh()
     },

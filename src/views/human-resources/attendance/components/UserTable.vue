@@ -1,17 +1,34 @@
+<!--
+ * @Description: 表格
+ * @Author: wuxxing
+ * @LastEditTime: 2022-04-27 13:44:44
+-->
 <template>
   <div class="fake-table">
-    <van-row class="fake-table__head">
+    <template>
+      <el-table :data="tableData" :style="tableStyle" border stripe>
+        <template v-for="column in columns">
+          <el-table-column
+            :key="column.prop"
+            :prop="column.prop"
+            :label="column.label"
+            min-width="120"
+          ></el-table-column>
+        </template>
+      </el-table>
+    </template>
+    <!-- <van-row class="fake-table__head">
       <van-col
         class="col vh-flex-center"
-        v-for="(item, index) in headData"
+        v-for="(item, index) in columns.slice(0, 5)"
         :key="index"
         :span="item.span"
       >
-        {{ item.name }}
+        {{ item.label }}
       </van-col>
     </van-row>
-    <van-row class="fake-table__body" v-for="(item, index) in bodyData" :key="index">
-      <template v-for="(colItem, colIndex) in headData">
+    <van-row class="fake-table__body" v-for="(item, index) in tableData" :key="index">
+      <template v-for="(colItem, colIndex) in columns">
         <van-col
           class="col vh-flex-center"
           :span="colItem.span"
@@ -21,19 +38,49 @@
           <span>{{ item[colItem.prop] }}</span>
         </van-col>
       </template>
-    </van-row>
+    </van-row> -->
   </div>
 </template>
 <script>
+import { Table, TableColumn } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+// import { _isUndefined } from '@/utils/is'
 export default {
+  name: 'UserTable',
+  components: {
+    elTable: Table,
+    elTableColumn: TableColumn
+  },
   props: {
     headData: {
       type: Array,
       default: () => []
     },
-    bodyData: {
+    tableData: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    tableStyle: {
+      get() {
+        return {
+          width: '100%'
+          // height: '250px'
+          // height: '6.6667rem'
+        }
+      }
+    },
+    columns() {
+      const ret = this.headData.map((v) => {
+        // const hasVal = this.tableData[0][v.item_code]
+        return {
+          label: v.item_name,
+          span: '6',
+          prop: v.item_code
+        }
+      })
+      return ret
     }
   },
   methods: {}
@@ -43,6 +90,7 @@ export default {
 @col-padding: 5px;
 
 .fake-table {
+  // min-height: 200px;
   margin: 12px;
   &__head,
   &__body {

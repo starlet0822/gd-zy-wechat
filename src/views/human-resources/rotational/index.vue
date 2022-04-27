@@ -127,7 +127,6 @@ export default {
     },
     // 标签页切换
     onTabsChange(id, title) {
-      console.log(id)
       this.parameters.dataState = id
       this.parameters.queryTerm = ''
       this.$nextTick(() => {

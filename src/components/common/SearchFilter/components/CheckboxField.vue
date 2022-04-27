@@ -120,7 +120,6 @@ export default {
     resetDefaultVal() {
       const initData = this.$options.data.call(this)
       if (_isEqual(this.defaultVal, initData.defaultVal)) return
-      console.log(`重置${this.field}`)
       this.defaultVal = initData.defaultVal
     },
     handleToggle() {

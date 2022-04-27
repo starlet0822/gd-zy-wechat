@@ -4,7 +4,6 @@
  * @LastEditTime: 2022-04-25 09:41:42
  */
 import vars from '../assets/css/vars.less'
-// console.log(vars)
 export const RootValue = 37.5 // 自适应基准值
 export const prefixCls = 'vh' // class类前缀
 export const themeColor = vars.themeColor // 主题基色值

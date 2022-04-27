@@ -110,7 +110,6 @@ export function findField(arg, filedId) {
   arg.forEach((item) => {
     if (item.rowData && item.rowData.length) {
       field = item.rowData.find((v) => camelCase(v.filedId) === filedId)
-      console.log('findField', field)
     }
   })
   return field

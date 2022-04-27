@@ -1,9 +1,9 @@
 /*
  * @Description:校验工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 16:54:23
+ * @LastEditTime: 2022-04-27 10:03:30
  */
-export { isNumber as _isNumber, isEqual as _isEqual } from 'lodash-es'
+export { isNumber as _isNumber, isUndefined as _isUndefined, isEqual as _isEqual } from 'lodash-es'
 
 /**
  * @desc 是否是数组

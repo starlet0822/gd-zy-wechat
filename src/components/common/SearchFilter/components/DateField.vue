@@ -1,7 +1,7 @@
 <!--
  * @Description: 日期时间选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 11:09:56
+ * @LastEditTime: 2022-04-27 10:17:24
 -->
 <template>
   <div class="date-field-wrapper" ref="dateFieldRef">
@@ -115,7 +115,7 @@ export default {
     }
   },
   created() {
-    console.log(this.$options.data.call(this))
+    // console.log(this.$options.data.call(this))
   },
   methods: {
     // handlePlaceholder() {
@@ -143,12 +143,10 @@ export default {
       // console.log('初始data状态', initData, this.defaultVal)
       // if (_isEqual(this.defaultVal, initData.defaultVal)) return
       // if (_isEqual(this.defaultVal, this.storageVal)) return
-      console.log(`重置${this.field}`)
       // this.defaultVal = ['']
       // 特殊处理
       if (this.ifRange) {
         this.defaultVal.forEach((k, i) => {
-          console.log(k, i)
           // this.defaultVal.splice(i, 1, initData.storageVal[i])
           this.defaultVal.splice(i, 1, '') // TODO 先这么处理
         })

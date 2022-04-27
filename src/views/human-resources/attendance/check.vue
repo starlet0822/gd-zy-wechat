@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-24 17:51:22
+ * @LastEditTime: 2022-04-27 10:45:57
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -16,10 +16,10 @@
       @search="handleSearch"
       :can-filter="false"
     ></search-filter>
-    <div class="" v-if="false">
-      <UserTable :headData="tableHead" :bodyData="matirialUsed"></UserTable>
+    <div class="" v-if="true">
+      <UserTable :headData="tableHead" :tableData="tableData"></UserTable>
     </div>
-    <van-swipe v-if="true" class="my-swipe" @change="onChange">
+    <van-swipe v-if="false" class="my-swipe" @change="onChange">
       <van-swipe-item v-for="item in 5" :key="item">
         <div v-if="true" class="check-info vh-bg-white vh-p-10 vh-m-10 vh-rounded-6">
           <div class="vh-flex-ac-jb vh-pb-8">
@@ -97,7 +97,12 @@
       />
     </van-form>
     <!-- 底部按钮组 -->
-    <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn"></vh-button-group>
+    <vh-button-group
+      v-if="canCheck"
+      :btn-arr="btnList"
+      fixed
+      @click="handleClickBtn"
+    ></vh-button-group>
     <van-popup
       v-model="showCheckDetail"
       position="right"
@@ -114,6 +119,7 @@
 <script>
 import vars from '@/assets/css/vars.less'
 import { getAtteDetailList } from '@/api/modules/human-resources'
+import { sendCheck } from '@/api/modules/common'
 import { typeCode } from '@/config/constants'
 import check from '@/mixins/check'
 import SearchFilter from '@comp/common/SearchFilter'
@@ -139,61 +145,61 @@ export default {
         deptId: ''
       },
       tableHead: [
-        {
-          name: '工号', // 注意传进去的列名
-          span: '4',
-          prop: 'no' // 注意传进去的列属性名，要跟实际取得的数据的属性名一致，如matirialUsed数组的每一项的属性名
-        },
-        {
-          name: '姓名',
-          span: '4',
-          prop: 'name'
-        },
-        {
-          name: '休假类型',
-          span: '6',
-          prop: 'type'
-        },
-        {
-          name: '开始时间',
-          span: '5',
-          prop: 'startTime'
-        },
-        {
-          name: '回院时间',
-          span: '5',
-          prop: 'endTime'
-        }
+        // {
+        //   label: '工号', // 注意传进去的列名
+        //   span: '4',
+        //   prop: 'no' // 注意传进去的列属性名，要跟实际取得的数据的属性名一致，如matirialUsed数组的每一项的属性名
+        // },
+        // {
+        //   label: '姓名',
+        //   span: '4',
+        //   prop: 'name'
+        // },
+        // {
+        //   label: '休假类型',
+        //   span: '6',
+        //   prop: 'type'
+        // },
+        // {
+        //   label: '开始时间',
+        //   span: '5',
+        //   prop: 'startTime'
+        // },
+        // {
+        //   label: '回院时间',
+        //   span: '5',
+        //   prop: 'endTime'
+        // }
       ],
-      matirialUsed: [
-        {
-          no: '4052',
-          name: '张三',
-          type: '年假',
-          startTime: '2020-10-01',
-          endTime: '2020-10-11'
-        },
-        {
-          no: '4052',
-          name: '张三',
-          type: '年假',
-          startTime: '2020-10-01',
-          endTime: '2020-10-11'
-        },
-        {
-          no: '4052',
-          name: '张三',
-          type: '年假',
-          startTime: '2020-10-01',
-          endTime: '2020-10-11'
-        },
-        {
-          no: '4052',
-          name: '张三',
-          type: '年假',
-          startTime: '2020-10-01',
-          endTime: '2020-10-11'
-        }
+      tableData: [
+        // {
+        //   no: '4052',
+        //   name: '张三',
+        //   type: '年假',
+        //   startTime: '2020-10-01',
+        //   endTime: '2020-10-11'
+        // },
+        // {
+        //   no: '4052',
+        //   name: '张三',
+        //   type: '年假',
+        //   startTime: '2020-10-01',
+        //   endTime: '2020-10-11'
+        // },
+        // {
+        //   no: '4052',
+        //   name: '张三',
+        //   type: '年假',
+        //   startTime: '2020-10-01',
+        //   endTime: '2020-10-11'
+        // },
+        // {
+        //   no: '4052',
+        //   name: '张三',
+        //   type: '年假',
+        //   startTime: '2020-10-01',
+        //   endTime: '2020-10-11'
+        // }
       ]
     }
   },
@@ -209,7 +215,35 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        console.log(data)
+        const { trends_header, monthData } = data
+        this.tableHead = trends_header || []
+        this.tableData = monthData || []
+      }
+    },
+    // 驳回
+    async checkInfo(type) {
+      const { errcode, errmsg } = await sendCheck({
+        typeCode: this.typeCode,
+        checkParam: this.checkParam
+      })
+      if (errcode === '0') {
+        this.$toast({
+          message: type === 'YES' ? '已同意' : '已驳回',
+          type: 'success',
+          duration: 800,
+          // overlay: true,
+          forbidClick: true
+        })
+        this.$router.back()
+      }
+      if (errcode === '1') {
+        this.$toast({
+          message: errmsg,
+          type: 'error',
+          duration: 1500,
+          // overlay: true,
+          forbidClick: true
+        })
       }
     },
     onSubmit(values) {
@@ -220,26 +254,8 @@ export default {
     },
     // 按钮回调
     handleClickBtn({ value }) {
-      switch (value) {
-        case 'pass':
-          this.$toast({
-            message: '已同意',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
-          break
-        case 'nopass':
-          this.$toast({
-            message: '已驳回',
-            type: 'success',
-            duration: 800,
-            // overlay: true,
-            forbidClick: true
-          })
-          break
-      }
+      this.checkParam.checkState = value
+      this.checkInfo(value)
     },
     // 搜索
     handleSearch(val) {

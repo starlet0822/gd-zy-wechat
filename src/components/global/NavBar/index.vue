@@ -1,7 +1,7 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 09:36:04
+ * @LastEditTime: 2022-04-27 10:36:23
 -->
 <template>
   <div class="navbar-wrapper">
@@ -84,5 +84,8 @@ export default {
 <style lang="less" scoped>
 .navbar-wrapper {
   height: 48px;
+  /deep/.van-nav-bar {
+    z-index: 9;
+  }
 }
 </style>

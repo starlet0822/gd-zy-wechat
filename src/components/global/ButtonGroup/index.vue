@@ -121,7 +121,6 @@ export default {
     // if (this.placeholder && this.fixed) {
     if (this.fixed) {
       const setHeight = () => {
-        console.log(5)
         this.height = this.$refs.buttonGroup.getBoundingClientRect().height
       }
 
@@ -137,7 +136,6 @@ export default {
       this.$emit('click', btn)
     },
     handleClickMore() {
-      console.log('点击展开更多')
       this.showMoreBtn = true
     },
     getContainer() {

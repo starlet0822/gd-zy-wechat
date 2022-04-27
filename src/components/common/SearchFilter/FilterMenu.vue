@@ -1,7 +1,7 @@
 <!--
  * @Description: 筛选页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 15:34:16
+ * @LastEditTime: 2022-04-27 10:16:38
 -->
 <template>
   <div class="filterMenu-wrapper vh-bg-white">
@@ -84,10 +84,6 @@ export default {
   },
   props: {
     filterMenu: {
-      // required: () => {
-      //   console.log(this)
-      //   return this.showFilter
-      // },
       type: Array,
       default: () => [
         // 复杂数据（有层级关联的） TODO:待做
@@ -170,7 +166,6 @@ export default {
     filterMenu: {
       handler(newVal, oldVal) {
         if (isEqual(newVal, oldVal)) return false
-        console.log(newVal)
         this.handleResult(newVal)
       },
       immediate: true,
@@ -207,7 +202,7 @@ export default {
           }
         }
       })
-      console.log('初始化筛选数据结构', this.result)
+      // console.log('初始化筛选数据结构', this.result)
     },
     // 取消
     filterCancel() {
@@ -227,7 +222,6 @@ export default {
       })
       this.$nextTick(function () {
         const fieldRefs = this.$refs[refName]
-        console.log('fieldRefs', fieldRefs)
         fieldRefs.forEach((fieldRef, index) => {
           fieldRef.resetDefaultVal()
           if (index === fieldRefs?.length - 1) {
@@ -242,7 +236,6 @@ export default {
       const { result } = this // 筛选后的结果
       // this.$nextTick(function () {
       const fieldRefs = this.$refs[refName]
-      console.log('fieldRefs', fieldRefs)
       fieldRefs.forEach((fieldRef) => {
         fieldRef.setDefaultVal()
         // TODO 过滤掉值为空的字段

@@ -15,7 +15,6 @@ const modulesFiles = require.context('./modules', false, /\.js$/)
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
   // 把 './user.js' => 'user'
   const moduleName = _camelCase(modulePath.replace(/^\.\/(.*)\.\w+$/, '$1'))
-  console.log(moduleName)
   const value = modulesFiles(modulePath)
   modules[moduleName] = value.default
   return modules

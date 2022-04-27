@@ -14,7 +14,6 @@ export function add(...arg) {
     count = new Decimal(count).add(pre)
     return count
   }, 0)
-  console.log('arg', arg, ret)
   return ret
 }
 
