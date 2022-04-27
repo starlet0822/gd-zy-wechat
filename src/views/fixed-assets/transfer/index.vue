@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 15:22:28
+ * @LastEditTime: 2022-04-27 09:08:11
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
@@ -122,8 +122,7 @@ export default {
         //   value: ['', ''],
         //   format: 'YYYY-MM'
         // }
-      ],
-      filterQuery: {} // 筛选参数
+      ]
     }
   },
   created() {},

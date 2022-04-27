@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 15:20:24
+ * @LastEditTime: 2022-04-27 09:08:01
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -128,8 +128,7 @@ export default {
         //   type: 'date',
         //   value: ['', '']
         // }
-      ],
-      filterQuery: {} // 筛选参数
+      ]
     }
   },
   created() {},

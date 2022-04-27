@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 15:22:18
+ * @LastEditTime: 2022-04-27 09:08:05
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -130,8 +130,7 @@ export default {
         //   type: 'date',
         //   value: ''
         // }
-      ],
-      filterQuery: {} // 筛选参数
+      ]
     }
   },
   created() {},

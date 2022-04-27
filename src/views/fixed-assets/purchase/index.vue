@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 15:01:15
+ * @LastEditTime: 2022-04-27 09:07:23
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -150,8 +150,7 @@ export default {
           value: ['', '']
           // value: '2022-04-01'
         }
-      ],
-      filterQuery: {} // 筛选参数
+      ]
     }
   },
   created() {},

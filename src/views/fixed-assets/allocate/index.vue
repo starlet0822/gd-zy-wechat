@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 15:22:04
+ * @LastEditTime: 2022-04-27 09:07:51
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
@@ -128,8 +128,7 @@ export default {
         //   type: 'date',
         //   value: ['', '']
         // }
-      ],
-      filterQuery: {} // 筛选参数
+      ]
     }
   },
   created() {},
