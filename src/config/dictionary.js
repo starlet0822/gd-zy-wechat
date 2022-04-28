@@ -1,7 +1,7 @@
 /*
  * @Description:字典管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 17:52:33
+ * @LastEditTime: 2022-04-27 18:25:49
  */
 
 import vars from '@css/vars.less'
@@ -27,6 +27,7 @@ export const typeCode = new Map([
   // === 人力资源 ===
   ['attendance', 'hr_attendance_result'], // 考勤
   ['vacation', 'hr_vacation'], // 休假
+  ['resetVacation', 'hr_reset_vacation'], // 销假
   ['workShift', 'hr_work_shift'], // 轮岗
   ['toLoan', 'hr_to_loan'], // 借调
   ['quit', 'hr_quit'] // 离职

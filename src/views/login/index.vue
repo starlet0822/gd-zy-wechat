@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 14:12:27
+ * @LastEditTime: 2022-04-28 10:26:59
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -57,11 +57,6 @@ export default {
       logoName: '医疗高效运营管理系统'
     }
   },
-  computed: {
-    openId() {
-      return 'xiejiewei' + this.loginForm.userAccount
-    }
-  },
   created() {},
   methods: {
     // 登录绑定
@@ -82,7 +77,6 @@ export default {
     },
     // 表单提交
     onSubmit(values) {
-      // console.log('submit', values)
       debounce(this.loginFn(), 150) // TODO 无效？
     }
   }

@@ -1,19 +1,20 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 10:36:15
+ * @LastEditTime: 2022-04-28 10:27:28
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 import md5 from 'js-md5'
 import { str2UTF8Bytes } from '@/utils'
+import { ISDEV } from '@/config'
 
 const state = {
   code: null,
-  // openId: null,
-  openId: JSON.parse(localStorage.getItem('openId')) || 'xiejiewei', // TODO 测试
+  openId: null,
+  // openId: JSON.parse(localStorage.getItem('openId')) || 'xiejiewei', // TODO 测试
   menus: JSON.parse(localStorage.getItem('menus')) || [],
   userName: 'startlet_wu',
-  roles: ['admin']
+  user: null // 用户信息
 }
 const mutations = {
   SET_USER_NAME(state, name) {
@@ -28,6 +29,10 @@ const mutations = {
   },
   SET_MENUS(state, val) {
     state.menus = val
+    localStorage.setItem('menus', JSON.stringify(val))
+  },
+  SET_USER(state, val) {
+    state.user = val
   }
 }
 const actions = {
@@ -43,23 +48,25 @@ const actions = {
   },
   // 用户登录
   login({ state, commit }, userInfo) {
-    commit('SET_OPENID', 'xiejiewei')
+    // commit('SET_OPENID', 'xiejiewei')
     return new Promise((resolve, reject) => {
       const { userAccount, password } = userInfo
-      const openId = state.openId + userAccount // test
-      commit('SET_OPENID', openId)
+      // const openId = state.openId + userAccount // test
+      // commit('SET_OPENID', openId)
       const _password = md5.base64(str2UTF8Bytes(password)) // 加密处理
       login({
         userAccount: userAccount.trim(),
         password: _password,
-        openId: openId
-        // openId: state.openId
+        // openId: openId
+        openId: ISDEV ? 'xiejiewei' + userAccount : state.openId
       })
         .then((res) => {
-          const { errcode, data } = res
-          if (errcode === '0') {
-            commit('SET_MENUS', data || [])
-            localStorage.setItem('menus', JSON.stringify(data))
+          if (res.errcode === '0') {
+            const {
+              data: { modList, orgUser }
+            } = res
+            commit('SET_MENUS', modList || [])
+            commit('SET_USER', orgUser || null)
           }
           resolve(res)
         })
@@ -74,7 +81,12 @@ const actions = {
         .then((res) => {
           console.log('judgeLoginState', res)
           if (res.errcode === '0') {
+            const {
+              data: { modList, orgUser }
+            } = res
             commit('SET_OPENID', res.data.openId)
+            commit('SET_MENUS', modList || [])
+            commit('SET_USER', orgUser || null)
           }
           resolve(res.data)
         })

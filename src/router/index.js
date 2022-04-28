@@ -1,15 +1,11 @@
 /*
  * @Description:路由管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 09:18:14
+ * @LastEditTime: 2022-04-27 16:29:21
  */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { routes } from './routes'
-import store from '@/store'
-import { getCode } from '@/utils/code'
-import { judgeRoutePower } from '@/utils/permission'
-import { ENV } from '@/config/index'
 
 Vue.use(VueRouter)
 const router = new VueRouter({
@@ -30,29 +26,29 @@ const router = new VueRouter({
   }
 })
 
-router.beforeEach(async (to, from, next) => {
-  console.log(to, from)
-  const doPower = ['production'].includes(ENV)
-  // TODO 嵌套在企业微信再解开
-  if (doPower) {
-    judgeRoutePower(to, next)
-    // const Code = getCode()
-    if (!store.getters.openId) {
-      const params = { code: getCode(), state: '' }
-      console.log('openId', store.state.user.openId, params)
-      const data = await store.dispatch('user/judgeLoginState', params)
-      const { authority } = data
-      if (authority === '1') {
-        next('/login')
-      } else {
-        next('/')
-      }
-    }
-  }
-  next()
-})
+// router.beforeEach(async (to, from, next) => {
+//   console.log(to, from)
+//   const doPower = ['production'].includes(ENV)
+//   // TODO 嵌套在企业微信再解开
+//   if (doPower) {
+//     judgeRoutePower(to, next)
+//     // const Code = getCode()
+//     if (!store.getters.openId) {
+//       const params = { code: getCode(), state: '' }
+//       console.log('openId', store.state.user.openId, params)
+//       const data = await store.dispatch('user/judgeLoginState', params)
+//       const { authority } = data
+//       if (authority === '1') {
+//         next('/login')
+//       } else {
+//         next('/')
+//       }
+//     }
+//   }
+//   next()
+// })
 
-// 路由后置守卫
-router.afterEach((to, from) => {})
+// // 路由后置守卫
+// router.afterEach((to, from) => {})
 
 export default router

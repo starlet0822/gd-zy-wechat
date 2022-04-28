@@ -1,15 +1,18 @@
 /*
  * @Description:获取code
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 16:11:36
+ * @LastEditTime: 2022-04-28 09:43:37
  */
 import { urlQuery2Object } from './index'
 import store from '@/store'
 // 获取code值
 export function getCode() {
+  // const url =
+  // 'http://hrp.gdhtcm.com:8111/wechatWeb/?code=ejjzxTtaEbN8spFmuenc05raxvF-TbJR5MLYl5ksbiE&state=STATE#/login'
   const url = window.location.href || ''
   const code = urlQuery2Object(url)?.code || ''
-  console.log('code', url, code)
+  console.log('url', url)
+  console.log('code:', code)
   return code
 }
 // 储存code值
