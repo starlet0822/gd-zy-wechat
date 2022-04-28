@@ -1,7 +1,7 @@
 <!--
  * @Description: 离职申请列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 17:55:49
+ * @LastEditTime: 2022-04-28 17:52:15
 -->
 <template>
   <div class="departure-wrapper vh-bg">
@@ -26,29 +26,31 @@
             @load="onLoad"
           >
             <div
-              class="list-item vh-m-10 vh-rounded-6 vh-p-10 vh-bg-white"
+              class="list-item vh-p-10 vh-bg-white vh-rounded-6"
               v-for="item in dataList"
               :key="item.billId"
               v-waves
               @click="toCheck(item)"
             >
-              <van-row type="flex" align="center">
-                <van-col span="22" class="vh-flex-wrap">
-                  <p
-                    class="vh-pr-40"
-                    v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
-                    :key="fieldIndex"
-                  >
-                    <span class="vh-tip">{{ field.fieldKey }}：</span>
-                    <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
-                      {{ field.fieldValue }}
-                    </span>
-                  </p>
-                </van-col>
-                <van-col span="2">
-                  <van-icon name="arrow" size="0.64rem" :color="themeColor"></van-icon>
-                </van-col>
-              </van-row>
+              <div class="vh-flex-jb-ac">
+                <div class="vh-title">{{ item.title }}</div>
+                <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
+              </div>
+              <div
+                class="vh-flex-ac"
+                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
+                :key="fieldIndex"
+              >
+                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
+                  {{ field.fieldValue }}
+                </span>
+              </div>
+              <div class="btn-status">
+                <!-- :color="checkStatus.get(item.checkState).color"
+                    :text="checkStatus.get(item.checkState).text" -->
+                <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
+              </div>
             </div>
             <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
           </van-list>
@@ -59,19 +61,22 @@
 </template>
 
 <script>
-import { themeColor, typeCode } from '@/config/constants'
+import vars from '@/assets/css/vars.less'
+import { typeCode } from '@/config/constants'
 import { findHrCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
+import TagBox from '@comp/common/TagBox'
 export default {
   name: 'Departure',
   mixins: [list],
   components: {
-    SearchFilter
+    SearchFilter,
+    TagBox
   },
   data() {
     return {
-      themeColor,
+      tagColor: vars.colorOrange,
       typeCode: typeCode.get('quit')
     }
   },
@@ -137,5 +142,14 @@ export default {
 
 <style lang="less" scoped>
 .departure-wrapper {
+  .list-item {
+    margin: 10px;
+    .btn-status {
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
 }
 </style>

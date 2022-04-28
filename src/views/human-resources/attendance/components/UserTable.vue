@@ -1,7 +1,7 @@
 <!--
  * @Description: 表格
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 17:02:52
+ * @LastEditTime: 2022-04-28 17:58:03
 -->
 <template>
   <div class="fake-table">
@@ -16,28 +16,6 @@
         </template>
       </el-table>
     </template>
-    <!-- <van-row class="fake-table__head">
-      <van-col
-        class="col vh-flex-center"
-        v-for="(item, index) in columns.slice(0, 5)"
-        :key="index"
-        :span="item.span"
-      >
-        {{ item.label }}
-      </van-col>
-    </van-row>
-    <van-row class="fake-table__body" v-for="(item, index) in tableData" :key="index">
-      <template v-for="(colItem, colIndex) in columns">
-        <van-col
-          class="col vh-flex-center"
-          :span="colItem.span"
-          :key="colIndex"
-          v-if="colItem.prop"
-        >
-          <span>{{ item[colItem.prop] }}</span>
-        </van-col>
-      </template>
-    </van-row> -->
   </div>
 </template>
 <script>
