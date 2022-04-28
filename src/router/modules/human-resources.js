@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 17:54:39
+ * @LastEditTime: 2022-04-28 14:39:55
  */
 export default [
   {
@@ -45,6 +45,31 @@ export default [
     },
     component: () =>
       import(/* webpackChunkName: "vacation-check" */ '@/views/human-resources/vacation/check')
+  },
+  {
+    path: '/vacation-reset',
+    name: 'VacationReset',
+    meta: {
+      title: '销假审批',
+      icon: 'xiaojia',
+      modCode: '21',
+      keepAlive: true
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "vacation-reset" */ '@/views/human-resources/vacation-reset/index.vue'
+      )
+  },
+  {
+    path: '/vacation-reset-check/:id/:dataState?',
+    name: 'VacationResetCheck',
+    meta: {
+      title: '销假审批'
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "vacation-reset-check" */ '@/views/human-resources/vacation-reset/check'
+      )
   },
   {
     path: '/rotational',

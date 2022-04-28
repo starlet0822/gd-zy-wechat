@@ -1,17 +1,19 @@
 <!--
- * @Description: 考勤
+ * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 15:40:14
+ * @LastEditTime: 2022-04-28 14:40:51
 -->
 <template>
-  <div class="attendance-wrapper vh-bg">
-    <vh-nav-bar></vh-nav-bar>
+  <div class="vacation-reset-list-wrapper vh-bg">
+    <vh-nav-bar @click-right="handleRightClick">
+      <template #right>
+        <div v-show="showCheckBtn" class="vh-color-white">批量审批</div>
+      </template>
+    </vh-nav-bar>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
-      <van-tab v-for="tab in tabs" :title="tab.title" :key="tab.id" :name="tab.id">
+      <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <search-filter
-          ref="searchFilterRef"
-          :key-id="tab.id"
-          :value.sync="parameters.queryTerm"
+          v-model.trim="parameters.queryTerm"
           placeholder="请输入员工姓名"
           @search="handleSearch"
           :can-filter="false"
@@ -69,15 +71,22 @@ import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 
 export default {
-  name: 'Attendance',
+  name: 'VacationReset',
   mixins: [list],
   components: { SearchFilter, TagBox },
   data() {
     return {
       tagColor: vars.colorOrange,
-      typeCode: typeCode.get('attendance'),
-      pageRequest: {
-        pageSize: 15 // TODO 特殊处理
+      showMulti: false, // 是否批量
+      result: [],
+      typeCode: typeCode.get('resetVacation')
+    }
+  },
+  computed: {
+    // 是否显示批量审批按钮
+    showCheckBtn: {
+      get() {
+        return this.showMulti && this.result.length > 0
       }
     }
   },
@@ -90,7 +99,7 @@ export default {
         const params = {
           typeCode: this.typeCode,
           pageRequest: this.pageRequest,
-          parameters: { ...this.parameters }
+          parameters: { ...this.parameters, ...this.filterQuery }
         }
         const {
           errcode,
@@ -119,7 +128,7 @@ export default {
     },
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/attendance-check/${billId}/${this.tabActive}`)
+      this.$router.push(`/vacation-reset-check/${billId}/${this.tabActive}`)
     },
     // 搜索
     handleSearch(val) {
@@ -129,20 +138,31 @@ export default {
     // 标签页切换
     onTabsChange(id, title) {
       this.parameters.dataState = id
-      this.parameters.queryTerm = ''
-      this.$nextTick(() => {
-        const searchFilterRefs = this.$refs.searchFilterRef
-        const curSearchFilterRef = searchFilterRefs.find((v) => v.keyId === id)
-        this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
-        this.onRefresh()
+      this.onRefresh()
+    },
+    // 驳回
+    handleClickReject() {
+      this.$toast({
+        message: '已驳回',
+        type: 'success',
+        duration: 800,
+        // overlay: true,
+        forbidClick: true
       })
-    }
+    },
+    switchChange(val) {
+      console.log('switchChange', val)
+      this.showMulti = val
+      this.result = []
+    },
+    // TODO 批量审批
+    handleRightClick() {}
   }
 }
 </script>
 
 <style lang="less" scoped>
-.attendance-wrapper {
+.vacation-reset-list-wrapper {
   .list-item {
     margin: 10px;
     .btn-status {

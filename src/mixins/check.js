@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 09:54:03
+ * @LastEditTime: 2022-04-28 14:53:52
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -33,7 +33,7 @@ export default {
         checkState: 'NO',
         remark: '同意',
         approver: '',
-        openId: 'xiejiewei1390',
+        openId: 'xiejiewei' + 'demo', // TODO 手动改值测试
         state: ''
       }
     }
@@ -49,7 +49,7 @@ export default {
   },
   created() {
     // console.log(this.openId, this.userAccount)
-    this.checkParam.openId = this.openId // test
+    // this.checkParam.openId = this.openId // test
   },
   methods: {
     // 查看审批详情
