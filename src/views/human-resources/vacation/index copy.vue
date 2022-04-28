@@ -1,7 +1,12 @@
 <!--
+ * @Description:
+ * @Author: wuxxing
+ * @LastEditTime: 2022-04-28 16:12:49
+-->
+<!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 16:24:03
+ * @LastEditTime: 2022-04-27 10:20:20
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -13,13 +18,30 @@
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <search-filter
-          ref="searchFilterRef"
-          :key-id="tab.id"
-          :value.sync="parameters.queryTerm"
+          v-model.trim="parameters.queryTerm"
           placeholder="请输入员工姓名"
           @search="handleSearch"
           :can-filter="false"
         ></search-filter>
+        <!-- <van-cell center class="vh-border-0" v-if="dataList.length">
+        <template #title>
+          <div class="vh-tip">
+            共查询到
+            <span class="vh-color-orange">{{ dataList.length }}</span>
+            条记录
+          </div>
+        </template>
+        <template #right-icon>
+          <span class="vh-font-12">{{ !showMulti ? '开启批量审批' : '关闭批量审批' }}</span>
+          <van-switch
+            :active-color="colorOrange"
+            size="0.64rem"
+            class="vh-ml-10"
+            v-model="showMulti"
+            @change="switchChange"
+          ></van-switch>
+        </template>
+      </van-cell> -->
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
@@ -29,33 +51,34 @@
             :finished-text="finishedText"
             @load="onLoad"
           >
-            <div
-              class="list-item vh-p-10 vh-bg-white vh-rounded-6"
-              v-for="item in dataList"
-              :key="item.billId"
-              v-waves
-              @click="toCheck(item)"
-            >
-              <div class="vh-flex-jb-ac">
-                <div class="vh-title">{{ item.title }}</div>
-                <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
-              </div>
-              <div
-                class="vh-flex-ac"
-                v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
-                :key="fieldIndex"
+            <van-checkbox-group v-model="result">
+              <van-row
+                v-waves
+                class="vacation-item vh-m-10 vh-bg-white vh-rounded-6 vh-p-10 vh-flex-ac-jb"
+                type="flex"
+                align="center"
+                v-for="item in dataList"
+                :key="item.billId"
               >
-                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
-                  {{ field.fieldValue }}
-                </span>
-              </div>
-              <div class="btn-status">
-                <!-- :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text" -->
-                <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
-              </div>
-            </div>
+                <!-- <transition :name="'van-slide-left'"> -->
+                <van-col span="2" v-show="showMulti">
+                  <van-checkbox :name="item.billId"></van-checkbox>
+                </van-col>
+                <!-- </transition> -->
+                <van-col :span="showMulti ? 11 : 12" @click="toCheck(item)">
+                  <p v-for="(left, leftIdx) in item.formData.slice(0, 2)" :key="leftIdx">
+                    <span class="vh-tip">{{ left.fieldKey }}：</span>
+                    <span>{{ left.fieldValue }}</span>
+                  </p>
+                </van-col>
+                <van-col :span="showMulti ? 11 : 12" @click="toCheck(item)">
+                  <p v-for="(left, leftIdx) in item.formData.slice(2)" :key="leftIdx">
+                    <span class="vh-tip">{{ left.fieldKey }}：</span>
+                    <span>{{ left.fieldValue }}</span>
+                  </p>
+                </van-col>
+              </van-row>
+            </van-checkbox-group>
             <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
           </van-list>
         </van-pull-refresh>
@@ -66,22 +89,23 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode } from '@/config/constants'
+import { themeColor, typeCode } from '@/config/constants'
 import { findHrCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
-import TagBox from '@comp/common/TagBox'
 
 export default {
-  name: 'VacationReset',
+  name: 'Vacation',
   mixins: [list],
-  components: { SearchFilter, TagBox },
+  components: { SearchFilter },
   data() {
     return {
-      tagColor: vars.colorOrange,
-      typeCode: typeCode.get('vacation'),
+      colorBlue: vars.colorBlue,
+      colorOrange: vars.colorOrange,
+      themeColor,
       showMulti: false, // 是否批量
-      result: []
+      result: [],
+      typeCode: typeCode.get('vacation')
     }
   },
   computed: {
@@ -114,6 +138,9 @@ export default {
           } else {
             this.dataList = this.dataList.concat(data || [])
           }
+          // this.dataList.forEach((v) => {
+          //   v.showMulti = false // 默认单选
+          // })
           if (this.dataList.length < this.totalSize) {
             params.pageRequest.pageNum = params.pageRequest.pageNum + 1
           }
@@ -128,9 +155,10 @@ export default {
         this.loading = false
       }
     },
+
     // 审批
     toCheck({ billId }) {
-      this.$router.push(`/vacation-check/${billId}/${this.tabActive}`)
+      this.$router.push(`/vacation-check/${billId}`)
     },
     // 搜索
     handleSearch(val) {
@@ -140,13 +168,7 @@ export default {
     // 标签页切换
     onTabsChange(id, title) {
       this.parameters.dataState = id
-      this.parameters.queryTerm = ''
-      this.$nextTick(() => {
-        const searchFilterRefs = this.$refs.searchFilterRef
-        const curSearchFilterRef = searchFilterRefs.find((v) => v.keyId === id)
-        this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
-        this.onRefresh()
-      })
+      this.onRefresh()
     },
     // 驳回
     handleClickReject() {
@@ -158,6 +180,11 @@ export default {
         forbidClick: true
       })
     },
+    switchChange(val) {
+      console.log('switchChange', val)
+      this.showMulti = val
+      this.result = []
+    },
     // TODO 批量审批
     handleRightClick() {}
   }
@@ -166,14 +193,7 @@ export default {
 
 <style lang="less" scoped>
 .vacation-list-wrapper {
-  .list-item {
-    margin: 10px;
-    .btn-status {
-      text-align: right;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
+  .vacation-item {
   }
 }
 </style>

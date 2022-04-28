@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 14:40:51
+ * @LastEditTime: 2022-04-28 16:24:20
 -->
 <template>
   <div class="vacation-reset-list-wrapper vh-bg">
@@ -44,7 +44,7 @@
                 :key="fieldIndex"
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
+                <span :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
                   {{ field.fieldValue }}
                 </span>
               </div>
@@ -77,9 +77,9 @@ export default {
   data() {
     return {
       tagColor: vars.colorOrange,
+      typeCode: typeCode.get('resetVacation'),
       showMulti: false, // 是否批量
-      result: [],
-      typeCode: typeCode.get('resetVacation')
+      result: []
     }
   },
   computed: {

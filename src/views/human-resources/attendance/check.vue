@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 10:45:57
+ * @LastEditTime: 2022-04-28 17:37:47
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -215,8 +215,8 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        const { trends_header, monthData } = data
-        this.tableHead = trends_header || []
+        const { show_header, monthData } = data
+        this.tableHead = show_header || []
         this.tableData = monthData || []
       }
     },

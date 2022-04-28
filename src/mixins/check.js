@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 14:53:52
+ * @LastEditTime: 2022-04-28 16:00:30
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -48,8 +48,8 @@ export default {
     ...mapGetters(['openId'])
   },
   created() {
-    // console.log(this.openId, this.userAccount)
-    // this.checkParam.openId = this.openId // test
+    console.log(this.openId)
+    this.checkParam.openId = this.openId // test
   },
   methods: {
     // 查看审批详情

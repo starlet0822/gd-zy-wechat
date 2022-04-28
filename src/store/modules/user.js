@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 10:27:28
+ * @LastEditTime: 2022-04-28 15:54:23
  */
 import { judgeLoginState, login } from '@/api/modules/user'
 import md5 from 'js-md5'
@@ -51,14 +51,18 @@ const actions = {
     // commit('SET_OPENID', 'xiejiewei')
     return new Promise((resolve, reject) => {
       const { userAccount, password } = userInfo
-      // const openId = state.openId + userAccount // test
       // commit('SET_OPENID', openId)
+      if (ISDEV) {
+        // 开发环境
+        const openId = 'xiejiewei' + userAccount
+        commit('SET_OPENID', openId)
+      }
       const _password = md5.base64(str2UTF8Bytes(password)) // 加密处理
       login({
         userAccount: userAccount.trim(),
         password: _password,
         // openId: openId
-        openId: ISDEV ? 'xiejiewei' + userAccount : state.openId
+        openId: state.openId
       })
         .then((res) => {
           if (res.errcode === '0') {

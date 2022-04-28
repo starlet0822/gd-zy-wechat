@@ -1,19 +1,18 @@
 <!--
  * @Description: 表格
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 13:44:44
+ * @LastEditTime: 2022-04-28 17:02:52
 -->
 <template>
   <div class="fake-table">
     <template>
       <el-table :data="tableData" :style="tableStyle" border stripe>
         <template v-for="column in columns">
-          <el-table-column
-            :key="column.prop"
-            :prop="column.prop"
-            :label="column.label"
-            min-width="120"
-          ></el-table-column>
+          <el-table-column :key="column.prop" :label="column.label" min-width="120">
+            <template v-slot="{ row }">
+              <span>{{ row[column.prop] || 0 }}</span>
+            </template>
+          </el-table-column>
         </template>
       </el-table>
     </template>

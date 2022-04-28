@@ -1,11 +1,11 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 10:07:01
+ * @LastEditTime: 2022-04-28 16:07:31
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
-    <vh-nav-bar @click-right="handleRightClick">
+    <vh-nav-bar :title="dataInfo && dataInfo.title" @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批流程</div>
       </template>
@@ -14,10 +14,10 @@
       <!-- 折叠面板 -->
       <van-collapse v-model="activeNames" :border="false">
         <van-collapse-item
-          v-for="(item, index) in formData"
-          :key="index"
+          class="vh-mb-10"
           :name="index"
-          class="vh-mb-100"
+          v-for="(item, index) in formData"
+          :key="item.title + index"
           :border="false"
         >
           <template #title>
@@ -26,11 +26,12 @@
           <template #default>
             <template v-if="item.type === 'jsonText'">
               <van-cell
-                v-for="(row, rowIdx) in item.rowData"
-                :key="rowIdx"
                 title-class="vh-color-tip"
-                :title="row.fieldName"
-                :value="row.fieldValue || '--'"
+                v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)"
+                :key="citem.fieldName + cidx"
+                :title="citem.fieldName"
+                :value="citem.fieldValue || '--'"
+                :value-class="['vh-flex2']"
               ></van-cell>
             </template>
             <!-- 附件 -->
@@ -49,9 +50,10 @@
       </van-collapse>
     </div>
     <!-- 表单 -->
-    <van-form @submit="onSubmit" class="vh-mb-10">
+    <van-form v-if="formData.length" class="vh-mb-10" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
+        v-if="canCheck"
         name="remark"
         label="审批意见"
         placeholder="请输入审批意见"
@@ -64,7 +66,39 @@
       />
     </van-form>
     <!-- 底部按钮组 -->
-    <vh-button-group :btn-arr="btnList" fixed @click="handleClickBtn" />
+    <vh-button-group v-if="canCheck" :btn-arr="btnList" fixed @click="handleClickBtn" />
+    <!-- 节点弹窗 -->
+    <van-dialog
+      class-name="user-dialog"
+      v-model="showCheckUser"
+      :title="checkPeopleData && checkPeopleData.title"
+      show-cancel-button
+      :close-on-click-overlay="false"
+      @confirm="handleConfirmUser"
+    >
+      <template #default>
+        <template
+          v-if="checkPeopleData && checkPeopleData.rowData && checkPeopleData.rowData.length"
+        >
+          <div class="user-check vh-p-20">
+            <van-checkbox-group v-model="approvers" icon-size="0.64rem">
+              <!-- TODO: 记得去掉.slice(0, 10)-->
+              <van-checkbox
+                class="vh-mb-10"
+                v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
+                :key="user.id + index"
+                :name="user.id"
+              >
+                {{ user.empName }}
+              </van-checkbox>
+            </van-checkbox-group>
+          </div>
+        </template>
+        <template v-else>
+          <div class="vh-p-box">{{ '暂无审批人员' }}</div>
+        </template>
+      </template>
+    </van-dialog>
     <van-popup
       v-model="showCheckDetail"
       position="right"
@@ -72,50 +106,28 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-pt-20 vh-pl-5">
-        <TimeLine :id="parameters.billId" :type-code="typeCode"></TimeLine>
+        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
 </template>
 
 <script>
-import vars from '@/assets/css/vars.less'
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
-import { findCodeName } from './hooks'
-import ImgView from '@comp/common/ImgView'
-import FileCard from '@comp/common/FileCard'
-import TimeLine from '@comp/common/TimeLine'
+import { typeCode } from '@/config/constants'
+import { getIncreasingArr } from '@/utils'
+import check from '@/mixins/check'
+// import { findCodeName } from './hooks'
 export default {
   name: 'VacationCheck',
-  components: { ImgView, FileCard, TimeLine },
+  mixins: [check],
+  components: {},
   data() {
     return {
-      formData: [],
-      activeNames: [],
-      showCheckDetail: false,
-      btnList: [
-        { text: '驳回', value: 'NO' },
-        { text: '同意', value: 'YES' }
-      ],
-      colorYellow: vars.colorYellow,
-      colorRed: vars.colorRed,
-      // 请求参数
-      typeCode: 'hr_vacation',
-      parameters: {
-        billId: ''
-      },
-      checkParam: {
-        // empName: '谢杰伟',
-        // empCode: 538,
-        busKey: '',
-        checkState: 'NO',
-        remark: '',
-        openId: 'xiejiewei'
-      }
+      typeCode: typeCode.get('vacation')
     }
   },
   created() {
-    // this.checkParam.openId = this.$store.state.user.openId
     this.getInfo()
   },
   methods: {
@@ -127,17 +139,18 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        this.formData = data.formData || []
-        this.activeNames = [...Array(this.formData.length).keys()]
+        this.dataInfo = data
+        this.formData = [...data.formData, ...data.detailData] || []
+        this.checkPeopleData = data.checkPeopleData || null
+        this.activeNames = getIncreasingArr(this.formData?.length)
         // 获取code name
-        const user = findCodeName(this.formData)
-        this.checkParam = { ...user, ...this.checkParam }
+        // const user = findCodeName(this.formData)
+        // this.checkParam = { ...user, ...this.checkParam }
       }
     },
     // 驳回
     async checkInfo(type) {
-      const { id } = this.$route.params
-      this.parameters.billId = id
+      this.checkParam.checkState = type
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam
@@ -162,21 +175,36 @@ export default {
         })
       }
     },
-    onSubmit(values) {
-      console.log('submit', values)
+    handleConfirmUser(type = 'YES') {
+      if (!this.approvers.length) {
+        this.$toast({
+          message: `请选择下一审批人！`,
+          type: 'error',
+          duration: 1500,
+          // overlay: true,
+          forbidClick: true
+        })
+        return
+      }
+      this.checkParam.approver = this.approvers.join(',')
+      // 调接口
+      this.checkInfo(type)
     },
     // 按钮回调
     handleClickBtn({ value }) {
-      this.checkParam.checkState = value
-      this.checkInfo(value)
-      // switch (value) {
-      //   case 'YES':
-      //     this.checkInfo()
-      //     break
-      //   case 'NO':
-      //     this.checkInfo()
-      //     break
-      // }
+      switch (value) {
+        case 'YES':
+          if (this.checkPeopleData?.rowData.length) {
+            this.showCheckUser = true
+          } else {
+            this.checkInfo(value)
+          }
+          break
+        case 'NO':
+          this.checkParam.approver = ''
+          this.checkInfo(value)
+          break
+      }
     }
   }
 }
@@ -186,26 +214,12 @@ export default {
 .vacation-check-wrapper {
   /deep/.check-info {
     .van-collapse-item__title {
-      // background: rgba(0, 0, 0, 0.1);
-      // background: @color-bg;
-      border-bottom: 1px solid #e6e6e6;
-      height: 40px;
-      // &::before {
-      //   content: ' ';
-      //   display: block;
-      //   height: 40%;
-      //   // line-height: 80%;
-      //   width: 3px;
-      //   background-color: @color-orange;
-      //   position: absolute;
-      //   left: 3%;
-      //   top: 50%;
-      //   transform: translateY(-40%);
-      // }
+      background: @color-bg;
     }
     .van-collapse-item__content {
       padding: 0;
       .van-cell {
+        // font-size: @font14;
         padding-top: 5px;
         padding-bottom: 5px;
         &::after {
