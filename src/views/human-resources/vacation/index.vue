@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 16:24:03
+ * @LastEditTime: 2022-04-29 11:26:45
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -47,7 +47,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

@@ -41,7 +41,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'approval_no' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

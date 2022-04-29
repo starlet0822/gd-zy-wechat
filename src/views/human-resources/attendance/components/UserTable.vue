@@ -1,16 +1,21 @@
 <!--
  * @Description: 表格
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 17:58:03
+ * @LastEditTime: 2022-04-29 11:16:31
 -->
 <template>
   <div class="fake-table">
     <template>
       <el-table :data="tableData" :style="tableStyle" border stripe>
         <template v-for="column in columns">
-          <el-table-column :key="column.prop" :label="column.label" min-width="120">
+          <el-table-column
+            :key="column.prop"
+            :fixed="column.fixed"
+            :label="column.label"
+            :min-width="column.minWidth"
+          >
             <template v-slot="{ row }">
-              <span>{{ row[column.prop] || 0 }}</span>
+              <span>{{ row[column.prop] || (row.dataType === -99 ? '' : 0) }}</span>
             </template>
           </el-table-column>
         </template>
@@ -51,10 +56,13 @@ export default {
     columns() {
       const ret = this.headData.map((v) => {
         // const hasVal = this.tableData[0][v.item_code]
+        const fixed = ['empCode', 'empName', '!bDeptName', '!cDeptName'].includes(v.itemCode)
         return {
-          label: v.item_name,
-          span: '6',
-          prop: v.item_code
+          dataType: v.dataType,
+          label: v.itemName,
+          prop: v.itemCode,
+          fixed: fixed,
+          minWidth: fixed ? 90 : 100
         }
       })
       return ret
@@ -68,7 +76,7 @@ export default {
 
 .fake-table {
   // min-height: 200px;
-  margin: 12px;
+  // margin: 12px;
   &__head,
   &__body {
     border: 1px solid #dddddd;

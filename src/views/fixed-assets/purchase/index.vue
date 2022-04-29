@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 09:07:23
+ * @LastEditTime: 2022-04-29 11:26:04
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -42,7 +42,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

@@ -1,7 +1,7 @@
 <!--
  * @Description: 离职申请列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 17:52:15
+ * @LastEditTime: 2022-04-29 11:26:33
 -->
 <template>
   <div class="departure-wrapper vh-bg">
@@ -43,7 +43,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

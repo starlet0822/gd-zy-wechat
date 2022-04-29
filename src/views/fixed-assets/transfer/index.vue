@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 09:08:11
+ * @LastEditTime: 2022-04-29 11:26:08
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
@@ -42,7 +42,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'transfer_no' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

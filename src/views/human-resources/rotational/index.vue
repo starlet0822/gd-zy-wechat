@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 09:28:48
+ * @LastEditTime: 2022-04-29 11:26:25
 -->
 <template>
   <div class="rotational-wrapper vh-bg">
@@ -43,7 +43,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

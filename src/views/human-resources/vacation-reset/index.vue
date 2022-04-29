@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 16:24:20
+ * @LastEditTime: 2022-04-29 11:26:41
 -->
 <template>
   <div class="vacation-reset-list-wrapper vh-bg">
@@ -45,7 +45,7 @@
               >
                 <span class="vh-color-tip">{{ field.fieldKey }}：</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
-                  {{ field.fieldValue }}
+                  {{ field.fieldValue || '--' }}
                 </span>
               </div>
               <div class="btn-status">

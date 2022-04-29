@@ -1,7 +1,7 @@
 <!--
  * @Description: 借调审批列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 18:06:59
+ * @LastEditTime: 2022-04-29 11:26:38
 -->
 <template>
   <div class="secondment-wrapper vh-bg">
@@ -41,7 +41,7 @@
                   >
                     <span class="vh-tip">{{ field.fieldKey }}：</span>
                     <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
-                      {{ field.fieldValue }}
+                      {{ field.fieldValue || '--' }}
                     </span>
                   </p>
                 </van-col>
