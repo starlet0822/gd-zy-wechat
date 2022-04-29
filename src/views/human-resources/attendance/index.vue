@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:17:57
+ * @LastEditTime: 2022-04-29 17:26:46
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -12,7 +12,7 @@
           ref="searchFilterRef"
           :key-id="tab.id"
           :value.sync="parameters.queryTerm"
-          placeholder="请输入员工姓名"
+          :placeholder="hrPlaceholder"
           @search="handleSearch"
           :can-filter="false"
         ></search-filter>
@@ -125,17 +125,6 @@ export default {
     handleSearch(val) {
       this.parameters.queryTerm = val
       this.onRefresh()
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
-      this.parameters.queryTerm = ''
-      this.$nextTick(() => {
-        const searchFilterRefs = this.$refs.searchFilterRef
-        const curSearchFilterRef = searchFilterRefs.find((v) => v.keyId === id)
-        this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
-        this.onRefresh()
-      })
     }
   }
 }

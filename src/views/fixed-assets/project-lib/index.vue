@@ -1,19 +1,22 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 09:08:05
+ * @LastEditTime: 2022-04-29 16:22:10
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter
-      v-model.trim="parameters.queryTerm"
-      @search="handleSearch"
-      @confirm="handleFilterConfirm"
-      :filter-menu="filterMenu"
-    ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
+        <search-filter
+          ref="searchFilterRef"
+          :key-id="tab.id"
+          :value.sync="parameters.queryTerm"
+          :placeholder="fixPlaceholder"
+          @search="handleSearch"
+          @confirm="handleFilterConfirm"
+          :filter-menu="filterMenu"
+        ></search-filter>
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
@@ -45,8 +48,6 @@
                 </span>
               </div>
               <div class="btn-status">
-                <!-- :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text" -->
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
@@ -60,7 +61,7 @@
 
 <script>
 import vars from '@/assets/css/vars.less'
-import { typeCode, checkStatus } from '@/config/constants'
+import { typeCode } from '@/config/constants'
 import { findFixCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
 import SearchFilter from '@comp/common/SearchFilter'
@@ -75,62 +76,7 @@ export default {
   data() {
     return {
       tagColor: vars.colorOrange,
-      checkStatus, // 审批状态
-      typeCode: typeCode.get('approval_apply'),
-      filterMenu: [
-        // 筛选菜单
-        {
-          field: 'billNo',
-          label: '申请单号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'deptCode', // TODO
-          label: '申请科室',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: ['applyDate', 'applyEndDate'],
-          // field: 'applyDate',
-          label: '申请日期',
-          placeholder: ['开始', '结束'],
-          type: 'date',
-          value: ['', '']
-          // value: '2022-04-01'
-        }
-        // {
-        //   field: 'empName',
-        //   label: '申请人',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: 'billNo',
-        //   label: '立项单号',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: 'applyDeptCode',
-        //   label: '立项类型',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: ['applyDate', 'applyEndDate'],
-        //   label: '制单日期',
-        //   placeholder: ['起始', '结束'],
-        //   type: 'date',
-        //   value: ''
-        // }
-      ]
+      typeCode: typeCode.get('approval_apply')
     }
   },
   created() {},
@@ -183,11 +129,6 @@ export default {
     handleFilterConfirm(query) {
       console.log('筛选回调', query)
       this.filterQuery = query
-      this.onRefresh()
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
       this.onRefresh()
     }
   }

@@ -1,20 +1,22 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:26:08
+ * @LastEditTime: 2022-04-29 16:18:13
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
     <vh-nav-bar></vh-nav-bar>
-    <search-filter
-      v-model="parameters.queryTerm"
-      :filter-menu="filterMenu"
-      show-filter
-      @search="handleSearch"
-      @confirm="handleFilterConfirm"
-    ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
+        <search-filter
+          ref="searchFilterRef"
+          :key-id="tab.id"
+          :value.sync="parameters.queryTerm"
+          :placeholder="fixPlaceholder"
+          @search="handleSearch"
+          @confirm="handleFilterConfirm"
+          :filter-menu="filterMenu"
+        ></search-filter>
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
@@ -75,54 +77,7 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('transfer'),
-      filterMenu: [
-        {
-          field: 'billNo',
-          label: '申请单号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'deptCode', // TODO
-          label: '申请科室',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: ['applyDate', 'applyEndDate'],
-          // field: 'applyDate',
-          label: '申请日期',
-          placeholder: ['开始', '结束'],
-          type: 'date',
-          value: ['', '']
-          // value: '2022-04-01'
-        }
-        // {
-        //   field: 'empName',
-        //   label: '制单人',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: 'transfer_no',
-        //   label: '移交单号',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: ['applyDate', 'applyEndDate'],
-        //   label: '会计年月',
-        //   placeholder: ['开始', '结束'],
-        //   type: 'date',
-        //   value: ['', ''],
-        //   format: 'YYYY-MM'
-        // }
-      ]
+      typeCode: typeCode.get('transfer')
     }
   },
   created() {},
@@ -176,11 +131,6 @@ export default {
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/asset-transfer-check/${billId}/${this.tabActive}`)
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
-      this.onRefresh()
     }
   }
 }

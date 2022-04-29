@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:43:42
+ * @LastEditTime: 2022-04-29 16:56:20
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -93,11 +93,7 @@ export default {
       colorRed: vars.colorRed,
       current: 0,
       typeCode: typeCode.get('attendance'),
-      checkParam: {
-        deptId: '',
-        atteYear: '',
-        atteMonth: ''
-      },
+      formInfo: {}, // 主表信息
       tableHead: [], // 主表表头
       monthData: [], // 主表数据
       vacationHead, // 副表表头
@@ -125,7 +121,11 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        const { show_header, monthData, vacationData, unSubmitPerson } = data
+        const { formData, show_header, monthData, vacationData, unSubmitPerson } = data
+        this.formInfo = formData
+        this.checkParam.deptId = formData.deptId
+        this.checkParam.acctYear = formData.acctYear
+        this.checkParam.acctMonth = formData.acctMonth
         this.tableHead = show_header || []
         this.monthData = monthData || []
         this.vacationData = vacationData || []

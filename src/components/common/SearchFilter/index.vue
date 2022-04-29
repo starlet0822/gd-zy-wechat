@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-04-24 17:25:58
+ * @LastEditTime: 2022-04-29 17:08:16
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -37,10 +37,11 @@
       <SearchPage v-model="keyword" @cancel="onCancel" @search="onSearch"></SearchPage>
     </van-popup>
     <!-- 筛选组件 -->
-    <van-action-sheet
+    <!-- <van-action-sheet
       :style="{ width: '100%', 'max-height': '85vh' }"
       v-model="visibleFilterMenu"
       title="全部筛选"
+      teleport="body"
       @close="onCloseFilterMenu"
     >
       <FilterMenu
@@ -49,14 +50,22 @@
         @confirm="onFilterConfirm"
         v-bind="$attrs"
       ></FilterMenu>
-    </van-action-sheet>
-    <!-- <van-popup
+    </van-action-sheet> -->
+    <van-popup
       v-model="visibleFilterMenu"
       position="bottom"
-      :style="{ width: '100%', height: '75%' }"
+      round
+      :closeable="false"
+      get-container="body"
+      :style="{ width: '100%', 'max-height': '85vh' }"
     >
-      <FilterMenu @cancel="visibleFilterMenu = false"></FilterMenu>
-    </van-popup> -->
+      <FilterMenu
+        ref="filterMenuRef"
+        @cancel="visibleFilterMenu = false"
+        @confirm="onFilterConfirm"
+        v-bind="$attrs"
+      ></FilterMenu>
+    </van-popup>
   </div>
 </template>
 
@@ -148,6 +157,9 @@ export default {
   /deep/ .search-box {
     .van-icon-search:before {
       color: @color-tip;
+    }
+    .van-cell {
+      padding: 8px 8px 8px 0;
     }
   }
 

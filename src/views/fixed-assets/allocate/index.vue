@@ -1,19 +1,22 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:25:57
+ * @LastEditTime: 2022-04-29 15:56:57
 -->
 <template>
   <div class="asset-allocate-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
-    <search-filter
-      v-model="parameters.queryTerm"
-      @search="handleSearch"
-      @confirm="handleFilterConfirm"
-      :filter-menu="filterMenu"
-    ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
+        <search-filter
+          ref="searchFilterRef"
+          :key-id="tab.id"
+          :value.sync="parameters.queryTerm"
+          :placeholder="fixPlaceholder"
+          @search="handleSearch"
+          @confirm="handleFilterConfirm"
+          :filter-menu="filterMenu"
+        ></search-filter>
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
@@ -74,61 +77,7 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('allocation'),
-      filterMenu: [
-        // 筛选菜单
-        {
-          field: 'billNo',
-          label: '申请单号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'deptCode', // TODO
-          label: '申请科室',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: ['applyDate', 'applyEndDate'],
-          // field: 'applyDate',
-          label: '申请日期',
-          placeholder: ['开始', '结束'],
-          type: 'date',
-          value: ['', '']
-          // value: '2022-04-01'
-        }
-        // {
-        //   field: 'transferNo',
-        //   label: '单据号',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: 'empName',
-        //   label: '调出单位',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: 'applyDeptCode',
-        //   label: '调入单位',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        // {
-        //   field: ['acctStartYear', 'acctEndYear'],
-        //   label: '制单日期',
-        //   placeholder: ['开始', '结束'],
-        //   type: 'date',
-        //   value: ['', '']
-        // }
-      ]
+      typeCode: typeCode.get('allocation')
     }
   },
   created() {},
@@ -181,11 +130,6 @@ export default {
     handleFilterConfirm(query) {
       console.log('筛选回调', query)
       this.filterQuery = query
-      this.onRefresh()
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
       this.onRefresh()
     }
   }

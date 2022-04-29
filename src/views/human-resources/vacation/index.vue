@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:26:45
+ * @LastEditTime: 2022-04-29 17:24:57
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -16,7 +16,7 @@
           ref="searchFilterRef"
           :key-id="tab.id"
           :value.sync="parameters.queryTerm"
-          placeholder="请输入员工姓名"
+          :placeholder="hrPlaceholder"
           @search="handleSearch"
           :can-filter="false"
         ></search-filter>

@@ -1,20 +1,22 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:07:36
+ * @LastEditTime: 2022-04-29 16:18:07
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
     <vh-nav-bar></vh-nav-bar>
-    <search-filter
-      ref="searchFilterRef"
-      :value.sync="parameters.queryTerm"
-      @search="handleSearch"
-      @confirm="handleFilterConfirm"
-      :filter-menu="filterMenu"
-    ></search-filter>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
+        <search-filter
+          ref="searchFilterRef"
+          :key-id="tab.id"
+          :value.sync="parameters.queryTerm"
+          :placeholder="fixPlaceholder"
+          @search="handleSearch"
+          @confirm="handleFilterConfirm"
+          :filter-menu="filterMenu"
+        ></search-filter>
         <!-- 列表 -->
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
@@ -77,80 +79,50 @@ export default {
     return {
       tagColor: vars.colorOrange,
       checkStatus, // 审批状态
-      typeCode: typeCode.get('acquisition'),
-      filterMenu: [
-        // 筛选菜单
-        // {
-        //   field: 'status',
-        //   label: '状态',
-        //   type: 'radio', // 单选
-        //   value: '',
-        //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
-        //   // multiple: false, // 是否开启多选 TODO:先不做
-        //   options: [
-        //     { label: '未审核', value: '-1' },
-        //     { label: '已审核', value: '0' },
-        //     { label: '未通过', value: '1' },
-        //     { label: '审核中', value: '2' },
-        //     { label: '已退回', value: '3' },
-        //     { label: '已退回', value: '3' },
-        //     { label: '已退回', value: '3' },
-        //     { label: '已退回', value: '3' },
-        //     { label: '已退回', value: '3' },
-        //     { label: '已退回', value: '3' }
-        //   ]
-        // },
-        // {
-        //   field: 'status2',
-        //   label: '状态',
-        //   type: 'checkbox', // 多选
-        //   value: [],
-        //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
-        //   options: [
-        //     // { label: '全选', value: 'all' },
-        //     { label: '未审核', value: '-1' },
-        //     { label: '已审核', value: '0' },
-        //     { label: '未通过', value: '1' },
-        //     { label: '审核中', value: '2' },
-        //     { label: '已退回', value: '3' }
-        //     // { label: '已退回', value: '3' },
-        //     // { label: '已退回', value: '3' },
-        //     // { label: '已退回', value: '3' },
-        //     // { label: '已退回', value: '3' },
-        //     // { label: '已退回', value: '3' }
-        //   ]
-        // },
-        // {
-        //   field: 'empName',
-        //   label: '申请人',
-        //   placeholder: '请输入',
-        //   type: 'input',
-        //   value: ''
-        // },
-        {
-          field: 'billNo',
-          label: '申请单号',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: 'deptCode', // TODO
-          label: '申请科室',
-          placeholder: '请输入',
-          type: 'input',
-          value: ''
-        },
-        {
-          field: ['applyDate', 'applyEndDate'],
-          // field: 'applyDate',
-          label: '申请日期',
-          placeholder: ['开始', '结束'],
-          type: 'date',
-          value: ['', '']
-          // value: '2022-04-01'
-        }
-      ]
+      typeCode: typeCode.get('acquisition')
+      // filterMenu: [
+      //   // 筛选菜单
+      //   // {
+      //   //   field: 'status',
+      //   //   label: '状态',
+      //   //   type: 'radio', // 单选
+      //   //   value: '',
+      //   //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
+      //   //   // multiple: false, // 是否开启多选 TODO:先不做
+      //   //   options: [
+      //   //     { label: '未审核', value: '-1' },
+      //   //     { label: '已审核', value: '0' },
+      //   //     { label: '未通过', value: '1' },
+      //   //     { label: '审核中', value: '2' },
+      //   //     { label: '已退回', value: '3' },
+      //   //     { label: '已退回', value: '3' },
+      //   //     { label: '已退回', value: '3' },
+      //   //     { label: '已退回', value: '3' },
+      //   //     { label: '已退回', value: '3' },
+      //   //     { label: '已退回', value: '3' }
+      //   //   ]
+      //   // },
+      //   // {
+      //   //   field: 'status2',
+      //   //   label: '状态',
+      //   //   type: 'checkbox', // 多选
+      //   //   value: [],
+      //   //   // canAll: true, // TODO:是否开启全选功能 可以默认请求所有就无需添加该字段
+      //   //   options: [
+      //   //     // { label: '全选', value: 'all' },
+      //   //     { label: '未审核', value: '-1' },
+      //   //     { label: '已审核', value: '0' },
+      //   //     { label: '未通过', value: '1' },
+      //   //     { label: '审核中', value: '2' },
+      //   //     { label: '已退回', value: '3' }
+      //   //     // { label: '已退回', value: '3' },
+      //   //     // { label: '已退回', value: '3' },
+      //   //     // { label: '已退回', value: '3' },
+      //   //     // { label: '已退回', value: '3' },
+      //   //     // { label: '已退回', value: '3' }
+      //   //   ]
+      //   // },
+      // ]
     }
   },
   created() {},
@@ -203,11 +175,6 @@ export default {
     // 筛选回调
     handleFilterConfirm(query) {
       this.filterQuery = query
-      this.onRefresh()
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
       this.onRefresh()
     }
   }

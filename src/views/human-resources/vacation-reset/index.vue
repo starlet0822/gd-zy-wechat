@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:26:41
+ * @LastEditTime: 2022-04-29 17:25:10
 -->
 <template>
   <div class="vacation-reset-list-wrapper vh-bg">
@@ -13,8 +13,10 @@
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <search-filter
-          v-model.trim="parameters.queryTerm"
-          placeholder="请输入员工姓名"
+          ref="searchFilterRef"
+          :key-id="tab.id"
+          :value.sync="parameters.queryTerm"
+          :placeholder="hrPlaceholder"
           @search="handleSearch"
           :can-filter="false"
         ></search-filter>
@@ -135,11 +137,6 @@ export default {
       this.parameters.queryTerm = val
       this.onRefresh()
     },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
-      this.onRefresh()
-    },
     // 驳回
     handleClickReject() {
       this.$toast({
@@ -149,11 +146,6 @@ export default {
         // overlay: true,
         forbidClick: true
       })
-    },
-    switchChange(val) {
-      console.log('switchChange', val)
-      this.showMulti = val
-      this.result = []
     },
     // TODO 批量审批
     handleRightClick() {}

@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:39:32
+ * @LastEditTime: 2022-04-29 17:24:31
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -42,7 +42,7 @@ export default {
           value: ''
         },
         {
-          field: 'applyDeptCode', // TODO
+          field: 'deptCode', // TODO
           label: '申请科室',
           placeholder: '请输入',
           type: 'input',
@@ -62,7 +62,9 @@ export default {
       tip: {
         icon: 'empty'
         // description: '暂无数据'
-      }
+      },
+      fixPlaceholder: '单据号、科室名称/编码、申请人',
+      hrPlaceholder: '员工姓名'
     }
   },
   computed: {
@@ -108,6 +110,17 @@ export default {
       this.totalSize = 0
       this.pageRequest.pageNum = 1
       this.onLoad()
+    },
+    // 标签页切换
+    onTabsChange(id, title) {
+      this.parameters.dataState = id
+      this.parameters.queryTerm = ''
+      this.$nextTick(() => {
+        const searchFilterRefs = this.$refs.searchFilterRef
+        const curSearchFilterRef = searchFilterRefs.find((v) => v.keyId === id)
+        this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
+        this.onRefresh()
+      })
     }
   }
 }

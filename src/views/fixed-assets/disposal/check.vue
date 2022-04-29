@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 10:06:00
+ * @LastEditTime: 2022-04-29 17:40:54
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -137,7 +137,7 @@ export default {
       if (errcode === '0') {
         this.dataInfo = data
         this.formData = [...data.formData, ...data.detailData] || []
-        this.checkPeopleData = data.checkPeopleData || {}
+        this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)
         // 获取code name
         // const user = findCodeName(this.formData)
@@ -146,9 +146,8 @@ export default {
     },
     // 审批or驳回
     async checkInfo(type) {
-      const { id } = this.$route.params
-      this.parameters.billId = id
       this.checkParam.checkState = type
+      this.checkParam.remark = type === 'YES' ? '同意' : '不同意'
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam
@@ -191,9 +190,14 @@ export default {
     },
     // 按钮回调
     handleClickBtn({ value }) {
+      console.log(value)
       switch (value) {
         case 'YES':
-          this.showCheckUser = true
+          if (this.checkPeopleData) {
+            this.showCheckUser = true
+          } else {
+            this.checkInfo(value)
+          }
           break
         case 'NO':
           this.checkParam.approver = ''
