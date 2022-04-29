@@ -1,11 +1,12 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-04-15 14:06:34
+ * @LastEditTime: 2022-04-29 14:10:45
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
-import { Toast } from 'vant'
+import { Toast, Dialog } from 'vant'
+import router from '@/router'
 const settings = require('../config/settings')
 const service = axios.create({
   baseURL: API_BASEURL, // 请求前缀
@@ -18,16 +19,35 @@ const service = axios.create({
   // }
 })
 
+function handleErrorStatus(data) {
+  const { errcode, errmsg: message } = data
+  console.log('errcode', errcode)
+  switch (errcode) {
+    case 403:
+      Dialog.confirm({ message })
+        .then(() => {
+          router.push({ path: '/login' })
+        })
+        .catch(() => {})
+      // Toast({ type: 'fail', message, duration: 3000 })
+      break
+    case '0':
+      Toast.clear()
+      break
+    default:
+      Toast({ type: 'fail', message, duration: 1500 })
+  }
+}
 // 请求拦截器
 service.interceptors.request.use(
   (config) => {
-    console.log('config', config)
+    console.log('请求拦截器config', config)
     // 不传递默认开启loading
     if (settings.showAxiosLoading && !config.noLoading) {
       Toast.loading({
         loadingType: 'spinner',
         message: '加载中...',
-        forbidClick: true,
+        // forbidClick: true,
         duration: 0
       })
     }
@@ -40,7 +60,7 @@ service.interceptors.request.use(
     return config
   },
   (error) => {
-    console.log('请求拦截', error)
+    console.log('请求拦截器error', error)
     return Promise.reject(error)
   }
 )
@@ -48,21 +68,20 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response) => {
-    // console.log('response', response)
-    const res = response
-    if ([200, 304].includes(res.status)) {
+    const { status, data } = response
+    console.log('响应拦截器response', response)
+    if ([200, 304].includes(status)) {
       Toast.clear()
     }
-    if (res.status && res.status !== 200) {
-      // 登录超时,重新登录
-      // if (res.status === 401) {
-      //   store.dispatch('FedLogOut').then(() => {
-      //     location.reload()
-      //   })
-      // }
-      return Promise.reject(res || 'error')
+    // if ([404].includes(status)) {
+    //   Toast({ type: 'fail', message: '404 Not Found' })
+    // }
+    if (status && status !== 200) {
+      // handleErrorStatus(data) // 根据后台自定义状态码errcode 做出对应处理
+      return Promise.reject(response || 'error')
     }
-    return Promise.resolve(res)
+    handleErrorStatus(data)
+    return Promise.resolve(response)
   },
   (error) => {
     Toast.clear()

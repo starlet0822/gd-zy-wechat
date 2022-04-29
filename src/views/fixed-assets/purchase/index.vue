@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:26:04
+ * @LastEditTime: 2022-04-29 14:07:36
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -51,7 +51,7 @@
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
-            <vh-tip v-if="dataList.length === 0 && !loading"></vh-tip>
+            <vh-tip v-bind="tip" v-if="dataList.length === 0 && !loading"></vh-tip>
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -164,11 +164,9 @@ export default {
           pageRequest: this.pageRequest,
           parameters: { ...this.parameters, ...this.filterQuery }
         }
-        const {
-          errcode,
-          data: { dataList: data, totalSize }
-        } = await findFixCheckList(params)
-        if (errcode === '0') {
+        const res = await findFixCheckList(params)
+        if (res.errcode === '0') {
+          const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
           if (params.pageRequest.pageNum === 1) {
             this.dataList = data || []
@@ -178,10 +176,14 @@ export default {
           if (this.dataList.length < this.totalSize) {
             params.pageRequest.pageNum = params.pageRequest.pageNum + 1
           }
+          if (this.dataList.length === 0) {
+            this.tip.icon = 'empty'
+          }
         }
         if (this.dataList.length >= this.totalSize) this.finished = true
       } catch (e) {
         console.error('捕获异常', e)
+        this.tip.icon = 'network'
         this.error = true
         this.pageRequest.pageNum = 1 // 重置为初始页码
       } finally {

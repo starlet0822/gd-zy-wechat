@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 09:25:11
+ * @LastEditTime: 2022-04-29 13:47:08
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -58,7 +58,11 @@ export default {
           // value: '2022-04-01'
         }
       ],
-      filterQuery: {} // 筛选参数
+      filterQuery: {}, // 筛选参数
+      tip: {
+        icon: 'empty'
+        // description: '暂无数据'
+      }
     }
   },
   computed: {
