@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 14:49:14
+ * @LastEditTime: 2022-04-29 19:00:02
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -106,7 +106,7 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-pt-20 vh-pl-5">
-        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
+        <TimeLine ref="timeLineRef" :id="busKey" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
@@ -140,6 +140,7 @@ export default {
       })
       if (errcode === '0') {
         this.dataInfo = data
+        this.busKey = data.busKey
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)
@@ -151,6 +152,10 @@ export default {
     // 驳回
     async checkInfo(type) {
       this.checkParam.checkState = type
+      // 用户未填写意见时默认补充意见
+      if (this.checkParam.remark.trim() === '') {
+        this.checkParam.remark = type === 'YES' ? '同意' : '驳回'
+      }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam

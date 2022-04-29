@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 10:05:45
+ * @LastEditTime: 2022-04-29 18:44:05
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -89,7 +89,7 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-pt-20 vh-pl-5">
-        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
+        <TimeLine ref="timeLineRef" :id="busKey" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
@@ -124,6 +124,7 @@ export default {
           this.$set(item, 'canView', true)
         })
         this.dataInfo = data
+        this.busKey = data.busKey
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)

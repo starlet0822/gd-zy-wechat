@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 16:56:20
+ * @LastEditTime: 2022-04-29 19:03:56
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -68,7 +68,7 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-pt-20 vh-pl-5">
-        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
+        <TimeLine ref="timeLineRef" :id="checkParam.busKey" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
@@ -115,7 +115,7 @@ export default {
   methods: {
     async getInfo() {
       const { id } = this.$route.params
-      this.parameters.billId = this.checkParam.busKey = id
+      this.parameters.billId = id
       const { errcode, data } = await getAtteDetailList({
         typeCode: this.typeCode,
         parameters: this.parameters
@@ -123,6 +123,7 @@ export default {
       if (errcode === '0') {
         const { formData, show_header, monthData, vacationData, unSubmitPerson } = data
         this.formInfo = formData
+        this.checkParam.busKey = formData.billId
         this.checkParam.deptId = formData.deptId
         this.checkParam.acctYear = formData.acctYear
         this.checkParam.acctMonth = formData.acctMonth
@@ -135,7 +136,10 @@ export default {
     // 驳回
     async checkInfo(type) {
       this.checkParam.checkState = type
-      this.checkParam.remark = type === 'YES' ? '同意' : '不同意'
+      // 用户未填写意见时默认补充意见
+      if (this.checkParam.remark.trim() === '') {
+        this.checkParam.remark = type === 'YES' ? '同意' : '驳回'
+      }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam

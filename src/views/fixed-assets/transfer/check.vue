@@ -110,7 +110,7 @@
       :style="{ width: '90%', height: '100%' }"
     >
       <div class="vh-pt-20 vh-pl-5">
-        <TimeLine ref="timeLineRef" :id="parameters.billId" :type-code="typeCode"></TimeLine>
+        <TimeLine ref="timeLineRef" :id="busKey" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
   </div>
@@ -143,6 +143,7 @@ export default {
       })
       if (errcode === '0') {
         this.dataInfo = data
+        this.busKey = data.busKey
         this.formData = [...data.formData, ...data.detailData] || []
         this.checkPeopleData = data.checkPeopleData
         this.activeNames = getIncreasingArr(this.formData?.length)

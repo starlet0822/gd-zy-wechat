@@ -1,40 +1,42 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:20:40
+ * @LastEditTime: 2022-04-29 17:51:36
 -->
 <template>
   <div class="home-wrapper vh-bg">
-    <div
-      class="module vh-mb-10 vh-bg-white"
-      v-for="(item, index) in list"
-      :key="item.title + index"
-    >
-      <template v-if="item.children && item.children.length">
-        <van-cell
-          title-class="vh-title"
-          class="vh-border-0 module-title vh-pb-0"
-          :title="item.title"
-        ></van-cell>
-        <van-grid :gutter="0" :border="false" :clickable="true">
-          <template v-if="item.children && item.children.length">
-            <van-grid-item
-              v-for="(cItem, cIndex) in item.children"
-              :key="cItem.meta.title + cIndex"
-              icon-prefix="iconfont icon"
-              :icon="cItem.meta.icon"
-              :text="cItem.meta.title"
-              v-bind="linkProps(cItem)"
-              badge=""
-              @click="onclickItem(cItem, index)"
-            />
-          </template>
-          <template v-else>
-            <div class="vh-p-box">暂无子模块</div>
-          </template>
-        </van-grid>
-      </template>
-    </div>
+    <template v-for="(item, index) in list">
+      <div
+        class="module vh-mb-10 vh-bg-white"
+        v-if="item.children && item.children.length"
+        :key="item.title + index"
+      >
+        <template v-if="item.children && item.children.length">
+          <van-cell
+            title-class="vh-title"
+            class="vh-border-0 module-title vh-pb-0"
+            :title="item.title"
+          ></van-cell>
+          <van-grid :gutter="0" :border="false" :clickable="true">
+            <template v-if="item.children && item.children.length">
+              <van-grid-item
+                v-for="(cItem, cIndex) in item.children"
+                :key="cItem.meta.title + cIndex"
+                icon-prefix="iconfont icon"
+                :icon="cItem.meta.icon"
+                :text="cItem.meta.title"
+                v-bind="linkProps(cItem)"
+                badge=""
+                @click="onclickItem(cItem, index)"
+              />
+            </template>
+            <template v-else>
+              <div class="vh-p-box">暂无子模块</div>
+            </template>
+          </van-grid>
+        </template>
+      </div>
+    </template>
   </div>
 </template>
 

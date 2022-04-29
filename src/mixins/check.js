@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 16:00:30
+ * @LastEditTime: 2022-04-29 18:54:45
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -28,10 +28,11 @@ export default {
       parameters: {
         billId: ''
       },
+      busKey: '', // 用于查询审批流程
       checkParam: {
         busKey: '',
         checkState: 'NO',
-        remark: '同意',
+        remark: '',
         approver: '',
         openId: 'xiejiewei' + 'demo', // TODO 手动改值测试
         state: ''
