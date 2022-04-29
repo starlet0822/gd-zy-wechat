@@ -1,12 +1,12 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-21 14:52:42
+ * @LastEditTime: 2022-04-29 14:36:34
  */
 export default [
   {
     path: '/asset-purchase',
-    name: 'AssePurchase',
+    name: 'AssetPurchase',
     meta: { title: '资产购置', icon: 'gouzhi', modCode: '05', keepAlive: true },
     component: () =>
       import(/* webpackChunkName: "asset-purchase" */ '@/views/fixed-assets/purchase/index.vue')

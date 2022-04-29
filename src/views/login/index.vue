@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 10:26:59
+ * @LastEditTime: 2022-04-29 14:29:33
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -63,8 +63,9 @@ export default {
     async loginFn() {
       try {
         this.$toast.loading({ message: '正在登录...', forbidClick: true, duration: 0 }) // 开启loading
-        const { errcode } = await this.$store.dispatch('user/login', this.loginForm)
-        if (errcode === '0') {
+        const res = await this.$store.dispatch('user/login', this.loginForm)
+        console.log('loginFn', res)
+        if (res.errcode === '0') {
           this.$toast.clear() // 清除loading
           this.$router.push({ path: '/' })
           // this.dataList = data || []

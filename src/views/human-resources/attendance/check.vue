@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 10:56:55
+ * @LastEditTime: 2022-04-29 14:43:42
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -93,6 +93,11 @@ export default {
       colorRed: vars.colorRed,
       current: 0,
       typeCode: typeCode.get('attendance'),
+      checkParam: {
+        deptId: '',
+        atteYear: '',
+        atteMonth: ''
+      },
       tableHead: [], // 主表表头
       monthData: [], // 主表数据
       vacationHead, // 副表表头

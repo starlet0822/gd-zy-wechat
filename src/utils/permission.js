@@ -1,8 +1,9 @@
 /*
  * @Description:路由权限判断
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 10:12:46
+ * @LastEditTime: 2022-04-29 15:02:35
  */
+/* eslint-disable */
 import router from '@/router'
 import store from '@/store'
 import { getCode } from '@/utils/code'
@@ -74,4 +75,32 @@ router.beforeEach(async (to, from, next) => {
 })
 
 // 路由后置守卫
-router.afterEach((to, from) => {})
+router.afterEach((to, from) => {
+  if (to.params.hasOwnProperty('keepAliveTo')) {
+    to.meta.keepAlive = to.params.keepAliveTo
+  } else if (to.query.hasOwnProperty('keepAliveTo')) {
+    to.meta.keepAlive = to.query.keepAliveTo
+  }
+  if (to.params.hasOwnProperty('keepAliveFrom')) {
+    from.meta.keepAlive = to.params.keepAliveFrom
+  } else if (to.query.hasOwnProperty('keepAliveFrom')) {
+    from.meta.keepAlive = to.query.keepAliveFrom
+  }
+  // 处理路由传参方法
+  const changeRoutes = (routes) => {
+    return {
+      fullPath: routes.fullPath,
+      hash: routes.hash,
+      name: routes.name,
+      path: routes.path,
+      meta: { ...routes.meta },
+      params: { ...routes.params },
+      query: { ...routes.query }
+    }
+  }
+  const params = {
+    to: changeRoutes(to),
+    from: changeRoutes(from)
+  }
+  store.dispatch('cacheView/handleInclude', params)
+})

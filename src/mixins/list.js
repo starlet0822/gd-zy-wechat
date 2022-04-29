@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 13:47:08
+ * @LastEditTime: 2022-04-29 14:39:32
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -89,6 +89,9 @@ export default {
   },
   created() {
     // this.setTabs()
+  },
+  activated() {
+    this.onRefresh()
   },
   methods: {
     onLoad() {

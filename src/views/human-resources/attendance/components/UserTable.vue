@@ -15,7 +15,7 @@
             :min-width="column.minWidth"
           >
             <template v-slot="{ row }">
-              <span>{{ row[column.prop] || (row.dataType === -99 ? '' : 0) }}</span>
+              <span>{{ row[column.prop] || (column.dataType === -99 ? '' : 0) }}</span>
             </template>
           </el-table-column>
         </template>
