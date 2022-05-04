@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:08:16
+ * @LastEditTime: 2022-05-01 19:09:22
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -37,11 +37,11 @@
       <SearchPage v-model="keyword" @cancel="onCancel" @search="onSearch"></SearchPage>
     </van-popup>
     <!-- 筛选组件 -->
-    <!-- <van-action-sheet
+    <van-action-sheet
       :style="{ width: '100%', 'max-height': '85vh' }"
       v-model="visibleFilterMenu"
       title="全部筛选"
-      teleport="body"
+      get-container="body"
       @close="onCloseFilterMenu"
     >
       <FilterMenu
@@ -50,8 +50,8 @@
         @confirm="onFilterConfirm"
         v-bind="$attrs"
       ></FilterMenu>
-    </van-action-sheet> -->
-    <van-popup
+    </van-action-sheet>
+    <!-- <van-popup
       v-model="visibleFilterMenu"
       position="bottom"
       round
@@ -65,7 +65,7 @@
         @confirm="onFilterConfirm"
         v-bind="$attrs"
       ></FilterMenu>
-    </van-popup>
+    </van-popup> -->
   </div>
 </template>
 
