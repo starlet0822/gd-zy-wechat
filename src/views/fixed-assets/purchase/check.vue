@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 18:41:56
+ * @LastEditTime: 2022-05-05 10:02:10
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -180,6 +180,7 @@ export default {
         })
         this.$router.back()
       } else {
+        this.checkParam.remark = '' // 提交未成功清空审批意见
         this.$toast({
           message: errmsg,
           type: 'fail',

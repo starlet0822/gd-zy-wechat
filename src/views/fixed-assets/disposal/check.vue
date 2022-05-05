@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 18:35:58
+ * @LastEditTime: 2022-05-05 10:52:44
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -194,7 +194,6 @@ export default {
     },
     // 按钮回调
     handleClickBtn({ value }) {
-      console.log(value)
       switch (value) {
         case 'YES':
           if (this.checkPeopleData) {

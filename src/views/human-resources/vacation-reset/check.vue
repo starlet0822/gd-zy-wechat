@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 19:00:02
+ * @LastEditTime: 2022-05-05 10:59:14
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
@@ -169,8 +169,8 @@ export default {
           forbidClick: true
         })
         this.$router.back()
-      }
-      if (errcode === '1') {
+      } else {
+        this.checkParam.remark = '' // 提交未成功清空审批意见
         this.$toast({
           message: errmsg,
           type: 'error',

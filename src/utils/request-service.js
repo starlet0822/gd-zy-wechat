@@ -1,7 +1,7 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:10:45
+ * @LastEditTime: 2022-05-05 10:43:48
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
@@ -13,9 +13,7 @@ const service = axios.create({
   timeout: API_TIMEOUT, // 请求超时
   withCredentials: true // 跨域请求时是否携带上cookie（凭证）
   // headers: {
-  //   post: {
-  //     'Content-Type': 'Content-Type: application/json' // 默认参数格式
-  //   }
+  //   post: { 'Content-Type': 'Content-Type: application/json' } // 默认参数格式
   // }
 })
 
@@ -69,7 +67,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const { status, data } = response
-    console.log('响应拦截器response', response)
+    // console.log('响应拦截器response', response)
     if ([200, 304].includes(status)) {
       Toast.clear()
     }

@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 09:17:13
+ * @LastEditTime: 2022-05-05 10:47:41
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -19,7 +19,7 @@ export default {
       // 参数相关
       pageRequest: {
         pageNum: 1,
-        pageSize: 10
+        pageSize: 5
       },
       parameters: {
         dataState: '0', // 默认待处理
@@ -42,7 +42,7 @@ export default {
           value: ''
         },
         {
-          field: 'deptCode', // TODO
+          field: 'deptCode',
           label: '申请科室',
           placeholder: '请输入',
           type: 'input',
@@ -109,6 +109,7 @@ export default {
       this.dataList = []
       this.totalSize = 0
       this.pageRequest.pageNum = 1
+      // console.log('pageNum',this.pageRequest.pageNum)
       this.onLoad()
     },
     // 标签页切换

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 09:16:10
+ * @LastEditTime: 2022-05-05 10:12:53
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -145,12 +145,8 @@ export default {
           } else {
             this.dataList = this.dataList.concat(data || [])
           }
-          if (this.dataList.length < this.totalSize) {
-            params.pageRequest.pageNum = params.pageRequest.pageNum + 1
-          }
-          if (this.dataList.length === 0) {
-            this.tip.icon = 'empty'
-          }
+          if (this.dataList.length < this.totalSize) ++params.pageRequest.pageNum
+          if (this.dataList.length === 0) this.tip.icon = 'empty'
         }
         if (this.dataList.length >= this.totalSize) this.finished = true
       } catch (e) {

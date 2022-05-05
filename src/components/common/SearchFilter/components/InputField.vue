@@ -1,7 +1,7 @@
 <!--
  * @Description: 输入文本类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-20 17:40:10
+ * @LastEditTime: 2022-05-05 10:51:22
 -->
 <template>
   <div class="input-field-wrapper vh-border-b-11">
@@ -78,9 +78,7 @@ export default {
       console.log(`重置${this.field}`)
       this.defaultVal = initData.defaultVal
     },
-    onInput(val) {
-      // console.log(val)
-    }
+    onInput(val) {}
   }
 }
 </script>

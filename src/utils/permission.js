@@ -1,14 +1,14 @@
 /*
  * @Description:路由权限判断
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 15:02:35
+ * @LastEditTime: 2022-05-05 10:46:23
  */
 /* eslint-disable */
 import router from '@/router'
 import store from '@/store'
 import { getCode } from '@/utils/code'
 import { ENV } from '@/config/index'
-const doPower = ['production', 'test'].includes(ENV) // TODO 嵌套在企业微信再解开
+const doPower = ['production', 'test'].includes(ENV) // 嵌套在企业微信再解开
 
 const whiteList = ['/login'] // no redirect whitelist
 
@@ -22,8 +22,7 @@ function judgeRoutePower(to, next) {
     const hasPower = store.getters.menus.some((menu) => {
       return modCode === menu.modCode
     })
-    console.log('hasPower', modCode, hasPower)
-    // if (modCode) {
+    // console.log('hasPower', modCode, hasPower)
     if (!hasPower) {
       next('/no-power')
     } else {
@@ -58,7 +57,6 @@ router.beforeEach(async (to, from, next) => {
       if (to.path === '/login') {
         next({ path: '/' })
       } else {
-        // next()
         judgeRoutePower(to, next)
       }
     } else {

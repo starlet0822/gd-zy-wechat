@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 18:32:05
+ * @LastEditTime: 2022-05-05 10:58:21
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -182,6 +182,7 @@ export default {
         })
         this.$router.back()
       } else {
+        this.checkParam.remark = '' // 提交未成功清空审批意见
         this.$toast({
           message: errmsg,
           type: 'fail',

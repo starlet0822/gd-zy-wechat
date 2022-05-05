@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-26 10:06:12
+ * @LastEditTime: 2022-05-05 10:57:23
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -48,7 +48,7 @@
       </van-collapse-item>
     </van-collapse>
     <!-- 表单 -->
-    <van-form v-if="formData.length" @submit="onSubmit" class="vh-mb-10" scroll-to-error>
+    <van-form v-if="formData.length" class="vh-mb-10" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
         v-if="canCheck"
@@ -171,6 +171,7 @@ export default {
         })
         this.$router.back()
       } else {
+        this.checkParam.remark = '' // 提交未成功清空审批意见
         this.$toast({
           message: errmsg,
           type: 'fail',
@@ -202,9 +203,6 @@ export default {
           await this.checkInfo(type)
         })
         .catch(() => {})
-    },
-    onSubmit(values) {
-      console.log('submit', values)
     },
     // 按钮回调
     handleClickBtn({ value }) {

@@ -42,7 +42,6 @@ export default {
       return require(`@/assets/images/tip/${this.icon}.png`)
     },
     desc() {
-      // console.log(this.tipTextMap)
       return this.tipTextMap.get(this.icon) || this.description
     }
   },

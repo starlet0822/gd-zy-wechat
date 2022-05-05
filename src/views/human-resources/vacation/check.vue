@@ -169,8 +169,8 @@ export default {
           forbidClick: true
         })
         this.$router.back()
-      }
-      if (errcode === '1') {
+      } else {
+        this.checkParam.remark = '' // 提交未成功清空审批意见
         this.$toast({
           message: errmsg,
           type: 'error',

@@ -1,7 +1,7 @@
 <!--
  * @Description:导航栏
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 10:36:23
+ * @LastEditTime: 2022-05-05 10:51:44
 -->
 <template>
   <div class="navbar-wrapper">
@@ -69,9 +69,7 @@ export default {
       }
     }
   },
-  created() {
-    console.log(this.title)
-  },
+  created() {},
   methods: {
     // 点击左侧
     handleClickLeft() {

@@ -1,7 +1,7 @@
 <!--
  * @Description: 点击多选类型
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 18:11:45
+ * @LastEditTime: 2022-05-05 10:50:57
 -->
 <template>
   <div class="radio-field-wrapper vh-bg2">
@@ -126,7 +126,7 @@ export default {
       this.isPickup = !this.isPickup
     },
     onCheckboxChange({ label, value }) {
-      console.log('onCheckboxChange', label, value)
+      // console.log('onCheckboxChange', label, value)
       // const allItem = this.options.find((v) => v.value === 'all')
       // let isAll = false
       // isAll = this.defaultVal.length === this.options.length - 1 // 选中的项目总数

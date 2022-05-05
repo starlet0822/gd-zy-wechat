@@ -1,11 +1,10 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-04-11 13:56:53
+ * @LastEditTime: 2022-05-05 10:54:59
  */
 export function findCodeName(target) {
   for (const item of target) {
-    // console.log(item)
     const user = { empCode: '', empName: '' }
     item.rowData.forEach((v) => {
       if (v.filedId === 'emp_code') {

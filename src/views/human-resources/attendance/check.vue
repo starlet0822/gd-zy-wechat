@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 19:03:56
+ * @LastEditTime: 2022-05-05 10:53:32
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -153,8 +153,8 @@ export default {
           forbidClick: true
         })
         this.$router.back()
-      }
-      if (errcode === '1') {
+      } else {
+        this.checkParam.remark = '' // 提交未成功清空审批意见
         this.$toast({
           message: errmsg,
           type: 'error',
@@ -163,9 +163,6 @@ export default {
           forbidClick: true
         })
       }
-    },
-    onSubmit(values) {
-      console.log('submit', values)
     },
     onChange(index) {
       this.current = index

@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 18:54:45
+ * @LastEditTime: 2022-05-05 10:52:01
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -49,7 +49,7 @@ export default {
     ...mapGetters(['openId'])
   },
   created() {
-    console.log(this.openId)
+    // console.log(this.openId)
     this.checkParam.openId = this.openId // test
   },
   methods: {

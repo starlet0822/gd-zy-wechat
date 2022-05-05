@@ -1,7 +1,7 @@
 <!--
  * @Description: 入口页面
  * @Author: wuxxing
- * @LastEditTime: 2022-03-28 11:07:44
+ * @LastEditTime: 2022-05-05 10:50:08
 -->
 <template>
   <div id="app">
@@ -26,9 +26,7 @@ export default {
   computed: {
     ...mapGetters('cacheView', ['include', 'exclude'])
   },
-  created() {
-    console.log(this.include)
-  },
+  created() {},
   methods: {
     afterLeave() {
       // this.$root.$emit('triggerScroll')

@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:51:36
+ * @LastEditTime: 2022-05-05 10:53:15
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -149,7 +149,6 @@ export default {
     this.list = handleMenus(menus, this.constantRoutes)
   },
   beforeRouteEnter(to, from, next) {
-    console.log(to, from)
     next((vm) => {
       // 通过 `vm` 访问组件实例
       vm.$store.dispatch('cacheView/resetKeepAlive')
