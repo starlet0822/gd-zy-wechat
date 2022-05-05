@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:12:53
+ * @LastEditTime: 2022-05-05 13:43:18
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -140,11 +140,7 @@ export default {
         if (res.errcode === '0') {
           const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
-          if (params.pageRequest.pageNum === 1) {
-            this.dataList = data || []
-          } else {
-            this.dataList = this.dataList.concat(data || [])
-          }
+          this.dataList = params.pageRequest.pageNum === 1 ? data : this.dataList.concat(data)
           if (this.dataList.length < this.totalSize) ++params.pageRequest.pageNum
           if (this.dataList.length === 0) this.tip.icon = 'empty'
         }

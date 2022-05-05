@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 10:00:12
+ * @LastEditTime: 2022-05-05 11:31:57
 -->
 <template>
   <div class="file-card-wrapper">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { getFileSize } from '@/utils/flle'
+import { getFileSize } from '@/utils/file'
 import { isPic } from '@/utils/is'
 import { API_BASEURL, ISDEV } from '@/config'
 const { devProxyTarget } = require('@/config/settings')

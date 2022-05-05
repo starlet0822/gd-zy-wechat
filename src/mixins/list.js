@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:47:41
+ * @LastEditTime: 2022-05-05 13:41:42
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -19,7 +19,7 @@ export default {
       // 参数相关
       pageRequest: {
         pageNum: 1,
-        pageSize: 5
+        pageSize: 10
       },
       parameters: {
         dataState: '0', // 默认待处理
