@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 16:18:07
+ * @LastEditTime: 2022-05-05 09:16:10
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -166,16 +166,6 @@ export default {
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/asset-purchase-check/${billId}/${this.tabActive}`)
-    },
-    // 搜索
-    handleSearch(val) {
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
-    // 筛选回调
-    handleFilterConfirm(query) {
-      this.filterQuery = query
-      this.onRefresh()
     }
   }
 }

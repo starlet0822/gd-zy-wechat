@@ -1,7 +1,7 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:24:31
+ * @LastEditTime: 2022-05-05 09:17:13
  */
 import { dataState } from '@/config/constants'
 export default {
@@ -121,6 +121,18 @@ export default {
         this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
         this.onRefresh()
       })
+    },
+    // 搜索
+    handleSearch(val) {
+      // console.log('搜索', val)
+      this.parameters.queryTerm = val
+      this.onRefresh()
+    },
+    // 筛选回调
+    handleFilterConfirm(query) {
+      // console.log('筛选回调', query)
+      this.filterQuery = query
+      this.onRefresh()
     }
   }
 }

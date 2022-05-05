@@ -132,11 +132,6 @@ export default {
     toCheck({ billId }) {
       this.$router.push(`/vacation-reset-check/${billId}/${this.tabActive}`)
     },
-    // 搜索
-    handleSearch(val) {
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
     // 驳回
     handleClickReject() {
       this.$toast({

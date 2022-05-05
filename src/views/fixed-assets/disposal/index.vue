@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 15:50:00
+ * @LastEditTime: 2022-05-05 09:14:13
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -119,18 +119,6 @@ export default {
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/asset-disposal-check/${billId}/${this.tabActive}`)
-    },
-    // 搜索
-    handleSearch(val) {
-      console.log('handleSearch', val)
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
-    // 筛选回调
-    handleFilterConfirm(query) {
-      console.log('筛选回调', query)
-      this.filterQuery = query
-      this.onRefresh()
     }
     // 标签页切换
     // onTabsChange(id, title) {

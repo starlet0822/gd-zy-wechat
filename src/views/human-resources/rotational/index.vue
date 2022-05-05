@@ -119,11 +119,6 @@ export default {
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/rotational-check/${billId}/${this.tabActive}`)
-    },
-    // 搜索
-    handleSearch(val) {
-      this.parameters.queryTerm = val
-      this.onRefresh()
     }
   }
 }

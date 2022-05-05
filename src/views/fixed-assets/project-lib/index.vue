@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 16:22:10
+ * @LastEditTime: 2022-05-05 09:11:37
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -118,18 +118,6 @@ export default {
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/asset-project-lib-check/${billId}/${this.tabActive}`)
-    },
-    // 搜索
-    handleSearch(val) {
-      console.log('handleSearch', val)
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
-    // 筛选回调
-    handleFilterConfirm(query) {
-      console.log('筛选回调', query)
-      this.filterQuery = query
-      this.onRefresh()
     }
   }
 }

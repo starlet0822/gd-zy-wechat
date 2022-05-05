@@ -125,11 +125,6 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true
       this.onLoad()
-    },
-    // 搜索
-    handleSearch() {
-      console.log('handleSearch', this.keyword)
-      this.onRefresh()
     }
   }
 }

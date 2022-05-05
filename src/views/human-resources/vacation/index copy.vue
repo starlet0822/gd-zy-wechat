@@ -160,16 +160,6 @@ export default {
     toCheck({ billId }) {
       this.$router.push(`/vacation-check/${billId}`)
     },
-    // 搜索
-    handleSearch(val) {
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
-      this.onRefresh()
-    },
     // 驳回
     handleClickReject() {
       this.$toast({

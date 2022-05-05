@@ -116,18 +116,6 @@ export default {
         this.loading = false
       }
     },
-    // 搜索
-    handleSearch(val) {
-      console.log('handleSearch', val)
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
-    // 筛选回调
-    handleFilterConfirm(query) {
-      console.log('筛选回调', query)
-      this.filterQuery = query
-      this.onRefresh()
-    },
     // 审批
     toCheck({ billId }) {
       this.$router.push(`/asset-transfer-check/${billId}/${this.tabActive}`)

@@ -132,22 +132,6 @@ export default {
     toCheck({ billId }) {
       this.$router.push(`/vacation-check/${billId}/${this.tabActive}`)
     },
-    // 搜索
-    handleSearch(val) {
-      this.parameters.queryTerm = val
-      this.onRefresh()
-    },
-    // 标签页切换
-    onTabsChange(id, title) {
-      this.parameters.dataState = id
-      this.parameters.queryTerm = ''
-      this.$nextTick(() => {
-        const searchFilterRefs = this.$refs.searchFilterRef
-        const curSearchFilterRef = searchFilterRefs.find((v) => v.keyId === id)
-        this.parameters.queryTerm = curSearchFilterRef.keyword // 获取关键字
-        this.onRefresh()
-      })
-    },
     // 驳回
     handleClickReject() {
       this.$toast({
