@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:53:15
+ * @LastEditTime: 2022-05-06 17:51:47
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -37,6 +37,7 @@
         </template>
       </div>
     </template>
+    <!-- <vh-float-box></vh-float-box> -->
   </div>
 </template>
 
