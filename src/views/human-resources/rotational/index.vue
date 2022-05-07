@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:31:47
+ * @LastEditTime: 2022-05-07 15:59:51
 -->
 <template>
   <div class="rotational-wrapper vh-bg">
@@ -23,6 +23,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

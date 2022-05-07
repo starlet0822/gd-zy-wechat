@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 09:14:13
+ * @LastEditTime: 2022-05-07 15:59:11
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -24,6 +24,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

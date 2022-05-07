@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:25:10
+ * @LastEditTime: 2022-05-07 16:00:17
 -->
 <template>
   <div class="vacation-reset-list-wrapper vh-bg">
@@ -27,6 +27,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

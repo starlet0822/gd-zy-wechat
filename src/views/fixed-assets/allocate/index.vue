@@ -24,6 +24,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

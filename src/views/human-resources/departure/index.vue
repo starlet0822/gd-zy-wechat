@@ -1,7 +1,7 @@
 <!--
  * @Description: 离职申请列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:27:04
+ * @LastEditTime: 2022-05-07 15:59:31
 -->
 <template>
   <div class="departure-wrapper vh-bg">
@@ -23,6 +23,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

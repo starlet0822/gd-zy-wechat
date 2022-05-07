@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 13:43:18
+ * @LastEditTime: 2022-05-07 15:57:20
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -24,6 +24,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 16:18:13
+ * @LastEditTime: 2022-05-07 15:59:22
 -->
 <template>
   <div class="asset-transfer-wrapper vh-bg">
@@ -24,6 +24,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

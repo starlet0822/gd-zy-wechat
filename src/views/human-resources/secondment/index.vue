@@ -1,7 +1,7 @@
 <!--
  * @Description: 借调审批列表
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:27:50
+ * @LastEditTime: 2022-05-07 15:59:55
 -->
 <template>
   <div class="secondment-wrapper vh-bg">
@@ -23,6 +23,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

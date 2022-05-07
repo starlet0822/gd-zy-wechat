@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 17:26:46
+ * @LastEditTime: 2022-05-07 15:59:26
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -23,6 +23,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div

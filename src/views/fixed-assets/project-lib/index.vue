@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 09:11:37
+ * @LastEditTime: 2022-05-07 15:59:17
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -24,6 +24,7 @@
             :error.sync="error"
             :finished="finished"
             :finished-text="finishedText"
+            :immediate-check="false"
             @load="onLoad"
           >
             <div
