@@ -1,11 +1,11 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-06 17:51:47
+ * @LastEditTime: 2022-05-07 15:43:32
 -->
 <template>
   <div class="home-wrapper vh-bg">
-    <template v-for="(item, index) in list">
+    <template v-for="(item, index) in menuList">
       <div
         class="module vh-mb-10 vh-bg-white"
         v-if="item.children && item.children.length"
@@ -26,7 +26,7 @@
                 :icon="cItem.meta.icon"
                 :text="cItem.meta.title"
                 v-bind="linkProps(cItem)"
-                badge=""
+                :badge="cItem.notCheckCount"
                 @click="onclickItem(cItem, index)"
               />
             </template>
@@ -43,6 +43,7 @@
 
 <script>
 import { isExternal } from '@/utils/is'
+import { getCheckCount } from '@/api/modules/common'
 import { handleMenus } from './hooks/use-menus'
 import { routes } from '@/router/routes'
 export default {
@@ -50,105 +51,17 @@ export default {
   components: {},
   data() {
     return {
+      typeCode: '',
       constantRoutes: routes.filter((v) => v?.meta?.modCode && v?.meta?.title),
-      list: [
-        {
-          title: '财务报销',
-          children: [
-            {
-              text: '智能报销',
-              to: 'http://hrp.gdhtcm.com:8111/OES/ctrl/crtlwechat/index/appmodellogin.jsp',
-              icon: 'baoxiao'
-            }
-          ]
-        },
-        {
-          title: '固定资产',
-          children: [
-            {
-              text: '资产购置',
-              to: '/asset-purchase',
-              icon: 'gouzhi'
-            },
-            {
-              text: '资产处置',
-              to: '/asset-disposal',
-              icon: 'chuzhi'
-            },
-            {
-              text: '资产调拨',
-              to: '/asset-allocate',
-              icon: 'tiaobo'
-            },
-            {
-              text: '资产转移',
-              to: '/asset-transfer',
-              icon: 'zhuanyi'
-            }
-            // {
-            //   text: '项目库',
-            //   to: '',
-            //   icon: 'cangku'
-            // },
-            // {
-            //   text: '待处理消息',
-            //   to: '',
-            //   icon: 'xiaoxi'
-            // }
-          ]
-        },
-        {
-          title: '人力资源',
-          children: [
-            {
-              text: '考勤审批',
-              to: '/attendance',
-              icon: 'kaoqin'
-            },
-            {
-              text: '休假申请',
-              to: '/vacation',
-              icon: 'xiujia'
-            },
-            {
-              text: '职工轮岗',
-              to: '/rotational',
-              icon: 'lungang'
-            },
-            {
-              text: '职工借调',
-              to: '/secondment',
-              icon: 'jiediao'
-            },
-            {
-              text: '离职审批',
-              to: '/departure',
-              icon: 'lizhi'
-            },
-            {
-              text: '轮转审批',
-              to: '/rotary',
-              icon: 'lunzhuan'
-            }
-          ]
-        },
-        {
-          title: '统计分析',
-          children: [
-            {
-              text: 'BI分析',
-              to: 'http://hrp.gdhtcm.com:8111/BI/H5/#/',
-              icon: 'tongji'
-            }
-          ]
-        }
-      ]
+      menuList: []
     }
   },
   created() {
-    const menus = this.$store.state.user.menus
-    this.list = handleMenus(menus, this.constantRoutes)
+    this.initMenus()
   },
+  // activated() {
+  //   this.initMenus()
+  // },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 通过 `vm` 访问组件实例
@@ -156,6 +69,58 @@ export default {
     })
   },
   methods: {
+    initMenus() {
+      const menus = this.$store.state.user.menus
+      this.menuList = handleMenus(menus, this.constantRoutes)
+      this.typeCode = this.menuList.reduce((count, pre, curIdx, arr) => {
+        // console.log(curIdx, arr, arr[curIdx].typeCode)
+        const tempStr = pre.typeCode
+        if (arr[curIdx].typeCode) tempStr.concat(',')
+        count += tempStr
+        return count
+      }, '')
+      // 获取待审批提示数量
+      this.getCheckCount()
+    },
+    async getCheckCount(isClear = false) {
+      try {
+        // 先置空
+        for (const menu of this.menuList) {
+          for (const route of menu.children) {
+            this.$set(route, 'notCheckCount', null)
+          }
+        }
+        const params = { typeCode: this.typeCode }
+        const res = await getCheckCount(params, { noLoading: true })
+        if (res.errcode === '0') {
+          // for (let i = 0; i < res.data.length; i++) {
+          //   const dataItem = res.data[i]
+          //   console.log('dataItem', dataItem)
+          //   for (let j = 0; j < this.menuList.length; j++) {
+          //     const menus = this.menuList[j]
+          //     console.log('menus', menus)
+          //     for (let k = 0; k < menus.children.length; k++) {
+          //       const route = menus.children[k]
+          //       console.log('route', route)
+          //       if (dataItem.typeCode === route.meta.typeCode) {
+          //         this.$set(route, 'notCheckCount', isClear ? null : dataItem.notCheckCount)
+          //       }
+          //     }
+          //   }
+          // }
+          res.data.forEach((item) => {
+            this.menuList.forEach((menu) => {
+              menu.children.forEach((menu, index) => {
+                if (item.typeCode === menu.meta.typeCode) {
+                  console.log(menu, index)
+                  this.$set(menu, 'notCheckCount', isClear ? null : item.notCheckCount)
+                }
+              })
+            })
+          })
+        }
+      } catch {}
+    },
     onclickItem(item, index) {
       if (item.to === '') {
         this.$toast({
@@ -189,6 +154,7 @@ export default {
     }
     .van-grid-item {
       .van-grid-item__icon {
+        position: relative; // 为了微标相对定位
         display: flex;
         justify-content: center;
         align-items: center;

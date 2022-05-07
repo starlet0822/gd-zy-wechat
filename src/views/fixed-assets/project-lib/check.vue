@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)审核
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:57:04
+ * @LastEditTime: 2022-05-07 18:07:58
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -157,6 +157,10 @@ export default {
     // 审批or驳回
     async checkInfo(type) {
       this.checkParam.checkState = type
+      // 用户未填写意见时默认补充意见
+      if (this.checkParam.remark.trim() === '') {
+        this.checkParam.remark = type === 'YES' ? '同意' : '驳回'
+      }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam

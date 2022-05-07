@@ -1,13 +1,20 @@
 /*
  * @Description:资产配置相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:36:34
+ * @LastEditTime: 2022-05-07 09:31:44
  */
+import { typeCode } from '@/config/dictionary'
 export default [
   {
     path: '/asset-purchase',
     name: 'AssetPurchase',
-    meta: { title: '资产购置', icon: 'gouzhi', modCode: '05', keepAlive: true },
+    meta: {
+      title: '资产购置',
+      icon: 'gouzhi',
+      modCode: '05',
+      typeCode: typeCode.get('acquisition'),
+      keepAlive: true
+    },
     component: () =>
       import(/* webpackChunkName: "asset-purchase" */ '@/views/fixed-assets/purchase/index.vue')
   },
@@ -23,7 +30,13 @@ export default [
   {
     path: '/asset-disposal',
     name: 'AssetDisposal',
-    meta: { title: '资产处置', icon: 'chuzhi', modCode: '05', keepAlive: true },
+    meta: {
+      title: '资产处置',
+      icon: 'chuzhi',
+      modCode: '05',
+      typeCode: typeCode.get('disposal'),
+      keepAlive: true
+    },
     component: () =>
       import(/* webpackChunkName: "asset-disposal" */ '@/views/fixed-assets/disposal/index')
   },
@@ -39,7 +52,13 @@ export default [
   {
     path: '/asset-allocate',
     name: 'AssetAllocate',
-    meta: { title: '资产调拨', icon: 'tiaobo', modCode: '05', keepAlive: true },
+    meta: {
+      title: '资产调拨',
+      icon: 'tiaobo',
+      modCode: '05',
+      typeCode: typeCode.get('allocation'),
+      keepAlive: true
+    },
     component: () =>
       import(/* webpackChunkName: "asset-allocate" */ '@/views/fixed-assets/allocate/index')
   },
@@ -64,7 +83,13 @@ export default [
   {
     path: '/asset-transfer',
     name: 'AssetTransfer',
-    meta: { title: '资产转移', icon: 'zhuanyi', modCode: '05', keepAlive: true },
+    meta: {
+      title: '资产转移',
+      icon: 'zhuanyi',
+      modCode: '05',
+      typeCode: typeCode.get('transfer'),
+      keepAlive: true
+    },
     component: () =>
       import(/* webpackChunkName: "asset-transfer" */ '@/views/fixed-assets/transfer/index')
   },
@@ -80,7 +105,13 @@ export default [
   {
     path: '/asset-project-lib',
     name: 'AssetProjectLib',
-    meta: { title: '项目库', icon: 'cangku', modCode: '05', keepAlive: true },
+    meta: {
+      title: '项目库',
+      icon: 'cangku',
+      modCode: '05',
+      typeCode: typeCode.get('approval_apply'),
+      keepAlive: true
+    },
     component: () =>
       import(
         /* webpackChunkName: "asset-project-lib" */ '@/views/fixed-assets/project-lib/index.vue'

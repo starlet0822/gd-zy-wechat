@@ -1,7 +1,7 @@
 /*
  * @Description:字典管理
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 18:25:49
+ * @LastEditTime: 2022-05-07 09:31:53
  */
 
 import vars from '@css/vars.less'
@@ -20,8 +20,8 @@ export const dataState = new Map([
 export const typeCode = new Map([
   // === 固定资产 ===
   ['acquisition', 'fix_acquisition'], // 资产购置10W以下
-  ['allocation', 'fix_allocation'], // 资产调拨
   ['disposal', 'fix_disposal'], // 资产处置
+  ['allocation', 'fix_allocation'], // 资产调拨
   ['transfer', 'fix_transfer_dept'], // 资产转移
   ['approval_apply', 'fix_approval_apply'], // 项目库（资产购置10W以上）
   // === 人力资源 ===

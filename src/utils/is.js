@@ -1,7 +1,7 @@
 /*
  * @Description:校验工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-27 10:03:30
+ * @LastEditTime: 2022-05-07 15:43:47
  */
 export { isNumber as _isNumber, isUndefined as _isUndefined, isEqual as _isEqual } from 'lodash-es'
 
@@ -23,4 +23,16 @@ export function isExternal(path) {
 
 export function isPic(arg) {
   return /\.?(png|jpg|jpeg)/.test(arg)
+}
+// 判断手机系统类型
+export function userAgent() {
+  var userAgent = navigator.userAgent
+  // android终端
+  var isAndroid = userAgent.indexOf('Android') > -1 || userAgent.indexOf('Adr') > -1
+  var isiOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+  if (isAndroid) {
+    return `android`
+  } else if (isiOS) {
+    return `ios`
+  }
 }

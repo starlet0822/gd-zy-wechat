@@ -1,8 +1,9 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 14:39:55
+ * @LastEditTime: 2022-05-07 09:39:29
  */
+import { typeCode } from '@/config/dictionary'
 export default [
   {
     path: '/attendance',
@@ -11,6 +12,7 @@ export default [
       title: '考勤申请',
       icon: 'kaoqin',
       modCode: '21',
+      typeCode: typeCode.get('attendance'),
       keepAlive: true
     },
     component: () =>
@@ -32,6 +34,7 @@ export default [
       title: '休假申请',
       icon: 'xiujia',
       modCode: '21',
+      typeCode: typeCode.get('vacation'),
       keepAlive: true
     },
     component: () =>
@@ -53,6 +56,7 @@ export default [
       title: '销假审批',
       icon: 'xiaojia',
       modCode: '21',
+      typeCode: typeCode.get('resetVacation'),
       keepAlive: true
     },
     component: () =>
@@ -78,6 +82,7 @@ export default [
       title: '职工轮岗',
       icon: 'lungang',
       modCode: '21',
+      typeCode: typeCode.get('workShift'),
       keepAlive: true
     },
     component: () =>
@@ -99,6 +104,7 @@ export default [
       title: '职工借调',
       icon: 'jiediao',
       modCode: '21',
+      typeCode: typeCode.get('toLoan'),
       keepAlive: true
     },
     component: () =>
@@ -120,6 +126,7 @@ export default [
       title: '离职申请',
       icon: 'lizhi',
       modCode: '21',
+      typeCode: typeCode.get('quit'),
       keepAlive: true
     },
     component: () =>

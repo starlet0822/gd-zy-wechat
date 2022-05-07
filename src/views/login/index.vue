@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 14:29:33
+ * @LastEditTime: 2022-05-07 16:07:29
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -67,7 +67,7 @@ export default {
         console.log('loginFn', res)
         if (res.errcode === '0') {
           this.$toast.clear() // 清除loading
-          this.$router.push({ path: '/' })
+          this.$router.replace({ path: '/' })
           // this.dataList = data || []
         } else {
           this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })

@@ -1,7 +1,7 @@
 /*
  * @Description:路由权限判断
  * @Author: wuxxing
- * @LastEditTime: 2022-05-06 17:44:06
+ * @LastEditTime: 2022-05-07 11:00:55
  */
 /* eslint-disable */
 import router from '@/router'
@@ -35,7 +35,7 @@ function judgeRoutePower(to, next) {
 
 router.beforeEach(async (to, from, next) => {
   console.log(to, from)
-  const { name: toRouteName } = to
+  const { path: toRoute } = to
   const hasUser = store.getters.user // 是否存在用户信息
   console.log('用户信息：', hasUser)
   if (doPower) {
@@ -48,12 +48,16 @@ router.beforeEach(async (to, from, next) => {
       console.log('authority', authority)
       // 未绑定过
       if (authority === '1') {
-        next('/login')
+        if (toRoute === '/user-center') {
+          next(`/login?redirect=${to.path}`)
+        } else {
+          next('/login')
+        }
       }
       // 有绑定过
       if (authority === '0') {
-        console.log('to：', toRouteName)
-        if (toRouteName === 'UserCenter') {
+        console.log('to：', toRoute)
+        if (toRoute === '/user-center') {
           next({ path: '/user-center', replace: true }) // 前往个人中心
         } else {
           next('/')

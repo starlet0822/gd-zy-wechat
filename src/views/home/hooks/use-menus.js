@@ -1,7 +1,7 @@
 /*
  * @Description: 前端分类菜单
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:53:22
+ * @LastEditTime: 2022-05-07 11:49:03
  */
 export function handleMenus(menus, routes) {
   const homeMenus = []
@@ -10,6 +10,8 @@ export function handleMenus(menus, routes) {
     const item = []
     routes.forEach((route) => {
       if (route.meta.modCode === menu.modCode) {
+        // this.$set(route, 'notCheckCount', null)
+        // route.notCheckCount = null
         item.push(route)
       }
     })
@@ -19,9 +21,10 @@ export function handleMenus(menus, routes) {
       const obj = {
         title: menu.modName,
         modCode: menu.modCode,
+        typeCode: item.map((v) => v.meta.typeCode).join(','),
         children: item
       }
-      homeMenus.push(obj)
+      obj.children.length && homeMenus.push(obj) // 过滤掉无子菜单的
     }
   })
   console.log('homeMenus', homeMenus)

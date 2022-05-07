@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:52:44
+ * @LastEditTime: 2022-05-07 10:50:37
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -57,6 +57,22 @@
         <FileCard></FileCard>
       </div>
     </div>
+    <!-- 表单 -->
+    <van-form v-if="formData.length" scroll-to-error>
+      <van-field
+        v-model="checkParam.remark"
+        v-if="canCheck"
+        name="remark"
+        label="审批意见"
+        placeholder="请输入审批意见"
+        type="textarea"
+        rows="3"
+        autosize
+        maxlength="200"
+        show-word-limit
+        :rules="[{ required: false, message: '请输入审批意见' }]"
+      />
+    </van-form>
     <!-- 底部按钮组 -->
     <vh-button-group
       v-if="canCheck"

@@ -1,7 +1,7 @@
 <!--
  * @Description:资产调拨审核
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 18:44:05
+ * @LastEditTime: 2022-05-07 18:07:39
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -48,6 +48,22 @@
         </template>
       </van-collapse-item>
     </van-collapse>
+    <!-- 表单 -->
+    <van-form v-if="formData.length" scroll-to-error>
+      <van-field
+        v-model="checkParam.remark"
+        v-if="canCheck"
+        name="remark"
+        label="审批意见"
+        placeholder="请输入审批意见"
+        type="textarea"
+        rows="3"
+        autosize
+        maxlength="200"
+        show-word-limit
+        :rules="[{ required: false, message: '请输入审批意见' }]"
+      />
+    </van-form>
     <!-- 底部按钮组 -->
     <vh-button-group
       v-if="canCheck"
@@ -81,7 +97,6 @@
         </div>
       </template>
     </van-dialog>
-
     <van-popup
       v-model="showCheckDetail"
       position="right"
@@ -136,6 +151,10 @@ export default {
     // 审批or驳回
     async checkInfo(type) {
       this.checkParam.checkState = type
+      // 用户未填写意见时默认补充意见
+      if (this.checkParam.remark.trim() === '') {
+        this.checkParam.remark = type === 'YES' ? '同意' : '驳回'
+      }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam
