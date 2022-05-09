@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 15:59:11
+ * @LastEditTime: 2022-05-09 09:42:12
 -->
 <template>
   <div class="asset-disposal-wrapper vh-bg">
@@ -92,11 +92,9 @@ export default {
           pageRequest: this.pageRequest,
           parameters: { ...this.parameters, ...this.filterQuery }
         }
-        const {
-          errcode,
-          data: { dataList: data, totalSize }
-        } = await findFixCheckList(params)
-        if (errcode === '0') {
+        const res = await findFixCheckList(params)
+        if (res.errcode === '0') {
+          const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
           if (params.pageRequest.pageNum === 1) {
             this.dataList = data || []

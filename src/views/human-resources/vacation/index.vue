@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 16:00:12
+ * @LastEditTime: 2022-05-09 09:47:41
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -104,11 +104,9 @@ export default {
           pageRequest: this.pageRequest,
           parameters: { ...this.parameters, ...this.filterQuery }
         }
-        const {
-          errcode,
-          data: { dataList: data, totalSize }
-        } = await findHrCheckList(params)
-        if (errcode === '0') {
+        const res = await findHrCheckList(params)
+        if (res.errcode === '0') {
+          const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
           if (params.pageRequest.pageNum === 1) {
             this.dataList = data || []

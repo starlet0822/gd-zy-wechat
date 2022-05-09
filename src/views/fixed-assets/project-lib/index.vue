@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置10W以上(项目库)
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 15:59:17
+ * @LastEditTime: 2022-05-09 09:43:35
 -->
 <template>
   <div class="asset-project-lib-wrapper vh-bg">
@@ -91,11 +91,9 @@ export default {
           pageRequest: this.pageRequest,
           parameters: { ...this.parameters, ...this.filterQuery }
         }
-        const {
-          errcode,
-          data: { dataList: data, totalSize }
-        } = await findFixCheckList(params)
-        if (errcode === '0') {
+        const res = await findFixCheckList(params)
+        if (res.errcode === '0') {
+          const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
           if (params.pageRequest.pageNum === 1) {
             this.dataList = data || []

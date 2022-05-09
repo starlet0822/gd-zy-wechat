@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 15:59:26
+ * @LastEditTime: 2022-05-09 09:45:05
 -->
 <template>
   <div class="attendance-wrapper vh-bg">
@@ -93,11 +93,9 @@ export default {
           pageRequest: this.pageRequest,
           parameters: { ...this.parameters }
         }
-        const {
-          errcode,
-          data: { dataList: data, totalSize }
-        } = await findHrCheckList(params)
-        if (errcode === '0') {
+        const res = await findHrCheckList(params)
+        if (res.errcode === '0') {
+          const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
           if (params.pageRequest.pageNum === 1) {
             this.dataList = data || []
