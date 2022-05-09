@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:02:10
+ * @LastEditTime: 2022-05-09 10:33:26
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -119,7 +119,7 @@
 <script>
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { typeCode } from '@/config/constants'
-import { getIncreasingArr } from '@/utils'
+import { getIncreasingArr, findField } from '@/utils'
 import check from '@/mixins/check'
 export default {
   name: 'AssetPurchaseCheck',
@@ -141,13 +141,8 @@ export default {
         parameters: this.parameters
       })
       if (errcode === '0') {
-        data.formData.forEach((item) => {
-          if (item.type === 'jsonText') {
-            const state = item.rowData.find((v) => v.filedId === 'state')
-            console.log(state)
-            this.checkParam.state = state.fieldValue
-          }
-        })
+        // 目前只有当前页面需要获取状态state
+        this.checkParam.state = findField(data.formData, 'state').fieldValue
         this.dataInfo = data
         this.busKey = data.busKey
         this.formData = [...data.formData, ...data.detailData] || []

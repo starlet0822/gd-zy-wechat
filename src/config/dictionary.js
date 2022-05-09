@@ -1,7 +1,7 @@
 /*
  * @Description:字典管理
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 09:31:53
+ * @LastEditTime: 2022-05-09 17:37:23
  */
 
 import vars from '@css/vars.less'
@@ -43,3 +43,10 @@ export const checkStateTips = new Map([
 
 // 驳回状态提示文案
 export const noStateTips = new Map([[('30' || '10' || '0', '此单据状态不能进行驳回操作!')]])
+
+export const tipTextMap = new Map([
+  ['empty', '暂无数据'],
+  ['404', '404 Not Found'],
+  ['lock', '抱歉，您无权限访问此页面'],
+  ['network', '网络异常']
+])

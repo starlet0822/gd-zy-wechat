@@ -1,7 +1,7 @@
 /*
  * @Description: 工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 11:10:02
+ * @LastEditTime: 2022-05-09 10:32:29
  */
 // 函数库别名导出(避免命名冲突)
 import { isArray, _isNumber } from '@utils/is'
@@ -108,10 +108,14 @@ export function getIncreasingArr(length = 1) {
 export function findField(arg, filedId) {
   let field = null
   arg.forEach((item) => {
-    if (item.rowData && item.rowData.length) {
-      field = item.rowData.find((v) => camelCase(v.filedId) === filedId)
+    // 排除附件
+    if (item.type === 'jsonText') {
+      if (item.rowData && item.rowData.length) {
+        field = item.rowData.find((v) => camelCase(v.filedId) === filedId)
+      }
     }
   })
+  console.log('field', field)
   return field
 }
 

@@ -1,7 +1,7 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:43:48
+ * @LastEditTime: 2022-05-09 16:54:01
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
@@ -33,7 +33,7 @@ function handleErrorStatus(data) {
       Toast.clear()
       break
     default:
-      Toast({ type: 'fail', message, duration: 1500 })
+      Toast({ message, duration: 1500 })
   }
 }
 // 请求拦截器
@@ -83,7 +83,24 @@ service.interceptors.response.use(
   },
   (error) => {
     Toast.clear()
-    console.error('err' + error)
+    console.error('err:' + error)
+    if (error && error.response.status) {
+      const status = error.response.status
+      console.log('errorStatus', status)
+      switch (status) {
+        case 404:
+          error.message = `请求出错(${status})`
+          break
+        case 500:
+          error.message = `服务器错误(${status})`
+          break
+        default:
+          error.message = `连接出错(${status})`
+      }
+    } else {
+      error.message = `连接服务器失败！`
+    }
+    Toast({ message: error.message, duration: 1500 })
     return Promise.reject(error)
   }
 )

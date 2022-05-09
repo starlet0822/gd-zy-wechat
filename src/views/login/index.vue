@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 16:07:29
+ * @LastEditTime: 2022-05-09 11:45:55
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -52,7 +52,6 @@ export default {
         userAccount: 'demo', // TODO 测试账号：2516 demo 1390 2541
         password: 'Hrp@123' // Hrp@123
       },
-      dataList: [],
       logoImg: logoImg,
       logoName: '医疗高效运营管理系统'
     }
@@ -64,11 +63,9 @@ export default {
       try {
         this.$toast.loading({ message: '正在登录...', forbidClick: true, duration: 0 }) // 开启loading
         const res = await this.$store.dispatch('user/login', this.loginForm)
-        console.log('loginFn', res)
         if (res.errcode === '0') {
           this.$toast.clear() // 清除loading
           this.$router.replace({ path: '/' })
-          // this.dataList = data || []
         } else {
           this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })
         }

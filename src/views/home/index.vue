@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 15:43:32
+ * @LastEditTime: 2022-05-09 10:50:36
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -72,13 +72,13 @@ export default {
     initMenus() {
       const menus = this.$store.state.user.menus
       this.menuList = handleMenus(menus, this.constantRoutes)
-      this.typeCode = this.menuList.reduce((count, pre, curIdx, arr) => {
-        // console.log(curIdx, arr, arr[curIdx].typeCode)
-        const tempStr = pre.typeCode
-        if (arr[curIdx].typeCode) tempStr.concat(',')
-        count += tempStr
-        return count
-      }, '')
+      this.typeCode = this.menuList
+        .reduce((count, pre, curIdx, arr) => {
+          // console.log(curIdx, arr, arr[curIdx].typeCode)
+          pre.typeCode && count.push(pre.typeCode)
+          return count
+        }, [])
+        .join(',')
       // 获取待审批提示数量
       this.getCheckCount()
     },

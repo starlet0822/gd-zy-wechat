@@ -1,7 +1,7 @@
 <!--
  * @Description: 日期时间选择类型
  * @Author: wuxxing
- * @LastEditTime: 2022-05-06 09:38:27
+ * @LastEditTime: 2022-04-27 10:17:24
 -->
 <template>
   <div class="date-field-wrapper" ref="dateFieldRef">
@@ -93,14 +93,6 @@ export default {
       type: String,
       default: '—'
     },
-    minDate: {
-      type: Date,
-      default: new Date(2017, 0, 1)
-    },
-    maxDate: {
-      type: Date,
-      default: new Date(2023, 11, 31)
-    },
     result: {
       type: Object,
       default: () => {}
@@ -111,9 +103,9 @@ export default {
       defaultVal: this.value,
       storageVal: this.value, // 记录默认绑定值 TODO: 为啥会双向绑定？
       curIndex: 0, // 默认操作第一个
-      showDatePicker: false // 显示时间选择
-      // startDate: new Date(2017, 0, 1),
-      // endDate: new Date(2023, 11, 31)
+      showDatePicker: false, // 显示时间选择
+      minDate: new Date(2017, 0, 1),
+      maxDate: new Date(2023, 11, 31)
     }
   },
   computed: {
