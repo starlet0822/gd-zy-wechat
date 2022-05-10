@@ -33,7 +33,7 @@ export default {
         busKey: '',
         checkState: 'NO',
         remark: '',
-        approver: '',
+        approver: '', // 下一审批人
         openId: 'xiejiewei' + 'demo', // TODO 手动改值测试
         state: ''
       }

@@ -26,10 +26,10 @@ export function isPic(arg) {
 }
 // 判断手机系统类型
 export function userAgent() {
-  var userAgent = navigator.userAgent
+  const userAgent = navigator.userAgent
   // android终端
-  var isAndroid = userAgent.indexOf('Android') > -1 || userAgent.indexOf('Adr') > -1
-  var isiOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+  const isAndroid = userAgent.indexOf('Android') > -1 || userAgent.indexOf('Adr') > -1
+  const isiOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
   if (isAndroid) {
     return `android`
   } else if (isiOS) {

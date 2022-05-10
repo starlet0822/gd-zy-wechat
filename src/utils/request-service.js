@@ -17,6 +17,8 @@ const service = axios.create({
   // }
 })
 
+// console.log(vm)
+
 function handleErrorStatus(data) {
   const { errcode, errmsg: message } = data
   console.log('errcode', errcode)
@@ -71,9 +73,6 @@ service.interceptors.response.use(
     if ([200, 304].includes(status)) {
       Toast.clear()
     }
-    // if ([404].includes(status)) {
-    //   Toast({ type: 'fail', message: '404 Not Found' })
-    // }
     if (status && status !== 200) {
       // handleErrorStatus(data) // 根据后台自定义状态码errcode 做出对应处理
       return Promise.reject(response || 'error')
@@ -84,7 +83,7 @@ service.interceptors.response.use(
   (error) => {
     Toast.clear()
     console.error('err:' + error)
-    if (error && error.response.status) {
+    if (error && error.response?.status) {
       const status = error.response.status
       console.log('errorStatus', status)
       switch (status) {
@@ -98,9 +97,18 @@ service.interceptors.response.use(
           error.message = `连接出错(${status})`
       }
     } else {
-      error.message = `连接服务器失败！`
+      // 网络超时异常处理
+      if (
+        error.code === 'ECONNABORTED' ||
+        error.message === 'Network Error' ||
+        error.message.includes('timeout')
+      ) {
+        error.message = `请求超时！`
+      } else {
+        error.message = `连接服务器失败！`
+      }
     }
-    Toast({ message: error.message, duration: 1500 })
+    Toast({ message: error.message, duration: 3000 })
     return Promise.reject(error)
   }
 )

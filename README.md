@@ -62,6 +62,8 @@ yarn lint           # 格式化代码
 compression-webpack-plugin
 ```
 
+- 图片压缩
+
 ## 业务
 
 - md5 加密 √

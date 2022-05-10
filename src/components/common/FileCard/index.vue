@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    // 点击文件 TODO: 文件大小转换
+    // 点击文件
     onClickFile(file) {
       const prefix = ISDEV ? devProxyTarget : API_BASEURL
       const url = prefix + `/api/file/getUrlFile?path=${file.filePath}&isview=1`

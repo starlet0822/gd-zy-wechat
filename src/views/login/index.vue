@@ -67,10 +67,10 @@ export default {
           this.$toast.clear() // 清除loading
           this.$router.replace({ path: '/' })
         } else {
-          this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })
+          this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 2000 })
         }
       } catch {
-        this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 1500 })
+        this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 2000 })
       }
     },
     // 表单提交

@@ -7,7 +7,7 @@
 import router from '@/router'
 import store from '@/store'
 import { getCode } from '@/utils/code'
-import { ENV } from '@/config/index'
+import { ENV } from '@/config'
 const doPower = ['production', 'test'].includes(ENV) // 嵌套在企业微信再解开
 
 const whiteList = ['/login'] // no redirect whitelist
