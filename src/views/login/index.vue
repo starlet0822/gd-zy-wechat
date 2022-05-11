@@ -32,7 +32,7 @@
         </div>
       </van-form>
     </main>
-
+    <!-- 技术支持-->
     <footer class="login__footer">
       <p>主办单位：广东省中医院</p>
       <p>技术支持：望海（广东）科技有限公司</p>
@@ -65,7 +65,7 @@ export default {
         const res = await this.$store.dispatch('user/login', this.loginForm)
         if (res.errcode === '0') {
           this.$toast.clear() // 清除loading
-          this.$router.replace({ path: '/' })
+          await this.$router.replace({ path: '/' })
         } else {
           this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 2000 })
         }
@@ -84,18 +84,16 @@ export default {
 <style lang="less" scoped>
 .login-wrapper {
   .login__main {
-    width: 100%;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0 16px;
+    //width: 100%;
+    //position: absolute;
+    //left: 50%;
+    //top: 50%;
+    //transform: translate(-50%, -50%);
+    //padding: 0 16px;
   }
   .login__logo {
     .logo-img {
       width: 80%;
-      // width: 167px;
-      // height: 36px;
     }
     .logo-name {
       font-weight: 600;

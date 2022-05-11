@@ -17,8 +17,6 @@ const service = axios.create({
   // }
 })
 
-// console.log(vm)
-
 function handleErrorStatus(data) {
   const { errcode, errmsg: message } = data
   console.log('errcode', errcode)
@@ -103,9 +101,9 @@ service.interceptors.response.use(
         error.message === 'Network Error' ||
         error.message.includes('timeout')
       ) {
-        error.message = `请求超时！`
+        error.message = `请求超时`
       } else {
-        error.message = `连接服务器失败！`
+        error.message = `连接服务器失败`
       }
     }
     Toast({ message: error.message, duration: 3000 })

@@ -7,7 +7,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 import { _camelCase } from '@utils/index'
-
 Vue.use(Vuex)
 
 // 自动引入模块

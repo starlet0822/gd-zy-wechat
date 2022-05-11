@@ -5,22 +5,20 @@
 -->
 <template>
   <div class="fake-table">
-    <template>
-      <el-table :data="tableData" :style="tableStyle" border stripe>
-        <template v-for="column in columns">
-          <el-table-column
-            :key="column.prop"
-            :fixed="column.fixed"
-            :label="column.label"
-            :min-width="column.minWidth"
-          >
-            <template v-slot="{ row }">
-              <span>{{ row[column.prop] || (column.dataType === -99 ? '' : 0) }}</span>
-            </template>
-          </el-table-column>
-        </template>
-      </el-table>
-    </template>
+    <el-table class="inner" :data="tableData" :style="tableStyle" border stripe>
+      <template v-for="column in columns">
+        <el-table-column
+          :key="column.prop"
+          :fixed="column.fixed"
+          :label="column.label"
+          :min-width="column.minWidth"
+        >
+          <template v-slot="{ row }">
+            <span>{{ row[column.prop] || (column.dataType === -99 ? '' : 0) }}</span>
+          </template>
+        </el-table-column>
+      </template>
+    </el-table>
   </div>
 </template>
 <script>
@@ -54,7 +52,7 @@ export default {
       }
     },
     columns() {
-      const ret = this.headData.map((v) => {
+      return this.headData.map((v) => {
         // const hasVal = this.tableData[0][v.item_code]
         const fixed = ['empCode', 'empName', '!bDeptName', '!cDeptName'].includes(v.itemCode)
         return {
@@ -65,47 +63,16 @@ export default {
           minWidth: fixed ? 90 : 100
         }
       })
-      return ret
     }
   },
   methods: {}
 }
 </script>
 <style lang="less" scoped>
-@col-padding: 5px;
-
 .fake-table {
-  // min-height: 200px;
-  // margin: 12px;
-  &__head,
-  &__body {
-    border: 1px solid #dddddd;
-    &:not(:last-child) {
-      border-bottom: none;
-    }
-  }
-  &__head {
-    font-size: 14px;
-    background: #f5faff;
-    .col {
-      // font-size: 14px;
-      font-weight: 500;
-      line-height: 20px;
-      padding: @col-padding;
-    }
-  }
-  &__body {
-    .col {
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 18px;
-      padding: 5px 0;
-      // padding: @col-padding;
-      // padding: @colPaddingLeft @colPaddingLeft @colPaddingLeft
-      //   calc(@colPaddingLeft - @inputPaddingLeft);
-      // &:last-child {
-      //   padding-left: @inputPaddingLeft;
-      // }
+  /deep/.inner {
+    .el-table__header-wrapper {
+      overflow: auto;
     }
   }
 }

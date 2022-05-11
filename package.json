@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "bootstrap": "yarn || npm i",
     "serve": "vue-cli-service serve",
     "dev": "yarn serve",
     "build": "vue-cli-service build",

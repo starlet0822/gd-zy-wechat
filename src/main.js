@@ -16,7 +16,8 @@ import { ENV } from '@/config'
 import common from './mixins/common'
 import { registerGlobFilter } from './filters/index'
 import { registerGlobComp } from '@/components/global'
-import { registerGlobDirective } from '@/directives' // 注册全局自定义指令
+import { registerGlobDirective } from '@/directives'
+import { userAgent } from '@utils/is' // 注册全局自定义指令
 // import { getCode, setCode } from './utils/code'
 registerGlobFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
@@ -30,6 +31,7 @@ registerGlobDirective(Vue)
 // setCode(getCode)
 
 console.log('当前运行环境：', ENV)
+console.log('当前运行系统：', userAgent())
 Vue.use(common) // 公共混入注册
 Vue.config.productionTip = false // 关闭生产环境提示
 

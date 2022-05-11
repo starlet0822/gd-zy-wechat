@@ -92,7 +92,6 @@ export function debounce(func, wait, immediate) {
       result = func.apply(context, args)
       context = args = null
     }
-
     return result
   }
 }

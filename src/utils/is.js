@@ -24,15 +24,26 @@ export function isExternal(path) {
 export function isPic(arg) {
   return /\.?(png|jpg|jpeg)/.test(arg)
 }
+
+// export function isAndroid() {
+//   /* istanbul ignore next */
+//   return /android/.test(navigator.userAgent.toLowerCase())
+// }
+//
+// export function isIOS() {
+//   /* istanbul ignore next */
+//   return /ios|iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase())
+// }
+
 // 判断手机系统类型
 export function userAgent() {
   const userAgent = navigator.userAgent
   // android终端
   const isAndroid = userAgent.indexOf('Android') > -1 || userAgent.indexOf('Adr') > -1
-  const isiOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
+  const isIOS = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) // ios终端
   if (isAndroid) {
     return `android`
-  } else if (isiOS) {
+  } else if (isIOS) {
     return `ios`
   }
 }

@@ -21,7 +21,7 @@
       <div class="user-box vh-px-16 vh-pb-10 vh-bg-white">{{ unSubmitPersonStr }}</div>
     </div>
     <div class="vh-mt-10 vh-bg-white" v-if="true">
-      <van-cell class="vh-border-0" title="明细主表"></van-cell>
+      <van-cell class="vh-border-0" title="考勤明细"></van-cell>
       <UserTable
         class="vh-px-160"
         key="monthData"
@@ -30,7 +30,7 @@
       ></UserTable>
     </div>
     <div class="vh-mt-10 vh-bg-white" v-if="true">
-      <van-cell class="vh-border-0" title="明细副表"></van-cell>
+      <van-cell class="vh-border-0" title="休假明细"></van-cell>
       <UserTable
         class="vh-px-160"
         key="vacationData"
