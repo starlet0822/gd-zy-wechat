@@ -82,7 +82,7 @@ export default {
                 // TODO 这个地址动态调整
                 location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwa07d3a2cb92618de&redirect_uri=http%3A%2F%2Fhrp.gdhtcm.com%3A8111%2FwechatWeb&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`
               } else {
-                this.$router.replace({ path: '/login' })
+                await this.$router.replace({ path: '/login' })
               }
             } else {
               this.$toast.fail({

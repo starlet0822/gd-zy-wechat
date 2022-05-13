@@ -102,21 +102,21 @@ export default [
         /* webpackChunkName: "asset-transfer-check" */ '@/views/fixed-assets/transfer/check.vue'
       )
   },
-  {
-    path: '/asset-project-lib',
-    name: 'AssetProjectLib',
-    meta: {
-      title: '项目库',
-      icon: 'cangku',
-      modCode: '05',
-      typeCode: typeCode.get('approval_apply'),
-      keepAlive: true
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "asset-project-lib" */ '@/views/fixed-assets/project-lib/index.vue'
-      )
-  },
+  // {
+  //   path: '/asset-project-lib',
+  //   name: 'AssetProjectLib',
+  //   meta: {
+  //     title: '项目库',
+  //     icon: 'cangku',
+  //     modCode: '05',
+  //     typeCode: typeCode.get('approval_apply'),
+  //     keepAlive: true
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "asset-project-lib" */ '@/views/fixed-assets/project-lib/index.vue'
+  //     )
+  // },
   {
     path: '/asset-project-lib-check/:id/:dataState?',
     name: 'AssetProjectLibCheck',
