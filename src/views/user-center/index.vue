@@ -34,6 +34,7 @@
 
 <script>
 import { ISBUILD } from '@/config'
+import { userCenter } from '@/config/constants'
 export default {
   name: 'UserCenter',
   data() {
@@ -80,7 +81,8 @@ export default {
               if (ISBUILD) {
                 // location.reload()
                 // TODO 这个地址动态调整
-                location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwa07d3a2cb92618de&redirect_uri=http%3A%2F%2Fhrp.gdhtcm.com%3A8111%2FwechatWeb&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`
+                location.href = userCenter
+                // location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wwa07d3a2cb92618de&redirect_uri=http%3A%2F%2Fhrp.gdhtcm.com%3A8111%2FwechatWeb&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`
               } else {
                 await this.$router.replace({ path: '/login' })
               }

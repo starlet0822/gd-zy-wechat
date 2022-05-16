@@ -6,7 +6,8 @@
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
 import { Toast, Dialog } from 'vant'
-import router from '@/router'
+// import router from '@/router'
+import { loginUrl } from '@/config/constants'
 const settings = require('../config/settings')
 const service = axios.create({
   baseURL: API_BASEURL, // 请求前缀
@@ -24,7 +25,8 @@ function handleErrorStatus(data) {
     case 403:
       Dialog.confirm({ message })
         .then(() => {
-          router.push({ path: '/login' })
+          // router.push({ path: '/login' })
+          location.href = loginUrl
         })
         .catch(() => {})
       // Toast({ type: 'fail', message, duration: 3000 })

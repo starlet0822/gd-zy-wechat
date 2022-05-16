@@ -9,7 +9,7 @@ const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
 const defaultSettings = require('./src/config/settings')
 const CompressionPlugin = require('compression-webpack-plugin')
-const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
+// const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
 const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { port, VUE_APP_PORT, npm_config_port, NODE_ENV, VCONSOLE } = process.env
@@ -19,6 +19,7 @@ const isBuild = ['production', 'prod'].includes(NODE_ENV)
 module.exports = {
   // publicPath: './', // 部署应用包时的基本 URL。 vue-router hash 模式使用 本地静态部署 serve -s dist
   publicPath: defaultSettings.publicPath, // 部署应用包时的基本 URL。
+  outputDir: 'wechatWeb', // 构建目录
   lintOnSave: !isBuild,
   productionSourceMap: false, // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
   devServer: {
@@ -69,24 +70,24 @@ module.exports = {
     }
   },
   configureWebpack: (config) => {
-    config.plugins.push(
-      new SkeletonWebpackPlugin({
-        webpackConfig: {
-          entry: {
-            app: path.join(__dirname, './src/components/common/skeleton/index.js')
-          }
-        },
-        minimize: true,
-        quiet: true,
-        router: {
-          mode: 'hash',
-          routes: [
-            { path: '/home', skeletonId: 'skeleton' },
-            { path: '/about', skeletonId: 'skeleton' }
-          ]
-        }
-      })
-    )
+    // config.plugins.push(
+    //   new SkeletonWebpackPlugin({
+    //     webpackConfig: {
+    //       entry: {
+    //         app: path.join(__dirname, './src/components/common/skeleton/index.js')
+    //       }
+    //     },
+    //     minimize: true,
+    //     quiet: true,
+    //     router: {
+    //       mode: 'history',
+    //       routes: [
+    //         { path: '/home', skeletonId: 'skeleton' },
+    //         { path: '/about', skeletonId: 'skeleton' }
+    //       ]
+    //     }
+    //   })
+    // )
     // 生产环境才开启 gzip压缩
     isBuild &&
       config.plugins.push(

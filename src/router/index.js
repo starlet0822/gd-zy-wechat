@@ -10,10 +10,12 @@ import { routes } from './routes'
 // 初始化重写的 push replace 方法
 // routerPush(VueRouter)
 // routerReplace(VueRouter)
+console.log(process.env.VUE_APP_PUBLIC_PATH)
 Vue.use(VueRouter)
 const router = new VueRouter({
-  // mode: 'history',
-  base: process.env.BASE_URL,
+  mode: 'history',
+  // base: process.env.BASE_URL,
+  base: process.env.VUE_APP_PUBLIC_PATH,
   routes,
   scrollBehavior: () => ({ y: 0 }) // 刷新重置滚动条滚动值 0
   // scrollBehavior(to, from, savedPosition) {
