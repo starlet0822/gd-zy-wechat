@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:52:01
+ * @LastEditTime: 2022-05-16 13:40:16
  */
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
@@ -45,6 +45,12 @@ export default {
     canCheck() {
       const { dataState } = this.$route.params
       return dataState === '0' // 待处理才显示
+    },
+    // 是否可以返回
+    canBack() {
+      console.log('canBack', this.$route.params.canBack)
+      if (!this.$route.params.canBack) return true
+      return this.$route.params.canBack === 'true'
     },
     ...mapGetters(['openId'])
   },

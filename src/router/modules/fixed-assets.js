@@ -19,7 +19,7 @@ export default [
       import(/* webpackChunkName: "asset-purchase" */ '@/views/fixed-assets/purchase/index.vue')
   },
   {
-    path: '/asset-purchase-check/:id/:dataState?',
+    path: '/asset-purchase-check/:id/:dataState?/:canBack?',
     name: 'AssetPurchaseCheck',
     meta: { title: '资产购置审核' },
     component: () =>
@@ -41,7 +41,7 @@ export default [
       import(/* webpackChunkName: "asset-disposal" */ '@/views/fixed-assets/disposal/index')
   },
   {
-    path: '/asset-disposal-check/:id/:dataState?',
+    path: '/asset-disposal-check/:id/:dataState?/:canBack?',
     name: 'AssetDisposalCheck',
     meta: { title: '资产处置审核' },
     component: () =>
@@ -63,7 +63,7 @@ export default [
       import(/* webpackChunkName: "asset-allocate" */ '@/views/fixed-assets/allocate/index')
   },
   {
-    path: '/asset-allocate-check/:id/:dataState?',
+    path: '/asset-allocate-check/:id/:dataState?/:canBack?',
     name: 'AssetAllocateCheck',
     meta: { title: '资产调拨审核' },
     component: () =>
@@ -94,7 +94,7 @@ export default [
       import(/* webpackChunkName: "asset-transfer" */ '@/views/fixed-assets/transfer/index')
   },
   {
-    path: '/asset-transfer-check/:id/:dataState?',
+    path: '/asset-transfer-check/:id/:dataState?/:canBack?',
     name: 'AssetTransferCheck',
     meta: { title: '资产转移审核' },
     component: () =>
@@ -118,7 +118,7 @@ export default [
   //     )
   // },
   {
-    path: '/asset-project-lib-check/:id/:dataState?',
+    path: '/asset-project-lib-check/:id/:dataState?/:canBack?',
     name: 'AssetProjectLibCheck',
     meta: { title: '项目库审核' },
     component: () =>

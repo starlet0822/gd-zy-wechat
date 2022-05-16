@@ -5,7 +5,11 @@
 -->
 <template>
   <div class="vacation-check-wrapper vh-bg">
-    <vh-nav-bar :title="dataInfo && dataInfo.title" @click-right="handleRightClick">
+    <vh-nav-bar
+      :left-arrow="canBack"
+      :title="dataInfo && dataInfo.title"
+      @click-right="handleRightClick"
+    >
       <template #right>
         <div class="vh-color-white">审批流程</div>
       </template>

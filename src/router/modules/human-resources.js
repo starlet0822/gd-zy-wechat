@@ -19,7 +19,7 @@ export default [
       import(/* webpackChunkName: "attendance" */ '@/views/human-resources/attendance/index.vue')
   },
   {
-    path: '/attendance-check/:id/:dataState?',
+    path: '/attendance-check/:id/:dataState?/:canBack?',
     name: 'AttendanceCheck',
     meta: {
       title: '考勤审批'
@@ -41,7 +41,7 @@ export default [
       import(/* webpackChunkName: "vacation" */ '@/views/human-resources/vacation/index.vue')
   },
   {
-    path: '/vacation-check/:id/:dataState?',
+    path: '/vacation-check/:id/:dataState?/:canBack?',
     name: 'VacationCheck',
     meta: {
       title: '休假审批'
@@ -65,7 +65,7 @@ export default [
       )
   },
   {
-    path: '/vacation-reset-check/:id/:dataState?',
+    path: '/vacation-reset-check/:id/:dataState?/:canBack?',
     name: 'VacationResetCheck',
     meta: {
       title: '销假审批'
@@ -89,7 +89,7 @@ export default [
       import(/* webpackChunkName: "rotational" */ '@/views/human-resources/rotational/index.vue')
   },
   {
-    path: '/rotational-check/:id/:dataState?',
+    path: '/rotational-check/:id/:dataState?/:canBack?',
     name: 'RotationalCheck',
     meta: {
       title: '轮岗审批'
@@ -111,7 +111,7 @@ export default [
       import(/* webpackChunkName: "secondment" */ '@/views/human-resources/secondment/index.vue')
   },
   {
-    path: '/secondment-check/:id/:dataState?',
+    path: '/secondment-check/:id/:dataState?/:canBack?',
     name: 'SecondmentCheck',
     meta: {
       title: '借调审批'
@@ -133,7 +133,7 @@ export default [
       import(/* webpackChunkName: "departure" */ '@/views/human-resources/departure/index.vue')
   },
   {
-    path: '/departure-check/:id/:dataState?',
+    path: '/departure-check/:id/:dataState?/:canBack?',
     name: 'DepartureCheck',
     meta: {
       title: '离职审批'
@@ -154,7 +154,7 @@ export default [
   //     import(/* webpackChunkName: "rotary" */ '@/views/human-resources/rotary/index.vue')
   // },
   {
-    path: '/rotary-check/:id/:dataState?',
+    path: '/rotary-check/:id/:dataState?/:canBack?',
     name: 'RotaryCheck',
     meta: {
       title: '轮转审批'

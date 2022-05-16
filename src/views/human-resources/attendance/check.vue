@@ -5,7 +5,7 @@
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
-    <vh-nav-bar @click-right="handleRightClick">
+    <vh-nav-bar :left-arrow="canBack" @click-right="handleRightClick">
       <template #right>
         <div class="vh-color-white">审批详情</div>
       </template>

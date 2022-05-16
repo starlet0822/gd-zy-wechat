@@ -1,7 +1,7 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-05-16 10:36:06
+ * @LastEditTime: 2022-05-16 11:11:55
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
@@ -29,7 +29,6 @@ function handleErrorStatus(data) {
           location.href = loginUrl
         })
         .catch(() => {})
-      // Toast({ type: 'fail', message, duration: 3000 })
       break
     case '0':
       Toast.clear()
