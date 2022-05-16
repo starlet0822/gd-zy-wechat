@@ -9,7 +9,7 @@ import store from '@/store'
 export function getCode() {
   // const url =
   // 'http://hrp.gdhtcm.com:8111/wechatWeb/?code=ejjzxTtaEbN8spFmuenc05raxvF-TbJR5MLYl5ksbiE&state=STATE#/login'
-  const url = window.location.href || ''
+  const url = location.href || ''
   const code = urlQuery2Object(url)?.code || ''
   console.log('url', url)
   console.log('code:', code)

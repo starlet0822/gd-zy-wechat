@@ -1,13 +1,13 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-05-09 16:54:01
+ * @LastEditTime: 2022-05-16 10:36:06
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT } from '@/config/index'
 import { Toast, Dialog } from 'vant'
 // import router from '@/router'
-import { loginUrl } from '@/config/constants'
+import { loginUrl } from '@/config/weixin'
 const settings = require('../config/settings')
 const service = axios.create({
   baseURL: API_BASEURL, // 请求前缀
