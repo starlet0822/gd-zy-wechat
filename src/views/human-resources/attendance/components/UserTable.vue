@@ -5,7 +5,13 @@
 -->
 <template>
   <div class="fake-table">
-    <el-table class="inner" :data="tableData" :style="tableStyle" border stripe>
+    <el-table
+      :class="{ inner: !tableData.length }"
+      :data="tableData"
+      :style="tableStyle"
+      border
+      stripe
+    >
       <template v-for="column in columns">
         <el-table-column
           :key="column.prop"

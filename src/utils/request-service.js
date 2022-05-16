@@ -4,9 +4,9 @@
  * @LastEditTime: 2022-05-16 11:11:55
  */
 import axios from 'axios'
-import { API_BASEURL, API_TIMEOUT } from '@/config/index'
+import { API_BASEURL, API_TIMEOUT, ISBUILD } from '@/config/index'
 import { Toast, Dialog } from 'vant'
-// import router from '@/router'
+import router from '@/router'
 import { loginUrl } from '@/config/weixin'
 const settings = require('../config/settings')
 const service = axios.create({
@@ -25,8 +25,11 @@ function handleErrorStatus(data) {
     case 403:
       Dialog.confirm({ message })
         .then(() => {
-          // router.push({ path: '/login' })
-          location.href = loginUrl
+          if (ISBUILD) {
+            location.href = loginUrl
+          } else {
+            router.push({ path: '/login' })
+          }
         })
         .catch(() => {})
       break

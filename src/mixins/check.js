@@ -46,7 +46,7 @@ export default {
       const { dataState } = this.$route.params
       return dataState === '0' // 待处理才显示
     },
-    // 是否可以返回
+    // ! 企业微信跳转时必传 - 是否可以返回?
     canBack() {
       console.log('canBack', this.$route.params.canBack)
       if (!this.$route.params.canBack) return true

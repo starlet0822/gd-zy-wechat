@@ -32,7 +32,7 @@
         </div>
       </van-form>
     </main>
-    <!-- 技术支持-->
+    <!-- 技术支持 -->
     <footer class="login__footer">
       <p>主办单位：广东省中医院</p>
       <p>技术支持：望海（广东）科技有限公司</p>
@@ -84,20 +84,14 @@ export default {
 <style lang="less" scoped>
 .login-wrapper {
   .login__main {
-    //width: 100%;
-    //position: absolute;
-    //left: 50%;
-    //top: 50%;
-    //transform: translate(-50%, -50%);
-    //padding: 0 16px;
-  }
-  .login__logo {
-    .logo-img {
-      width: 80%;
-    }
-    .logo-name {
-      font-weight: 600;
-      font-size: 18px;
+    .login__logo {
+      .logo-img {
+        width: 80%;
+      }
+      .logo-name {
+        font-weight: 600;
+        font-size: 18px;
+      }
     }
   }
   .login__footer {

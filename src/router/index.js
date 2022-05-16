@@ -7,9 +7,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import store from '@/store/index'
 import { routes } from './routes'
-// 初始化重写的 push replace 方法
-// routerPush(VueRouter)
-// routerReplace(VueRouter)
 Vue.use(VueRouter)
 const router = new VueRouter({
   mode: 'history',

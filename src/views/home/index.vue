@@ -112,7 +112,7 @@ export default {
             this.menuList.forEach((menu) => {
               menu.children.forEach((menu, index) => {
                 if (item.typeCode === menu.meta.typeCode) {
-                  console.log(menu, index)
+                  // console.log(menu, index)
                   this.$set(menu, 'notCheckCount', isClear ? null : item.notCheckCount)
                 }
               })
