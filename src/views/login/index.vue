@@ -49,8 +49,8 @@ export default {
   data() {
     return {
       loginForm: {
-        userAccount: 'demo', // TODO 测试账号：2516 demo 1390 2541
-        password: 'Hrp@123' // Hrp@123
+        userAccount: '', // TODO 测试账号：2516 demo 1390 2541
+        password: '' // Hrp@123
       },
       logoImg: logoImg,
       logoName: '医疗高效运营管理系统'
@@ -61,16 +61,16 @@ export default {
     // 登录绑定
     async loginFn() {
       try {
-        this.$toast.loading({ message: '正在登录...', forbidClick: true, duration: 0 }) // 开启loading
+        this.$toast.loading({ message: '正在登录...', duration: 0 }) // 开启loading
         const res = await this.$store.dispatch('user/login', this.loginForm)
         if (res.errcode === '0') {
           this.$toast.clear() // 清除loading
           await this.$router.replace({ path: '/' })
         } else {
-          this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 2000 })
+          this.$toast.fail({ message: '登录失败' })
         }
       } catch {
-        this.$toast.fail({ message: '登录失败', forbidClick: true, duration: 2000 })
+        this.$toast.fail({ message: '登录失败' })
       }
     },
     // 表单提交

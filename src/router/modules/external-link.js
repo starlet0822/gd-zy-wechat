@@ -3,9 +3,12 @@
  * @Author: wuxxing
  * @LastEditTime: 2022-04-11 11:08:03
  */
+import { ISBUILD, API_BASEURL } from '@/config'
+const { devProxyTarget } = require('@/config/settings')
+
 export default [
   {
-    path: 'http://hrp.gdhtcm.com:8111/OES/ctrl/crtlwechat/index/appmodellogin.jsp',
+    path: ISBUILD ? API_BASEURL : devProxyTarget + `/ctrl/login/visitWeChat/`, // ${store.getters.openId}  xiejieweidemo
     name: 'BaoXiao',
     meta: { title: '智能报销', icon: 'baoxiao', modCode: '10' }
   },

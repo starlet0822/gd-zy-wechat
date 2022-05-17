@@ -3,6 +3,8 @@
  * @Author: wuxxing
  * @LastEditTime: 2022-05-07 11:49:03
  */
+import store from '@/store'
+
 export function handleMenus(menus, routes) {
   const homeMenus = []
   menus.forEach((menu) => {
@@ -12,6 +14,11 @@ export function handleMenus(menus, routes) {
       if (route.meta.modCode === menu.modCode) {
         // this.$set(route, 'notCheckCount', null)
         // route.notCheckCount = null
+        // 特殊处理智能报销
+        if (route.name === 'BaoXiao') {
+          route.path = route.path + store.getters.openId
+          console.log(route.path)
+        }
         item.push(route)
       }
     })

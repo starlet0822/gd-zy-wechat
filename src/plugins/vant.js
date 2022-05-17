@@ -50,8 +50,8 @@ import {
   SwipeItem
 } from 'vant'
 // 全局修改 Toast 的默认配置
-Toast.setDefaultOptions({ duration: 2000 })
-Toast.setDefaultOptions('loading', { forbidClick: true, loadingType: 'spinner' })
+Toast.setDefaultOptions({ forbidClick: true, duration: 2000 })
+Toast.setDefaultOptions('loading', { loadingType: 'spinner' })
 Vue.use(Button)
   .use(Cell)
   .use(Form)

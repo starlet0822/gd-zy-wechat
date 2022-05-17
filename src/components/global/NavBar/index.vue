@@ -31,18 +31,22 @@
 export default {
   name: 'NavBar',
   props: {
+    // 导航标题
     title: {
       type: String,
       default: ''
     },
+    // 标题类样式
     titleClass: {
       type: String,
       default: ''
     },
+    // 是否固定
     fixed: {
       type: Boolean,
       default: true
     },
+    // 是否显示左侧内容
     leftArrow: {
       type: Boolean,
       default: true

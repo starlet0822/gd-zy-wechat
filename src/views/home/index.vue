@@ -30,9 +30,6 @@
                 @click="onclickItem(cItem, index)"
               />
             </template>
-            <template v-else>
-              <div class="vh-p-box">暂无子模块</div>
-            </template>
           </van-grid>
         </template>
       </div>

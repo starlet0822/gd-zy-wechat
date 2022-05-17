@@ -8,9 +8,8 @@ import router from '@/router'
 import store from '@/store'
 import { getCode } from '@/utils/code'
 import { ENV } from '@/config'
+const whiteList = ['/login'] // 白名单
 const needJudgePower = ['production', 'test'].includes(ENV) // 嵌套在企业微信再解开
-
-const whiteList = ['/login'] // no redirect whitelist
 
 // 权限判断
 function judgeRoutePower(to, next) {
@@ -18,7 +17,7 @@ function judgeRoutePower(to, next) {
     meta: { modCode }
   } = to
   if (modCode) {
-    console.log(store.getters.menus)
+    // console.log(store.getters.menus)
     const hasPower = store.getters.menus.some((menu) => {
       return modCode === menu.modCode
     })
