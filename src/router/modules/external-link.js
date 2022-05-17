@@ -8,7 +8,7 @@ const { devProxyTarget } = require('@/config/settings')
 
 export default [
   {
-    path: ISBUILD ? API_BASEURL : devProxyTarget + `/ctrl/login/visitWeChat/`, // ${store.getters.openId}  xiejieweidemo
+    path: (ISBUILD ? API_BASEURL : devProxyTarget) + `/ctrl/login/visitWeChat/`, // ${store.getters.openId}  xiejieweidemo
     name: 'BaoXiao',
     meta: { title: '智能报销', icon: 'baoxiao', modCode: '10' }
   },
