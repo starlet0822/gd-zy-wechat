@@ -79,7 +79,7 @@ export default [
     path: '/rotational',
     name: 'Rotational',
     meta: {
-      title: '职工轮岗',
+      title: '职工转岗',
       icon: 'lungang',
       modCode: '21',
       typeCode: typeCode.get('workShift'),

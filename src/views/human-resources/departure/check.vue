@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮岗审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:58:21
+ * @LastEditTime: 2022-05-20 11:03:22
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -168,8 +168,15 @@ export default {
     async checkInfo(type) {
       this.checkParam.checkState = type
       // 用户未填写意见时默认补充意见
-      if (this.checkParam.remark.trim() === '') {
-        this.checkParam.remark = type === 'YES' ? '同意' : '驳回'
+      if (type === 'YES') {
+        if (this.checkParam.remark.trim() === '') {
+          this.checkParam.remark = '同意'
+        }
+      } else {
+        if (this.checkParam.remark.trim() === '') {
+          this.$toast({ message: `请填写审批意见` })
+          return
+        }
       }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,

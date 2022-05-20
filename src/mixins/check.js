@@ -43,8 +43,9 @@ export default {
   computed: {
     // 是否可以审核操作
     canCheck() {
-      const { dataState } = this.$route.params
-      return dataState === '0' // 待处理才显示
+      // const { dataState } = this.$route.params
+      // return dataState === '0' // 待处理才显示
+      return this.dataInfo && +this.dataInfo?.isNotCheck !== 0
     },
     // ! 企业微信跳转时必传 - 是否可以返回?
     canBack() {
