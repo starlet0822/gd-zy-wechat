@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-20 11:03:17
+ * @LastEditTime: 2022-05-23 14:30:28
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -75,9 +75,7 @@
 </template>
 
 <script>
-import vars from '@/assets/css/vars.less'
 import { getAtteDetailList } from '@/api/modules/human-resources'
-import { sendCheck } from '@/api/modules/common'
 import { typeCode } from '@/config/constants'
 import check from '@/mixins/check'
 import SearchFilter from '@comp/common/SearchFilter'
@@ -89,8 +87,6 @@ export default {
   components: { SearchFilter, UserTable },
   data() {
     return {
-      colorYellow: vars.colorYellow,
-      colorRed: vars.colorRed,
       current: 0,
       typeCode: typeCode.get('attendance'),
       formInfo: {}, // 主表信息
@@ -133,51 +129,10 @@ export default {
         this.unSubmitPerson = unSubmitPerson || []
       }
     },
-    // 驳回
-    async checkInfo(type) {
-      this.checkParam.checkState = type
-      // 用户未填写意见时默认补充意见
-      if (type === 'YES') {
-        if (this.checkParam.remark.trim() === '') {
-          this.checkParam.remark = '同意'
-        }
-      } else {
-        if (this.checkParam.remark.trim() === '') {
-          this.$toast({ message: `请填写审批意见` })
-          return
-        }
-      }
-      const { errcode, errmsg } = await sendCheck({
-        typeCode: this.typeCode,
-        checkParam: this.checkParam
-      })
-      if (errcode === '0') {
-        this.$toast({
-          message: type === 'YES' ? '已同意' : '已驳回',
-          type: 'success',
-          duration: 800,
-          // overlay: true,
-          forbidClick: true
-        })
-        this.$router.back()
-      } else {
-        this.checkParam.remark = '' // 提交未成功清空审批意见
-        this.$toast({
-          message: errmsg,
-          type: 'error',
-          duration: 1500,
-          // overlay: true,
-          forbidClick: true
-        })
-      }
-    },
-    onChange(index) {
-      this.current = index
-    },
     // 按钮回调
-    handleClickBtn({ value }) {
-      this.checkInfo(value)
-    },
+    // handleClickBtn({ value }) {
+    //   this.checkInfo(value)
+    // },
     // 搜索
     handleSearch(val) {
       this.parameters.empName = val

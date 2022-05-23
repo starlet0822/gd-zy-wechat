@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 11:34:44
+ * @LastEditTime: 2022-05-23 13:48:57
  */
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { getIncreasingArr, findField } from '@/utils'
@@ -77,8 +77,8 @@ export default {
         this.checkPeopleData = data.checkPeopleData || null
         this.activeNames = getIncreasingArr(this.formData?.length)
         // 目前只有当前页面需要获取状态state
-        this.checkParam.state = findField(data.formData, 'state').fieldValue
-        this.inOutType = findField(data.formData, 'inOutType').fieldValue
+        this.checkParam.state = findField(data.formData, 'state')?.fieldValue
+        this.inOutType = findField(data.formData, 'inOutType')?.fieldValue
         // 获取code name
         // const user = findCodeName(this.formData)
         // this.checkParam = { ...user, ...this.checkParam }

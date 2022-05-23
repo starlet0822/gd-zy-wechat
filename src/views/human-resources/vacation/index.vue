@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 10:55:38
+ * @LastEditTime: 2022-05-23 14:15:47
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -70,7 +70,7 @@ import { typeCode } from '@/config/constants'
 import list from '@/mixins/list'
 
 export default {
-  name: 'VacationReset',
+  name: 'Vacation',
   mixins: [list],
   data() {
     return {
