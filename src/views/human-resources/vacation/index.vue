@@ -1,7 +1,7 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-05-09 09:47:41
+ * @LastEditTime: 2022-05-23 10:55:38
 -->
 <template>
   <div class="vacation-list-wrapper vh-bg">
@@ -66,21 +66,16 @@
 </template>
 
 <script>
-import vars from '@/assets/css/vars.less'
 import { typeCode } from '@/config/constants'
-import { findHrCheckList } from '@/api/modules/common'
 import list from '@/mixins/list'
-import SearchFilter from '@comp/common/SearchFilter'
-import TagBox from '@comp/common/TagBox'
 
 export default {
   name: 'VacationReset',
   mixins: [list],
-  components: { SearchFilter, TagBox },
   data() {
     return {
-      tagColor: vars.colorOrange,
       typeCode: typeCode.get('vacation'),
+      toCheckPath: `/vacation-check`,
       showMulti: false, // 是否批量
       result: []
     }
@@ -95,42 +90,6 @@ export default {
   },
   created() {},
   methods: {
-    // 获取数据列表
-    async getList() {
-      try {
-        // 组织请求参数
-        const params = {
-          typeCode: this.typeCode,
-          pageRequest: this.pageRequest,
-          parameters: { ...this.parameters, ...this.filterQuery }
-        }
-        const res = await findHrCheckList(params)
-        if (res.errcode === '0') {
-          const { dataList: data, totalSize } = res.data
-          this.totalSize = totalSize
-          if (params.pageRequest.pageNum === 1) {
-            this.dataList = data || []
-          } else {
-            this.dataList = this.dataList.concat(data || [])
-          }
-          if (this.dataList.length < this.totalSize) {
-            params.pageRequest.pageNum = params.pageRequest.pageNum + 1
-          }
-        }
-        if (this.dataList.length >= this.totalSize) this.finished = true
-      } catch (e) {
-        console.error('捕获异常', e)
-        this.error = true
-        this.pageRequest.pageNum = 1 // 重置为初始页码
-      } finally {
-        this.refreshing = false
-        this.loading = false
-      }
-    },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/vacation-check/${billId}/${this.tabActive}`)
-    },
     // 驳回
     handleClickReject() {
       this.$toast({

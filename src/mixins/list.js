@@ -1,11 +1,11 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 09:48:01
+ * @LastEditTime: 2022-05-23 10:24:20
  */
 import vars from '@/assets/css/vars.less'
 import { dataState } from '@/config/constants'
-import { findFixCheckList } from '@/api/modules/common'
+import { findFixCheckList, findHrCheckList } from '@/api/modules/common'
 import SearchFilter from '@comp/common/SearchFilter'
 import TagBox from '@comp/common/TagBox'
 export default {
@@ -118,7 +118,8 @@ export default {
           pageRequest: this.pageRequest,
           parameters: { ...this.parameters, ...this.filterQuery }
         }
-        const res = await findFixCheckList(params)
+        const apiName = this.typeCode.startsWith('fix') ? findFixCheckList : findHrCheckList
+        const res = await apiName(params)
         if (res.errcode === '0') {
           const { dataList: data, totalSize } = res.data
           this.totalSize = totalSize
