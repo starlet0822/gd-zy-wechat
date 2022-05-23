@@ -1,10 +1,18 @@
 /*
  * @Description: 列表 混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 13:41:42
+ * @LastEditTime: 2022-05-23 09:48:01
  */
+import vars from '@/assets/css/vars.less'
 import { dataState } from '@/config/constants'
+import { findFixCheckList } from '@/api/modules/common'
+import SearchFilter from '@comp/common/SearchFilter'
+import TagBox from '@comp/common/TagBox'
 export default {
+  components: {
+    SearchFilter,
+    TagBox
+  },
   data() {
     return {
       // tabs: [],
@@ -64,7 +72,9 @@ export default {
         // description: '暂无数据'
       },
       fixPlaceholder: '单据号、科室名称/编码、申请人',
-      hrPlaceholder: '员工姓名'
+      hrPlaceholder: '员工姓名',
+      tagColor: vars.colorOrange,
+      toCheckPath: '/' // !!! 一定要填写完整路径 跳转审批页的路由路径
     }
   },
   computed: {
@@ -98,6 +108,34 @@ export default {
   methods: {
     onLoad() {
       this.getList()
+    },
+    // 获取数据列表
+    async getList() {
+      try {
+        // 组织请求参数
+        const params = {
+          typeCode: this.typeCode,
+          pageRequest: this.pageRequest,
+          parameters: { ...this.parameters, ...this.filterQuery }
+        }
+        const res = await findFixCheckList(params)
+        if (res.errcode === '0') {
+          const { dataList: data, totalSize } = res.data
+          this.totalSize = totalSize
+          this.dataList = params.pageRequest.pageNum === 1 ? data : this.dataList.concat(data)
+          if (this.dataList.length < this.totalSize) ++params.pageRequest.pageNum
+          if (this.dataList.length === 0) this.tip.icon = 'empty'
+        }
+        if (this.dataList.length >= this.totalSize) this.finished = true
+      } catch (e) {
+        console.error('捕获异常', e)
+        this.tip.icon = 'network'
+        this.error = true
+        this.pageRequest.pageNum = 1 // 重置为初始页码
+      } finally {
+        this.refreshing = false
+        this.loading = false
+      }
     },
     // 列表刷新
     onRefresh() {
@@ -134,6 +172,10 @@ export default {
       // console.log('筛选回调', query)
       this.filterQuery = query
       this.onRefresh()
+    },
+    // 审批
+    toCheck({ billId }) {
+      this.$router.push(`${this.toCheckPath}/${billId}/${this.tabActive}`)
     }
   }
 }

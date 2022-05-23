@@ -1,11 +1,11 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 15:57:20
+ * @LastEditTime: 2022-05-23 09:37:51
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
-    <vh-nav-bar></vh-nav-bar>
+    <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
         <search-filter
@@ -49,8 +49,6 @@
                 </span>
               </div>
               <div class="btn-status">
-                <!-- :color="checkStatus.get(item.checkState).color"
-                    :text="checkStatus.get(item.checkState).text" -->
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>
             </div>
@@ -63,24 +61,15 @@
 </template>
 
 <script>
-import vars from '@/assets/css/vars.less'
-import { typeCode, checkStatus } from '@/config/constants'
-import { findFixCheckList } from '@/api/modules/common'
+import { typeCode } from '@/config/constants'
 import list from '@/mixins/list'
-import SearchFilter from '@comp/common/SearchFilter'
-import TagBox from '@comp/common/TagBox'
 export default {
   name: 'AssetPurchase',
   mixins: [list],
-  components: {
-    SearchFilter,
-    TagBox
-  },
   data() {
     return {
-      tagColor: vars.colorOrange,
-      checkStatus, // 审批状态
-      typeCode: typeCode.get('acquisition')
+      typeCode: typeCode.get('acquisition'),
+      toCheckPath: `/asset-disposal-check`
       // filterMenu: [
       //   // 筛选菜单
       //   // {
@@ -127,40 +116,7 @@ export default {
     }
   },
   created() {},
-  methods: {
-    // 获取数据列表
-    async getList() {
-      try {
-        // 组织请求参数
-        const params = {
-          typeCode: this.typeCode,
-          pageRequest: this.pageRequest,
-          parameters: { ...this.parameters, ...this.filterQuery }
-        }
-        const res = await findFixCheckList(params)
-        if (res.errcode === '0') {
-          const { dataList: data, totalSize } = res.data
-          this.totalSize = totalSize
-          this.dataList = params.pageRequest.pageNum === 1 ? data : this.dataList.concat(data)
-          if (this.dataList.length < this.totalSize) ++params.pageRequest.pageNum
-          if (this.dataList.length === 0) this.tip.icon = 'empty'
-        }
-        if (this.dataList.length >= this.totalSize) this.finished = true
-      } catch (e) {
-        console.error('捕获异常', e)
-        this.tip.icon = 'network'
-        this.error = true
-        this.pageRequest.pageNum = 1 // 重置为初始页码
-      } finally {
-        this.refreshing = false
-        this.loading = false
-      }
-    },
-    // 审批
-    toCheck({ billId }) {
-      this.$router.push(`/asset-purchase-check/${billId}/${this.tabActive}`)
-    }
-  }
+  methods: {}
 }
 </script>
 
