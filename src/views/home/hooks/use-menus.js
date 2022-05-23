@@ -17,7 +17,7 @@ export function handleMenus(menus, routes) {
         // 特殊处理智能报销
         if (route.name === 'BaoXiao') {
           route.path = route.path + store.getters.openId
-          console.log(route.path)
+          // console.log(route.path)
         }
         item.push(route)
       }
