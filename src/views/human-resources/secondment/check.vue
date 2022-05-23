@@ -1,7 +1,7 @@
 <!--
- * @Description: 轮岗审批
+ * @Description: 借调审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 14:02:28
+ * @LastEditTime: 2022-05-23 17:23:18
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -29,14 +29,31 @@
           </template>
           <template #default>
             <template v-if="item.type === 'jsonText'">
-              <van-cell
-                title-class="vh-color-tip"
-                v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)"
-                :key="citem.fieldName + cidx"
-                :title="citem.fieldName"
-                :value="citem.fieldValue || '--'"
-                :value-class="['vh-flex2']"
-              ></van-cell>
+              <template v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)">
+                <!-- 可编辑 -->
+                <van-field
+                  v-if="citem.isEdit === 1"
+                  :key="citem.fieldName + cidx"
+                  label-class="vh-color-tip"
+                  :label="citem.fieldName"
+                  :value="citem.fieldValue || '--'"
+                  placeholder=""
+                  input-align="right"
+                  right-icon="edit"
+                  :readonly="citem.fieldType === 'time'"
+                  @focus="onFocus(citem)"
+                  @click-right-icon="onFocus(citem)"
+                />
+                <!-- 仅可读 -->
+                <van-cell
+                  v-else
+                  :key="citem.fieldName + cidx"
+                  title-class="vh-color-tip"
+                  :title="citem.fieldName"
+                  :value="citem.fieldValue || '--'"
+                  :value-class="['vh-flex2']"
+                ></van-cell>
+              </template>
             </template>
             <!-- 附件 -->
             <div v-else class="vh-p-box">
@@ -118,6 +135,19 @@
         <TimeLine ref="timeLineRef" :id="busKey" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
+    <!-- 日期选择 -->
+    <van-popup v-model="showDatePicker" position="bottom">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="date"
+        title="选择年月日"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :formatter="formatter"
+        @confirm="onConfirmDate"
+        @cancel="showDatePicker = false"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -125,7 +155,7 @@
 import { typeCode } from '@/config/constants'
 import check from '@/mixins/check'
 export default {
-  name: 'RotationalCheck',
+  name: 'SecondmentCheck',
   mixins: [check],
   components: {},
   data() {

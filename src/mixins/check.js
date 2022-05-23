@@ -1,13 +1,15 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 13:48:57
+ * @LastEditTime: 2022-05-23 18:19:07
  */
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { getIncreasingArr, findField } from '@/utils'
+import { formatDate } from '@/utils/date'
 import FileCard from '@comp/common/FileCard'
 import ImgView from '@comp/common/ImgView'
 import TimeLine from '@comp/common/TimeLine'
+// import { isEqual } from 'lodash-es'
 import { mapGetters } from 'vuex'
 export default {
   components: { FileCard, ImgView, TimeLine },
@@ -38,7 +40,17 @@ export default {
         approver: '', // 下一审批人
         openId: 'xiejiewei' + 'demo', // TODO 手动改值测试
         state: ''
-      }
+      },
+      formParamList: [], // 可编辑数据传参
+      // 日期选择相关
+      showDatePicker: false,
+      currentDate: new Date(),
+      minDate: new Date(2017, 0, 1),
+      maxDate: new Date(2023, 11, 31),
+      format: 'YYYY-MM-DD',
+      editItem: null, // 要编辑的哪一项数据？
+      beforeEditData: Object.freeze([]), // 编辑前的数据
+      afterEditData: [] // 编辑后的数据
     }
   },
 
@@ -82,6 +94,8 @@ export default {
         // 获取code name
         // const user = findCodeName(this.formData)
         // this.checkParam = { ...user, ...this.checkParam }
+        this.beforeEditData = Object.freeze(this.getEditRow()) // 记录编辑前初始数据
+        console.log('编辑前的数据', this.beforeEditData, Object.isFrozen(this.beforeEditData))
       }
     },
     // 审批or驳回
@@ -98,9 +112,14 @@ export default {
           return
         }
       }
+      // 排除考勤申请
+      if (this.typeCode !== 'hr_attendance_result') {
+        await this.handleFormParamList()
+      }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
-        checkParam: this.checkParam
+        checkParam: this.checkParam,
+        formParamList: this.formParamList // TODO 排除考勤申请
       })
       if (errcode === '0') {
         this.$toast({
@@ -162,6 +181,63 @@ export default {
       this.$nextTick(() => {
         this.$refs.timeLineRef.findCheckInfo()
       })
+    },
+    // 获取可编辑的字段数据
+    getEditRow() {
+      let isEditArr = []
+      this.formData.forEach((item) => {
+        if (item.type === 'jsonText') {
+          isEditArr = [...isEditArr, ...item.rowData.filter((v) => v.isEdit === 1)]
+        }
+      })
+      console.log(isEditArr)
+      return isEditArr
+    },
+    // 组织编辑参数
+    handleFormParamList() {
+      this.afterEditData = this.getEditRow() // 编辑后的数据
+      console.log('编辑前后的数据', this.beforeEditData, this.afterEditData)
+      // if (isEqual(this.afterEditData, this.beforeEditData)) return // FIXME 无效？
+      this.formParamList = []
+      this.afterEditData.forEach((after) => {
+        const { filedId, fieldType, fieldValue, tableName, primaryKeyName, primaryKeyValue } = after
+        this.formParamList.push({
+          filedId,
+          fieldType,
+          fieldValue,
+          tableName,
+          primaryKeyName,
+          primaryKeyValue
+        })
+        console.log('组织后的formParamList', this.formParamList)
+      })
+      return this.formParamList
+    },
+    onFocus(item) {
+      console.log('onFocus', item)
+      this.editItem = item
+      this.currentDate = new Date(item.fieldValue) // 回显日期绑定值
+      this.showDatePicker = item.fieldType === 'time'
+    },
+    formatter(type, val) {
+      if (type === 'year') {
+        return val + '年'
+      }
+      if (type === 'month') {
+        return val + '月'
+      }
+      if (type === 'day') {
+        return val + '日'
+      }
+      return val
+    },
+    onConfirmDate(val, item) {
+      const dateVal = formatDate(val, this.format)
+      console.log(val, item, dateVal)
+      // 回显修改值
+      this.$set(this.editItem, 'fieldValue', dateVal)
+      this.$emit('change', dateVal)
+      this.showDatePicker = false
     }
   }
 }

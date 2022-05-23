@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 14:30:28
+ * @LastEditTime: 2022-05-23 17:48:49
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -39,7 +39,7 @@
       ></UserTable>
     </div>
     <!-- 表单 -->
-    <van-form v-if="formData.length" scroll-to-error>
+    <van-form v-if="dataInfo" scroll-to-error>
       <van-field
         v-model="checkParam.remark"
         v-if="canCheck"
@@ -89,7 +89,7 @@ export default {
     return {
       current: 0,
       typeCode: typeCode.get('attendance'),
-      formInfo: {}, // 主表信息
+      formInfo: null, // 主表信息
       tableHead: [], // 主表表头
       monthData: [], // 主表数据
       vacationHead, // 副表表头
@@ -118,6 +118,7 @@ export default {
       })
       if (errcode === '0') {
         const { formData, show_header, monthData, vacationData, unSubmitPerson } = data
+        this.dataInfo = data
         this.formInfo = formData
         this.checkParam.busKey = formData.billId
         this.checkParam.deptId = formData.deptId
