@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 10:50:37
+ * @LastEditTime: 2022-05-23 11:49:05
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -131,9 +131,7 @@
 </template>
 
 <script>
-import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { typeCode } from '@/config/constants'
-import { getIncreasingArr } from '@/utils'
 import check from '@/mixins/check'
 export default {
   name: 'AssetDisposalCheck',
@@ -146,96 +144,7 @@ export default {
   created() {
     this.getInfo()
   },
-  methods: {
-    async getInfo() {
-      const { id } = this.$route.params
-      this.parameters.billId = this.checkParam.busKey = id
-      const { errcode, data } = await findCheckInfoDetail({
-        typeCode: this.typeCode,
-        parameters: this.parameters
-      })
-      if (errcode === '0') {
-        this.dataInfo = data
-        this.busKey = data.busKey
-        this.formData = [...data.formData, ...data.detailData] || []
-        this.checkPeopleData = data.checkPeopleData || null
-        this.activeNames = getIncreasingArr(this.formData?.length)
-        // 获取code name
-        // const user = findCodeName(this.formData)
-        // this.checkParam = { ...user, ...this.checkParam }
-      }
-    },
-    // 审批or驳回
-    async checkInfo(type) {
-      this.checkParam.checkState = type
-      // 用户未填写意见时默认补充意见
-      if (type === 'YES') {
-        if (this.checkParam.remark.trim() === '') {
-          this.checkParam.remark = '同意'
-        }
-      } else {
-        if (this.checkParam.remark.trim() === '') {
-          this.$toast({ message: `请填写审批意见` })
-          return
-        }
-      }
-      const { errcode, errmsg } = await sendCheck({
-        typeCode: this.typeCode,
-        checkParam: this.checkParam
-      })
-      if (errcode === '0') {
-        this.$toast({
-          message: type === 'YES' ? '已同意' : '已驳回',
-          type: 'success',
-          duration: 800,
-          closeOnClick: true,
-          // overlay: true,
-          forbidClick: true
-        })
-        this.$router.back()
-      } else {
-        this.$toast({
-          message: errmsg,
-          type: 'fail',
-          duration: 3000,
-          closeOnClick: true,
-          // className: 'vh-color-orange',
-          forbidClick: true
-        })
-      }
-    },
-    handleConfirmUser(type = 'YES') {
-      if (!this.approvers.length) {
-        this.$toast({
-          message: `请选择下一审批人！`,
-          type: 'error',
-          duration: 1500,
-          // overlay: true,
-          forbidClick: true
-        })
-        return
-      }
-      this.checkParam.approver = this.approvers.join(',')
-      // 调接口
-      this.checkInfo(type)
-    },
-    // 按钮回调
-    handleClickBtn({ value }) {
-      switch (value) {
-        case 'YES':
-          if (this.checkPeopleData) {
-            this.showCheckUser = true
-          } else {
-            this.checkInfo(value)
-          }
-          break
-        case 'NO':
-          this.checkParam.approver = ''
-          this.checkInfo(value)
-          break
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 

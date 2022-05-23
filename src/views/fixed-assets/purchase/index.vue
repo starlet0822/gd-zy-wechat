@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 09:37:51
+ * @LastEditTime: 2022-05-23 11:07:29
 -->
 <template>
   <div class="asset-purchase-wrapper vh-bg">
@@ -69,7 +69,7 @@ export default {
   data() {
     return {
       typeCode: typeCode.get('acquisition'),
-      toCheckPath: `/asset-disposal-check`
+      toCheckPath: `/asset-purchase-check`
       // filterMenu: [
       //   // 筛选菜单
       //   // {

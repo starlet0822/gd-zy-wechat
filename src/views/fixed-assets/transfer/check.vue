@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移审核
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 10:57:23
+ * @LastEditTime: 2022-05-23 13:39:43
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -121,9 +121,7 @@
 </template>
 
 <script>
-import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { typeCode, checkStateTips } from '@/config/constants'
-import { getIncreasingArr, findField } from '@/utils'
 import check from '@/mixins/check'
 export default {
   name: 'AssetTransferCheck',
@@ -138,53 +136,6 @@ export default {
     this.getInfo()
   },
   methods: {
-    async getInfo() {
-      const { id } = this.$route.params
-      this.parameters.billId = this.checkParam.busKey = id
-      const { errcode, data } = await findCheckInfoDetail({
-        typeCode: this.typeCode,
-        parameters: this.parameters
-      })
-      if (errcode === '0') {
-        this.dataInfo = data
-        this.busKey = data.busKey
-        this.formData = [...data.formData, ...data.detailData] || []
-        this.checkPeopleData = data.checkPeopleData
-        this.activeNames = getIncreasingArr(this.formData?.length)
-        this.checkParam.state = findField(data.formData, 'state').fieldValue
-        this.inOutType = findField(data.formData, 'inOutType').fieldValue
-        // 获取code name
-        // const user = findCodeName(this.formData)
-        // this.checkParam = { ...user, ...this.checkParam }
-      }
-    },
-    // 审批or驳回
-    async checkInfo(type) {
-      const { errcode, errmsg } = await sendCheck({
-        typeCode: this.typeCode,
-        checkParam: this.checkParam
-      })
-      if (errcode === '0') {
-        this.$toast({
-          message: type === 'YES' ? '已同意' : '已驳回',
-          type: 'success',
-          duration: 800,
-          closeOnClick: true,
-          // overlay: true,
-          forbidClick: true
-        })
-        this.$router.back()
-      } else {
-        this.checkParam.remark = '' // 提交未成功清空审批意见
-        this.$toast({
-          message: errmsg,
-          type: 'fail',
-          duration: 3000,
-          // className: 'vh-color-orange',
-          forbidClick: true
-        })
-      }
-    },
     handleConfirmUser(type = 'YES') {
       if (!this.approvers.length) {
         this.$toast({
