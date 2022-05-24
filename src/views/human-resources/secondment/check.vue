@@ -1,7 +1,7 @@
 <!--
  * @Description: 借调审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 17:23:18
+ * @LastEditTime: 2022-05-24 17:39:26
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -25,18 +25,18 @@
           :border="false"
         >
           <template #title>
-            <div class="vh-color-blue2">{{ item.title }}</div>
+            <div class="vh-color-blue">{{ item.title }}</div>
           </template>
           <template #default>
             <template v-if="item.type === 'jsonText'">
               <template v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)">
                 <!-- 可编辑 -->
                 <van-field
-                  v-if="citem.isEdit === 1"
+                  v-if="canCheck && citem.isEdit === 1"
                   :key="citem.fieldName + cidx"
                   label-class="vh-color-tip"
                   :label="citem.fieldName"
-                  :value="citem.fieldValue || '--'"
+                  v-model="citem.fieldValue"
                   placeholder=""
                   input-align="right"
                   right-icon="edit"
@@ -52,7 +52,7 @@
                   :title="citem.fieldName"
                   :value="citem.fieldValue || '--'"
                   :value-class="['vh-flex2']"
-                ></van-cell>
+                />
               </template>
             </template>
             <!-- 附件 -->
@@ -171,22 +171,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.check-wrapper {
-  /deep/.check-info {
-    .van-collapse-item__title {
-      background: @color-bg;
-    }
-    .van-collapse-item__content {
-      padding: 0;
-      .van-cell {
-        // font-size: @font14;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        &::after {
-          border: 0;
-        }
-      }
-    }
-  }
-}
+@import '@css/check.less';
 </style>

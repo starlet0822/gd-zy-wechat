@@ -1,10 +1,10 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 09:42:36
+ * @LastEditTime: 2022-05-24 13:43:42
 -->
 <template>
-  <div class="asset-transfer-wrapper vh-bg">
+  <div class="list-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
@@ -78,15 +78,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-transfer-wrapper {
-  .list-item {
-    margin: 10px;
-    .btn-status {
-      text-align: right;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-  }
-}
+@import '@css/list.less';
 </style>

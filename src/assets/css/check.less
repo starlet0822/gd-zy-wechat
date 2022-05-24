@@ -1,0 +1,39 @@
+.check-wrapper {
+  /deep/.check-info {
+    .van-collapse-item__title {
+      background: @color-bg;
+    }
+    .van-collapse-item__content {
+      padding: 0;
+      .van-cell {
+        // font-size: @font14;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        &::after {
+          border: 0;
+        }
+      }
+    }
+  }
+
+  /deep/.user-dialog {
+    max-height: 50%;
+    overflow: auto;
+    // position: relative;
+
+    .van-dialog__header {
+      position: sticky;
+      left: 0;
+      top: 0;
+      z-index: 1;
+      background-color: #ffffff;
+      border-bottom: 1px solid @color-shadow;
+      // color: #ffffff;
+    }
+    .van-dialog__footer {
+      position: sticky;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}

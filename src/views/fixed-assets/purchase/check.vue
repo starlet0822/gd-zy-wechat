@@ -1,7 +1,7 @@
 <!--
  * @Description:资产购置审核
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 11:46:39
+ * @LastEditTime: 2022-05-24 17:29:08
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -14,43 +14,62 @@
         <div class="vh-color-white">审批详情</div>
       </template>
     </vh-nav-bar>
-    <!-- 折叠面板 -->
-    <van-collapse class="vh-m-10" v-model="activeNames" :border="false">
-      <van-collapse-item
-        class="vh-mb-10 vh-rounded-6"
-        :name="index"
-        v-for="(item, index) in formData"
-        :key="item.title + index"
-        :border="false"
-      >
-        <template #title>
-          <div class="vh-color-blue">{{ item.title }}</div>
-        </template>
-        <template #default>
-          <template v-if="item.type === 'jsonText'">
-            <van-cell
-              title-class="vh-color-tip"
-              v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)"
-              :key="citem.fieldName + cidx"
-              :title="citem.fieldName"
-              :value="citem.fieldValue || '--'"
-              :value-class="['vh-flex2']"
-            ></van-cell>
+    <div class="check-info vh-mb-10 vh-bg-white">
+      <!-- 折叠面板 -->
+      <van-collapse v-model="activeNames" :border="false">
+        <van-collapse-item
+          class="vh-mb-10 vh-rounded-6"
+          :name="index"
+          v-for="(item, index) in formData"
+          :key="item.title + index"
+          :border="false"
+        >
+          <template #title>
+            <div class="vh-color-blue">{{ item.title }}</div>
           </template>
-          <!-- 附件 -->
-          <div v-else class="vh-p-box">
-            <template v-if="item.rowData && item.rowData.length">
-              <!-- 图片集 -->
-              <ImgView v-model="item.rowData" border></ImgView>
-              <FileCard v-model="item.rowData" class="vh-color-text"></FileCard>
+          <template #default>
+            <template v-if="item.type === 'jsonText'">
+              <template v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)">
+                <!-- 可编辑 -->
+                <van-field
+                  v-if="canCheck && citem.isEdit === 1"
+                  :key="citem.fieldName + cidx"
+                  label-class="vh-color-tip"
+                  :label="citem.fieldName"
+                  v-model="citem.fieldValue"
+                  placeholder=""
+                  input-align="right"
+                  right-icon="edit"
+                  :readonly="citem.fieldType === 'time'"
+                  @focus="onFocus(citem)"
+                  @click-right-icon="onFocus(citem)"
+                />
+                <!-- 仅可读 -->
+                <van-cell
+                  v-else
+                  :key="citem.fieldName + cidx"
+                  title-class="vh-color-tip"
+                  :title="citem.fieldName"
+                  :value="citem.fieldValue || '--'"
+                  :value-class="['vh-flex2']"
+                />
+              </template>
             </template>
-            <template v-else>
-              <div>暂无附件</div>
-            </template>
-          </div>
-        </template>
-      </van-collapse-item>
-    </van-collapse>
+            <!-- 附件 -->
+            <div v-else class="vh-p-box">
+              <template v-if="item.rowData && item.rowData.length">
+                <!-- 图片集 -->
+                <ImgView v-model="item.rowData" border></ImgView>
+                <FileCard v-model="item.rowData" class="vh-color-text"></FileCard>
+              </template>
+              <template v-else>
+                <div>暂无附件</div>
+              </template>
+            </div>
+          </template>
+        </van-collapse-item>
+      </van-collapse>
+    </div>
     <!-- 审批意见 -->
     <van-form v-if="formData.length" class="vh-mb-10" scroll-to-error>
       <van-field
@@ -116,6 +135,19 @@
       <div class="vh-pt-20 vh-pl-5">
         <TimeLine ref="timeLineRef" :id="busKey" :type-code="typeCode"></TimeLine>
       </div>
+    </van-popup>
+    <!-- 日期选择 -->
+    <van-popup v-model="showDatePicker" position="bottom">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="date"
+        title="选择年月日"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :formatter="formatter"
+        @confirm="onConfirmDate"
+        @cancel="showDatePicker = false"
+      />
     </van-popup>
   </div>
 </template>
@@ -232,38 +264,39 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.check-wrapper {
-  .asset-info {
-  }
-  /deep/ .van-collapse-item__content {
-    padding: 0;
-    .van-cell {
-      padding-top: 5px;
-      padding-bottom: 5px;
-      &::after {
-        border: 0;
-      }
-    }
-  }
-  /deep/.user-dialog {
-    max-height: 50%;
-    overflow: auto;
-    // position: relative;
+@import '@css/check.less';
+// .check-wrapper {
+//   .asset-info {
+//   }
+//   /deep/ .van-collapse-item__content {
+//     padding: 0;
+//     .van-cell {
+//       padding-top: 5px;
+//       padding-bottom: 5px;
+//       &::after {
+//         border: 0;
+//       }
+//     }
+//   }
+//   /deep/.user-dialog {
+//     max-height: 50%;
+//     overflow: auto;
+//     // position: relative;
 
-    .van-dialog__header {
-      position: sticky;
-      left: 0;
-      top: 0;
-      z-index: 1;
-      background-color: #ffffff;
-      border-bottom: 1px solid @color-shadow;
-      // color: #ffffff;
-    }
-    .van-dialog__footer {
-      position: sticky;
-      left: 0;
-      bottom: 0;
-    }
-  }
-}
+//     .van-dialog__header {
+//       position: sticky;
+//       left: 0;
+//       top: 0;
+//       z-index: 1;
+//       background-color: #ffffff;
+//       border-bottom: 1px solid @color-shadow;
+//       // color: #ffffff;
+//     }
+//     .van-dialog__footer {
+//       position: sticky;
+//       left: 0;
+//       bottom: 0;
+//     }
+//   }
+// }
 </style>

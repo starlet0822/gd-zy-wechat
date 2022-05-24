@@ -1,7 +1,7 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-05-16 11:11:55
+ * @LastEditTime: 2022-05-24 11:27:06
  */
 import axios from 'axios'
 import { API_BASEURL, API_TIMEOUT, ISBUILD } from '@/config/index'
@@ -86,18 +86,19 @@ service.interceptors.response.use(
     Toast.clear()
     console.error('err:' + error)
     if (error && error.response?.status) {
-      const status = error.response.status
-      console.log('errorStatus', status)
-      switch (status) {
-        case 404:
-          error.message = `请求出错(${status})`
-          break
-        case 500:
-          error.message = `服务器错误(${status})`
-          break
-        default:
-          error.message = `连接出错(${status})`
-      }
+      const { status, message } = error.response.data
+      console.log('errorStatus', status, message)
+      error.message = message || `请求出错(${status})` // 使用后端的提示文案
+      // switch (status) {
+      //   case 404:
+      //     error.message = `请求出错(${status})`
+      //     break
+      //   case 500:
+      //     error.message = `服务器错误(${status})`
+      //     break
+      //   default:
+      //     error.message = `连接出错(${status})`
+      // }
     } else {
       // 网络超时异常处理
       if (

@@ -1,7 +1,7 @@
 /*
  * @Description:人力管理相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 09:39:29
+ * @LastEditTime: 2022-05-24 17:19:07
  */
 import { typeCode } from '@/config/dictionary'
 export default [
@@ -92,7 +92,7 @@ export default [
     path: '/rotational-check/:id/:dataState?/:canBack?',
     name: 'RotationalCheck',
     meta: {
-      title: '轮岗审批'
+      title: '转岗审批'
     },
     component: () =>
       import(/* webpackChunkName: "rotational-check" */ '@/views/human-resources/rotational/check')

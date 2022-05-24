@@ -1,10 +1,10 @@
 <!--
- * @Description: 休假审批
+ * @Description: 销假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 13:56:36
+ * @LastEditTime: 2022-05-24 17:39:36
 -->
 <template>
-  <div class="vacation-check-wrapper vh-bg">
+  <div class="check-wrapper vh-bg">
     <vh-nav-bar
       :left-arrow="canBack"
       :title="dataInfo && dataInfo.title"
@@ -25,18 +25,35 @@
           :border="false"
         >
           <template #title>
-            <div class="vh-color-blue2">{{ item.title }}</div>
+            <div class="vh-color-blue">{{ item.title }}</div>
           </template>
           <template #default>
             <template v-if="item.type === 'jsonText'">
-              <van-cell
-                title-class="vh-color-tip"
-                v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)"
-                :key="citem.fieldName + cidx"
-                :title="citem.fieldName"
-                :value="citem.fieldValue || '--'"
-                :value-class="['vh-flex2']"
-              ></van-cell>
+              <template v-for="(citem, cidx) in item.rowData.filter((v) => v.isShow === 1)">
+                <!-- 可编辑 -->
+                <van-field
+                  v-if="canCheck && citem.isEdit === 1"
+                  :key="citem.fieldName + cidx"
+                  label-class="vh-color-tip"
+                  :label="citem.fieldName"
+                  v-model="citem.fieldValue"
+                  placeholder=""
+                  input-align="right"
+                  right-icon="edit"
+                  :readonly="citem.fieldType === 'time'"
+                  @focus="onFocus(citem)"
+                  @click-right-icon="onFocus(citem)"
+                />
+                <!-- 仅可读 -->
+                <van-cell
+                  v-else
+                  :key="citem.fieldName + cidx"
+                  title-class="vh-color-tip"
+                  :title="citem.fieldName"
+                  :value="citem.fieldValue || '--'"
+                  :value-class="['vh-flex2']"
+                />
+              </template>
             </template>
             <!-- 附件 -->
             <div v-else class="vh-p-box">
@@ -113,6 +130,19 @@
         <TimeLine ref="timeLineRef" :id="busKey" :type-code="typeCode"></TimeLine>
       </div>
     </van-popup>
+    <!-- 日期选择 -->
+    <van-popup v-model="showDatePicker" position="bottom">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="date"
+        title="选择年月日"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :formatter="formatter"
+        @confirm="onConfirmDate"
+        @cancel="showDatePicker = false"
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -137,22 +167,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.vacation-check-wrapper {
-  /deep/.check-info {
-    .van-collapse-item__title {
-      background: @color-bg;
-    }
-    .van-collapse-item__content {
-      padding: 0;
-      .van-cell {
-        // font-size: @font14;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        &::after {
-          border: 0;
-        }
-      }
-    }
-  }
-}
+@import '@css/check.less';
 </style>

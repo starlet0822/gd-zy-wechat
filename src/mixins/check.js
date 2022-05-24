@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 18:19:07
+ * @LastEditTime: 2022-05-24 10:41:03
  */
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { getIncreasingArr, findField } from '@/utils'
@@ -49,7 +49,7 @@ export default {
       maxDate: new Date(2023, 11, 31),
       format: 'YYYY-MM-DD',
       editItem: null, // 要编辑的哪一项数据？
-      beforeEditData: Object.freeze([]), // 编辑前的数据
+      beforeEditData: [], // 编辑前的数据
       afterEditData: [] // 编辑后的数据
     }
   },
@@ -94,7 +94,7 @@ export default {
         // 获取code name
         // const user = findCodeName(this.formData)
         // this.checkParam = { ...user, ...this.checkParam }
-        this.beforeEditData = Object.freeze(this.getEditRow()) // 记录编辑前初始数据
+        this.beforeEditData = this.getEditRow() // 记录编辑前初始数据
         console.log('编辑前的数据', this.beforeEditData, Object.isFrozen(this.beforeEditData))
       }
     },

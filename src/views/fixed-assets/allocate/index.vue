@@ -1,10 +1,10 @@
 <!--
  * @Description:资产调拨
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 09:28:57
+ * @LastEditTime: 2022-05-24 13:42:47
 -->
 <template>
-  <div class="asset-allocate-wrapper vh-bg">
+  <div class="list-wrapper vh-bg">
     <vh-nav-bar :left-arrow="true"></vh-nav-bar>
     <van-tabs v-model="tabActive" animated sticky offset-top="1.28rem" @change="onTabsChange">
       <van-tab v-for="(tab, index) in tabs" :title="tab.title" :key="index" :name="tab.id">
@@ -78,15 +78,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.asset-allocate-wrapper {
-  .list-item {
-    margin: 10px;
-    .btn-status {
-      text-align: right;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-  }
-}
+@import '@css/list.less';
 </style>

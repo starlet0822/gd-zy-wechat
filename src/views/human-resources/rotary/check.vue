@@ -1,7 +1,7 @@
 <!--
  * @Description: 轮转审批 TODO: 待需求确定
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 18:37:02
+ * @LastEditTime: 2022-05-24 17:39:11
 -->
 <template>
   <div class="rotary-check-wrapper vh-bg">
@@ -15,7 +15,7 @@
       <van-collapse v-model="activeNames" :border="false">
         <van-collapse-item :name="0" class="vh-mb-100" :border="false">
           <template #title>
-            <div class="vh-color-blue2">人员基本信息</div>
+            <div class="vh-color-blue">人员基本信息</div>
           </template>
           <template #default>
             <van-cell
@@ -94,7 +94,7 @@
         </van-collapse-item>
         <van-collapse-item :name="1" class="vh-mb-100" :border="false">
           <template #title>
-            <div class="vh-color-blue2">人员轮转信息</div>
+            <div class="vh-color-blue">人员轮转信息</div>
           </template>
           <template #default>
             <van-cell

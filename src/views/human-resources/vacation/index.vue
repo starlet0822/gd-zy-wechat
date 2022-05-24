@@ -1,10 +1,10 @@
 <!--
  * @Description: 休假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 14:15:47
+ * @LastEditTime: 2022-05-24 13:44:52
 -->
 <template>
-  <div class="vacation-list-wrapper vh-bg">
+  <div class="list-wrapper vh-bg">
     <vh-nav-bar @click-right="handleRightClick">
       <template #right>
         <div v-show="showCheckBtn" class="vh-color-white">批量审批</div>
@@ -107,15 +107,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.vacation-list-wrapper {
-  .list-item {
-    margin: 10px;
-    .btn-status {
-      text-align: right;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-  }
-}
+@import '@css/list.less';
 </style>
