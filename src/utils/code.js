@@ -1,7 +1,7 @@
 /*
  * @Description:获取code
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 09:43:37
+ * @LastEditTime: 2022-05-25 10:47:51
  */
 import { urlQuery2Object } from './index'
 import store from '@/store'

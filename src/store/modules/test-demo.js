@@ -1,9 +1,4 @@
 /*
- * @Description:
- * @Author: wuxxing
- * @LastEditTime: 2022-03-17 12:36:23
- */
-/*
  * @Description: 用户相关状态
  * @Author: wuxxing
  * @LastEditTime: 2022-03-17 09:10:27
