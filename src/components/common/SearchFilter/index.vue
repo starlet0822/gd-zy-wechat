@@ -1,7 +1,7 @@
 <!--
  * @Description: 搜索、筛选
  * @Author: wuxxing
- * @LastEditTime: 2022-05-01 19:09:22
+ * @LastEditTime: 2022-05-27 11:00:29
 -->
 <template>
   <div class="search-filter-wrapper vh-flex-ac" :class="{ 'van-hairline--bottom': border }">
@@ -28,7 +28,7 @@
         </div>
         <!-- 搜索按钮 -->
         <div v-else class="vh-flex-center" @click="onSearch">
-          <van-button class="vh-px-12" type="info" size="mini">查询</van-button>
+          <van-button class="vh-px-12" type="info" size="small">查询</van-button>
         </div>
       </template>
     </van-search>

@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-09 10:50:36
+ * @LastEditTime: 2022-05-27 10:59:27
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -164,6 +164,10 @@ export default {
       }
       .van-grid-item__text {
         font-size: 15px;
+      }
+      .van-info {
+        font-size: 15px;
+        padding: 0 5px;
       }
     }
     .module-children {
