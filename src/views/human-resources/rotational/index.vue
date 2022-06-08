@@ -42,7 +42,7 @@
                 v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
                   {{ field.fieldValue || '--' }}
                 </span>

@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-23 17:48:49
+ * @LastEditTime: 2022-06-08 11:18:17
 -->
 <template>
   <div class="attendance-check-wrapper vh-bg">
@@ -21,7 +21,15 @@
       <div class="user-box vh-px-16 vh-pb-10 vh-bg-white">{{ unSubmitPersonStr }}</div>
     </div>
     <div class="vh-mt-10 vh-bg-white" v-if="true">
-      <van-cell class="vh-border-0" title="考勤明细"></van-cell>
+      <van-cell class="vh-border-0">
+        <template #title>
+          <div>
+            考勤明细(
+            <span class="vh-color-blue">{{ monthData.length || 0 }}</span>
+            人)
+          </div>
+        </template>
+      </van-cell>
       <UserTable
         class="vh-px-160"
         key="monthData"
@@ -30,7 +38,15 @@
       ></UserTable>
     </div>
     <div class="vh-mt-10 vh-bg-white" v-if="true">
-      <van-cell class="vh-border-0" title="休假明细"></van-cell>
+      <van-cell class="vh-border-0">
+        <template #title>
+          <div>
+            休假明细(
+            <span class="vh-color-blue">{{ vacationData.length || 0 }}</span>
+            行)
+          </div>
+        </template>
+      </van-cell>
       <UserTable
         class="vh-px-160"
         key="vacationData"

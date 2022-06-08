@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 13:45:02
+ * @LastEditTime: 2022-06-08 10:57:53
 -->
 <template>
   <div class="list-wrapper vh-bg">
@@ -46,7 +46,7 @@
                 v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
                   {{ field.fieldValue || '--' }}
                 </span>

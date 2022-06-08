@@ -1,7 +1,7 @@
 <!--
  * @Description: 考勤
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 13:44:09
+ * @LastEditTime: 2022-06-08 10:44:38
 -->
 <template>
   <div class="list-wrapper vh-bg">
@@ -42,7 +42,7 @@
                 v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'purc_no' }">
                   {{ field.fieldValue || '--' }}
                 </span>

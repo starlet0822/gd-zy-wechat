@@ -1,7 +1,7 @@
 <!--
  * @Description:资处转移
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 13:43:42
+ * @LastEditTime: 2022-06-08 10:56:50
 -->
 <template>
   <div class="list-wrapper vh-bg">
@@ -43,7 +43,7 @@
                 v-for="(field, fieldIndex) in item.formData"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'transfer_no' }">
                   {{ field.fieldValue || '--' }}
                 </span>

@@ -1,7 +1,7 @@
 <!--
  * @Description: 离职申请列表
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 13:44:24
+ * @LastEditTime: 2022-06-08 10:52:57
 -->
 <template>
   <div class="list-wrapper vh-bg">
@@ -42,7 +42,7 @@
                 v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey }}：</span>
+                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
                 <span :class="{ 'vh-color-blue': field.fieldName === 'bill_no' }">
                   {{ field.fieldValue || '--' }}
                 </span>
