@@ -9,7 +9,7 @@ export default [
     path: '/attendance',
     name: 'Attendance',
     meta: {
-      title: '考勤申请',
+      title: '考勤审批',
       icon: 'kaoqin',
       modCode: '21',
       typeCode: typeCode.get('attendance'),
@@ -31,7 +31,7 @@ export default [
     path: '/vacation',
     name: 'Vacation',
     meta: {
-      title: '休假申请',
+      title: '休假审批',
       icon: 'xiujia',
       modCode: '21',
       typeCode: typeCode.get('vacation'),

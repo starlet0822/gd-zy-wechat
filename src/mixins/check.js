@@ -112,14 +112,14 @@ export default {
           return
         }
       }
-      // 排除考勤申请
+      // 排除考勤审批
       if (this.typeCode !== 'hr_attendance_result') {
         await this.handleFormParamList()
       }
       const { errcode, errmsg } = await sendCheck({
         typeCode: this.typeCode,
         checkParam: this.checkParam,
-        formParamList: this.formParamList // TODO 排除考勤申请
+        formParamList: this.formParamList // TODO 排除考勤审批
       })
       if (errcode === '0') {
         this.$toast({
