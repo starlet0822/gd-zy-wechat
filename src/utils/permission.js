@@ -1,7 +1,7 @@
 /*
  * @Description:路由权限判断
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 11:00:55
+ * @LastEditTime: 2022-06-10 16:45:29
  */
 /* eslint-disable */
 import router from '@/router'
@@ -33,6 +33,7 @@ function judgeRoutePower(to, next) {
 }
 
 router.beforeEach(async (to, from, next) => {
+  // console.log('account', store.state.user.user.account)
   console.log(to, from)
   const { path: toPath } = to
   const hasUser = store.getters.user // 是否存在用户信息

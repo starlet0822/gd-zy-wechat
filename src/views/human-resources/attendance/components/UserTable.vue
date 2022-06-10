@@ -1,7 +1,7 @@
 <!--
  * @Description: 表格
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 11:16:31
+ * @LastEditTime: 2022-06-08 13:50:56
 -->
 <template>
   <div class="fake-table">
@@ -60,13 +60,15 @@ export default {
     columns() {
       return this.headData.map((v) => {
         // const hasVal = this.tableData[0][v.item_code]
-        const fixed = ['empCode', 'empName', '!bDeptName', '!cDeptName'].includes(v.itemCode)
+        const fixed = ['!empCode', 'empName', '!bDeptName', '!cDeptName'].includes(v.itemCode)
         return {
           dataType: v.dataType,
           label: v.itemName,
           prop: v.itemCode,
           fixed: fixed,
-          minWidth: fixed ? 90 : 100
+          // minWidth: v.itemName.length * 30
+          minWidth: v.minWidth || 80
+          // minWidth: fixed ? 90 : 110
         }
       })
     }
@@ -74,11 +76,17 @@ export default {
   methods: {}
 }
 </script>
+
 <style lang="less" scoped>
 .fake-table {
   /deep/.inner {
     .el-table__header-wrapper {
       overflow: auto;
+    }
+  }
+  /deep/.el-table {
+    .cell {
+      line-height: 1em;
     }
   }
 }

@@ -1,16 +1,17 @@
 /*
  * @Description: 请求封装
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 11:27:06
+ * @LastEditTime: 2022-06-08 18:17:14
  */
 import axios from 'axios'
-import { API_BASEURL, API_TIMEOUT, ISBUILD } from '@/config/index'
+import { API_TIMEOUT, ISBUILD, API_BASEURL, ISDEV } from '@/config'
 import { Toast, Dialog } from 'vant'
 import router from '@/router'
 import { loginUrl } from '@/config/weixin'
 const settings = require('../config/settings')
 const service = axios.create({
-  baseURL: API_BASEURL, // 请求前缀
+  // baseURL: API_BASEURL, // TODO 开发是放开 请求前缀
+  baseURL: ISDEV ? API_BASEURL : window._CONFIG.BASEURL, // 请求前缀
   timeout: API_TIMEOUT, // 请求超时
   withCredentials: true // 跨域请求时是否携带上cookie（凭证）
   // headers: {
@@ -26,6 +27,7 @@ function handleErrorStatus(data) {
       Dialog.confirm({ message })
         .then(() => {
           if (ISBUILD) {
+            console.log('loginUrl', loginUrl)
             location.href = loginUrl
           } else {
             router.push({ path: '/login' })

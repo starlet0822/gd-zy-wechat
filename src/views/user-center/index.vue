@@ -1,7 +1,7 @@
 <!--
  * @Description: 个人中心
  * @Author: wuxxing
- * @LastEditTime: 2022-05-09 10:23:29
+ * @LastEditTime: 2022-06-08 17:24:44
 -->
 <template>
   <div class="user-center-wrapper vh-bg">
@@ -44,6 +44,7 @@ export default {
     }
   },
   created() {
+    console.log('homeUrl', homeUrl)
     this.getUserInfo()
   },
   methods: {

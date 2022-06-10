@@ -1,7 +1,7 @@
 <!--
  * @Description: 图片展示
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 10:00:29
+ * @LastEditTime: 2022-06-09 18:03:02
 -->
 <template>
   <div class="imgView-wrapper vh-p-box12 vh-bg-white" :class="{ 'van-hairline--bottom': border }">
@@ -26,7 +26,7 @@
 <script>
 import { ImagePreview } from 'vant'
 import { isPic } from '@/utils/is'
-import { API_BASEURL, ISDEV } from '@/config'
+import { ISDEV } from '@/config'
 const { devProxyTarget } = require('@/config/settings')
 export default {
   name: 'ImgView',
@@ -61,8 +61,9 @@ export default {
       get() {
         const imgs = this.value.filter((v) => isPic(v.fileType))
         return imgs.map((item) => {
-          const prefix = ISDEV ? devProxyTarget : API_BASEURL
-          const url = prefix + `/api/file/getUrlFile?path=${item.filePath}&isview=1`
+          const prefix = ISDEV ? devProxyTarget : window._CONFIG.BASEURL
+          const url =
+            prefix + `/api/file/getUrlFile?path=${item.filePath}&isview=1&fileName=${item.fileName}`
           return url
         })
       }

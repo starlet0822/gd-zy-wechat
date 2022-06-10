@@ -1,7 +1,7 @@
 <!--
  * @Description: 文件展示
  * @Author: wuxxing
- * @LastEditTime: 2022-05-05 11:31:57
+ * @LastEditTime: 2022-06-09 18:24:17
 -->
 <template>
   <div class="file-card-wrapper">
@@ -28,7 +28,7 @@
 <script>
 import { getFileSize } from '@/utils/file'
 import { isPic } from '@/utils/is'
-import { API_BASEURL, ISDEV } from '@/config'
+import { ISDEV } from '@/config'
 const { devProxyTarget } = require('@/config/settings')
 export default {
   name: 'FileCard',
@@ -69,9 +69,10 @@ export default {
   methods: {
     // 点击文件
     onClickFile(file) {
-      const prefix = ISDEV ? devProxyTarget : API_BASEURL
-      const url = prefix + `/api/file/getUrlFile?path=${file.filePath}&isview=1`
-      window.open(url)
+      const prefix = ISDEV ? devProxyTarget : window._CONFIG.BASEURL
+      const url =
+        prefix + `/api/file/getUrlFile?path=${file.filePath}&isview=1&fileName=${file.fileName}`
+      window.open(url, '_self')
     }
   }
 }

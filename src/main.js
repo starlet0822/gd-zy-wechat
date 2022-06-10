@@ -1,20 +1,22 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-04-28 09:44:58
+ * @LastEditTime: 2022-06-10 10:02:01
  */
+// 初始化全局配置
+import './config/config.js'
+
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/assets/css/index.less' // 全局样式
-import '@/plugins/vant' // 按需导入vant组件
-// import './plugins/index' // 注册所有依赖插件
+import '@/plugins' // 插件
 import 'amfe-flexible' // 屏幕适配
 import '@/utils/permission' // 鉴权
 import { ENV } from '@/config'
 import common from './mixins/common'
-import { registerGlobFilter } from './filters/index'
+import { registerGlobFilter } from './filters'
 import { registerGlobComp } from '@/components/global'
 import { registerGlobDirective } from '@/directives'
 import { userAgent } from '@utils/is' // 注册全局自定义指令

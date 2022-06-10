@@ -1,19 +1,20 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-04-25 15:09:54
+ * @LastEditTime: 2022-06-09 16:14:09
  */
 'use strict'
+
 const prodGzipExtensions = /\.(js|css|json|txt|html)$/i
 const path = require('path')
 const resolve = (dir) => path.join(__dirname, dir)
 const defaultSettings = require('./src/config/settings')
 const CompressionPlugin = require('compression-webpack-plugin')
 // const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
-const VConsolePlugin = require('vconsole-webpack-plugin')
+// const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { port, VUE_APP_PORT, npm_config_port, NODE_ENV, VCONSOLE } = process.env
-// console.log('VCONSOLE', VCONSOLE)
+// console.log('VCONSOLE', VCONSOLE, process)
 const DevPort = port || npm_config_port || VUE_APP_PORT // dev port
 const isBuild = ['production', 'prod'].includes(NODE_ENV)
 module.exports = {
@@ -99,12 +100,12 @@ module.exports = {
         })
       )
     // Vconsole 调试器
-    config.plugins.push(
-      new VConsolePlugin({
-        filter: [],
-        enable: isBuild && VCONSOLE
-      })
-    )
+    // config.plugins.push(
+    //   new VConsolePlugin({
+    //     filter: [],
+    //     enable: isBuild && VCONSOLE === 'true'
+    //   })
+    // )
     // 打包分析
     // isBuild && config.plugins.push(new BundleAnalyzerPlugin())
   },
@@ -124,7 +125,7 @@ module.exports = {
           // remove debugger
           args[0].terserOptions.compress.drop_debugger = true
           // 移除 console.log
-          args[0].terserOptions.compress.pure_funcs = VCONSOLE ? [] : ['console.log']
+          args[0].terserOptions.compress.pure_funcs = VCONSOLE === 'true' ? [] : ['console.log']
           // 去掉注释 如果需要看chunk-vendors公共部分插件，可以注释掉就可以看到注释了
           args[0].terserOptions.output = {
             comments: false
