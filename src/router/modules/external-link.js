@@ -1,11 +1,12 @@
 /*
  * @Description:外部链接相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-06-10 17:06:17
+ * @LastEditTime: 2022-06-10 18:24:13
  */
 import { ISBUILD } from '@/config'
-import store from '@/store'
-const account = store.state.user?.user?.account
+// import store from '@/store'
+// const account = store.state.user?.user?.account
+const account = JSON.parse(localStorage.getItem('gdzy_wx_user'))?.account
 const { devProxyTarget } = require('@/config/settings')
 
 export default [
@@ -17,7 +18,7 @@ export default [
     meta: { title: '智能报销', icon: 'baoxiao', modCode: '10' }
   },
   {
-    path: window._CONFIG.BI_BASEURL + '/BI/H5/#/',
+    path: window._CONFIG.BI_BASEURL,
     name: 'TongJi',
     meta: { title: 'BI分析', icon: 'tongji', modCode: 'bi' }
   }

@@ -1,9 +1,9 @@
 /*
  * @Description: 前端分类菜单
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 11:49:03
+ * @LastEditTime: 2022-06-10 17:49:30
  */
-import store from '@/store'
+// import store from '@/store'
 
 export function handleMenus(menus, routes) {
   const homeMenus = []
@@ -15,10 +15,10 @@ export function handleMenus(menus, routes) {
         // this.$set(route, 'notCheckCount', null)
         // route.notCheckCount = null
         // 特殊处理智能报销
-        if (route.name === 'BaoXiao') {
-          route.path = route.path + store.getters.openId
-          // console.log(route.path)
-        }
+        // if (route.name === 'BaoXiao') {
+        //   route.path = route.path + store.getters.openId
+        //   // console.log(route.path)
+        // }
         item.push(route)
       }
     })

@@ -9,7 +9,7 @@ window._CONFIG = {
   // 报销外链地址
   BAOXIAO_BASEURL: 'http://hrp.gdhtcm.com:8111/OES',
   // BI外链地址
-  BI_BASEURL: 'http://hrp.gdhtcm.com:8111',
+  BI_BASEURL: 'http://hrp.gdhtcm.com:8111/OES/BI/H5/#/',
   // 企业微信appid
   WORK_WX_APPID: 'wwa07d3a2cb92618de',
   // 是否开启调试器
