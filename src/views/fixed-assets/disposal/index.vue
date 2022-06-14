@@ -1,7 +1,7 @@
 <!--
  * @Description:资产处置
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 13:43:07
+ * @LastEditTime: 2022-06-13 11:49:48
 -->
 <template>
   <div class="list-wrapper vh-bg">
@@ -38,16 +38,21 @@
                 <div class="vh-title">{{ item.title }}</div>
                 <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
               </div>
-              <div
-                class="vh-flex-ac"
+              <van-row
+                class="vh-flex"
                 v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'equi_out_doc_no' }">
+                <van-col v-if="field.fieldKey" span="6" class="vh-color-tip">
+                  {{ field.fieldKey ? field.fieldKey + ':' : '' }}
+                </van-col>
+                <van-col
+                  span="18"
+                  :class="{ 'vh-color-blue': field.fieldName === 'equi_out_doc_no' }"
+                >
                   {{ field.fieldValue || '--' }}
-                </span>
-              </div>
+                </van-col>
+              </van-row>
               <div class="btn-status">
                 <TagBox plain size="medium" :color="tagColor" :text="item.checkState"></TagBox>
               </div>

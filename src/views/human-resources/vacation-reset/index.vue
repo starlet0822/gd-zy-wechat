@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假列表
  * @Author: wuxxing
- * @LastEditTime: 2022-06-08 10:57:53
+ * @LastEditTime: 2022-06-13 11:50:37
 -->
 <template>
   <div class="list-wrapper vh-bg">
@@ -41,16 +41,18 @@
                 <div class="vh-title">{{ item.title }}</div>
                 <div class="vh-color-tip">{{ item.dateTime | formatDate('YYYY-MM-DD') }}</div>
               </div>
-              <div
-                class="vh-flex-ac"
+              <van-row
+                class="vh-flex"
                 v-for="(field, fieldIndex) in item.formData.filter((v) => v.isShow === 1)"
                 :key="fieldIndex"
               >
-                <span class="vh-color-tip">{{ field.fieldKey ? field.fieldKey + ':' : '' }}</span>
-                <span :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
+                <van-col v-if="field.fieldKey" span="6" class="vh-color-tip">
+                  {{ field.fieldKey ? field.fieldKey + ':' : '' }}
+                </van-col>
+                <van-col span="18" :class="{ 'vh-color-blue': field.fieldName === 'apply_code' }">
                   {{ field.fieldValue || '--' }}
-                </span>
-              </div>
+                </van-col>
+              </van-row>
               <div class="btn-status">
                 <!-- :color="checkStatus.get(item.checkState).color"
                     :text="checkStatus.get(item.checkState).text" -->
