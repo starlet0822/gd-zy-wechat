@@ -1,7 +1,7 @@
 /*
  * @Description:外部链接相关路由
  * @Author: wuxxing
- * @LastEditTime: 2022-06-10 18:24:13
+ * @LastEditTime: 2022-06-15 14:24:58
  */
 import { ISBUILD } from '@/config'
 // import store from '@/store'
@@ -15,7 +15,7 @@ export default [
       (ISBUILD ? window._CONFIG.BAOXIAO_BASEURL : devProxyTarget) +
       `/ctrl/crtlwechat/index/wechatlogin.jsp?account=${account}&&JHSessionId=-1`, // ${store.getters.openId}  xiejieweidemo
     name: 'BaoXiao',
-    meta: { title: '智能报销', icon: 'baoxiao', modCode: '10' }
+    meta: { title: '智能报销', icon: 'baoxiao', modCode: '10', typeCode: 'ctrl_bill_type' }
   },
   {
     path: window._CONFIG.BI_BASEURL,

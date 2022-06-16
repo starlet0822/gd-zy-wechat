@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-27 10:59:27
+ * @LastEditTime: 2022-06-15 14:26:50
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -90,21 +90,6 @@ export default {
         const params = { typeCode: this.typeCode }
         const res = await getCheckCount(params, { noLoading: true })
         if (res.errcode === '0') {
-          // for (let i = 0; i < res.data.length; i++) {
-          //   const dataItem = res.data[i]
-          //   console.log('dataItem', dataItem)
-          //   for (let j = 0; j < this.menuList.length; j++) {
-          //     const menus = this.menuList[j]
-          //     console.log('menus', menus)
-          //     for (let k = 0; k < menus.children.length; k++) {
-          //       const route = menus.children[k]
-          //       console.log('route', route)
-          //       if (dataItem.typeCode === route.meta.typeCode) {
-          //         this.$set(route, 'notCheckCount', isClear ? null : dataItem.notCheckCount)
-          //       }
-          //     }
-          //   }
-          // }
           res.data.forEach((item) => {
             this.menuList.forEach((menu) => {
               menu.children.forEach((menu, index) => {

@@ -13,5 +13,5 @@ window._CONFIG = {
   // 企业微信appid
   WORK_WX_APPID: 'wwa07d3a2cb92618de',
   // 是否开启调试器
-  VCONSOLE: true
+  VCONSOLE: false
 }

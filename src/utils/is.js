@@ -1,7 +1,7 @@
 /*
  * @Description:校验工具函数
  * @Author: wuxxing
- * @LastEditTime: 2022-05-07 15:43:47
+ * @LastEditTime: 2022-06-13 14:09:03
  */
 export { isNumber as _isNumber, isUndefined as _isUndefined, isEqual as _isEqual } from 'lodash-es'
 
@@ -22,9 +22,8 @@ export function isExternal(path) {
 }
 
 export function isPic(arg) {
-  return /\.?(png|jpg|jpeg)/.test(arg)
+  return /\.?(jpeg|jpg|gif|png|svg|webp|jfif|bmp|dpg)/.test(arg)
 }
-
 // export function isAndroid() {
 //   /* istanbul ignore next */
 //   return /android/.test(navigator.userAgent.toLowerCase())
