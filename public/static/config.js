@@ -7,9 +7,9 @@ window._CONFIG = {
   // 应用部署后完整访问路径
   APP_FULL_URL: 'http://hrp.gdhtcm.com:8111/wechatWeb',
   // 报销外链地址
-  BAOXIAO_BASEURL: 'http://hrp.gdhtcm.com:8111/OES',
+  BAOXIAO_URL: 'http://hrp.gdhtcm.com:8111/OES',
   // BI外链地址
-  BI_BASEURL: 'http://hrp.gdhtcm.com:8111/OES/BI/H5/#/',
+  BI_URL: 'http://hrp.gdhtcm.com:8111/OES/BI/H5/#/',
   // 企业微信appid
   WORK_WX_APPID: 'wwa07d3a2cb92618de',
   // 是否开启调试器

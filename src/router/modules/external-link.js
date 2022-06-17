@@ -12,13 +12,13 @@ const { devProxyTarget } = require('@/config/settings')
 export default [
   {
     path:
-      (ISBUILD ? window._CONFIG.BAOXIAO_BASEURL : devProxyTarget) +
+      (ISBUILD ? window._CONFIG.BAOXIAO_URL : devProxyTarget) +
       `/ctrl/crtlwechat/index/wechatlogin.jsp?account=${account}&&JHSessionId=-1`, // ${store.getters.openId}  xiejieweidemo
     name: 'BaoXiao',
     meta: { title: '智能报销', icon: 'baoxiao', modCode: '10', typeCode: 'ctrl_bill_type' }
   },
   {
-    path: window._CONFIG.BI_BASEURL,
+    path: window._CONFIG.BI_URL,
     name: 'TongJi',
     meta: { title: 'BI分析', icon: 'tongji', modCode: 'bi' }
   }
