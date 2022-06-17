@@ -2,7 +2,7 @@
  * 存放配置常量(当值不为空时会覆盖env配置)
  */
 window._CONFIG = {
-  // 接口请求前缀 示例：http://hrp.gdhtcm.com:8111/OESWechat
+  // 接口请求前缀
   VUE_APP_API_BASEURL: 'http://hrp.gdhtcm.com:8111/OESWechat',
   // 应用部署后完整访问路径
   APP_FULL_URL: 'http://hrp.gdhtcm.com:8111/wechatWeb',

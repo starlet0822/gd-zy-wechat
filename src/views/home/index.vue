@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-06-16 17:47:45
+ * @LastEditTime: 2022-06-17 09:46:25
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -96,6 +96,7 @@ export default {
                 if (item.typeCode === menu.meta.typeCode) {
                   // console.log(menu, index)
                   this.$set(menu, 'notCheckCount', isClear ? null : item.notCheckCount)
+                  // this.$set(menu, 'notCheckCount', isClear ? null : 9999)
                 }
               })
             })
@@ -118,7 +119,7 @@ export default {
       //   return false
       // }
     },
-    // TODO
+    // 处理待读消息数
     handleBadge(cItem) {
       if (+cItem.notCheckCount > 99) {
         return '99+'

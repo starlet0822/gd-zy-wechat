@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-06-09 16:14:09
+ * @LastEditTime: 2022-06-17 13:55:58
  */
 'use strict'
 
@@ -11,7 +11,6 @@ const resolve = (dir) => path.join(__dirname, dir)
 const defaultSettings = require('./src/config/settings')
 const CompressionPlugin = require('compression-webpack-plugin')
 // const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
-// const VConsolePlugin = require('vconsole-webpack-plugin')
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const { port, VUE_APP_PORT, npm_config_port, NODE_ENV, VCONSOLE } = process.env
 // console.log('VCONSOLE', VCONSOLE, process)
@@ -99,15 +98,6 @@ module.exports = {
           minRatio: 0.8
         })
       )
-    // Vconsole 调试器
-    // config.plugins.push(
-    //   new VConsolePlugin({
-    //     filter: [],
-    //     enable: isBuild && VCONSOLE === 'true'
-    //   })
-    // )
-    // 打包分析
-    // isBuild && config.plugins.push(new BundleAnalyzerPlugin())
   },
   chainWebpack: (config) => {
     console.log('当前环境为：' + process.env.NODE_ENV)
@@ -134,8 +124,6 @@ module.exports = {
         })
       })
       .end()
-    // 开发环境可使用 开发工具
-    // config.when(process.env.NODE_ENV === 'development', config => config.devtool('cheap-source-map'))
     // 别名 alias
     config.resolve.alias
       .set('@', resolve('src'))

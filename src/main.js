@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-06-16 10:34:25
+ * @LastEditTime: 2022-06-17 13:38:20
  */
 // 初始化全局配置
 import './config/config.js'
@@ -31,6 +31,7 @@ registerGlobDirective(Vue)
 
 console.log('当前运行环境：', ENV)
 console.log('当前运行系统：', userAgent())
+
 Vue.use(common) // 公共混入注册
 Vue.config.productionTip = false // 关闭生产环境提示
 

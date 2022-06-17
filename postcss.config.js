@@ -1,7 +1,7 @@
 /*
  * @Description:
  * @Author: wuxxing
- * @LastEditTime: 2022-04-29 16:54:53
+ * @LastEditTime: 2022-06-17 13:56:34
  */
 const env = process.env.NODE_ENV
 const propList = env === 'development' ? [] : ['*', '!border']
@@ -21,9 +21,6 @@ module.exports = {
       // grid: true
     },
     'postcss-pxtorem': {
-      // rootValue({ file }) { // postcss-pxtorem 插件的版本需要 >= 5.0.0
-      //   return file.indexOf('vant') !== -1 ? 37.5 : 75
-      // },
       rootValue: 37.5, // 基准值 Vant 官方根字体大小是 37.5
       unitPrecision: 5, // （数字）允许REM单位增长的十进制数字
       propList: propList,
