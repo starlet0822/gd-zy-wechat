@@ -1,7 +1,7 @@
 /*
  * @Description: 项目配置
  * @Author: wuxxing
- * @LastEditTime: 2022-06-17 14:30:24
+ * @LastEditTime: 2022-06-17 15:28:58
  */
 'use strict'
 
@@ -69,11 +69,13 @@ module.exports = {
     }
   },
   configureWebpack: (config) => {
-    // config.plugins.push(
+    const plugins = []
+    // 骨架屏 无效？
+    // plugins.push(
     //   new SkeletonWebpackPlugin({
     //     webpackConfig: {
     //       entry: {
-    //         app: path.join(__dirname, './src/components/common/skeleton/index.js')
+    //         app: path.join(__dirname, './src/components/common/Skeleton/index.js')
     //       }
     //     },
     //     minimize: true,
@@ -81,15 +83,16 @@ module.exports = {
     //     router: {
     //       mode: 'history',
     //       routes: [
-    //         { path: '/home', skeletonId: 'skeleton' },
+    //         { path: '/', skeletonId: 'skeleton' },
     //         { path: '/about', skeletonId: 'skeleton' }
     //       ]
     //     }
     //   })
     // )
+
     // 生产环境才开启 gzip压缩
-    isBuild &&
-      config.plugins.push(
+    if (isBuild) {
+      plugins.push(
         new CompressionPlugin({
           filename: '[path][name].gz',
           test: prodGzipExtensions,
@@ -97,6 +100,9 @@ module.exports = {
           minRatio: 0.8
         })
       )
+    }
+
+    config.plugins = [...config.plugins, ...plugins]
   },
   chainWebpack: (config) => {
     console.log('当前环境为：' + process.env.NODE_ENV)

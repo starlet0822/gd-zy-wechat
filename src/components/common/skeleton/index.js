@@ -1,7 +1,7 @@
 /*
  * @Description: 骨架屏
  * @Author: wuxxing
- * @LastEditTime: 2022-03-16 23:17:33
+ * @LastEditTime: 2022-06-17 15:36:32
  */
 import Vue from 'vue'
 import Skeleton from './index'
@@ -12,7 +12,7 @@ export default new Vue({
   },
   template: `
     <div>
-      <skeleton id="skeleton" style="display:none"/>
+      <skeleton id="skeleton" style="display:none;"/>
     </div>
   `
 })

@@ -1,7 +1,7 @@
 /*
  * @Description:按需全局引入 vant组件
  * @Author: wuxxing
- * @LastEditTime: 2022-04-22 10:30:26
+ * @LastEditTime: 2022-06-17 15:14:54
  */
 import Vue from 'vue'
 import {
@@ -95,3 +95,4 @@ Vue.use(Button)
   .use(Switch)
   .use(Swipe)
   .use(SwipeItem)
+  .use(Skeleton)
