@@ -1,7 +1,7 @@
 <!--
  * @Description: 首页
  * @Author: wuxxing
- * @LastEditTime: 2022-06-15 14:26:50
+ * @LastEditTime: 2022-06-16 17:47:45
 -->
 <template>
   <div class="home-wrapper vh-bg">
@@ -26,7 +26,7 @@
                 :icon="cItem.meta.icon"
                 :text="cItem.meta.title"
                 v-bind="linkProps(cItem)"
-                :badge="cItem.notCheckCount"
+                :badge="handleBadge(cItem)"
                 @click="onclickItem(cItem, index)"
               />
             </template>
@@ -117,6 +117,14 @@ export default {
       //   window.open(item.to, '_blank')
       //   return false
       // }
+    },
+    // TODO
+    handleBadge(cItem) {
+      if (+cItem.notCheckCount > 99) {
+        return '99+'
+      } else {
+        return cItem.notCheckCount
+      }
     },
     // 特殊处理 to url属性
     linkProps({ path }) {

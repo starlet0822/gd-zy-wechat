@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录页
  * @Author: wuxxing
- * @LastEditTime: 2022-05-09 11:45:55
+ * @LastEditTime: 2022-06-17 09:35:26
 -->
 <template>
   <div class="login-wrapper vh-flex-center vh-flex-col">
@@ -64,6 +64,8 @@ export default {
         this.$toast.loading({ message: '正在登录...', duration: 0 }) // 开启loading
         const res = await this.$store.dispatch('user/login', this.loginForm)
         if (res.errcode === '0') {
+          // 缓存用户信息
+          await localStorage.setItem('gdzy_wx_user', JSON.stringify(res.data.orgUser))
           this.$toast.clear() // 清除loading
           await this.$router.replace({ path: '/' })
         } else {

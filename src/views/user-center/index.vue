@@ -1,7 +1,7 @@
 <!--
  * @Description: 个人中心
  * @Author: wuxxing
- * @LastEditTime: 2022-06-08 17:24:44
+ * @LastEditTime: 2022-06-17 09:15:46
 -->
 <template>
   <div class="user-center-wrapper vh-bg">
@@ -73,12 +73,7 @@ export default {
             // this.$toast.loading({ message: `${this.btnText}中...`, forbidClick: true, duration: 0 }) // 开启loading
             const res = await this.$store.dispatch('user/logout')
             if (res.errcode === '0') {
-              // this.$toast.success({
-              //   message: res.data || '解绑成功',
-              //   forbidClick: true,
-              //   duration: 1500
-              // })
-              // this.$toast.clear() // 清除loading
+              localStorage.removeItem('gdzy_wx_user') // 清除用户信息
               if (ISBUILD) {
                 location.href = homeUrl // 在当前页面打开主页面
               } else {

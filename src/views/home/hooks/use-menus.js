@@ -1,9 +1,12 @@
 /*
  * @Description: 前端分类菜单
  * @Author: wuxxing
- * @LastEditTime: 2022-06-10 17:49:30
+ * @LastEditTime: 2022-06-17 09:29:49
  */
 // import store from '@/store'
+import { ISBUILD } from '@/config'
+const { devProxyTarget } = require('@/config/settings')
+const account = JSON.parse(localStorage.getItem('gdzy_wx_user'))?.account
 
 export function handleMenus(menus, routes) {
   const homeMenus = []
@@ -14,11 +17,13 @@ export function handleMenus(menus, routes) {
       if (route.meta.modCode === menu.modCode) {
         // this.$set(route, 'notCheckCount', null)
         // route.notCheckCount = null
-        // 特殊处理智能报销
-        // if (route.name === 'BaoXiao') {
-        //   route.path = route.path + store.getters.openId
-        //   // console.log(route.path)
-        // }
+        // TODO 特殊处理智能报销
+        if (route.name === 'BaoXiao') {
+          route.path =
+            (ISBUILD ? window._CONFIG.BAOXIAO_BASEURL : devProxyTarget) +
+            `/ctrl/crtlwechat/index/wechatlogin.jsp?account=${account}&&JHSessionId=-1`
+          console.log('特殊处理智能报销url', route.path)
+        }
         item.push(route)
       }
     })

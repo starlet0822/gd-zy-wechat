@@ -1,7 +1,7 @@
 /*
  * @Description: 入口函数
  * @Author: wuxxing
- * @LastEditTime: 2022-06-10 10:02:01
+ * @LastEditTime: 2022-06-16 10:34:25
  */
 // 初始化全局配置
 import './config/config.js'
@@ -20,7 +20,6 @@ import { registerGlobFilter } from './filters'
 import { registerGlobComp } from '@/components/global'
 import { registerGlobDirective } from '@/directives'
 import { userAgent } from '@utils/is' // 注册全局自定义指令
-// import { getCode, setCode } from './utils/code'
 registerGlobFilter(Vue) // 注册全局过滤器
 registerGlobComp(Vue) // 注册全局组件
 registerGlobDirective(Vue)
@@ -29,8 +28,6 @@ registerGlobDirective(Vue)
 // const { mockXHR } = require('../mock')
 // mockXHR()
 // // }
-// getCode()
-// setCode(getCode)
 
 console.log('当前运行环境：', ENV)
 console.log('当前运行系统：', userAgent())

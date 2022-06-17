@@ -1,7 +1,7 @@
 /*
  * @Description: 用户相关状态
  * @Author: wuxxing
- * @LastEditTime: 2022-06-10 17:31:56
+ * @LastEditTime: 2022-06-17 09:12:45
  */
 import { judgeLoginState, login, getUserInfo, logout } from '@/api/modules/user'
 import md5 from 'js-md5'
@@ -34,7 +34,7 @@ const mutations = {
   },
   SET_USER(state, val) {
     state.user = val
-    localStorage.setItem('gdzy_wx_user', JSON.stringify(val))
+    // localStorage.setItem('gdzy_wx_user', JSON.stringify(val))
   },
   SET_USER_ACCOUNT(state, val) {
     state.userAccount = val
