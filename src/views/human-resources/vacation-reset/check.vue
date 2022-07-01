@@ -1,7 +1,7 @@
 <!--
  * @Description: 销假审批
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 17:39:36
+ * @LastEditTime: 2022-07-01 16:43:48
 -->
 <template>
   <div class="check-wrapper vh-bg">
@@ -106,7 +106,7 @@
               <!-- TODO: 记得去掉.slice(0, 10)-->
               <van-checkbox
                 class="vh-mb-10"
-                v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
+                v-for="(user, index) in checkPeopleData.rowData"
                 :key="user.id + index"
                 :name="user.id"
               >

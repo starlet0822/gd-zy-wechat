@@ -106,7 +106,7 @@
               <!-- TODO: 记得去掉.slice(0, 10)-->
               <van-checkbox
                 class="vh-mb-10"
-                v-for="(user, index) in checkPeopleData.rowData.slice(0, 10)"
+                v-for="(user, index) in checkPeopleData.rowData"
                 :key="user.id + index"
                 :name="user.id"
               >

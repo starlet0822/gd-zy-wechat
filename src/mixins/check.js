@@ -1,7 +1,7 @@
 /*
  * @Description:审批公共混入
  * @Author: wuxxing
- * @LastEditTime: 2022-05-24 10:41:03
+ * @LastEditTime: 2022-07-01 17:03:38
  */
 import { findCheckInfoDetail, sendCheck } from '@/api/modules/common'
 import { getIncreasingArr, findField } from '@/utils'
@@ -163,10 +163,16 @@ export default {
     handleClickBtn({ value }) {
       switch (value) {
         case 'YES':
-          if (this.checkPeopleData?.rowData.length) {
-            this.showCheckUser = true
+          // 为 null 直接调用审批接口
+          if (!this.checkPeopleData) {
+            this.checkInfo(value) // 审批接口
           } else {
-            this.checkInfo(value)
+            // rowData 存在数据时 打开选人弹窗
+            if (this.checkPeopleData.rowData.length) {
+              this.showCheckUser = true
+            } else {
+              this.$toast({ message: '抱歉，未设置下一审批人，无法进行操作' })
+            }
           }
           break
         case 'NO':
